@@ -5,7 +5,7 @@ class Game {
 	//public signal void exit();
 	
 	bool mainloop () {
-		bool running = IO.initAndStartIO ("Titel", 640, 480);
+		bool running = IO.initAndStart ("Titel", 640, 480);
 
 		IO.setProjection((double) 640/480);
 		// Main loop

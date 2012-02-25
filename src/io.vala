@@ -10,7 +10,7 @@ namespace IO {
 	 *
 	 * @param aspect Seitenverhaeltnis des Anzeigefensters (In).
 	 */
-	static void setProjection (GLdouble aspect)
+	static void setProjection (double aspect)
 	{
 		/* Nachfolgende Operationen beeinflussen Projektionsmatrix */
 		glMatrixMode (GL_PROJECTION);
@@ -92,26 +92,17 @@ namespace IO {
 		glViewport (0, 0, (GLsizei) w, (GLsizei) h);
 
 		/* Anpassen der Projektionsmatrix an das Seitenverhältnis des Fensters */
-		setProjection ((GLdouble) w / (GLdouble) h);
+		setProjection ((double) w / (double) h);
 		print("test!");
 	}
 
 	/**
 	 * Verarbeitung eines Tasturereignisses.
-	 * s: Flieger starten lassen
-	 * n: Normalen umschalten
-	 * c: Zeichnen der konvexen Huelle umschalten
-	 * b: Umschalten zwischen Spline / Bezier.
-	 * +/-: Splinezeichendetail erhoehen / verringern
-	 * F1: Wireframemodus umschalten
-	 * F2: Vollbildmodus umschalten
-	 * h: Hilfefenster einblenden
-	 * p: Pausieren
 	 * q,ESC: Beenden
 	 *
 	 * @param key Taste, die das Ereignis ausgeloest hat. (ASCII-Wert oder WERT des
 	 *        GLUT_KEY_<SPECIAL>.
-	 * @param status Status der Taste, GL_TRUE=gedrueckt, GL_FALSE=losgelassen.
+	 * @param status Status der Taste, true=gedrueckt, false=losgelassen.
 	 * @param isSpecialKey ist die Taste eine Spezialtaste?
 	 * @param x x-Position des Mauszeigers zum Zeitpunkt der Ereignisausloesung.
 	 * @param y y-Position des Mauszeigers zum Zeitpunkt der Ereignisausloesung.
@@ -148,6 +139,19 @@ namespace IO {
 	{
 		handleKeyboardEvent (key, GLUT_DOWN, false, x, y);
 	}
+	
+	/**
+	 * Callback fuer Druck auf Spezialtasten.
+	 * Ruft Ereignisbehandlung fuer Tastaturereignis auf.
+	 *
+	 * @param key betroffene Taste (In).
+	 * @param x x-Position der Maus zur Zeit des Tastendrucks (In).
+	 * @param y y-Position der Maus zur Zeit des Tastendrucks (In).
+	 */
+	static void cbSpecial (int key, int x, int y)
+	{
+		handleKeyboardEvent (key, GLUT_DOWN, true, x, y);
+	}
 
 	/**
 	 * Registrierung der GLUT-Callback-Routinen.
@@ -160,7 +164,7 @@ namespace IO {
 		/* Spezialtasten-Druck-Callback - wird ausgefuehrt, wenn Spezialtaste
 		 * (F1 - F12, Links, Rechts, Oben, Unten, Bild-Auf, Bild-Ab, Pos1, Ende oder
 		 * Einfuegen) gedrueckt wird */
-		//glutSpecialFunc (cbSpecial);
+		glutSpecialFunc (cbSpecial);
 
 		/* Mouse-Button-Callback (wird ausgefuehrt, wenn eine Maustaste
 		 * gedrueckt oder losgelassen wird) */
@@ -194,7 +198,7 @@ namespace IO {
 	 * @param height Hoehe des Fensters
 	 * @return ID des erzeugten Fensters, 0 im Fehlerfall
 	 */
-	bool initAndStartIO (string title, int width, int height)
+	bool initAndStart (string title, int width, int height)
 	{
 		int windowID = 0;
 
@@ -218,16 +222,16 @@ namespace IO {
 			/* Logik initialisieren */
 			//initLogic ();
 			/* Szene initialisieren */
-			//if (initScene ()) {
+			if (Scene.init ()) {
 				/* Callbacks registrieren */
 				registerCallbacks ();
 				/* Eintritt in die Ereignisschleife */
 				glutMainLoop ();
-			//} else {
-			//	/* Szene konnte nicht initialisiert werden */
-			//	glutDestroyWindow (windowID);
-			//	windowID = 0;
-			//}
+			} else {
+			/* Szene konnte nicht initialisiert werden */
+				glutDestroyWindow (windowID);
+				windowID = 0;
+			}
 		} else {
 			/* Fenster konnte nicht erzeugt werden */
 		}
