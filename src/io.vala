@@ -244,7 +244,7 @@ namespace IO {
 				/* Eintritt in die Ereignisschleife */
 				glutMainLoop ();
 			} else {
-			/* Szene konnte nicht initialisiert werden */
+				/* Szene konnte nicht initialisiert werden */
 				glutDestroyWindow (windowID);
 				windowID = 0;
 			}
