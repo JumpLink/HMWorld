@@ -39,6 +39,10 @@ namespace Scene {
 		/* Polygonrueckseiten nicht anzeigen */
 		/*glCullFace (GL_BACK);
 		glEnable (GL_CULL_FACE);*/
+		
+		//nur um sdl zu testen
+		SDL.RWops png_dir = new SDL.RWops.from_file("./data/Stadt - Sommer.png", "rb");
+		SDL.Surface png = SDLImage.load_png(png_dir);
 
 		/* Alles in Ordnung? */
 		return (glGetError() == GL_NO_ERROR);

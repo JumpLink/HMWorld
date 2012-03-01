@@ -17,6 +17,8 @@
 using GL;
 using GLU;
 using GLUT;
+using SDL;
+using SDLImage;
 
 namespace IO {
 

@@ -13,9 +13,6 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-using SDL;
-using SDLImage;
-
 class Game {
 	//public signal void exit();
 	
@@ -24,10 +21,6 @@ class Game {
 	}
 
 	public static int main (string[] args) {
-		//nur um sdl zu testen
-		SDL.RWops png_dir = new SDL.RWops.from_file("./data/Stadt - Sommer.png", "rb");
-		SDL.Surface png = SDLImage.load_png(png_dir);
-		
 		Game run = new Game();
 		return (int) run.mainloop();;
 	}
