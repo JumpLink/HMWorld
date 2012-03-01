@@ -62,6 +62,10 @@ pull:
 ## * make commit: Committet die Aenderungen, falls kompiliert werden kann
 commit:
 	@echo "Testing compilation..." && $(MAKE) && echo "Committing changes..." && $(BZR) commit
+	
+## * make commit: Committet die Aenderungen, falls kompiliert werden kann
+commit-%:
+	@echo "Testing compilation..." && $(MAKE) && echo "Committing changes..." && $(BZR) commit -m "%"
 
 ## * make push: Committet und Pusht dann ins Launchpad-Repo
 push: commit
