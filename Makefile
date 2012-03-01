@@ -55,11 +55,11 @@ dirs:
 ## * make pull: Aktuelle Version ziehen
 pull:
 	@echo "Pulling from Repository..."
-	$(BZR) pull
+	@$(BZR) pull
 
 ## * make commit: Committet die Aenderungen, falls kompiliert werden kann
 commit:
-	@echo "Testing compilation..." && @$(MAKE) && @echo "Committing changes..." && @$(BZR) commit
+	@echo "Testing compilation..." && $(MAKE) && echo "Committing changes..." && $(BZR) commit
 
 ## * make push: Committet und Pusht dann ins Launchpad-Repo
 push: commit
