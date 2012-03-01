@@ -212,12 +212,11 @@ namespace IO {
 	 * @param title Beschriftung des Fensters
 	 * @param width Breite des Fensters
 	 * @param height Hoehe des Fensters
-	 * @return ID des erzeugten Fensters, 0 im Fehlerfall
+	 * @return ID des erzeugten Fensters, false im Fehlerfall
 	 */
 	bool initAndStart (string title, int width, int height)
 	{
 		int windowID = 0;
-
 		/* Kommandozeile immitieren */
 		int argc = 1;
 		string[] argv = {"cmd"};
@@ -230,6 +229,16 @@ namespace IO {
 		glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 		glutInitWindowSize (width, height);
 		glutInitWindowPosition (0, 0);
+		
+		/* SDL initialisieren */
+		if (SDL.init(SDL.InitFlag.EVERYTHING) != 0) {
+			print("Unable to initialize SDL: %s\n", SDL.get_error());
+			return true;
+		}
+		if (SDLImage.init(SDLImage.InitFlags.PNG) != 0) {
+			print("Unable to initialize SDL-Image: %s\n", SDLImage.get_error());
+			return true;
+		}
 
 		/* Fenster erzeugen */
 		windowID = glutCreateWindow (title);

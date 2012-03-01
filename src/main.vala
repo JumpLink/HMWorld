@@ -25,10 +25,9 @@ class Game {
 
 	public static int main (string[] args) {
 		//nur um sdl zu testen
-		SDL.init(SDL.InitFlag.EVERYTHING);
-		SDLImage.init(SDLImage.InitFlags.PNG);
 		SDL.RWops png_dir = new SDL.RWops.from_file("./data/Stadt - Sommer.png", "rb");
 		SDL.Surface png = SDLImage.load_png(png_dir);
+		
 		Game run = new Game();
 		return (int) run.mainloop();;
 	}
