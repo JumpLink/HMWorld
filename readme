@@ -13,3 +13,11 @@ Author:
 	Ole Lorenzen <ole.lorenzen@gmx.net>
 	Patrick König <knuffi@gmail.com>
 
+Dokumentations
+	SDL
+		http://unstable.valadoc.org/#!wiki=sdl/index
+		http://www.libsdl.org/docs/html/
+	SDL-Image
+		http://unstable.valadoc.org/#!wiki=sdl-image/index
+		http://www.libsdl.org/projects/SDL_image/docs/SDL_image_frame.html
+			
