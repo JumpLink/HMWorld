@@ -7,9 +7,9 @@ SRCS          = main.vala scene.vala values.vala io.vala
 # ausfuehrbares Ziel
 TARGET        = hmp
 # Pakete
-PACKAGES      = gl glu glut
+PACKAGES      = gl glu glut sdl sdl-image
 # C-Compileranweisungen
-CFLAGS        = -lglut
+CFLAGS        = -lglut -lSDL_image
 
 # Quellverzeichnis
 SRC_DIR       = src/
@@ -34,6 +34,8 @@ SRC_FILES     = $(SRCS:%.vala=$(SRC_DIR)%.vala)
 TARGET_FILE   = $(TARGET:%=$(BIN_DIR)%)
 # Paketflags
 PKG_FLAGS     = $(PACKAGES:%=--pkg %)
+# C-Flags
+CC_FLAGS      = $(CFLAGS:%=-X %)
 
 # Targets
 
@@ -68,7 +70,7 @@ push: commit
 
 $(TARGET_FILE): $(SRC_FILES)
 	@echo "Compiling Binary..."
-	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) -X $(CFLAGS) $(SRC_FILES)
+	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES)
 
 ## * make clean: Raeumt die erzeugten Dateien auf
 clean:
