@@ -25,16 +25,7 @@ class Game {
 	//public signal void exit();
 	
 	bool mainloop () {
-		bool running = IO.initAndStart ("Titel", 640, 480);
-
-		IO.setProjection((double) 640/480);
-		// Main loop
-		while (running) {
-			IO.registerCallbacks ();
-		}
-
-		// Exit program
-		return true;
+		return IO.initAndStart ("Titel", 640, 480);
 	}
 
 	public static int main (string[] args) {
