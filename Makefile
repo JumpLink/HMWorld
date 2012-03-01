@@ -39,7 +39,7 @@ CC_FLAGS      = $(CFLAGS:%=-X %)
 
 # Targets
 
-.PHONY: all run dirs pull commit push help clean
+.PHONY: all run dirs pull commit commit-* push push-* help clean
 
 ## * make (all): Programm compilieren
 all: dirs $(TARGET_FILE)
@@ -69,6 +69,11 @@ commit-%:
 
 ## * make push: Committet und Pusht dann ins Launchpad-Repo
 push: commit
+	@echo "Pushing to Repository..."
+	@$(BZR) push $(BZR_REPO)
+	
+## * make push: Committet und Pusht dann ins Launchpad-Repo
+push-%: commit-%
 	@echo "Pushing to Repository..."
 	@$(BZR) push $(BZR_REPO)
 
