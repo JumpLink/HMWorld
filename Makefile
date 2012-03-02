@@ -3,7 +3,7 @@
 # Variablen und Flags
 
 # Quelldateien
-SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala map.vala layer.vala tile.vala entity.vala player.vala world.vala
+SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala map.vala layer.vala tile.vala entity.vala player.vala world.vala image.vala
 
 # ausfuehrbares Ziel
 TARGET        = hmp

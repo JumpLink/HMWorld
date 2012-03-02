@@ -4,13 +4,14 @@ using SDL;
 //TODO untested
 class Image {
 	Gdk.Pixbuf pixbuf;
-	public load_from_file (string filename) {
+	public void load_from_file (string filename) {
 		pixbuf = new Gdk.Pixbuf.from_file ("data/"+filename);
+		GLuint* texID;
 		
 		if (pixbuf != null)
 		{
-			glGenTextures(1, out texID);
-			glBindTexture(GL_TEXTURE_2D, texID[0]);
+			glGenTextures(1, texID);
+			glBindTexture(GL_TEXTURE_2D, &texID);
 
 			GLvoid[] v = new GLvoid[tex.w*tex.h*4];
 			v.insert_vals (0, tex.pixels, tex.w * tex.h * tex.format.BytesPerPixel);
@@ -22,5 +23,3 @@ class Image {
 		}
 	}
 }
-
-GLvoid *
