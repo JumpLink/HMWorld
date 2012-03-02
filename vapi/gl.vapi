@@ -9039,7 +9039,7 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glDeleteOcclusionQueriesNV")]
 	public static void glDeleteOcclusionQueriesNV (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] GL.GLuint[]? ids);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glDeletePerfMonitorsAMD")]
-	public static void glDeletePerfMonitorsAMD (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] monitors);
+	public static void glDeletePerfMonitorsAMD (GL.GLsizei n, GL.GLuint* monitors);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glDeleteProgram")]
 	public static void glDeleteProgram (GL.GLuint program);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glDeleteProgramPipelines")]
@@ -9429,60 +9429,60 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenAsyncMarkersSGIX")]
 	public static GL.GLuint glGenAsyncMarkersSGIX (GL.GLsizei range);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenBuffers")]
-	public static void glGenBuffers (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] buffers);
+	public static void glGenBuffers (GL.GLsizei n, GL.GLuint* buffers);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenBuffersARB")]
-	public static void glGenBuffersARB (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] buffers);
+	public static void glGenBuffersARB (GL.GLsizei n, GL.GLuint* buffers);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenFencesAPPLE")]
-	public static void glGenFencesAPPLE (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] fences);
+	public static void glGenFencesAPPLE (GL.GLsizei n, GL.GLuint* fences);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenFencesNV")]
-	public static void glGenFencesNV (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] fences);
+	public static void glGenFencesNV (GL.GLsizei n, GL.GLuint* fences);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenFragmentShadersATI")]
 	public static GL.GLuint glGenFragmentShadersATI (GL.GLuint range);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenFramebuffers")]
-	public static void glGenFramebuffers (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] framebuffers);
+	public static void glGenFramebuffers (GL.GLsizei n, GL.GLuint* framebuffers);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenFramebuffersEXT")]
-	public static void glGenFramebuffersEXT (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] framebuffers);
+	public static void glGenFramebuffersEXT (GL.GLsizei n, GL.GLuint* framebuffers);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenLists")]
 	public static GL.GLuint glGenLists (GL.GLsizei range);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenNamesAMD")]
-	public static void glGenNamesAMD (GL.GLenum identifier, GL.GLuint num, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] names);
+	public static void glGenNamesAMD (GL.GLenum identifier, GL.GLuint num, GL.GLuint* names);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenOcclusionQueriesNV")]
-	public static void glGenOcclusionQueriesNV (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] ids);
+	public static void glGenOcclusionQueriesNV (GL.GLsizei n, GL.GLuint* ids);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenPerfMonitorsAMD")]
-	public static void glGenPerfMonitorsAMD (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] monitors);
+	public static void glGenPerfMonitorsAMD (GL.GLsizei n, GL.GLuint* monitors);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenProgramPipelines")]
-	public static void glGenProgramPipelines (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] pipelines);
+	public static void glGenProgramPipelines (GL.GLsizei n, GL.GLuint* pipelines);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenProgramsARB")]
-	public static void glGenProgramsARB (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] programs);
+	public static void glGenProgramsARB (GL.GLsizei n, GL.GLuint* programs);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenProgramsNV")]
-	public static void glGenProgramsNV (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] programs);
+	public static void glGenProgramsNV (GL.GLsizei n, GL.GLuint* programs);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenQueries")]
-	public static void glGenQueries (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] ids);
+	public static void glGenQueries (GL.GLsizei n, GL.GLuint* ids);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenQueriesARB")]
-	public static void glGenQueriesARB (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] ids);
+	public static void glGenQueriesARB (GL.GLsizei n, GL.GLuint* ids);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenRenderbuffers")]
-	public static void glGenRenderbuffers (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] renderbuffers);
+	public static void glGenRenderbuffers (GL.GLsizei n, GL.GLuint* renderbuffers);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenRenderbuffersEXT")]
-	public static void glGenRenderbuffersEXT (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] renderbuffers);
+	public static void glGenRenderbuffersEXT (GL.GLsizei n, GL.GLuint* renderbuffers);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenSamplers")]
-	public static void glGenSamplers (GL.GLsizei count, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] samplers);
+	public static void glGenSamplers (GL.GLsizei count, GL.GLuint* samplers);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenSymbolsEXT")]
 	public static GL.GLuint glGenSymbolsEXT (GL.GLenum datatype, GL.GLenum storagetype, GL.GLenum range, GL.GLuint components);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenTextures")]
-	//public static void glGenTextures (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] textures);
+	//public static void glGenTextures (GL.GLsizei n, GL.GLuint* textures);
 	//public static void glGenTextures (GLsizei n, [CCode (array_length = false)] GLuint[] textures);
 	public static void glGenTextures (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] GL.GLuint* textures);
 	
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenTexturesEXT")]
-	public static void glGenTexturesEXT (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] textures);
+	public static void glGenTexturesEXT (GL.GLsizei n, GL.GLuint* textures);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenTransformFeedbacks")]
-	public static void glGenTransformFeedbacks (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] ids);
+	public static void glGenTransformFeedbacks (GL.GLsizei n, GL.GLuint* ids);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenTransformFeedbacksNV")]
-	public static void glGenTransformFeedbacksNV (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] ids);
+	public static void glGenTransformFeedbacksNV (GL.GLsizei n, GL.GLuint* ids);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenVertexArrays")]
-	public static void glGenVertexArrays (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] arrays);
+	public static void glGenVertexArrays (GL.GLsizei n, GL.GLuint* arrays);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenVertexArraysAPPLE")]
-	public static void glGenVertexArraysAPPLE (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] arrays);
+	public static void glGenVertexArraysAPPLE (GL.GLsizei n, GL.GLuint* arrays);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenVertexShadersEXT")]
 	public static GL.GLuint glGenVertexShadersEXT (GL.GLuint range);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenerateMipmap")]
@@ -9526,7 +9526,7 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetAttachedObjectsARB")]
 	public static void glGetAttachedObjectsARB (GL.GLhandleARB containerObj, GL.GLsizei maxCount, [CCode (array_length = false)] out unowned GL.GLsizei[] count, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLhandleARB[] obj);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetAttachedShaders")]
-	public static void glGetAttachedShaders (GL.GLuint program, GL.GLsizei maxCount, [CCode (array_length = false)] out unowned GL.GLsizei[] count, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] obj);
+	public static void glGetAttachedShaders (GL.GLuint program, GL.GLsizei maxCount, [CCode (array_length = false)] out unowned GL.GLsizei[] count, GL.GLuint* obj);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetAttribLocation")]
 	public static GL.GLint glGetAttribLocation (GL.GLuint program, [CCode (array_length = false, array_null_terminated = true)] GL.GLchar[]? name);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetAttribLocationARB")]
@@ -9604,9 +9604,9 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetConvolutionParameterivEXT")]
 	public static void glGetConvolutionParameterivEXT (GL.GLenum target, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLint[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetDebugMessageLogAMD")]
-	public static GL.GLuint glGetDebugMessageLogAMD (GL.GLuint count, GL.GLsizei bufsize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLenum[] categories, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] severities, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] ids, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLsizei[] lengths, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLchar[] message);
+	public static GL.GLuint glGetDebugMessageLogAMD (GL.GLuint count, GL.GLsizei bufsize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLenum[] categories, GL.GLuint* severities, GL.GLuint* ids, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLsizei[] lengths, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLchar[] message);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetDebugMessageLogARB")]
-	public static GL.GLuint glGetDebugMessageLogARB (GL.GLuint count, GL.GLsizei bufsize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLenum[] sources, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLenum[] types, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] ids, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLenum[] severities, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLsizei[] lengths, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLchar[] messageLog);
+	public static GL.GLuint glGetDebugMessageLogARB (GL.GLuint count, GL.GLsizei bufsize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLenum[] sources, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLenum[] types, GL.GLuint* ids, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLenum[] severities, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLsizei[] lengths, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLchar[] messageLog);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetDetailTexFuncSGIS")]
 	public static void glGetDetailTexFuncSGIS (GL.GLenum target, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLfloat[] points);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetDoubleIndexedvEXT")]
@@ -9762,7 +9762,7 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetMultiTexParameterIivEXT")]
 	public static void glGetMultiTexParameterIivEXT (GL.GLenum texunit, GL.GLenum target, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLint[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetMultiTexParameterIuivEXT")]
-	public static void glGetMultiTexParameterIuivEXT (GL.GLenum texunit, GL.GLenum target, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] @params);
+	public static void glGetMultiTexParameterIuivEXT (GL.GLenum texunit, GL.GLenum target, GL.GLenum pname, GL.GLuint* @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetMultiTexParameterfvEXT")]
 	public static void glGetMultiTexParameterfvEXT (GL.GLenum texunit, GL.GLenum target, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLfloat[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetMultiTexParameterivEXT")]
@@ -9812,23 +9812,23 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetOcclusionQueryivNV")]
 	public static void glGetOcclusionQueryivNV (GL.GLuint id, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLint[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetOcclusionQueryuivNV")]
-	public static void glGetOcclusionQueryuivNV (GL.GLuint id, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] @params);
+	public static void glGetOcclusionQueryuivNV (GL.GLuint id, GL.GLenum pname, GL.GLuint* @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetPerfMonitorCounterDataAMD")]
-	public static void glGetPerfMonitorCounterDataAMD (GL.GLuint monitor, GL.GLenum pname, GL.GLsizei dataSize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] data, [CCode (array_length = false)] out unowned GL.GLint[] bytesWritten);
+	public static void glGetPerfMonitorCounterDataAMD (GL.GLuint monitor, GL.GLenum pname, GL.GLsizei dataSize, GL.GLuint* data, [CCode (array_length = false)] out unowned GL.GLint[] bytesWritten);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetPerfMonitorCounterInfoAMD")]
 	public static void glGetPerfMonitorCounterInfoAMD (GL.GLuint group, GL.GLuint counter, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLvoid[] data);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetPerfMonitorCounterStringAMD")]
 	public static void glGetPerfMonitorCounterStringAMD (GL.GLuint group, GL.GLuint counter, GL.GLsizei bufSize, [CCode (array_length = false)] out unowned GL.GLsizei[] length, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLchar[] counterString);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetPerfMonitorCountersAMD")]
-	public static void glGetPerfMonitorCountersAMD (GL.GLuint group, [CCode (array_length = false)] out unowned GL.GLint[] numCounters, [CCode (array_length = false)] out unowned GL.GLint[] maxActiveCounters, GL.GLsizei counterSize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] counters);
+	public static void glGetPerfMonitorCountersAMD (GL.GLuint group, [CCode (array_length = false)] out unowned GL.GLint[] numCounters, [CCode (array_length = false)] out unowned GL.GLint[] maxActiveCounters, GL.GLsizei counterSize, GL.GLuint* counters);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetPerfMonitorGroupStringAMD")]
 	public static void glGetPerfMonitorGroupStringAMD (GL.GLuint group, GL.GLsizei bufSize, [CCode (array_length = false)] out unowned GL.GLsizei[] length, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLchar[] groupString);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetPerfMonitorGroupsAMD")]
-	public static void glGetPerfMonitorGroupsAMD ([CCode (array_length = false)] out unowned GL.GLint[] numGroups, GL.GLsizei groupsSize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] groups);
+	public static void glGetPerfMonitorGroupsAMD ([CCode (array_length = false)] out unowned GL.GLint[] numGroups, GL.GLsizei groupsSize, GL.GLuint* groups);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetPixelMapfv")]
 	public static void glGetPixelMapfv (GL.GLenum map, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLfloat[] values);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetPixelMapuiv")]
-	public static void glGetPixelMapuiv (GL.GLenum map, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] values);
+	public static void glGetPixelMapuiv (GL.GLenum map, GL.GLuint* values);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetPixelMapusv")]
 	public static void glGetPixelMapusv (GL.GLenum map, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLushort[] values);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetPixelTexGenParameterfvSGIS")]
@@ -9882,7 +9882,7 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetProgramStringNV")]
 	public static void glGetProgramStringNV (GL.GLuint id, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLubyte[] program);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetProgramSubroutineParameteruivNV")]
-	public static void glGetProgramSubroutineParameteruivNV (GL.GLenum target, GL.GLuint index, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] param);
+	public static void glGetProgramSubroutineParameteruivNV (GL.GLenum target, GL.GLuint index, GL.GLuint* param);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetProgramiv")]
 	public static void glGetProgramiv (GL.GLuint program, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLint[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetProgramivARB")]
@@ -9904,9 +9904,9 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetQueryObjectui64vEXT")]
 	public static void glGetQueryObjectui64vEXT (GL.GLuint id, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint64EXT[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetQueryObjectuiv")]
-	public static void glGetQueryObjectuiv (GL.GLuint id, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] @params);
+	public static void glGetQueryObjectuiv (GL.GLuint id, GL.GLenum pname, GL.GLuint* @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetQueryObjectuivARB")]
-	public static void glGetQueryObjectuivARB (GL.GLuint id, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] @params);
+	public static void glGetQueryObjectuivARB (GL.GLuint id, GL.GLenum pname, GL.GLuint* @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetQueryiv")]
 	public static void glGetQueryiv (GL.GLenum target, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLint[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetQueryivARB")]
@@ -9918,7 +9918,7 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetSamplerParameterIiv")]
 	public static void glGetSamplerParameterIiv (GL.GLuint sampler, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLint[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetSamplerParameterIuiv")]
-	public static void glGetSamplerParameterIuiv (GL.GLuint sampler, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] @params);
+	public static void glGetSamplerParameterIuiv (GL.GLuint sampler, GL.GLenum pname, GL.GLuint* @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetSamplerParameterfv")]
 	public static void glGetSamplerParameterfv (GL.GLuint sampler, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLfloat[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetSamplerParameteriv")]
@@ -9976,9 +9976,9 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetTexParameterIivEXT")]
 	public static void glGetTexParameterIivEXT (GL.GLenum target, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLint[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetTexParameterIuiv")]
-	public static void glGetTexParameterIuiv (GL.GLenum target, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] @params);
+	public static void glGetTexParameterIuiv (GL.GLenum target, GL.GLenum pname, GL.GLuint* @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetTexParameterIuivEXT")]
-	public static void glGetTexParameterIuivEXT (GL.GLenum target, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] @params);
+	public static void glGetTexParameterIuivEXT (GL.GLenum target, GL.GLenum pname, GL.GLuint* @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetTexParameterPointervAPPLE")]
 	public static void glGetTexParameterPointervAPPLE (GL.GLenum target, GL.GLenum pname, [CCode (array_length = false)] out unowned GL.GLvoid[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetTexParameterfv")]
@@ -9994,7 +9994,7 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetTextureParameterIivEXT")]
 	public static void glGetTextureParameterIivEXT (GL.GLuint texture, GL.GLenum target, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLint[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetTextureParameterIuivEXT")]
-	public static void glGetTextureParameterIuivEXT (GL.GLuint texture, GL.GLenum target, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] @params);
+	public static void glGetTextureParameterIuivEXT (GL.GLuint texture, GL.GLenum target, GL.GLenum pname, GL.GLuint* @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetTextureParameterfvEXT")]
 	public static void glGetTextureParameterfvEXT (GL.GLuint texture, GL.GLenum target, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLfloat[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetTextureParameterivEXT")]
@@ -10012,7 +10012,7 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetUniformBufferSizeEXT")]
 	public static GL.GLint glGetUniformBufferSizeEXT (GL.GLuint program, GL.GLint location);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetUniformIndices")]
-	public static void glGetUniformIndices (GL.GLuint program, GL.GLsizei uniformCount, [CCode (array_length = false, array_null_terminated = true)] GL.GLchar[]? uniformNames, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] uniformIndices);
+	public static void glGetUniformIndices (GL.GLuint program, GL.GLsizei uniformCount, [CCode (array_length = false, array_null_terminated = true)] GL.GLchar[]? uniformNames, GL.GLuint* uniformIndices);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetUniformLocation")]
 	public static GL.GLint glGetUniformLocation (GL.GLuint program, [CCode (array_length = false, array_null_terminated = true)] GL.GLchar[]? name);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetUniformLocationARB")]
@@ -10036,9 +10036,9 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetUniformui64vNV")]
 	public static void glGetUniformui64vNV (GL.GLuint program, GL.GLint location, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint64EXT[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetUniformuiv")]
-	public static void glGetUniformuiv (GL.GLuint program, GL.GLint location, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] @params);
+	public static void glGetUniformuiv (GL.GLuint program, GL.GLint location, GL.GLuint* @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetUniformuivEXT")]
-	public static void glGetUniformuivEXT (GL.GLuint program, GL.GLint location, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] @params);
+	public static void glGetUniformuivEXT (GL.GLuint program, GL.GLint location, GL.GLuint* @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetVariantArrayObjectfvATI")]
 	public static void glGetVariantArrayObjectfvATI (GL.GLuint id, GL.GLenum pname, [CCode (array_length = false)] out unowned GL.GLfloat[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetVariantArrayObjectivATI")]
@@ -10112,7 +10112,7 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetVideoui64vNV")]
 	public static void glGetVideoui64vNV (GL.GLuint video_slot, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint64EXT[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetVideouivNV")]
-	public static void glGetVideouivNV (GL.GLuint video_slot, GL.GLenum pname, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] @params);
+	public static void glGetVideouivNV (GL.GLuint video_slot, GL.GLenum pname, GL.GLuint* @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetnColorTableARB")]
 	public static void glGetnColorTableARB (GL.GLenum target, GL.GLenum format, GL.GLenum type, GL.GLsizei bufSize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLvoid[] table);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetnCompressedTexImageARB")]
@@ -10132,7 +10132,7 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetnPixelMapfvARB")]
 	public static void glGetnPixelMapfvARB (GL.GLenum map, GL.GLsizei bufSize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLfloat[] values);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetnPixelMapuivARB")]
-	public static void glGetnPixelMapuivARB (GL.GLenum map, GL.GLsizei bufSize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] values);
+	public static void glGetnPixelMapuivARB (GL.GLenum map, GL.GLsizei bufSize, GL.GLuint* values);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetnPixelMapusvARB")]
 	public static void glGetnPixelMapusvARB (GL.GLenum map, GL.GLsizei bufSize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLushort[] values);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetnPolygonStippleARB")]
@@ -10148,7 +10148,7 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetnUniformivARB")]
 	public static void glGetnUniformivARB (GL.GLuint program, GL.GLint location, GL.GLsizei bufSize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLint[] @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGetnUniformuivARB")]
-	public static void glGetnUniformuivARB (GL.GLuint program, GL.GLint location, GL.GLsizei bufSize, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] @params);
+	public static void glGetnUniformuivARB (GL.GLuint program, GL.GLint location, GL.GLsizei bufSize, GL.GLuint* @params);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGlobalAlphaFactorbSUN")]
 	public static void glGlobalAlphaFactorbSUN (GL.GLbyte factor);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGlobalAlphaFactordSUN")]
@@ -11570,9 +11570,9 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glSecondaryColorPointerListIBM")]
 	public static void glSecondaryColorPointerListIBM (GL.GLint size, GL.GLenum type, GL.GLint stride, [CCode (array_length = false, array_null_terminated = true)] GL.GLvoid[]? pointer, GL.GLint ptrstride);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glSelectBuffer")]
-	public static void glSelectBuffer (GL.GLsizei size, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] buffer);
+	public static void glSelectBuffer (GL.GLsizei size, GL.GLuint* buffer);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glSelectPerfMonitorCountersAMD")]
-	public static void glSelectPerfMonitorCountersAMD (GL.GLuint monitor, GL.GLboolean enable, GL.GLuint group, GL.GLint numCounters, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] counterList);
+	public static void glSelectPerfMonitorCountersAMD (GL.GLuint monitor, GL.GLboolean enable, GL.GLuint group, GL.GLint numCounters, GL.GLuint* counterList);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glSeparableFilter2D")]
 	public static void glSeparableFilter2D (GL.GLenum target, GL.GLenum internalformat, GL.GLsizei width, GL.GLsizei height, GL.GLenum format, GL.GLenum type, [CCode (array_length = false, array_null_terminated = true)] GL.GLvoid[]? row, [CCode (array_length = false, array_null_terminated = true)] GL.GLvoid[]? column);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glSeparableFilter2DEXT")]
