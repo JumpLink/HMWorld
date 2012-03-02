@@ -3,7 +3,8 @@
 # Variablen und Flags
 
 # Quelldateien
-SRCS          = main.vala scene.vala values.vala io.vala #image.vala
+SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala map.vala layer.vala tile.vala entity.vala player.vala world.vala
+
 # ausfuehrbares Ziel
 TARGET        = hmp
 # Pakete
@@ -57,7 +58,7 @@ dirs:
 ## * make pull: Aktuelle Version ziehen
 pull:
 	@echo "Pulling from Repository..."
-	@$(BZR) pull
+	@$(BZR) pull $(BZR_REPO)
 
 ## * make commit: Committet die Aenderungen, falls kompiliert werden kann
 commit:
