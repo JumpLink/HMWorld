@@ -3,7 +3,7 @@
 # Variablen und Flags
 
 # Quelldateien
-SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala map.vala layer.vala tile.vala entity.vala player.vala world.vala texture.vala image.vala
+SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala map.vala layer.vala tile.vala entity.vala player.vala world.vala texture.vala
 
 # ausfuehrbares Ziel
 TARGET        = hmp
@@ -85,8 +85,8 @@ $(TARGET_FILE): $(SRC_FILES)
 ## * make clean: Raeumt die erzeugten Dateien auf
 clean:
 	@echo "Cleaning up..."
-	@rm -r $(BIN_DIR)
-	@rm -r $(SRC_DIR)*.c
+	@rm -rf $(BIN_DIR)
+	@rm -rf $(SRC_DIR)*.c
 
 ## * make help: Diese Hilfe anzeigen
 help:

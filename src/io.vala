@@ -21,8 +21,7 @@ using SDL;
 using SDLImage;
 
 class IOlong {
-	//Texture t = new Texture();
-	Image t = new Image();
+	Texture t = new Texture();
 	/**
 	 * Setzen der Projektionsmatrix.
 	 * Setzt die Projektionsmatrix fuer die Szene.
@@ -255,7 +254,7 @@ class IOlong {
 			//initLogic ();
 			/* Szene initialisieren */
 			if (Scene.init ()) {
-				t.loadFromFile();
+				t.loadFromFile("./data/Stadt - Sommer.png");
 				/* Callbacks registrieren */
 				registerCallbacks ();
 				/* Eintritt in die Ereignisschleife */

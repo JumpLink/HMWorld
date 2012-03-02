@@ -17,11 +17,45 @@
 using SDL;
 using SDLImage;
 using GL;
+using Gdk;
 
 public class Texture {
 	GLuint* texID = new GLuint[10];
 
-	public void loadFromFile() {
+	public void loadFromFile(string filename) {
+		loadFromFileWithGdk(filename);
+	}
+	
+	public void loadFromFileWithGdk(string filename) {
+		Pixbuf tex = new Pixbuf.from_file (filename);
+
+		GLenum texture_format;
+		
+		if(tex.colorspace == Colorspace.RGB)
+			if (tex.get_has_alpha())
+				texture_format = GL_RGBA;
+				//texture_format = GL_BGRA;
+			else
+				texture_format = GL_RGB;
+				//texture_format = GL_BGR;
+		else {
+			texture_format = 0;
+			print("warning: the image is not truecolor..  this will probably break\n");
+		}
+
+		if (tex != null)
+		{
+			glGenTextures(1, texID);
+			glBindTexture(GL_TEXTURE_2D, texID[0]);
+
+			glTexImage2D(GL_TEXTURE_2D, 0, 3, tex.width, tex.height, 0, texture_format, GL_UNSIGNED_BYTE, tex.get_pixels());
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		}
+	}
+	
+	public void loadFromFileWithSdl(string filename) {
 		RWops png_dir = new SDL.RWops.from_file("./data/Stadt - Sommer.png", "rb");
 		var tex = SDLImage.load_png(png_dir);
 
