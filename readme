@@ -20,4 +20,7 @@ Dokumentations
 	SDL-Image
 		http://unstable.valadoc.org/#!wiki=sdl-image/index
 		http://www.libsdl.org/projects/SDL_image/docs/SDL_image_frame.html
+	Cogl
+		http://unstable.valadoc.org/#!api=cogl-1.0/Cogl
+		http://docs.clutter-project.org/docs/cogl/stable/
 			

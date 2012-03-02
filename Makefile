@@ -3,7 +3,7 @@
 # Variablen und Flags
 
 # Quelldateien
-SRCS          = main.vala scene.vala values.vala io.vala image.vala
+SRCS          = main.vala scene.vala values.vala io.vala #image.vala
 # ausfuehrbares Ziel
 TARGET        = hmp
 # Pakete
