@@ -9469,7 +9469,10 @@ namespace GL {
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenSymbolsEXT")]
 	public static GL.GLuint glGenSymbolsEXT (GL.GLenum datatype, GL.GLenum storagetype, GL.GLenum range, GL.GLuint components);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenTextures")]
-	public static void glGenTextures (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] textures);
+	//public static void glGenTextures (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] textures);
+	//public static void glGenTextures (GLsizei n, [CCode (array_length = false)] GLuint[] textures);
+	public static void glGenTextures (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint* textures);
+	
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenTexturesEXT")]
 	public static void glGenTexturesEXT (GL.GLsizei n, [CCode (array_length = false, array_null_terminated = true)] out unowned GL.GLuint[] textures);
 	[CCode (cheader_filename = "GL/gl.h", cname = "glGenTransformFeedbacks")]
