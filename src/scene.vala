@@ -40,7 +40,6 @@ namespace Scene {
 		/*glCullFace (GL_BACK);
 		glEnable (GL_CULL_FACE);*/
 		
-		//nur um sdl zu testen
 		glEnable(GL_TEXTURE_2D);
 
 		/* Alles in Ordnung? */

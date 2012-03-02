@@ -21,7 +21,8 @@ using SDL;
 using SDLImage;
 
 class IOlong {
-	Texture t = new Texture();
+	//Texture t = new Texture();
+	Image t = new Image();
 	/**
 	 * Setzen der Projektionsmatrix.
 	 * Setzt die Projektionsmatrix fuer die Szene.

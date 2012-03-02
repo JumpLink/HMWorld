@@ -25,4 +25,11 @@ Dokumentations
 		http://docs.clutter-project.org/docs/cogl/stable/
 		
 # To compile this software install the following dependencies on Ubuntu 11.10
-# sudo apt-get install valac freeglut3 freeglut3-dev libxi-dev libxi6 libxmu-dev libxi6 libxmu-dev libxmu6 libsdl1.2debian-all libsdl1.2-dev libsdl-image1.2-dev libsdl-image1.2 gee-1.0 libgee-dev gobject-introspection
+	# General
+		# sudo apt-get install valac freeglut3 freeglut3-dev libxi-dev libxi6 libxmu-dev libxi6 libxmu-dev libxmu6
+	# SDL
+		# sudo apt-get install libsdl1.2debian-all libsdl1.2-dev libsdl-image1.2-dev libsdl-image1.2
+	# Gdk
+		# sudo apt-get install libgdk-pixbuf2.0-0 libgdk-pixbuf2.0-dev
+	# To generate vapis
+		# sudo apt-get install gee-1.0 libgee-dev gobject-introspection ..unvollsteanding
