@@ -17,7 +17,7 @@ class Game {
 	//public signal void exit();
 	
 	bool mainloop () {
-		return IO.initAndStart ("Titel", 640, 480);
+		return new IOlong().initAndStart ("Titel", 640, 480);
 	}
 
 	public static int main (string[] args) {

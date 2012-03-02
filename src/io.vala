@@ -20,8 +20,8 @@ using GLUT;
 using SDL;
 using SDLImage;
 
-namespace IO {
-
+class IOlong {
+	Texture t = new Texture();
 	/**
 	 * Setzen der Projektionsmatrix.
 	 * Setzt die Projektionsmatrix fuer die Szene.
@@ -87,9 +87,13 @@ namespace IO {
 		/* Szene zeichnen */
 		// OpenGL rendering goes here...
 		    glBegin (GL_QUADS);
+			glTexCoord2f(0,0);
 		        glVertex3f ( -1.0f,  1.0f, 0.0f);
+			glTexCoord2f(1,0);
 		        glVertex3f (  1.0f,  1.0f, 0.0f);
+			glTexCoord2f(1,1);
 		        glVertex3f (  1.0f, -1.0f, 0.0f);
+			glTexCoord2f(0,1);
 		        glVertex3f ( -1.0f, -1.0f, 0.0f);
 		    glEnd ();
 
@@ -216,7 +220,7 @@ namespace IO {
 	 * @param height Hoehe des Fensters
 	 * @return ID des erzeugten Fensters, false im Fehlerfall
 	 */
-	bool initAndStart (string title, int width, int height)
+	public bool initAndStart (string title, int width, int height)
 	{
 		int windowID = 0;
 		/* Kommandozeile immitieren */
@@ -237,7 +241,7 @@ namespace IO {
 			print("Unable to initialize SDL: %s\n", SDL.get_error());
 			return true;
 		}
-		if (SDLImage.init(SDLImage.InitFlags.PNG) != 0) {
+		if (SDLImage.init(0) != 0) {
 			print("Unable to initialize SDL-Image: %s\n", SDLImage.get_error());
 			return true;
 		}
@@ -250,6 +254,7 @@ namespace IO {
 			//initLogic ();
 			/* Szene initialisieren */
 			if (Scene.init ()) {
+				t.loadFromFile();
 				/* Callbacks registrieren */
 				registerCallbacks ();
 				/* Eintritt in die Ereignisschleife */

@@ -19,21 +19,41 @@ using SDLImage;
 using GL;
 
 public class Texture {
-	GLuint[] texID;
+	GLuint* texID = new GLuint[10];
 
-	void load_from_file() {
+	public void loadFromFile() {
 		RWops png_dir = new SDL.RWops.from_file("./data/Stadt - Sommer.png", "rb");
-		Surface tex = SDLImage.load_png(png_dir);
+		var tex = SDLImage.load_png(png_dir);
+
+		GLenum texture_format;
+
+		// get the number of channels in the SDL surface
+		switch (tex.format.BytesPerPixel) {
+			case 4:	// with alpha channel
+				    if (tex.format.Rmask == 0x000000ff)
+				            texture_format = GL_RGBA;
+				    else
+				            texture_format = GL_BGRA;
+			break;
+			case 3:     // no alpha channel
+				    if (tex.format.Rmask == 0x000000ff)
+				            texture_format = GL_RGB;
+				    else
+				            texture_format = GL_BGR;
+			break;
+			default:
+				texture_format = 0;
+			    print("warning: the image is not truecolor..  this will probably break\n");
+			    // this error should not go unhandled
+			break;
+		}
 
 		if (tex != null)
 		{
-			glGenTextures(1, out texID);
+			glGenTextures(1, texID);
 			glBindTexture(GL_TEXTURE_2D, texID[0]);
 
-			GLvoid[] v = new GLvoid[tex.w*tex.h*4];
-			v.insert_vals (0, tex.pixels, tex.w * tex.h * tex.format.BytesPerPixel);
-
-			glTexImage2D(GL_TEXTURE_2D, 0, 3, tex.w, tex.h, 0, GL_BGR, GL_UNSIGNED_BYTE, v);
+			glTexImage2D(GL_TEXTURE_2D, 0, 3, tex.w, tex.h, 0, texture_format, GL_UNSIGNED_BYTE, tex.pixels);
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

@@ -3,12 +3,12 @@
 # Variablen und Flags
 
 # Quelldateien
-SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala map.vala layer.vala tile.vala entity.vala player.vala world.vala image.vala
+SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala map.vala layer.vala tile.vala entity.vala player.vala world.vala texture.vala
 
 # ausfuehrbares Ziel
 TARGET        = hmp
 # Pakete
-PACKAGES      = gl glu glut sdl sdl-image
+PACKAGES      = gl glu glut sdl sdl-image cairo
 # C-Compileranweisungen
 CFLAGS        = -lglut -lSDL_image
 
@@ -86,6 +86,7 @@ $(TARGET_FILE): $(SRC_FILES)
 clean:
 	@echo "Cleaning up..."
 	@rm -r $(BIN_DIR)
+	@rm -r $(SRC_DIR)*.c
 
 ## * make help: Diese Hilfe anzeigen
 help:
