@@ -14,12 +14,34 @@
  *	Patrick König <knuffi@gmail.com>
  */
 
-const int TIMER_CALLS_PS = 60;
-/** Keycode der ESC-Taste */
-const int ESC = 27;
+/**
+ * Klasse fuer SpriteSets
+ */
+public class SpriteSet {
 
-/** Szenenhintergrundfarbe */
-const GL.GLclampf colBG[] = {0.6f, 0.6f, 1.0f, 0.0f};
-/** Benamsung der Farbindizes */
-enum ColorIndex { R=0, G=1, B=2, A=3 }
+	/**
+	 * Struktur fuer TileSets
+	 */
+	public struct Data {
+		/** Name des TileSets. */
+		public string name;
+	}
 
+	//SpriteSet.Data data;
+	/** Array fuer die einzelnen Tiles */	
+	private Sprite[,] sprites;
+
+	/**
+	 * Konstruktor
+	 */
+	public SpriteSet() {
+		getSpriteSetFromFile ("foobar");
+		//tiles = new Tile[,];
+	}
+	
+	public void getSpriteSetFromFile(string path) {
+	
+		var xml = new HMPXml ();
+		var data = xml.getSpriteSetDataFromFile(path);
+	}
+}

@@ -15,43 +15,54 @@
  */
 
 /**
- * Klasse fuer Maps
+ * Klasse fuer TileSets
  */
-public class Map {
+public class TileSet {
 
 	/**
-	 * Struktur fuer Maps
+	 * Struktur fuer TileSets
 	 */
 	public struct Data {
-		/** Name der Map. */
+		/** Name des TileSets. */
 		public string name;
 		/** Breite eines Tiles */
 		public uint tilewidth;
 		/** Hoehe eines Tiles */
 		public uint tileheight;
-		/** Name des TileSets */
+		/** Dateiname des TileSets */
 		public string source;
 		/** Transparente Farbe im TileSet */
 		public string trans;
-		/** Gesamtbreite der Map */
+		/** Gesamtbreite des TileSets */
 		public uint width;
-		/** Gesamthoehe der Map */
+		/** Gesamthoehe des TileSets */
 		public uint height;
 	}
 
-	/** Name der Map. */
-	public Data data = Data();
-	/** Layer der Map. */
-	public List<Layer> layers;
-	/** Entities auf der Map */
-	public List<Entity> entities;
+	TileSet.Data data;
+	/** Array fuer die einzelnen Tiles */	
+	private Tile[,]	 tiles;
 
 	/**
 	 * Konstruktor
 	 */
-	public Map() {
-		data.name = "new Map";
-		layers = new List<Layer>();
-		entities = new List<Entity>();
+	public TileSet() {
+		//tiles = new Tile[,];
+	}
+	
+	public void loadTileSetFromFile(string path) {
+	
+		var xml = new HMPXml ();
+		data = xml.getTileSetDataFromFile(path);
+	}
+	
+	public void printValues() {
+		print("name: %s\n", data.name);
+		print("tilewidth: %u", data.tilewidth);
+		print("tileheight: %u", data.tileheight);
+		print("source: %s\n", data.source);
+		print("trans: %s\n", data.trans);
+		print("width: %u", data.width);
+		print("height: %u", data.height);
 	}
 }

@@ -3,12 +3,12 @@
 # Variablen und Flags
 
 # Quelldateien
-SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala map.vala layer.vala tile.vala entity.vala player.vala world.vala texture.vala
+SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala map.vala layer.vala tile.vala entity.vala player.vala world.vala texture.vala xml.vala tileset.vala spriteset.vala sprite.vala
 
 # ausfuehrbares Ziel
 TARGET        = hmp
 # Pakete
-PACKAGES      = gl glu glut sdl sdl-image cairo gdk-x11-2.0
+PACKAGES      = gl glu glut sdl sdl-image cairo gdk-x11-2.0 libxml-2.0 gee-1.0
 # C-Compileranweisungen
 CFLAGS        = -lglut -lSDL_image
 
@@ -37,6 +37,9 @@ TARGET_FILE   = $(TARGET:%=$(BIN_DIR)%)
 PKG_FLAGS     = $(PACKAGES:%=--pkg %)
 # C-Flags
 CC_FLAGS      = $(CFLAGS:%=-X %)
+# Alle Kombilerobtionen
+COMP		  = $(-o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES))
+
 
 # Targets
 
@@ -81,6 +84,10 @@ push-%: commit-%
 $(TARGET_FILE): $(SRC_FILES)
 	@echo "Compiling Binary..."
 	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES)
+	
+c: dirs $(SRC_FILES)
+	@echo "Compiling Binary..."
+	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) -C
 
 ## * make clean: Raeumt die erzeugten Dateien auf
 clean:

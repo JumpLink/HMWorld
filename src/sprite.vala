@@ -14,12 +14,17 @@
  *	Patrick König <knuffi@gmail.com>
  */
 
-const int TIMER_CALLS_PS = 60;
-/** Keycode der ESC-Taste */
-const int ESC = 27;
+/**
+ * Allgemeine Klasse fuer Tiles
+ */
+public class Sprite {
+	/** Spritetyp */
+	public uint type;
 
-/** Szenenhintergrundfarbe */
-const GL.GLclampf colBG[] = {0.6f, 0.6f, 1.0f, 0.0f};
-/** Benamsung der Farbindizes */
-enum ColorIndex { R=0, G=1, B=2, A=3 }
-
+	/**
+	 * Konstruktor 
+	 */
+	public Sprite() {
+		type = 0;
+	}
+}

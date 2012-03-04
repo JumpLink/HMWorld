@@ -15,21 +15,23 @@ Author:
 
 Dokumentations
 	SDL
-		http://unstable.valadoc.org/#!wiki=sdl/index
-		http://www.libsdl.org/docs/html/
+		vala: http://unstable.valadoc.org/#!wiki=sdl/index
+		original: http://www.libsdl.org/docs/html/
 	SDL-Image
-		http://unstable.valadoc.org/#!wiki=sdl-image/index
-		http://www.libsdl.org/projects/SDL_image/docs/SDL_image_frame.html
+		vala: http://unstable.valadoc.org/#!wiki=sdl-image/index
+		original: http://www.libsdl.org/projects/SDL_image/docs/SDL_image_frame.html
 	Cogl
-		http://unstable.valadoc.org/#!api=cogl-1.0/Cogl
-		http://docs.clutter-project.org/docs/cogl/stable/
+		vala: http://unstable.valadoc.org/#!api=cogl-1.0/Cogl
+		original: http://docs.clutter-project.org/docs/cogl/stable/
 		
-# To compile this software install the following dependencies on Ubuntu 11.10
-	# General
-		# sudo apt-get install valac freeglut3 freeglut3-dev libxi-dev libxi6 libxmu-dev libxi6 libxmu-dev libxmu6
-	# SDL
-		# sudo apt-get install libsdl1.2debian-all libsdl1.2-dev libsdl-image1.2-dev libsdl-image1.2
-	# Gdk
-		# sudo apt-get install libgdk-pixbuf2.0-0 libgdk-pixbuf2.0-dev
-	# To generate vapis
-		# sudo apt-get install gee-1.0 libgee-dev gobject-introspection ..unvollsteanding
+To compile this software install the following dependencies on Ubuntu 11.10
+	OpenGL
+		sudo apt-get install valac freeglut3 freeglut3-dev libxi-dev libxi6 libxmu-dev libxi6 libxmu-dev libxmu6
+	SDL
+		sudo apt-get install libsdl1.2debian-all libsdl1.2-dev libsdl-image1.2-dev libsdl-image1.2
+	Gdk
+		sudo apt-get install libgdk-pixbuf2.0-0 libgdk-pixbuf2.0-dev
+	XML
+		sudo apt-get install libxml2 libxml2-dev
+	To generate vapis
+		sudo apt-get install gee-1.0 libgee-dev gobject-introspection ..unvollsteanding

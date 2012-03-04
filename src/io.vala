@@ -142,6 +142,7 @@ class IOlong {
 					case ESC:
 						//cleanupLogic();
 						//exit (0);
+						//TODO Callback für beenden einrichten
 						print("Jetzt sollte egtl. das Programm beendet werden..");
 						break;
 				}
@@ -255,6 +256,8 @@ class IOlong {
 			/* Szene initialisieren */
 			if (Scene.init ()) {
 				t.loadFromFile("./data/Stadt - Sommer.png");
+				//var tileset = new TileSet();
+				//tileset.loadTileSetFromFile("./data/Stadt - Sommer.tsx");
 				/* Callbacks registrieren */
 				registerCallbacks ();
 				/* Eintritt in die Ereignisschleife */

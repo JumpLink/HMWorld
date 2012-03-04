@@ -22,12 +22,12 @@ using Gdk;
 public class Texture {
 	GLuint* texID = new GLuint[10];
 
-	public void loadFromFile(string filename) {
-		loadFromFileWithGdk(filename);
+	public void loadFromFile(string path) {
+		loadFromFileWithGdk(path);
 	}
 	
-	public void loadFromFileWithGdk(string filename) {
-		Pixbuf tex = new Pixbuf.from_file (filename);
+	public void loadFromFileWithGdk(string path) {
+		Pixbuf tex = new Pixbuf.from_file (path);
 
 		GLenum texture_format;
 		
@@ -55,8 +55,8 @@ public class Texture {
 		}
 	}
 	
-	public void loadFromFileWithSdl(string filename) {
-		RWops png_dir = new SDL.RWops.from_file("./data/Stadt - Sommer.png", "rb");
+	public void loadFromFileWithSdl(string path) {
+		RWops png_dir = new SDL.RWops.from_file(path, "rb");
 		var tex = SDLImage.load_png(png_dir);
 
 		GLenum texture_format;
