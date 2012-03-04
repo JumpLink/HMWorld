@@ -35,17 +35,55 @@ public class Vector {
 		this.dim = dim;
 		this.vec = new double[dim];
 	}
+	 
+	public Vector addVector (Vector v) {
+		if (dim == v.dim)
+			for (int i = 0; i < dim; ++i)
+				vec[i] += v.vec[i];
+		return this;
+	}
 	
-	/* Rechenoperationen */
-	/* TODO:
-	 * Addition
-	 * Punktprodukt
-	 * Kreuzprodukt
-	 * Division durch Skalar
-	 * Multiplikation mit Skalar
-	 * Normalisieren
-	 * Laenge bestimmen
-	 */
+	public double ScalarProduct (Vector v) {
+		double r = 0.0;
+		if (dim == v.dim)
+			for (int i = 0; i < dim; ++i)
+				r += vec[i] * v.vec[i];
+		return r;
+	}
+	
+	public Vector VectorProduct (Vector v) {
+		Vector r = new Vector (dim);
+		if (dim == 3 && v.dim == 3) {
+			r.vec[0] = vec[1] * v.vec[2] - vec[2] * v.vec[1];
+			r.vec[1] = vec[2] * v.vec[0] - vec[0] * v.vec[2];
+			r.vec[2] = vec[0] * v.vec[1] - vec[1] * v.vec[0];
+		}
+		return r;
+	}
+	
+	public Vector divideByScalar (double s) {
+		if (s != 0.0)
+			for (int i = 0; i < dim; ++i)
+				vec[i] /= s;
+		return this;
+	}
+	
+	public Vector multScalar (double s) {
+		for (int i = 0; i < dim; ++i)
+			vec[i] *= s;
+		return this;
+	}
+	
+	public double VectorNorm () {
+		double r = 0.0;
+		for (int i = 0; i < dim; ++i)
+			r += vec[i] * vec[i];
+		return Math.sqrt (r);
+	}
+	
+	public Vector normVector () {
+		return divideByScalar (VectorNorm ());	
+	}
 	
 	public Vector multMatrix(Matrix m, Vector v) {
 		for (int i = 0; i < dim; ++i) {
