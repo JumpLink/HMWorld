@@ -115,7 +115,7 @@ class IOlong {
 
 		/* Anpassen der Projektionsmatrix an das Seitenverhältnis des Fensters */
 		setProjection ((double) w / (double) h);
-		print("test!");
+		print("- Fensterinhalt nach groesse angepasst -");
 	}
 
 	/**
@@ -256,8 +256,8 @@ class IOlong {
 			/* Szene initialisieren */
 			if (Scene.init ()) {
 				t.loadFromFile("./data/Stadt - Sommer.png");
-				//var tileset = new TileSet();
-				//tileset.loadTileSetFromFile("./data/Stadt - Sommer.tsx");
+				var tileset = new TileSet();
+				tileset.loadTileSetFromFile("./data/Stadt - Sommer.tsx");
 				/* Callbacks registrieren */
 				registerCallbacks ();
 				/* Eintritt in die Ereignisschleife */

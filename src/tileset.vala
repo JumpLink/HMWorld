@@ -47,22 +47,29 @@ public class TileSet {
 	 * Konstruktor
 	 */
 	public TileSet() {
+		print("Erstelle TileSet\n");
 		//tiles = new Tile[,];
 	}
-	
+	/**
+	 * Dekonstruktor
+	 */
+	~TileSet() {
+		print("Lösche TileSet\n");
+	}
 	public void loadTileSetFromFile(string path) {
 	
 		var xml = new HMPXml ();
 		data = xml.getTileSetDataFromFile(path);
+		printValues();
 	}
 	
 	public void printValues() {
 		print("name: %s\n", data.name);
-		print("tilewidth: %u", data.tilewidth);
-		print("tileheight: %u", data.tileheight);
+		print("tilewidth: %u\n", data.tilewidth);
+		print("tileheight: %u\n", data.tileheight);
 		print("source: %s\n", data.source);
 		print("trans: %s\n", data.trans);
-		print("width: %u", data.width);
-		print("height: %u", data.height);
+		print("width: %u\n", data.width);
+		print("height: %u\n", data.height);
 	}
 }

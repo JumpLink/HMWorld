@@ -28,33 +28,33 @@ class HMPXml {
     // Line indentation
     private int indent = 0;
     
-    // Um die Werte aus der XML zu speichern
-    Gee.HashMap<string, Gee.HashMap<string, string>> nodes;
-    Gee.HashMap<string, string>[] properties;
-     
-    
     /**
      * Konstrukter
      */
     public HMPXml() {
+    	//print("Erstelle HMPXml-Klasse\n");
     	// Initialisation, not instantiation since the parser is a static class
     	Parser.init ();
     	
     	// Beispiel
-		string simple_xml = HMPXml.create_simple_xml ();
-		print ("Simple XML is:\n%s\n", simple_xml);
+		//string simple_xml = HMPXml.create_simple_xml ();
+		//print ("Simple XML is:\n%s\n", simple_xml);
     }
     
     /**
      * Dekonstrukter
      */
-     ~HMPXml() {
+    ~HMPXml() {
+     	//print("Loesche HMPXml-Klasse\n");
 		// Do the parser cleanup to free the used memory
 		Parser.cleanup ();
     }
 
 	/**
-	 * 
+	 * Gibt einen Wert der XML aus
+	 * @param node Nodename
+	 * @param content Wert vom Nodename
+	 * @param token Wert der der Ausgabe vorangestellt wird
 	 */
     private void print_indent (string node, string content, char token = '+') {
         string indent = string.nfill (this.indent * 2, ' ');
@@ -62,68 +62,78 @@ class HMPXml {
     }
     
 	/**
+	 * Läd die Werte einer TileSet-XML.tsx
 	 * 
+	 * @param path Pfad mit Dateiname der auszulesenden XML
+	 * @return struct TileSet.Data mit den gespeicherten Werten
 	 */
     public TileSet.Data getTileSetDataFromFile (string path) {
+    	//print("\tFuehre getTileSetDataFromFile aus\n");
+    	
 		TileSet.Data data = TileSet.Data();
-    	properties = new Gee.HashMap<string, string>[2];
-		nodes = new Gee.HashMap<string, Gee.HashMap<string, string>>();
-    	nodes.set ("tileset", properties[0]);
-    	nodes.set ("image", properties[1]);
-
+    	Gee.HashMap<string, string> tileset_global_properties = new Gee.HashMap<string, string>();
+    	Gee.HashMap<string, string> tileset_image_properties = new Gee.HashMap<string, string>();
 		
-     	nodes.get("tileset").set ("name", "");
-    	nodes.get("tileset").set ("tilewidth", "");
-    	nodes.get("tileset").set ("tileheight", "");
+    	parse_file (path, tileset_global_properties, tileset_image_properties);
     	
-    	nodes.get("image").set ("source", "");
-    	nodes.get("image").set ("trans", "");
-    	nodes.get("image").set ("width", "");
-    	nodes.get("image").set ("height", "");
-
-    	parse_file (path);
+    	/* Ausgabe der Werte der Maps
+    	foreach (var entry in tileset_global_properties.entries) {
+        	print ("%s => %s\n", entry.key, entry.value);
+    	}
+    	foreach (var entry in tileset_image_properties.entries) {
+        	print ("%s => %s\n", entry.key, entry.value);
+    	}
+    	*/
     	
-    	data.name = nodes.get("tileset").get ("name");
-    	data.tilewidth = (uint) nodes.get("tileset").get ("tilewidth");
-    	data.tileheight = (uint) nodes.get("tileset").get ("tileheight");
-    	data.source = nodes.get("tileset").get ("source");
-    	data.trans = nodes.get("tileset").get ("trans");
-    	data.width = (uint) nodes.get("tileset").get ("width");
-    	data.height = (uint) nodes.get("tileset").get ("height");
+    	// Zuweisung der geparsten Werte
+    	data.name = (string) tileset_global_properties.get ("name");
+    	data.tilewidth = (uint) tileset_global_properties.get ("tilewidth").to_int();
+    	data.tileheight = (uint) tileset_global_properties.get ("tileheight").to_int();
+    	
+    	data.source = (string) tileset_image_properties.get ("source");
+    	data.trans = (string) tileset_image_properties.get ("trans");
+    	data.width = (uint) tileset_image_properties.get ("width").to_int();
+    	data.height = (uint) tileset_image_properties.get ("height").to_int();
     	
     	return data;
     }
 
 	/**
+	 * Läd die Werte einer SpriteSet-XML
 	 * 
+	 * @param path Pfad mit Dateiname der auszulesenden XML
+	 * @return struct SpriteSet.Data mit den gespeicherten Werten
 	 */
     public SpriteSet.Data getSpriteSetDataFromFile (string path) {
 		SpriteSet.Data data = SpriteSet.Data();
-		//data.name = "test";
-		parse_file (path);
+		//parse_file (path, ...);
     	
     	return data;
     }
 
 	/**
+	 * Läd die Werte einer Map-XML
 	 * 
+	 * @param path Pfad mit Dateiname der auszulesenden XML
+	 * @return struct Map.Data mit den gespeicherten Werten
 	 */
     public Map.Data getMapDataFromFile  (string path) {
 		Map.Data data = Map.Data();
-		data.name = "test";
-		parse_file (path);
-    	
+		/*data.name = "test";
+		parse_file (path, ...);
+    	*/
     	return data;
     }
 
 	/**
-	 * 
+	 * Hilfsfunktion welche eine XML auslesen kann
 	 */
-    private void parse_file (string path) {
+    private void parse_file (string path, Gee.HashMap<string, string> tileset_global_properties, Gee.HashMap<string, string> tileset_image_properties) {
+    	//print("\tbeginne Datei zu parsen\n");
         // Parse the document from path
         Xml.Doc* doc = Parser.parse_file (path);
         if (doc == null) {
-            print ("File %s not found or permissions missing", path);
+            error ("File %s not found or permissions missing", path);
             return;
         }
 
@@ -141,16 +151,23 @@ class HMPXml {
         // Print the root node's name
         print_indent ("Root node", root->name);
         
-        foreach (string key in nodes.keys) {
-        	// Prüfe ob root bereits eines der gesuchten Nodes beinhaltet
-			if (root->name == key) {
-				// root beinhaltet eines der gesuchten Nodes, lese dessen properties aus
-				parse_properties (root, key);
-			}
-        }
+    	// Prüfe ob root bereits eines der gesuchten Nodes beinhaltet
+		switch (root->name) {
+			case "tileset":
+				//print("\t%s in root gefunden\n",root->name);
+				parse_properties (root, tileset_global_properties);
+			break;
+			case "image":
+				//print("\t%s in root gefunden\n",root->name);
+				parse_properties (root, tileset_image_properties);
+			break;
+			default:
+				print("Keine passende Node gefunden!\n");
+			break;
+		}
         
         // Let's parse those nodes
-        parse_node (root);
+        parse_node (root, tileset_global_properties, tileset_image_properties);
 
         // Free the document
         delete doc;
@@ -159,7 +176,8 @@ class HMPXml {
 	/**
 	 * 
 	 */
-    private void parse_node (Xml.Node* node) {
+    private void parse_node (Xml.Node* node, Gee.HashMap<string, string> tileset_global_properties, Gee.HashMap<string, string> tileset_image_properties) {
+    	//print("\tbeginne Node zu parsen\n");
         this.indent++;
         // Loop over the passed node's children
         for (Xml.Node* iter = node->children; iter != null; iter = iter->next) {
@@ -174,16 +192,23 @@ class HMPXml {
             string node_content = iter->get_content ();
             print_indent (node_name, node_content);
 		    
-		    foreach (string key in nodes.keys) {
-		    	// Prüfe ob root bereits eines der gesuchten Nodes beinhaltet
-				if (node->name == key) {
-					// root beinhaltet eines der gesuchten Nodes, lese dessen properties aus
-					parse_properties (node, key);
-				}
-		    }
+			// Prüfe ob node eines der gesuchten Nodes beinhaltet
+			switch (iter->name) {
+				case "tileset":
+					//print("\t%s in node gefunden\n",iter->name);
+					parse_properties (iter, tileset_global_properties);
+				break;
+				case "image":
+					//print("\t%s in node gefunden\n",iter->name);
+					parse_properties (iter, tileset_image_properties);
+				break;
+				default:
+					print("\tKeine (weiteren) passende Nodes gefunden!\n");
+				break;
+			}
         
             // Followed by its children nodes
-            parse_node (iter);
+            parse_node (iter, tileset_global_properties, tileset_image_properties);
         }
         this.indent--;
     }
@@ -191,7 +216,9 @@ class HMPXml {
 	/**
 	 * 
 	 */
-    private void parse_properties (Xml.Node* node, string nodename) {
+    private void parse_properties (Xml.Node* node, Gee.HashMap<string, string> properties) {
+    	//print("\tbeginne Werte zu parsen\n");
+    	bool found = false;
         // Loop over the passed node's properties (attributes)
         for (Xml.Attr* prop = node->properties; prop != null; prop = prop->next) {
             string attr_name = prop->name;
@@ -199,15 +226,8 @@ class HMPXml {
             // (Attr doesn't feature content)
             string attr_content = prop->children->content;
 
-			// ist eines der gesuchten Werte im Node enthalten, prüfe mit jedem
-			foreach (string k in nodes.get(nodename).keys) {
-				// ein propertie enthalten, speichere es
-				if (k == attr_name) {
-					nodes.get(nodename)[k] = (prop->children->content).to_string ();
-				}
-			}
-		
-            print_indent (attr_name, attr_content, '|');
+			print_indent (attr_name, attr_content, '|');
+			properties.set(attr_name, attr_content);
         }
     }
 
