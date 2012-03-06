@@ -15,18 +15,28 @@
  */
 
 /**
- * Allgemeine Klasse fuer Tiles
+ * Klasse fuer unterteilte Tiles
  */
-public abstract class Tile {
-	/** Tiletyp */
-	public uint type;
+	public class SplitTile : Tile {
+		/** Einzelteile */
+		public SubTile[] subTiles;
 
-	/**
-	 * Konstruktor 
-	 */
-	public Tile() {
-		type = 0;
-	}
+		/**
+		 * Konstruktor 
+		 */
+		public SplitTile () {
+			subTiles = new SubTile [4];
+			foreach (SubTile s in subTiles)
+				s = new SubTile ();
+		}
 
-	public abstract void calcEdges (uint[] neighbours);
+		public void calcEdges (uint[] neighbours) {
+			assert (neighbours.length == 8);
+			uint[] n = new uint[3];
+			for (uint s = 0; s < 4; ++s) {
+				for (t = 0; t < 3; ++t)
+					n[t] = neighbours[(2 * s + t) % 8];
+				subTiles[s].calcEdge (n, type, s);
+			}
+		}
 }
