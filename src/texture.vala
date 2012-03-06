@@ -49,17 +49,7 @@ public class Texture {
 			texture_format = 0;
 			print("warning: the image is not truecolor..  this will probably break\n");
 		}
-
-		if (tex != null)
-		{
-			glGenTextures(1, texID);
-			glBindTexture(GL_TEXTURE_2D, texID[0]);
-
-			glTexImage2D(GL_TEXTURE_2D, 0, 3, tex.width, tex.height, 0, texture_format, GL_UNSIGNED_BYTE, tex.get_pixels());
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		}
+		bindTexture (texID, tex.width, tex.height, texture_format, tex.get_pixels());
 	}
 	
 	public void loadFromFileWithSdl(string path) {
@@ -89,12 +79,16 @@ public class Texture {
 			break;
 		}
 
-		if (tex != null)
+		bindTexture (texID, tex.w, tex.h, texture_format, tex.pixels);
+	}
+
+	public void bindTexture (GL.GLuint* texID, GL.GLsizei width, GL.GLsizei height, GLenum texture_format, void* pixels) {
+		if (width > 0 && height > 0)
 		{
 			glGenTextures(1, texID);
 			glBindTexture(GL_TEXTURE_2D, texID[0]);
 
-			glTexImage2D(GL_TEXTURE_2D, 0, 3, tex.w, tex.h, 0, texture_format, GL_UNSIGNED_BYTE, tex.pixels);
+			glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, texture_format, GL_UNSIGNED_BYTE, pixels);
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
