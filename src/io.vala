@@ -256,8 +256,10 @@ class IOlong {
 			/* Szene initialisieren */
 			if (Scene.init ()) {
 				t.loadFromFile("./data/tileset/Stadt - Sommer.png");
-				var tileset = new TileSet();
-				tileset.loadTileSetFromFile("./data//tileset/Stadt - Sommer.tsx");
+				//var tileset = new TileSet();
+				//tileset.loadTileSetFromFile("./data/tileset/Stadt - Sommer.tsx");
+				TileSetManager tm = new TileSetManager();
+				tm.loadAllTileSetsFromPath("./data/tileset/");
 				/* Callbacks registrieren */
 				registerCallbacks ();
 				/* Eintritt in die Ereignisschleife */
