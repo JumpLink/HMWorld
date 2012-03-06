@@ -15,7 +15,7 @@
  */
 
  public class SubTile {
- 	public EdgeShape edge;
+ 	EdgeShape edge;
 
  	public SubTile () {
  		edge = EdgeShape.FULL;

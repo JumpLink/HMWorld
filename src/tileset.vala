@@ -15,6 +15,7 @@
  */
 using Xml;
 using Gee;
+using Gdk;
 /**
  * Klasse fuer TileSets
  */
@@ -184,6 +185,7 @@ public class TileSet {
 	}
 
 	TileSet.Data data;
+	Tile[,] tile;
 	/** Array fuer die einzelnen Tiles */	
 	//private Tile[,]	 tiles;
 
@@ -206,6 +208,53 @@ public class TileSet {
 		data = xml.getDataFromFile(path);
 		printValues();
 	}
+
+	public string getSource() {
+		return data.source;
+	}
+
+	public uint getTotalWidth() {
+		return data.width;
+	}
+
+	public uint getTotalHeight() {
+		return data.height;
+	}
+
+	public uint getTileWidth() {
+		return data.tilewidth;
+	}
+
+	public uint getTileHeight() {
+		return data.tileheight;
+	}
+	public uint getCountY() {
+		return (int) getTotalWidth() / getTileWidth();
+	}
+
+	public uint getCountX() {
+		return (int) getTotalHeight() / getTileHeight();
+	}
+
+	private void loadTiles() {
+		Texture tex = new Texture();
+		tex.loadFromFile(getSource());
+		int count_y = (int) getCountY;
+		int count_x = (int) getCountX;
+		int split_width = (int) getTileWidth();
+		int split_height = (int) getTileHeight();
+		Tile[,] tile = new Tile[getCountY(),getCountX()];
+		Pixbuf pxb = tex.get_Pixbuf();
+		Pixbuf split = null;
+
+		for(int y = 0; y < count_y; y++) {
+			for(int x = 0; x < count_x; x++) {
+				pxb.copy_area((int) (split_width*getCountY()), (int) split_height*count_x, (int) split_width, (int) split_height, split, 0, 0);
+				tile[y,x] = new RegularTile.FromPixbuf(split);
+			}
+		}
+	}
+
 	/**
 	 * Gibt alle Werte des TileSets auf der Konsole aus
 	 */

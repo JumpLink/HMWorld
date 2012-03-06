@@ -30,11 +30,11 @@
 				s = new SubTile ();
 		}
 
-		public void calcEdges (uint[] neighbours) {
+		public override void calcEdges (uint[] neighbours) {
 			assert (neighbours.length == 8);
 			uint[] n = new uint[3];
 			for (uint s = 0; s < 4; ++s) {
-				for (t = 0; t < 3; ++t)
+				for (uint t = 0; t < 3; ++t)
 					n[t] = neighbours[(2 * s + t) % 8];
 				subTiles[s].calcEdge (n, type, s);
 			}

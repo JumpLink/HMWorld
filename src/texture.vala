@@ -14,8 +14,8 @@
  *	Patrick König <knuffi@gmail.com>
  */
 
-using SDL;
-using SDLImage;
+//using SDL;
+//using SDLImage;
 using GL;
 using Gdk;
 using GLib;
@@ -52,40 +52,6 @@ public class Texture {
 			print("warning: the image is not truecolor..  this will probably break\n");
 		}
 	}
-	/*
-	public void loadFromFileWithSdl(string path) {
-		RWops png_dir = new SDL.RWops.from_file(path, "rb");
-		var tex = SDLImage.load_png(png_dir);
-
-		GLenum texture_format;
-
-		// get the number of channels in the SDL surface
-		switch (tex.format.BytesPerPixel) {
-			case 4:	// with alpha channel
-				    if (tex.format.Rmask == 0x000000ff)
-				            texture_format = GL_RGBA;
-				    else
-				            texture_format = GL_BGRA;
-			break;
-			case 3:     // no alpha channel
-				    if (tex.format.Rmask == 0x000000ff)
-				            texture_format = GL_RGB;
-				    else
-				            texture_format = GL_BGR;
-			break;
-			default:
-				texture_format = 0;
-			    print("warning: the image is not truecolor..  this will probably break\n");
-			    // this error should not go unhandled
-			break;
-		}
-
-		this.width = tex.w;
-		this.height = tex.h;
-		bpp = tex.format.BytesPerPixel;
-		//this.pixels.set_size(width*height*bpp);
-		this.pixbuf = new Pixbuf((Colorspace colorspace, bool has_alpha, int bits_per_sample, int width, int height tex.pixels;
-	}*/
 
 	public void bindTexture () {
 		if (get_width() > 0 && get_height() > 0)
@@ -100,27 +66,37 @@ public class Texture {
 		}
 	}
 
-	public int get_width() {
-		return pixbuf.get_width();
+	public uint get_width() {
+		return this.pixbuf.get_width();
 	}
 
-	public int get_height() {
-		return pixbuf.get_height();
+	public uint get_height() {
+		return this.pixbuf.get_height();
 	}
 
 	public void* get_pixels() {
-		return pixbuf.get_pixels();
+		return this.pixbuf.get_pixels();
 	}
-/*
-	public Gdk.Pixbuf SDLSurfaceToGdkPixbuf (SDL.Surface s) {
 
-	}*/
+	public bool has_alpha() {
+		return this.pixbuf.get_has_alpha();
+	}
 
-	/*
-	public SDL.Surface GdkPixbufToSDLSurface (Gdk.Pixbuf p) {
-		p.get_pixels(), p.get_width(), p.height(), 8*bpp, get_byte_length ()
-		//depth = depth bits per pixel
-		// Pitch is the size of the scanline of the surface, in bytes, i.e. widthInPixels*bytesPerPixel.
-		return Surface.from_RGB(void* pixels, int width, int height, int depth, int pitch, uint32 rmask, uint32 gmask, uint32 bmask, uint32 amask)
-	}*/
+	public Colorspace get_colorspace() {
+		return this.pixbuf.get_colorspace();
+	}
+
+	public Pixbuf get_Pixbuf() {
+		return this.pixbuf;
+	}
+
+	public Pixbuf[,] createSplits(int split_width, int split_height, int count_y, int count_x) {
+		Pixbuf[,] splits = new Pixbuf[count_y,count_x];
+		for(int y = 0; y < count_y; y++) {
+			for(int x = 0; x < count_x; x++) {
+				pixbuf.copy_area(split_width*count_y, split_height*count_x, split_width, split_height, splits[y,x], 0, 0);
+			}
+		}
+		return splits;
+	}
 }

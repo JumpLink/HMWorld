@@ -13,20 +13,23 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-
+using Gdk;
 /**
  * Klasse fuer nicht unterteilte Tiles
  */
-	public class regularTile : Tile {
-
+	public class RegularTile : Tile {
+		Gdk.Pixbuf pixbuf;
 		/**
 		 * Konstruktor 
 		 */
-		public regularTile () {
-			super ();
+		public RegularTile () {
+
+		}
+		public RegularTile.FromPixbuf (Pixbuf pixbuf) {
+			this.pixbuf = pixbuf;
 		}
 
-		public void calcEdges (uint[] neighbours) {
+		public override void calcEdges (uint[] neighbours) {
 			//nichts
 		}
 }
