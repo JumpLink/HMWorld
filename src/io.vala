@@ -256,6 +256,7 @@ class IOlong {
 			/* Szene initialisieren */
 			if (Scene.init ()) {
 				t.loadFromFile("./data/tileset/Stadt - Sommer.png");
+				t.bindTexture ();
 				TileSetManager tm = new TileSetManager();
 				tm.loadAllFromPath("./data/tileset/");
 				/* Callbacks registrieren */

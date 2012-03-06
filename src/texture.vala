@@ -18,40 +18,41 @@ using SDL;
 using SDLImage;
 using GL;
 using Gdk;
+using GLib;
 
 public class Texture {
 	GLuint* texID = new GLuint[10];
+	GLenum texture_format;
+	Gdk.Pixbuf pixbuf;
 
 	public void loadFromFile(string path) {
 		loadFromFileWithGdk(path);
 	}
 	
 	public void loadFromFileWithGdk(string path) {
-		Pixbuf tex;
  		try {
-			tex = new Pixbuf.from_file (path);
+			pixbuf = new Pixbuf.from_file (path);
 		}
 		catch (GLib.Error e) {
 			//GLib.error("", e.message);
 			GLib.error("%s konnte nicht geladen werden", path);
 		}
-
-		GLenum texture_format;
 		
-		if(tex.colorspace == Colorspace.RGB)
-			if (tex.get_has_alpha())
+		if(pixbuf.colorspace == Colorspace.RGB)
+			if (pixbuf.get_has_alpha()) {
 				texture_format = GL_RGBA;
 				//texture_format = GL_BGRA;
-			else
+			}
+			else {
 				texture_format = GL_RGB;
 				//texture_format = GL_BGR;
+			}
 		else {
 			texture_format = 0;
 			print("warning: the image is not truecolor..  this will probably break\n");
 		}
-		bindTexture (texID, tex.width, tex.height, texture_format, tex.get_pixels());
 	}
-	
+	/*
 	public void loadFromFileWithSdl(string path) {
 		RWops png_dir = new SDL.RWops.from_file(path, "rb");
 		var tex = SDLImage.load_png(png_dir);
@@ -79,19 +80,47 @@ public class Texture {
 			break;
 		}
 
-		bindTexture (texID, tex.w, tex.h, texture_format, tex.pixels);
-	}
+		this.width = tex.w;
+		this.height = tex.h;
+		bpp = tex.format.BytesPerPixel;
+		//this.pixels.set_size(width*height*bpp);
+		this.pixbuf = new Pixbuf((Colorspace colorspace, bool has_alpha, int bits_per_sample, int width, int height tex.pixels;
+	}*/
 
-	public void bindTexture (GL.GLuint* texID, GL.GLsizei width, GL.GLsizei height, GLenum texture_format, void* pixels) {
-		if (width > 0 && height > 0)
+	public void bindTexture () {
+		if (get_width() > 0 && get_height() > 0)
 		{
 			glGenTextures(1, texID);
 			glBindTexture(GL_TEXTURE_2D, texID[0]);
 
-			glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, texture_format, GL_UNSIGNED_BYTE, pixels);
+			glTexImage2D(GL_TEXTURE_2D, 0, 3, (GL.GLsizei) get_width(), (GL.GLsizei) get_height(), 0, texture_format, GL_UNSIGNED_BYTE, get_pixels());
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		}
 	}
+
+	public int get_width() {
+		return pixbuf.get_width();
+	}
+
+	public int get_height() {
+		return pixbuf.get_height();
+	}
+
+	public void* get_pixels() {
+		return pixbuf.get_pixels();
+	}
+/*
+	public Gdk.Pixbuf SDLSurfaceToGdkPixbuf (SDL.Surface s) {
+
+	}*/
+
+	/*
+	public SDL.Surface GdkPixbufToSDLSurface (Gdk.Pixbuf p) {
+		p.get_pixels(), p.get_width(), p.height(), 8*bpp, get_byte_length ()
+		//depth = depth bits per pixel
+		// Pitch is the size of the scanline of the surface, in bytes, i.e. widthInPixels*bytesPerPixel.
+		return Surface.from_RGB(void* pixels, int width, int height, int depth, int pitch, uint32 rmask, uint32 gmask, uint32 bmask, uint32 amask)
+	}*/
 }
