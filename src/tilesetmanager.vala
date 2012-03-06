@@ -20,12 +20,13 @@ using GLib;
  */
 public class TileSetManager {
 	Gee.List<TileSet> tileset;
+	string path;
 	/**
 	 * Konstruktor
 	 */
 	public TileSetManager() {
 		print("Erstelle TileSet\n");
-		//tileset = Gee.List<TileSet>();
+		tileset = new Gee.ArrayList<TileSet>();
 	}
 	/**
 	 * Dekonstruktor
@@ -33,16 +34,19 @@ public class TileSetManager {
 	~TileSetManager() {
 		print("Lösche TileSet\n");
 	}
-	public void loadAllTileSetsFromPath(string path = "./data/tileset") {
-		File directory = File.new_for_path("./data/tileset");
+
+	public void loadAllFromPath(string path = "./data/tileset") {
+		this.path = path;
+		File directory = File.new_for_path(path);
 		FileEnumerator enumerator;
 	
 	    try {
 	    	FileInfo file_info;
+	    	// 'Oeffnet' das Verzeichnis path
 	        directory = File.new_for_path (path);
-
+	        // Ladet die Dateien die sich im Verzeichnis path befinden
 	        enumerator = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0);
-
+	        // Durchläuft alle gefundenen Dateien und werte desen Informationen zur Weiterverarbeitung aus
 	        while ((file_info = enumerator.next_file ()) != null) {
 	        	string filename = file_info.get_name ();
 	        	string extension;
@@ -54,8 +58,8 @@ public class TileSetManager {
 	        	print ("extension: %s\n", extension);
 	            if (extension == ".tsx") {
 	            	TileSet tmptileset = new TileSet();
-	            	tmptileset.loadTileSetFromFile(path+filename);
-	            	//tileset.add(tmptileset); //TODO funktioniert nicht
+	            	tmptileset.loadFromPath(path+filename);
+	            	tileset.add(tmptileset);
 	            }
 	        }
 
@@ -65,18 +69,21 @@ public class TileSetManager {
 	    }
 	}
 
-	public TileSet getTileSetFromList(string source) {
-
+	public TileSet get(string name) {
+		foreach (TileSet ts in tileset)
+				if (ts.getName() == name)
+					return ts;
 		return new TileSet();
 	}
-	public TileSet getTileSetFromPath(string source) {
 
-		return new TileSet();
+	public TileSet loadFromPath(string filename) {
+
+		return loadFromPath(path+filename);
 	}
 
-	public void printAllTileSets() {
-		foreach (TileSet i in tileset) {
-				i.printValues ();
+	public void printAll() {
+		foreach (TileSet ts in tileset) {
+				ts.printValues ();
     	}
 	}
 }

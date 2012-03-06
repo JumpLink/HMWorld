@@ -200,13 +200,15 @@ public class TileSet {
 	~TileSet() {
 		print("Lösche TileSet Objekt\n");
 	}
-	public void loadTileSetFromFile(string path) {
+	public void loadFromPath(string path) {
 	
 		var xml = new XML ();
 		data = xml.getDataFromFile(path);
 		printValues();
 	}
-	
+	/**
+	 * Gibt alle Werte des TileSets auf der Konsole aus
+	 */
 	public void printValues() {
 		print("name: %s\n", data.name);
 		print("tilewidth: %u\n", data.tilewidth);
@@ -215,5 +217,12 @@ public class TileSet {
 		print("trans: %s\n", data.trans);
 		print("width: %u\n", data.width);
 		print("height: %u\n", data.height);
+	}
+	/**
+	 * Gibt den Namen des TileSets zurück
+	 * @return Name des TileSets
+	 */
+	public string getName() {
+		return data.name;
 	}
 }
