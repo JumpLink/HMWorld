@@ -18,8 +18,18 @@ const int TIMER_CALLS_PS = 60;
 /** Keycode der ESC-Taste */
 const int ESC = 27;
 
+const uint EMPTY_TILE = 42;
+
 /** Szenenhintergrundfarbe */
 const GL.GLclampf colBG[] = {0.6f, 0.6f, 1.0f, 0.0f};
 /** Benamsung der Farbindizes */
 enum ColorIndex { R=0, G=1, B=2, A=3 }
+
+enum EdgeShape {
+	FULL,
+	OUTER_CORNER,
+	INNER_CORNER,
+	V_LINE,
+	H_LINE
+}
 

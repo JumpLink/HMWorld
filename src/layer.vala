@@ -23,9 +23,9 @@ public class Layer {
 	/** z-offset zum Zeichnen dieses Layers */
 	public double zoff;
 	/** Breite des Layers */
-	public int sizeX;
+	public uint sizeX;
 	/** Hoehe des Layers */
-	public int sizeY;
+	public uint sizeY;
 	/** Tiles des Layers */
 	public Tile[,] tiles;
 
@@ -60,5 +60,21 @@ public class Layer {
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		tiles = new Tile[sizeX, sizeY];
+	}
+
+	public void calcEdges () {
+		uint[] neighbours = new uint[8];
+		for (uint r = 0; r < sizeY; ++r)
+			for (uint c = 0; c < sizeX; ++c) {
+				neighbours[0] = ( c != 0 ) ? tiles[c - 1, r].type : EMPTY_TILE;
+				neighbours[1] = (c != 0 && r != 0 ) ? tiles[c - 1, r - 1].type : EMPTY_TILE;
+				neighbours[2] = ( r != 0 ) ? tiles[c, r - 1].type : EMPTY_TILE;
+				neighbours[3] = ( r != 0 && c < sizeX ) ? tiles[c + 1, r - 1].type : EMPTY_TILE;
+				neighbours[4] = ( c < sizeX ) ? tiles[c + 1, r].type : EMPTY_TILE;
+				neighbours[5] = ( r < sizeY && c < sizeX ) ? tiles[c + 1, r + 1].type : EMPTY_TILE;
+				neighbours[6] = ( r < sizeY ) ? tiles[c, r + 1].type : EMPTY_TILE;
+				neighbours[7] = ( r < sizeY && c != 0 ) ? tiles[c - 1, r + 1].type : EMPTY_TILE;
+				tiles[c, r].calcEdges(neighbours);
+			}
 	}
 }

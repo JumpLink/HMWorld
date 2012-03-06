@@ -15,18 +15,18 @@
  */
 
 /**
- * Allgemeine Klasse fuer Tiles
+ * Klasse fuer nicht unterteilte Tiles
  */
-public abstract class Tile {
-	/** Tiletyp */
-	public uint type;
+	public class regularTile : Tile {
 
-	/**
-	 * Konstruktor 
-	 */
-	public Tile() {
-		type = 0;
-	}
+		/**
+		 * Konstruktor 
+		 */
+		public regularTile () {
+			super ();
+		}
 
-	public abstract void calcEdges (uint[] neighbours);
+		public void calcEdges (uint[] neighbours) {
+			//nichts
+		}
 }
