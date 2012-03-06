@@ -27,7 +27,14 @@ public class Texture {
 	}
 	
 	public void loadFromFileWithGdk(string path) {
-		Pixbuf tex = new Pixbuf.from_file (path);
+		Pixbuf tex;
+ 		try {
+			tex = new Pixbuf.from_file (path);
+		}
+		catch (GLib.Error e) {
+			//GLib.error("", e.message);
+			GLib.error("%s konnte nicht geladen werden", path);
+		}
 
 		GLenum texture_format;
 		
