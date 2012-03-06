@@ -13,22 +13,22 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-
+using Gee;
 /**
  * Klasse fuer die gesamte Welt
  */
 public class World {
 	/** Maps der Welt */
-	public List<Map> maps;
+	public Gee.List<Map> maps;
 	/** Spieler in der Welt */
-	public List<Player> players;
+	public Gee.List<Player> players;
 	/* TODO Datum, Zeit, Wetter, ... */
 
 	/**
 	 * Konstruktor
 	 */
 	public World() {
-		maps = new List<Map>();
-		players = new List<Player>();
+		//maps = new List<Map>();
+		//players = new List<Player>();
 	}
 }

@@ -40,15 +40,6 @@ public class TileSet {
 			
 	    	parse_file (path, tileset_global_properties, tileset_image_properties);
 	    	
-	    	/* Ausgabe der Werte der Maps
-	    	foreach (var entry in tileset_global_properties.entries) {
-	        	print ("%s => %s\n", entry.key, entry.value);
-	    	}
-	    	foreach (var entry in tileset_image_properties.entries) {
-	        	print ("%s => %s\n", entry.key, entry.value);
-	    	}
-	    	*/
-	    	
 	    	// Zuweisung der geparsten Werte
 	    	data.name = (string) tileset_global_properties.get ("name");
 	    	data.tilewidth = int.parse(tileset_global_properties.get ("tilewidth"));
@@ -200,14 +191,14 @@ public class TileSet {
 	 * Konstruktor
 	 */
 	public TileSet() {
-		print("Erstelle TileSet\n");
+		print("Erstelle TileSet Objekt\n");
 		//tiles = new Tile[,];
 	}
 	/**
 	 * Dekonstruktor
 	 */
 	~TileSet() {
-		print("Lösche TileSet\n");
+		print("Lösche TileSet Objekt\n");
 	}
 	public void loadTileSetFromFile(string path) {
 	

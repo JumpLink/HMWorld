@@ -3,12 +3,12 @@
 # Variablen und Flags
 
 # Quelldateien
-SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala map.vala layer.vala tile.vala entity.vala player.vala world.vala texture.vala tileset.vala xml.vala #spriteset.vala sprite.vala
+SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala layer.vala tile.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala xml.vala tilesetmanager.vala #spriteset.vala sprite.vala
 
 # ausfuehrbares Ziel
 TARGET        = hmp
 # Pakete
-PACKAGES      = gl glu glut sdl sdl-image cairo gdk-x11-2.0 libxml-2.0 gee-1.0
+PACKAGES      = gl glu glut sdl sdl-image cairo gdk-x11-2.0 libxml-2.0 gee-1.0 gio-2.0
 # C-Compileranweisungen
 CFLAGS        = -lglut -lSDL_image
 
