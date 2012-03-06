@@ -25,7 +25,7 @@ public class TileSetManager {
 	 */
 	public TileSetManager() {
 		print("Erstelle TileSet\n");
-		//tileset = new List<TileSet>();
+		//tileset = Gee.List<TileSet>();
 	}
 	/**
 	 * Dekonstruktor
@@ -33,23 +33,30 @@ public class TileSetManager {
 	~TileSetManager() {
 		print("Lösche TileSet\n");
 	}
-	public void loadAllTileSetsFromPath(string path) {
+	public void loadAllTileSetsFromPath(string path = "./data/tileset") {
 		File directory = File.new_for_path("./data/tileset");
 		FileEnumerator enumerator;
 	
 	    try {
 	    	FileInfo file_info;
-	        directory = File.new_for_path ("./data/tileset");
+	        directory = File.new_for_path (path);
 
 	        enumerator = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0);
 
 	        while ((file_info = enumerator.next_file ()) != null) {
-	        	print ("%s\n", file_info.get_name ());
-	        	print ("Content type: %s\n", file_info.get_content_type ());
-	            //TileSet tmptileset = new TileSet();
-	            //if (file_info.get_content_type () == ".t")
-	            //tmptileset.loadTileSetFromFile(file_info.get_name ());
-	            //tileset.add(tmptileset);
+	        	string filename = file_info.get_name ();
+	        	string extension;
+
+	        	print ("%s\n", filename);
+	        	//print ("Content type: %s\n", file_info.get_content_type ());
+	        	//extrahiert die Dateiendung
+	        	extension = filename.substring(filename.last_index_of (".", 0), -1);
+	        	print ("extension: %s\n", extension);
+	            if (extension == ".tsx") {
+	            	TileSet tmptileset = new TileSet();
+	            	tmptileset.loadTileSetFromFile(path+filename);
+	            	//tileset.add(tmptileset); //TODO funktioniert nicht
+	            }
 	        }
 
 	    } catch (Error e) {

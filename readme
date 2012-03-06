@@ -23,8 +23,22 @@ Dokumentations
 	Cogl
 		vala: http://unstable.valadoc.org/#!api=cogl-1.0/Cogl
 		original: http://docs.clutter-project.org/docs/cogl/stable/
+	Gee
+		vala, original: http://unstable.valadoc.org/#!wiki=gee-0.8/index
+		Samples: https://live.gnome.org/Vala/GeeSamples
+	GIO
+		vala: http://unstable.valadoc.org/#!wiki=gio-2.0/index
+		original: http://developer.gnome.org/gio/
+	Glib
+		vala: http://unstable.valadoc.org/#!api=glib-2.0/GLib
+		original: http://developer.gnome.org/glib/
+
+
+
 		
 To compile this software install the following dependencies on Ubuntu 11.10
+	Gee
+		sudo apt-get install gee-1.0 libgee-dev
 	OpenGL
 		sudo apt-get install valac freeglut3 freeglut3-dev libxi-dev libxi6 libxmu-dev libxi6 libxmu-dev libxmu6
 	SDL
@@ -34,4 +48,4 @@ To compile this software install the following dependencies on Ubuntu 11.10
 	XML
 		sudo apt-get install libxml2 libxml2-dev
 	To generate vapis
-		sudo apt-get install gee-1.0 libgee-dev gobject-introspection ..unvollsteanding
+		sudo apt-get install gobject-introspection ..unvollsteanding
