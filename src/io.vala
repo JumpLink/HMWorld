@@ -255,10 +255,19 @@ class IOlong {
 			//initLogic ();
 			/* Szene initialisieren */
 			if (Scene.init ()) {
-				t.loadFromFile("./data/tileset/Stadt - Sommer.png");
-				t.bindTexture ();
+				//t.loadFromFile("./data/tileset/Stadt - Sommer.png");
+				//t.bindTexture ();
 				TileSetManager tm = new TileSetManager();
 				tm.loadAllFromPath("./data/tileset/");
+				//tm.get("Stadt - Sommer").tile[0,0].tex.bindTexture();
+
+				print("- 1 -\n");
+				TileSet tileset = tm.get("Stadt - Sommer");
+				tileset.printValues();
+				print("- 2 -\n");
+				tileset.tile[1,0].tex.bindTexture();
+				print("- 3 -\n");
+				//tile.tex.bindTexture();
 				/* Callbacks registrieren */
 				registerCallbacks ();
 				/* Eintritt in die Ereignisschleife */

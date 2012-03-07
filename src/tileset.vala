@@ -185,7 +185,7 @@ public class TileSet {
 	}
 
 	TileSet.Data data;
-	Tile[,] tile;
+	public RegularTile[,] tile;
 	/** Array fuer die einzelnen Tiles */	
 	//private Tile[,]	 tiles;
 
@@ -207,6 +207,7 @@ public class TileSet {
 		var xml = new XML ();
 		data = xml.getDataFromFile(path);
 		printValues();
+		loadTiles();
 	}
 
 	public string getSource() {
@@ -229,30 +230,32 @@ public class TileSet {
 		return data.tileheight;
 	}
 	public uint getCountY() {
-		return (int) getTotalWidth() / getTileWidth();
+		return (int) getTotalHeight() / getTileHeight();
 	}
 
 	public uint getCountX() {
-		return (int) getTotalHeight() / getTileHeight();
+		return (int) getTotalWidth() / getTileWidth();
 	}
 
 	private void loadTiles() {
 		Texture tex = new Texture();
-		tex.loadFromFile(getSource());
-		int count_y = (int) getCountY;
-		int count_x = (int) getCountX;
+		tex.loadFromFile("./data/tileset/"+getSource());
+		int count_y = (int) getCountY();
+		int count_x = (int) getCountX();
 		int split_width = (int) getTileWidth();
 		int split_height = (int) getTileHeight();
-		Tile[,] tile = new Tile[getCountY(),getCountX()];
+		tile = new RegularTile[getCountY(),getCountX()];
 		Pixbuf pxb = tex.get_Pixbuf();
-		Pixbuf split = null;
+		Pixbuf split = tex.get_Pixbuf();
 
 		for(int y = 0; y < count_y; y++) {
 			for(int x = 0; x < count_x; x++) {
-				pxb.copy_area((int) (split_width*getCountY()), (int) split_height*count_x, (int) split_width, (int) split_height, split, 0, 0);
+				//print("count_y: %i count_x:%i split_width:%i split_height:%i ", count_y, count_x, split_width, split_height);
+				pxb.copy_area((int) split_width*x, (int) split_height*y, (int) split_width, (int) split_height, split, 0, 0);
 				tile[y,x] = new RegularTile.FromPixbuf(split);
 			}
 		}
+		print("Tiles zerteilt\n");
 	}
 
 	/**

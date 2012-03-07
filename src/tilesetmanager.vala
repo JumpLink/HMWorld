@@ -71,15 +71,18 @@ public class TileSetManager {
 
 	public TileSet get(string name) {
 		foreach (TileSet ts in tileset)
-				if (ts.getName() == name)
+				if (ts.getName() == name) {
+					print("TileSet gefunden!\n");
 					return ts;
+				}
+					
 		return new TileSet();
 	}
 
-	public TileSet loadFromPath(string filename) {
+	/*public TileSet loadFromPath(string filename) {
 
 		return loadFromPath(path+filename);
-	}
+	}*/
 
 	public void printAll() {
 		foreach (TileSet ts in tileset) {

@@ -21,9 +21,9 @@ using Gdk;
 using GLib;
 
 public class Texture {
-	GLuint* texID = new GLuint[10];
+	GLuint* texID = new GLuint[1];
 	GLenum texture_format;
-	Gdk.Pixbuf pixbuf;
+	private Gdk.Pixbuf pixbuf;
 
 	public void loadFromFile(string path) {
 		loadFromFileWithGdk(path);
@@ -38,6 +38,12 @@ public class Texture {
 			GLib.error("%s konnte nicht geladen werden", path);
 		}
 		
+		loadFromPixbuf(pixbuf);
+	}
+
+
+	public void loadFromPixbuf(Gdk.Pixbuf pixbuf) {
+		this.pixbuf = pixbuf;
 		if(pixbuf.colorspace == Colorspace.RGB)
 			if (pixbuf.get_has_alpha()) {
 				texture_format = GL_RGBA;
@@ -54,6 +60,7 @@ public class Texture {
 	}
 
 	public void bindTexture () {
+		print("binde textur \n");
 		if (get_width() > 0 && get_height() > 0)
 		{
 			glGenTextures(1, texID);
@@ -90,7 +97,7 @@ public class Texture {
 		return this.pixbuf;
 	}
 
-	public Pixbuf[,] createSplits(int split_width, int split_height, int count_y, int count_x) {
+	/*public Pixbuf[,] createSplits(int split_width, int split_height, int count_y, int count_x) {
 		Pixbuf[,] splits = new Pixbuf[count_y,count_x];
 		for(int y = 0; y < count_y; y++) {
 			for(int x = 0; x < count_x; x++) {
@@ -98,5 +105,5 @@ public class Texture {
 			}
 		}
 		return splits;
-	}
+	}*/
 }
