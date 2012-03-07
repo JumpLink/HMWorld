@@ -265,7 +265,7 @@ class IOlong {
 				TileSet tileset = tm.get("Stadt - Sommer");
 				tileset.printValues();
 				print("- 2 -\n");
-				tileset.tile[1,0].tex.bindTexture();
+				tileset.tile[0,0].tex.bindTexture();
 				print("- 3 -\n");
 				//tile.tex.bindTexture();
 				/* Callbacks registrieren */

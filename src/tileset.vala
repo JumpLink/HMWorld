@@ -246,10 +246,10 @@ public class TileSet {
 		int split_height = (int) getTileHeight();
 		tile = new RegularTile[getCountY(),getCountX()];
 		Pixbuf pxb = tex.get_Pixbuf();
-		Pixbuf split = tex.get_Pixbuf();
 
 		for(int y = 0; y < count_y; y++) {
 			for(int x = 0; x < count_x; x++) {
+				Pixbuf split = new Pixbuf(Gdk.Colorspace.RGB, pxb.get_has_alpha(), pxb.get_bits_per_sample(), split_width, split_height);
 				//print("count_y: %i count_x:%i split_width:%i split_height:%i ", count_y, count_x, split_width, split_height);
 				pxb.copy_area((int) split_width*x, (int) split_height*y, (int) split_width, (int) split_height, split, 0, 0);
 				tile[y,x] = new RegularTile.FromPixbuf(split);
