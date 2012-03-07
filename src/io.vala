@@ -19,9 +19,24 @@ using GLU;
 using GLUT;
 using SDL;
 using SDLImage;
+TileSetManager tm;
+TileSet tileset;
 
 class IOlong {
-	Texture t = new Texture();
+
+	public IOlong() {
+		// Tests!! TODO
+		//t.loadFromFile("./data/tileset/Stadt - Sommer.png");
+		//t.bindTexture ();
+		tm = new TileSetManager();
+		tm.loadAllFromPath("./data/tileset/");
+		//tm.get("Stadt - Sommer").tile[0,0].tex.bindTexture();
+		tileset = tm.get("Stadt - Sommer");
+		tileset.printValues();
+		
+		//tile.tex.bindTexture();
+	}
+
 	/**
 	 * Setzen der Projektionsmatrix.
 	 * Setzt die Projektionsmatrix fuer die Szene.
@@ -97,6 +112,42 @@ class IOlong {
 		        glVertex3f ( -1.0f, -1.0f, 0.0f);
 		    glEnd ();
 
+		/* Szene anzeigen / Buffer tauschen */
+		glutSwapBuffers ();
+	}
+	static void cbDisplayTests ()
+	{
+		/* Colorbuffer leeren */
+		glClear (GL_COLOR_BUFFER_BIT);
+
+		/* Nachfolgende Operationen beeinflussen Modelviewmatrix */
+		glMatrixMode (GL_MODELVIEW);
+
+		/* Szene zeichnen */
+		tileset.tile[0,0].tex.bindTexture();
+		// OpenGL rendering goes here...
+		    glBegin (GL_QUADS);
+			glTexCoord2f(0,0);
+		        glVertex3f ( -0.0f,  1.0f, 0.0f);
+			glTexCoord2f(1,0);
+		        glVertex3f (  1.0f,  1.0f, 0.0f);
+			glTexCoord2f(1,1);
+		        glVertex3f (  1.0f, -0.0f, 0.0f);
+			glTexCoord2f(0,1);
+		        glVertex3f ( -0.0f, -0.0f, 0.0f);
+		    glEnd ();
+
+		tileset.tile[0,9].tex.bindTexture();
+		    glBegin (GL_QUADS);
+			glTexCoord2f(0,0);
+		        glVertex3f ( -1.0f,  0.0f, 0.0f);
+			glTexCoord2f(1,0);
+		        glVertex3f (  0.0f,  0.0f, 0.0f);
+			glTexCoord2f(1,1);
+		        glVertex3f (  0.0f, -1.0f, 0.0f);
+			glTexCoord2f(0,1);
+		        glVertex3f ( -1.0f, -1.0f, 0.0f);
+		    glEnd ();
 
 		/* Szene anzeigen / Buffer tauschen */
 		glutSwapBuffers ();
@@ -209,7 +260,8 @@ class IOlong {
 
 		/* Display-Callback - wird an mehreren Stellen imlizit (z.B. im Anschluss an
 		 * Reshape-Callback) oder explizit (durch glutPostRedisplay) angestossen */
-		glutDisplayFunc (cbDisplay);
+		//glutDisplayFunc (cbDisplay); TODO
+		glutDisplayFunc (cbDisplayTests);
 	}
 
 	/**
@@ -255,19 +307,6 @@ class IOlong {
 			//initLogic ();
 			/* Szene initialisieren */
 			if (Scene.init ()) {
-				//t.loadFromFile("./data/tileset/Stadt - Sommer.png");
-				//t.bindTexture ();
-				TileSetManager tm = new TileSetManager();
-				tm.loadAllFromPath("./data/tileset/");
-				//tm.get("Stadt - Sommer").tile[0,0].tex.bindTexture();
-
-				print("- 1 -\n");
-				TileSet tileset = tm.get("Stadt - Sommer");
-				tileset.printValues();
-				print("- 2 -\n");
-				tileset.tile[0,0].tex.bindTexture();
-				print("- 3 -\n");
-				//tile.tex.bindTexture();
 				/* Callbacks registrieren */
 				registerCallbacks ();
 				/* Eintritt in die Ereignisschleife */

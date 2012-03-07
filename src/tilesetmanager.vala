@@ -35,6 +35,15 @@ public class TileSetManager {
 		print("Lösche TileSet\n");
 	}
 
+	/**
+	 * Ladet alle Tilesets aus dem Verzeichniss "path"
+	 *
+	 * Dabei werden alle Dateien mit der Endung .tsx berücksichtigt.
+	 * Das Parsen der XML wird von der Klasse TileSet übernommen.
+	 * Anschließend wird jedes TileSet in eine ArrayList gespeichert.
+	 *
+	 * @param path der Ordnername aus dem gelesen werden soll.
+	 */
 	public void loadAllFromPath(string path = "./data/tileset") {
 		this.path = path;
 		File directory = File.new_for_path(path);
@@ -68,7 +77,11 @@ public class TileSetManager {
 	        //return 1;
 	    }
 	}
-
+	/**
+	 * Gibt das TileSet mit dem Namen "name" zurück
+	 *
+	 * @param name name des gesuchten TileSets
+	 */
 	public TileSet get(string name) {
 		foreach (TileSet ts in tileset)
 				if (ts.getName() == name) {
@@ -84,6 +97,9 @@ public class TileSetManager {
 		return loadFromPath(path+filename);
 	}*/
 
+	/**
+	 * Gibt die Werte aller TileSets in der Liste aus.
+	 */
 	public void printAll() {
 		foreach (TileSet ts in tileset) {
 				ts.printValues ();
