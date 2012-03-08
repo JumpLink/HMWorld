@@ -19,13 +19,19 @@ VAPI_DIR      = vapi/
 # Verzeichnis fuer erzeuge Binaries
 BIN_DIR       = bin/
 # Verzeichnis fuer Doku
-DOC_DIR       = doc/
+DOC_DIR       = doc2/
 
 # Bazaar-Repository
 BZR_REPO      = bzr+ssh://bazaar.launchpad.net/%2Bbranch/hmproject/0.1/
 
 # Vala-Compiler
 VC            = valac
+
+# Valadoc
+VD            = valadoc
+# Valadoc Driver
+VDD           = 0.14.0
+
 # Bazaar
 BZR           = bzr
 
@@ -89,10 +95,16 @@ c: dirs $(SRC_FILES)
 	@echo "Compiling Binary..."
 	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) -C
 
+doc: $(SRC_FILES)
+	@echo "Generating Documentation..."
+	@$(VD) -o $(DOC_DIR) $(SRC_FILES)
+#	@$(VD) -o $(DOC_DIR) --driver $(VDD) $(SRC_FILES)
+
 ## * make clean: Raeumt die erzeugten Dateien auf
 clean:
 	@echo "Cleaning up..."
 	@rm -rf $(BIN_DIR)
+	@rm -rf $(DOC_DIR)
 	@rm -rf $(SRC_DIR)*.c
 
 ## * make help: Diese Hilfe anzeigen

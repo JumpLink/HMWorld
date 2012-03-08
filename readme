@@ -49,5 +49,7 @@ To compile this software install the following dependencies on Ubuntu 11.10
 		sudo apt-get install libgdk-pixbuf2.0-0 libgdk-pixbuf2.0-dev
 	XML
 		sudo apt-get install libxml2 libxml2-dev
+	ValaDoc
+		sudo apt-get install valadoc libvaladoc0 libvaladoc-dev
 	To generate vapis
 		sudo apt-get install gobject-introspection ..unvollsteanding
