@@ -112,7 +112,7 @@ doc-internal: $(SRC_FILES)
 	@$(VD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION) --private --internal
 	@gnome-open ./doc/index.html
 
-publish-doc: $(SRC_FILES)
+doc-publish: $(SRC_FILES)
 	@mkdir -p $(PUB_DIR)
 	@cp $(DOC_DIR) $(PUB_DIR) -r
 	@gnome-open http://dl.dropbox.com/u/55722973/hmp/doc/index.html

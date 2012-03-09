@@ -96,7 +96,7 @@ public class TileSetManager {
 	/**
 	 * Gibt das TileSet mit dem Namen "name" zurück
 	 *
-	 * @param name name des gesuchten TileSets
+	 * @param source Ort des gesuchten TileSets
 	 * @return Bei Erfolg das gefundene TileSet, sonst ein neues Objekt TileSet
 	 */
 	public TileSet getFromSource(string source) {

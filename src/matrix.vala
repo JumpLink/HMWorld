@@ -129,7 +129,7 @@ public class Matrix {
 	/**
 	 * Besetzt diese Matrix als Translationsmatrix.
 	 * 
-	 * @param s Verschiebungsvektor.
+	 * @param t Verschiebungsvektor.
 	 * 
 	 * @return Referenz auf diese Matrix.
 	 */
@@ -330,7 +330,7 @@ public class Matrix {
 	/**
 	 * Multipliziert diese Matrix mit einem Vektor.
 	 * 
-	 * @param s Skalar mit dem multipliziert wird.
+	 * @param v Skalar mit dem multipliziert wird.
 	 * 
 	 * @return neuer Vektor mit dem Ergebnis der Multiplikation.
 	 */
