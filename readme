@@ -13,7 +13,10 @@ Author:
 	Ole Lorenzen <ole.lorenzen@gmx.net>
 	Patrick König <knuffi@gmail.com>
 
+More informations on http://incux.de/projects/reloaded
+
 Dokumentations
+
 	SDL
 		vala: http://unstable.valadoc.org/#!wiki=sdl/index
 		original: http://www.libsdl.org/docs/html/
@@ -39,6 +42,7 @@ Dokumentations
 		original: http://developer.gnome.org/glib/
 		
 To compile this software install the following dependencies on Ubuntu 11.10
+
 	Gee
 		sudo apt-get install gee-1.0 libgee-dev
 	OpenGL

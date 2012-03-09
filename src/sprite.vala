@@ -18,7 +18,9 @@
  * Allgemeine Klasse fuer Tiles
  */
 public class Sprite {
-	/** Spritetyp */
+	/**
+	 * Spritetyp
+	 */
 	public uint type;
 
 	/**

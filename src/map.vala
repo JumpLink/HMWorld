@@ -25,7 +25,9 @@ public class Map {
 	 */
 	class XML : HMPXML {
 
-		/** Daten der Map. */
+		/**
+		 * Daten der Map.
+		 */
 		protected Data data = Data();
 
 		/**

@@ -29,7 +29,23 @@ const GL.GLclampf colBG[] = {0.6f, 0.6f, 1.0f, 0.0f};
 /**
  * Benamsung der Farbindizes
  */
-enum ColorIndex { R=0, G=1, B=2, A=3 }
+enum ColorIndex {
+	/**
+	 * Rot
+	 */
+	R=0,
+	/**
+	 * Gruen
+	 */
+	G=1,
+	/**
+	 * Blau
+	 */
+	B=2,
+	/**
+	 * Alpha
+	 */
+	A=3 }
 
 enum EdgeShape {
 	FULL,

@@ -25,6 +25,8 @@ VAPI_DIR      = vapi/
 BIN_DIR       = bin/
 # Verzeichnis fuer Doku
 DOC_DIR       = doc/
+# Öffentliches Verzeichnis für die Dokumentationsveröffentlichung
+PUB_DIR       = ~/Dropbox/Public/hmp/
 
 # Bazaar-Repository
 BZR_REPO      = bzr+ssh://bazaar.launchpad.net/%2Bbranch/hmproject/0.1/
@@ -103,7 +105,17 @@ c: dirs $(SRC_FILES)
 doc: $(SRC_FILES)
 	@echo "Generating Documentation..."
 	@$(VD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION)
-#	@$(VD) -o $(DOC_DIR) --driver $(VDD) $(SRC_FILES)
+	@gnome-open ./doc/index.html
+
+doc-internal: $(SRC_FILES)
+	@echo "Generating Documentation..."
+	@$(VD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION) --private --internal
+	@gnome-open ./doc/index.html
+
+publish-doc: $(SRC_FILES)
+	@mkdir -p $(PUB_DIR)
+	@cp $(DOC_DIR) $(PUB_DIR) -r
+	@gnome-open http://dl.dropbox.com/u/55722973/hmp/doc/index.html
 
 ## * make clean: Raeumt die erzeugten Dateien auf
 clean:
