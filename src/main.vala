@@ -13,6 +13,7 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
+ 
 class Game {
 	//public signal void exit();
 	

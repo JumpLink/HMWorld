@@ -1,6 +1,11 @@
 ## Makefile fuers Harvestmoon-Projekt:
 
 # Variablen und Flags
+# Version des Pakets
+VERSION       = 0.1
+
+# Name des Pakets
+PKG_NAME      = HMP
 
 # Quelldateien
 SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala #spriteset.vala sprite.vala
@@ -19,7 +24,7 @@ VAPI_DIR      = vapi/
 # Verzeichnis fuer erzeuge Binaries
 BIN_DIR       = bin/
 # Verzeichnis fuer Doku
-DOC_DIR       = doc2/
+DOC_DIR       = doc/
 
 # Bazaar-Repository
 BZR_REPO      = bzr+ssh://bazaar.launchpad.net/%2Bbranch/hmproject/0.1/
@@ -97,7 +102,7 @@ c: dirs $(SRC_FILES)
 
 doc: $(SRC_FILES)
 	@echo "Generating Documentation..."
-	@$(VD) -o $(DOC_DIR) $(SRC_FILES)
+	@$(VD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION)
 #	@$(VD) -o $(DOC_DIR) --driver $(VDD) $(SRC_FILES)
 
 ## * make clean: Raeumt die erzeugten Dateien auf

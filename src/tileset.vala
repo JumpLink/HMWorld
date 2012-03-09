@@ -168,19 +168,33 @@ public class TileSet {
 	 * Struktur fuer TileSets
 	 */
 	public struct Data {
-		/** Name des TileSets. */
+		/**
+		 * Name des TileSets.
+		 */
 		public string name;
-		/** Breite eines Tiles */
+		/**
+		 * Breite eines Tiles
+		 */
 		public uint tilewidth;
-		/** Hoehe eines Tiles */
+		/**
+		 * Hoehe eines Tiles
+		 */
 		public uint tileheight;
-		/** Dateiname des TileSets */
+		/**
+		 * Dateiname des TileSets
+		 */
 		public string source;
-		/** Transparente Farbe im TileSet */
+		/**
+		 * Transparente Farbe im TileSet
+		 */
 		public string trans;
-		/** Gesamtbreite des TileSets */
+		/**
+		 * Gesamtbreite des TileSets
+		 */
 		public uint width;
-		/** Gesamthoehe des TileSets */
+		/**
+		 * Gesamthoehe des TileSets
+		 */
 		public uint height;
 	}
 
@@ -208,10 +222,6 @@ public class TileSet {
 		data = xml.getDataFromFile(path);
 		printValues();
 		loadTiles();
-	}
-
-	public string getSource() {
-		return data.source;
 	}
 
 	public uint getTotalWidth() {
@@ -270,11 +280,20 @@ public class TileSet {
 		print("width: %u\n", data.width);
 		print("height: %u\n", data.height);
 	}
+
 	/**
 	 * Gibt den Namen des TileSets zurück
 	 * @return Name des TileSets
 	 */
 	public string getName() {
 		return data.name;
+	}
+
+	/**
+	 * Gibt den Sourcenamen des TileSets zurück
+	 * @return source des TileSets
+	 */
+	public string getSource() {
+		return data.source;
 	}
 }

@@ -55,7 +55,9 @@ public class SpriteSet {
 	}
 
 	//SpriteSet.Data data;
-	/** Array fuer die einzelnen Tiles */	
+	/**
+	 * Array fuer die einzelnen Tiles
+	 */	
 	private Sprite[,] sprites;
 
 	/**

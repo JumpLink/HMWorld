@@ -18,9 +18,13 @@ using Gee;
  * Klasse fuer die gesamte Welt
  */
 public class World {
-	/** Maps der Welt */
+	/**
+	 * Maps der Welt
+	 */
 	public Gee.List<Map> maps;
-	/** Spieler in der Welt */
+	/**
+	 * Spieler in der Welt
+	 */
 	public Gee.List<Player> players;
 	/* TODO Datum, Zeit, Wetter, ... */
 

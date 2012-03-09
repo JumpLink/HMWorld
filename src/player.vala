@@ -18,7 +18,9 @@
  * Klasse fuer das Spielerobjekt
  */
 public class Player : Entity {
-	/** Name des Spielers */
+	/**
+	 * Name des Spielers
+	 */
 	public string name;
 
 	/* TODO map auf der sich der spieler befindet, inventar und weitere spielereigenschaften hierher */

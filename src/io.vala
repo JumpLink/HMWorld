@@ -31,7 +31,7 @@ class IOlong {
 		tm = new TileSetManager();
 		tm.loadAllFromPath("./data/tileset/");
 		//tm.get("Stadt - Sommer").tile[0,0].tex.bindTexture();
-		tileset = tm.get("Stadt - Sommer");
+		tileset = tm.getFromName("Stadt - Sommer");
 		tileset.printValues();
 		
 		//tile.tex.bindTexture();

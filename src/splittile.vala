@@ -18,7 +18,9 @@
  * Klasse fuer unterteilte Tiles
  */
 	public class SplitTile : Tile {
-		/** Einzelteile */
+		/**
+		 * Einzelteile
+		 */
 		public SubTile[] subTiles;
 
 		/**

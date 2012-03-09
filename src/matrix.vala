@@ -18,13 +18,21 @@
  * Einfache Klasse fuer n x m - Matrizen.
  */
 public class Matrix {
-	/** Breite der Matrix. */
+	/**
+	 * Breite der Matrix.
+	 */
 	public int n;
-	/** Hoehe der Matrix. */
+	/**
+	 * Hoehe der Matrix.
+	 */
 	public int m;
-	/** Matrixdaten. */
+	/**
+	 * Matrixdaten.
+	 */
 	public double[,] mat;
-	/** Flag ob Matrix quadratisch ist. */
+	/**
+	 * Flag ob Matrix quadratisch ist.
+	 */
 	public bool sq = false;
 
 	/* Konstruktoren */

@@ -18,7 +18,9 @@
  * Allgemeine Klasse fuer Tiles
  */
 public abstract class Tile {
-	/** Tiletyp */
+	/**
+	 * Tiletyp
+	 */
 	public uint type;
 
 	/**

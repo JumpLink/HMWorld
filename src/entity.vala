@@ -19,7 +19,9 @@
  * hiervon erben Spieler, NPCs und andere Dynamische Objekte.
  */
 public class Entity {
-	/** Position des Entities */
+	/**
+	 * Position des Entities
+	 */
 	Vector pos;
 
 	/**

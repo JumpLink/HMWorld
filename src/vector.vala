@@ -19,9 +19,13 @@
  */
 public class Vector {
 
-	/** Dimension des Vektors. */
+	/**
+	 * Dimension des Vektors.
+	 */
 	public int dim;
-	/** Daten des Vektors. */
+	/**
+	 * Daten des Vektors.
+	 */
 	public double[] vec;
 	
 	/**

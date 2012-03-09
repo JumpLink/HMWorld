@@ -18,15 +18,25 @@
  * Klasse fuer Maplayer.
  */
 public class Layer {
-	/** Name des Layers */
+	/**
+	 * Name des Layers
+	 */
 	public string name;
-	/** z-offset zum Zeichnen dieses Layers */
+	/**
+	 * z-offset zum Zeichnen dieses Layers
+	 */
 	public double zoff;
-	/** Breite des Layers */
+	/**
+	 * Breite des Layers
+	 */
 	public uint sizeX;
-	/** Hoehe des Layers */
+	/**
+	 * Hoehe des Layers
+	 */
 	public uint sizeY;
-	/** Tiles des Layers */
+	/**
+	 * Tiles des Layers
+	 */
 	public Tile[,] tiles;
 
 	/**

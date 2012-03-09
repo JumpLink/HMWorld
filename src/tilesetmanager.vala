@@ -82,9 +82,24 @@ public class TileSetManager {
 	 *
 	 * @param name name des gesuchten TileSets
 	 */
-	public TileSet get(string name) {
+	public TileSet getFromName(string name) {
 		foreach (TileSet ts in tileset)
 				if (ts.getName() == name) {
+					print("TileSet gefunden!\n");
+					return ts;
+				}
+					
+		return new TileSet();
+	}
+
+	/**
+	 * Gibt das TileSet mit dem Namen "name" zurück
+	 *
+	 * @param name name des gesuchten TileSets
+	 */
+	public TileSet getFromSource(string source) {
+		foreach (TileSet ts in tileset)
+				if (ts.getSource() == source) {
 					print("TileSet gefunden!\n");
 					return ts;
 				}

@@ -117,7 +117,6 @@ public class Map {
 
 	    	switch (nodename) {
 	    		case "tileset":
-	
 	    		break;
 	    	}
 
@@ -190,37 +189,60 @@ public class Map {
 	}
 
 	public struct TileSetMapData {
-		/** Quelle des TileSets. */
+		/**
+		 * Quelle des TileSets.
+		 */
 		public TileSet source;
-		/**  */
+		/**
+		 * TODO
+		 */
 		public uint firstgid;
 	}
 	/**
 	 * Struktur fuer Maps
 	 */
 	public struct Data {
-		/** orientation der Map. */
+		/**
+		 * orientation der Map.
+		 */
 		public string orientation;
-		/** Version des Kartenformats? */
+		/**
+		 * Version des Kartenformats?
+		 */
 		public uint version;
-		/** Gesamtbreite der map */
+		/**
+		 * Gesamtbreite der map
+		 */
 		public uint width;
-		/** Gesamthoehe der Map */
+		/**
+		 * Gesamthoehe der Map
+		 */
 		public uint height;
-		/** Breite eines Tiles */
+		/**
+		 * Breite eines Tiles
+		 */
 		public uint tilewidth;
-		/** Höhe eines Tiles */
+		/**
+		 * Höhe eines Tiles
+		 */
 		public uint tileheight;
-		/** Tilesets die für auf der Map verwendet werden*/
-		public Gee.List<TileSetMapData?> tileset; //TODO warum ?
-		/** Layer der Map. */
+		/**
+		 * Tilesets die für auf der Map verwendet werden
+		 */
+		public Gee.List<TileSetMapData?> tileset;
+		/**
+		 * Layer der Map.
+		 */
 		public Gee.List<Layer> layers;
-		/** Entities auf der Map */
+		/** 
+		 * Entities auf der Map
+		 */
 		public Gee.List<Entity> entities;
-
 	}
 
-	/** Name der Map. */
+	/**
+	 * Name der Map.
+	 */
 	protected Data data = Data();
 	//data.tileset = new Gee.List<TileSetMapData>();
 
@@ -228,8 +250,8 @@ public class Map {
 	 * Konstruktor
 	 */
 	public Map() {
-		//data.layers = new Gee.List<Layer>();
-		//data.entities = new Gee.List<Entity>();
-		//data.tileset = new Gee.List<TileSetMapData>();
+		data.layers = new Gee.ArrayList<Layer>();
+		data.entities = new Gee.ArrayList<Entity>();
+		data.tileset = new Gee.ArrayList<TileSetMapData?>();
 	}
 }

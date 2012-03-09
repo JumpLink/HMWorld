@@ -28,12 +28,18 @@ namespace Scene {
 	static bool init ()
 	{
 		/* Setzen der Farbattribute */
-		/* Hintergrundfarbe */
+		/**
+		 * Hintergrundfarbe
+		 */
 		glClearColor (colBG[ColorIndex.R], colBG[ColorIndex.G], colBG[ColorIndex.B], colBG[ColorIndex.A]);
-		/* Zeichenfarbe */
+		/**
+		 * Zeichenfarbe
+		 */
 		glColor3f (1.0f, 1.0f, 1.0f);
 
-		/* Vertexarrays erlauben */
+		/**
+		 * Vertexarrays erlauben
+		 */
 		glEnableClientState (GL_VERTEX_ARRAY);
 
 		/* Polygonrueckseiten nicht anzeigen */
@@ -42,7 +48,9 @@ namespace Scene {
 		
 		glEnable(GL_TEXTURE_2D);
 
-		/* Alles in Ordnung? */
+		/**
+		 * Alles in Ordnung?
+		 */
 		return (glGetError() == GL_NO_ERROR);
 	}
 }

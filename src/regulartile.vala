@@ -18,7 +18,9 @@ using Gdk;
  * Klasse fuer nicht unterteilte Tiles
  */
 	public class RegularTile : Tile {
-		/** Tiletyp */
+		/**
+		 * Tiletyp
+		 */
 		public Texture tex;
 		/**
 		 * Konstruktor 
