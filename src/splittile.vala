@@ -13,32 +13,34 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
+using HMP;
+namespace HMP {
+	/**
+	 * Klasse fuer unterteilte Tiles
+	 */
+		public class SplitTile : Tile {
+			/**
+			 * Einzelteile
+			 */
+			public SubTile[] subTiles;
 
-/**
- * Klasse fuer unterteilte Tiles
- */
-	public class SplitTile : Tile {
-		/**
-		 * Einzelteile
-		 */
-		public SubTile[] subTiles;
-
-		/**
-		 * Konstruktor 
-		 */
-		public SplitTile () {
-			subTiles = new SubTile [4];
-			foreach (SubTile s in subTiles)
-				s = new SubTile ();
-		}
-
-		public override void calcEdges (uint[] neighbours) {
-			assert (neighbours.length == 8);
-			uint[] n = new uint[3];
-			for (uint s = 0; s < 4; ++s) {
-				for (uint t = 0; t < 3; ++t)
-					n[t] = neighbours[(2 * s + t) % 8];
-				subTiles[s].calcEdge (n, type, s);
+			/**
+			 * Konstruktor 
+			 */
+			public SplitTile () {
+				subTiles = new SubTile [4];
+				foreach (SubTile s in subTiles)
+					s = new SubTile ();
 			}
-		}
+
+			public override void calcEdges (uint[] neighbours) {
+				assert (neighbours.length == 8);
+				uint[] n = new uint[3];
+				for (uint s = 0; s < 4; ++s) {
+					for (uint t = 0; t < 3; ++t)
+						n[t] = neighbours[(2 * s + t) % 8];
+					subTiles[s].calcEdge (n, type, s);
+				}
+			}
+	}
 }

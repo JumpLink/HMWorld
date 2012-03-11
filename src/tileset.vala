@@ -16,283 +16,287 @@
 using Xml;
 using Gee;
 using Gdk;
-/**
- * Klasse fuer TileSets
- */
-public class TileSet {
 
+using HMP;
+namespace HMP {
 	/**
-	 * Klasse fuer XML-Operationen
+	 * Klasse fuer TileSets
 	 */
-	class XML : HMPXML {
-	    
-		/**
-		 * Läd die Werte einer TileSet-XML.tsx
-		 * 
-		 * @param path Pfad mit Dateiname der auszulesenden XML
-		 * @return struct TileSet.Data mit den gespeicherten Werten
-		 */
-	    public TileSet.Data getDataFromFile (string path) {
-	    	//print("\tFuehre getTileSetDataFromFile aus\n");
-	    	
-			TileSet.Data data = TileSet.Data();
-	    	Gee.HashMap<string, string> tileset_global_properties = new Gee.HashMap<string, string>();
-	    	Gee.HashMap<string, string> tileset_image_properties = new Gee.HashMap<string, string>();
-			
-	    	parse_file (path, tileset_global_properties, tileset_image_properties);
-	    	
-	    	// Zuweisung der geparsten Werte
-	    	data.name = (string) tileset_global_properties.get ("name");
-	    	data.tilewidth = int.parse(tileset_global_properties.get ("tilewidth"));
-	    	data.tileheight = int.parse(tileset_global_properties.get ("tileheight"));
-	    	
-	    	data.source = (string) tileset_image_properties.get ("source");
-	    	data.trans = (string) tileset_image_properties.get ("trans");
-	    	data.width = int.parse(tileset_image_properties.get ("width"));
-	    	data.height = int.parse(tileset_image_properties.get ("height"));
-	    	
-	    	return data;
-	    }
-
+	public class TileSet {
 
 		/**
-		 * Hilfsfunktion welche eine XML auslesen kann
-		 *
-		 * @return true bei Fehler, sonst false
+		 * Klasse fuer XML-Operationen
 		 */
-	    private bool parse_file (string path, Gee.HashMap<string, string> tileset_global_properties, Gee.HashMap<string, string> tileset_image_properties) {
-	    	//print("\tbeginne Datei zu parsen\n");
-	        // Parse the document from path
-	        Xml.Doc* doc = Parser.parse_file (path);
-	        if (doc == null) {
-	            error ("File %s not found or permissions missing", path);
-	            //return true;
-	        }
+		class XML : HMP.XML {
+		    
+			/**
+			 * Läd die Werte einer TileSet-XML.tsx
+			 * 
+			 * @param path Pfad mit Dateiname der auszulesenden XML
+			 * @return struct TileSet.Data mit den gespeicherten Werten
+			 */
+		    public TileSet.Data getDataFromFile (string path) {
+		    	//print("\tFuehre getTileSetDataFromFile aus\n");
+		    	
+				TileSet.Data data = TileSet.Data();
+		    	Gee.HashMap<string, string> tileset_global_properties = new Gee.HashMap<string, string>();
+		    	Gee.HashMap<string, string> tileset_image_properties = new Gee.HashMap<string, string>();
+				
+		    	parse_file (path, tileset_global_properties, tileset_image_properties);
+		    	
+		    	// Zuweisung der geparsten Werte
+		    	data.name = (string) tileset_global_properties.get ("name");
+		    	data.tilewidth = int.parse(tileset_global_properties.get ("tilewidth"));
+		    	data.tileheight = int.parse(tileset_global_properties.get ("tileheight"));
+		    	
+		    	data.source = (string) tileset_image_properties.get ("source");
+		    	data.trans = (string) tileset_image_properties.get ("trans");
+		    	data.width = int.parse(tileset_image_properties.get ("width"));
+		    	data.height = int.parse(tileset_image_properties.get ("height"));
+		    	
+		    	return data;
+		    }
 
-	        // Get the root node. notice the dereferencing operator -> instead of .
-	        Xml.Node* root = doc->get_root_element ();
-	        if (root == null) {
-	            // Free the document manually before returning
-	            delete doc;
-	            print ("The xml file '%s' is empty", path);
-	            return true;
-	        }
 
-	        print_indent ("XML document", path, '-');
+			/**
+			 * Hilfsfunktion welche eine XML auslesen kann
+			 *
+			 * @return true bei Fehler, sonst false
+			 */
+		    private bool parse_file (string path, Gee.HashMap<string, string> tileset_global_properties, Gee.HashMap<string, string> tileset_image_properties) {
+		    	//print("\tbeginne Datei zu parsen\n");
+		        // Parse the document from path
+		        Xml.Doc* doc = Parser.parse_file (path);
+		        if (doc == null) {
+		            error ("File %s not found or permissions missing", path);
+		            //return true;
+		        }
 
-	        // Print the root node's name
-	        print_indent ("Root node", root->name);
-	        
-	    	// Prüfe ob root bereits eines der gesuchten Nodes beinhaltet
-			switch (root->name) {
-				case "tileset":
-					//print("\t%s in root gefunden\n",root->name);
-					parse_properties (root, tileset_global_properties);
-				break;
-				case "image":
-					//print("\t%s in root gefunden\n",root->name);
-					parse_properties (root, tileset_image_properties);
-				break;
-				default:
-					print("Keine passende Node gefunden!\n");
-				break;
-			}
-	        
-	        // Let's parse those nodes
-	        parse_node (root, tileset_global_properties, tileset_image_properties);
+		        // Get the root node. notice the dereferencing operator -> instead of .
+		        Xml.Node* root = doc->get_root_element ();
+		        if (root == null) {
+		            // Free the document manually before returning
+		            delete doc;
+		            print ("The xml file '%s' is empty", path);
+		            return true;
+		        }
 
-	        // Free the document
-	        delete doc;
-	        return true;
-	    }
+		        print_indent ("XML document", path, '-');
 
-		/**
-		 * 
-		 */
-	    private void parse_node (Xml.Node* node, Gee.HashMap<string, string> tileset_global_properties, Gee.HashMap<string, string> tileset_image_properties) {
-	    	//print("\tbeginne Node zu parsen\n");
-	        this.indent++;
-	        // Loop over the passed node's children
-	        for (Xml.Node* iter = node->children; iter != null; iter = iter->next) {
-	            // Spaces between tags are also nodes, discard them
-	            if (iter->type != ElementType.ELEMENT_NODE) {
-	                continue;
-	            }
-
-	            // Get the node's name
-	            string node_name = iter->name;
-	            // Get the node's content with <tags> stripped
-	            string node_content = iter->get_content ();
-	            print_indent (node_name, node_content);
-			    
-				// Prüfe ob node eines der gesuchten Nodes beinhaltet
-				switch (iter->name) {
+		        // Print the root node's name
+		        print_indent ("Root node", root->name);
+		        
+		    	// Prüfe ob root bereits eines der gesuchten Nodes beinhaltet
+				switch (root->name) {
 					case "tileset":
-						//print("\t%s in node gefunden\n",iter->name);
-						parse_properties (iter, tileset_global_properties);
+						//print("\t%s in root gefunden\n",root->name);
+						parse_properties (root, tileset_global_properties);
 					break;
 					case "image":
-						//print("\t%s in node gefunden\n",iter->name);
-						parse_properties (iter, tileset_image_properties);
+						//print("\t%s in root gefunden\n",root->name);
+						parse_properties (root, tileset_image_properties);
 					break;
 					default:
-						print("\tKeine (weiteren) passende Nodes gefunden!\n");
+						print("Keine passende Node gefunden!\n");
 					break;
 				}
-	        
-	            // Followed by its children nodes
-	            parse_node (iter, tileset_global_properties, tileset_image_properties);
-	        }
-	        this.indent--;
-	    }
+		        
+		        // Let's parse those nodes
+		        parse_node (root, tileset_global_properties, tileset_image_properties);
 
-		/**
-		 * 
-		 */
-	    private void parse_properties (Xml.Node* node, Gee.HashMap<string, string> properties) {
-	    	//print("\tbeginne Werte zu parsen\n");
-	        // Loop over the passed node's properties (attributes)
-	        for (Xml.Attr* prop = node->properties; prop != null; prop = prop->next) {
-	            string attr_name = prop->name;
-	            // Notice the ->children which points to a Node*
-	            // (Attr doesn't feature content)
-	            string attr_content = prop->children->content;
+		        // Free the document
+		        delete doc;
+		        return true;
+		    }
 
-				print_indent (attr_name, attr_content, '|');
-				properties.set(attr_name, attr_content);
-	        }
-	    }
-	}
+			/**
+			 * 
+			 */
+		    private void parse_node (Xml.Node* node, Gee.HashMap<string, string> tileset_global_properties, Gee.HashMap<string, string> tileset_image_properties) {
+		    	//print("\tbeginne Node zu parsen\n");
+		        this.indent++;
+		        // Loop over the passed node's children
+		        for (Xml.Node* iter = node->children; iter != null; iter = iter->next) {
+		            // Spaces between tags are also nodes, discard them
+		            if (iter->type != ElementType.ELEMENT_NODE) {
+		                continue;
+		            }
 
-	/**
-	 * Struktur fuer TileSets
-	 */
-	public struct Data {
-		/**
-		 * Name des TileSets.
-		 */
-		public string name;
-		/**
-		 * Breite eines Tiles
-		 */
-		public uint tilewidth;
-		/**
-		 * Hoehe eines Tiles
-		 */
-		public uint tileheight;
-		/**
-		 * Dateiname des TileSets
-		 */
-		public string source;
-		/**
-		 * Transparente Farbe im TileSet
-		 */
-		public string trans;
-		/**
-		 * Gesamtbreite des TileSets
-		 */
-		public uint width;
-		/**
-		 * Gesamthoehe des TileSets
-		 */
-		public uint height;
-	}
+		            // Get the node's name
+		            string node_name = iter->name;
+		            // Get the node's content with <tags> stripped
+		            string node_content = iter->get_content ();
+		            print_indent (node_name, node_content);
+				    
+					// Prüfe ob node eines der gesuchten Nodes beinhaltet
+					switch (iter->name) {
+						case "tileset":
+							//print("\t%s in node gefunden\n",iter->name);
+							parse_properties (iter, tileset_global_properties);
+						break;
+						case "image":
+							//print("\t%s in node gefunden\n",iter->name);
+							parse_properties (iter, tileset_image_properties);
+						break;
+						default:
+							print("\tKeine (weiteren) passende Nodes gefunden!\n");
+						break;
+					}
+		        
+		            // Followed by its children nodes
+		            parse_node (iter, tileset_global_properties, tileset_image_properties);
+		        }
+		        this.indent--;
+		    }
 
-	TileSet.Data data;
-	public RegularTile[,] tile;
-	/** Array fuer die einzelnen Tiles */	
-	//private Tile[,]	 tiles;
+			/**
+			 * 
+			 */
+		    private void parse_properties (Xml.Node* node, Gee.HashMap<string, string> properties) {
+		    	//print("\tbeginne Werte zu parsen\n");
+		        // Loop over the passed node's properties (attributes)
+		        for (Xml.Attr* prop = node->properties; prop != null; prop = prop->next) {
+		            string attr_name = prop->name;
+		            // Notice the ->children which points to a Node*
+		            // (Attr doesn't feature content)
+		            string attr_content = prop->children->content;
 
-	/**
-	 * Konstruktor
-	 */
-	public TileSet() {
-		print("Erstelle TileSet Objekt\n");
-		//tiles = new Tile[,];
-	}
-	/**
-	 * Dekonstruktor
-	 */
-	~TileSet() {
-		print("Lösche TileSet Objekt\n");
-	}
-	public void loadFromPath(string path) {
-	
-		var xml = new XML ();
-		data = xml.getDataFromFile(path);
-		loadTiles();
-	}
-
-	public uint getTotalWidth() {
-		return data.width;
-	}
-
-	public uint getTotalHeight() {
-		return data.height;
-	}
-
-	public uint getTileWidth() {
-		return data.tilewidth;
-	}
-
-	public uint getTileHeight() {
-		return data.tileheight;
-	}
-	public uint getCountY() {
-		return (int) getTotalHeight() / getTileHeight();
-	}
-
-	public uint getCountX() {
-		return (int) getTotalWidth() / getTileWidth();
-	}
-
-	private void loadTiles() {
-		Texture tex = new Texture();
-		tex.loadFromFile("./data/tileset/"+getSource());
-		int count_y = (int) getCountY();
-		int count_x = (int) getCountX();
-		int split_width = (int) getTileWidth();
-		int split_height = (int) getTileHeight();
-		tile = new RegularTile[getCountY(),getCountX()];
-		Pixbuf pxb = tex.get_Pixbuf();
-
-		for(int y = 0; y < count_y; y++) {
-			for(int x = 0; x < count_x; x++) {
-				Pixbuf split = new Pixbuf(Gdk.Colorspace.RGB, pxb.get_has_alpha(), pxb.get_bits_per_sample(), split_width, split_height);
-				//print("count_y: %i count_x:%i split_width:%i split_height:%i ", count_y, count_x, split_width, split_height);
-				pxb.copy_area((int) split_width*x, (int) split_height*y, (int) split_width, (int) split_height, split, 0, 0);
-				tile[y,x] = new RegularTile.FromPixbuf(split);
-			}
+					print_indent (attr_name, attr_content, '|');
+					properties.set(attr_name, attr_content);
+		        }
+		    }
 		}
-		print("Tiles zerteilt\n");
-	}
 
-	/**
-	 * Gibt alle Werte des TileSets auf der Konsole aus
-	 */
-	public void printValues() {
-		print("name: %s\n", data.name);
-		print("tilewidth: %u\n", data.tilewidth);
-		print("tileheight: %u\n", data.tileheight);
-		print("source: %s\n", data.source);
-		print("trans: %s\n", data.trans);
-		print("width: %u\n", data.width);
-		print("height: %u\n", data.height);
-	}
+		/**
+		 * Struktur fuer TileSets
+		 */
+		public struct Data {
+			/**
+			 * Name des TileSets.
+			 */
+			public string name;
+			/**
+			 * Breite eines Tiles
+			 */
+			public uint tilewidth;
+			/**
+			 * Hoehe eines Tiles
+			 */
+			public uint tileheight;
+			/**
+			 * Dateiname des TileSets
+			 */
+			public string source;
+			/**
+			 * Transparente Farbe im TileSet
+			 */
+			public string trans;
+			/**
+			 * Gesamtbreite des TileSets
+			 */
+			public uint width;
+			/**
+			 * Gesamthoehe des TileSets
+			 */
+			public uint height;
+		}
 
-	/**
-	 * Gibt den Namen des TileSets zurück
-	 * @return Name des TileSets
-	 */
-	public string getName() {
-		return data.name;
-	}
+		TileSet.Data data;
+		public RegularTile[,] tile;
+		/** Array fuer die einzelnen Tiles */	
+		//private Tile[,]	 tiles;
 
-	/**
-	 * Gibt den Sourcenamen des TileSets zurück
-	 * @return source des TileSets
-	 */
-	public string getSource() {
-		return data.source;
+		/**
+		 * Konstruktor
+		 */
+		public TileSet() {
+			print("Erstelle TileSet Objekt\n");
+			//tiles = new Tile[,];
+		}
+		/**
+		 * Dekonstruktor
+		 */
+		~TileSet() {
+			print("Lösche TileSet Objekt\n");
+		}
+		public void loadFromPath(string path) {
+		
+			var xml = new XML ();
+			data = xml.getDataFromFile(path);
+			loadTiles();
+		}
+
+		public uint getTotalWidth() {
+			return data.width;
+		}
+
+		public uint getTotalHeight() {
+			return data.height;
+		}
+
+		public uint getTileWidth() {
+			return data.tilewidth;
+		}
+
+		public uint getTileHeight() {
+			return data.tileheight;
+		}
+		public uint getCountY() {
+			return (int) getTotalHeight() / getTileHeight();
+		}
+
+		public uint getCountX() {
+			return (int) getTotalWidth() / getTileWidth();
+		}
+
+		private void loadTiles() {
+			Texture tex = new Texture();
+			tex.loadFromFile("./data/tileset/"+getSource());
+			int count_y = (int) getCountY();
+			int count_x = (int) getCountX();
+			int split_width = (int) getTileWidth();
+			int split_height = (int) getTileHeight();
+			tile = new RegularTile[getCountY(),getCountX()];
+			Pixbuf pxb = tex.get_Pixbuf();
+
+			for(int y = 0; y < count_y; y++) {
+				for(int x = 0; x < count_x; x++) {
+					Pixbuf split = new Pixbuf(Gdk.Colorspace.RGB, pxb.get_has_alpha(), pxb.get_bits_per_sample(), split_width, split_height);
+					//print("count_y: %i count_x:%i split_width:%i split_height:%i ", count_y, count_x, split_width, split_height);
+					pxb.copy_area((int) split_width*x, (int) split_height*y, (int) split_width, (int) split_height, split, 0, 0);
+					tile[y,x] = new RegularTile.FromPixbuf(split);
+				}
+			}
+			print("Tiles zerteilt\n");
+		}
+
+		/**
+		 * Gibt alle Werte des TileSets auf der Konsole aus
+		 */
+		public void printValues() {
+			print("name: %s\n", data.name);
+			print("tilewidth: %u\n", data.tilewidth);
+			print("tileheight: %u\n", data.tileheight);
+			print("source: %s\n", data.source);
+			print("trans: %s\n", data.trans);
+			print("width: %u\n", data.width);
+			print("height: %u\n", data.height);
+		}
+
+		/**
+		 * Gibt den Namen des TileSets zurück
+		 * @return Name des TileSets
+		 */
+		public string getName() {
+			return data.name;
+		}
+
+		/**
+		 * Gibt den Sourcenamen des TileSets zurück
+		 * @return source des TileSets
+		 */
+		public string getSource() {
+			return data.source;
+		}
 	}
 }

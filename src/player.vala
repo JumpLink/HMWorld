@@ -13,42 +13,44 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-
-/**
- * Klasse fuer das Spielerobjekt
- */
-public class Player : Entity {
+using HMP;
+namespace HMP {
 	/**
-	 * Name des Spielers
+	 * Klasse fuer das Spielerobjekt
 	 */
-	public string name;
+	public class Player : Entity {
+		/**
+		 * Name des Spielers
+		 */
+		public string name;
 
-	/**
-	 * Inventar
-	 */
-	public Inventory tools;
+		/**
+		 * Inventar
+		 */
+		public Inventory tools;
 
-	/**
-	 * Karte, auf der sich der Spieler befindet.
-	 */
-	public Map map;
+		/**
+		 * Karte, auf der sich der Spieler befindet.
+		 */
+		public Map map;
 
-	/**
-	 * Position des Spielers
-	 */
-	public float x;
-	public float y;
+		/**
+		 * Position des Spielers
+		 */
+		public float x;
+		public float y;
 
-	/**
-	 * Ausrichtung des Spielers
-	 */
-	public Direction direction;
+		/**
+		 * Ausrichtung des Spielers
+		 */
+		public Direction direction;
 
-	/**
-	 * Konstruktor
-	 */
-	public Player() {
-		this.name = "foobert";
-		tools = new Inventory ();
+		/**
+		 * Konstruktor
+		 */
+		public Player() {
+			this.name = "foobert";
+			tools = new Inventory ();
+		}
 	}
 }

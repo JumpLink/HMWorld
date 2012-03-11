@@ -22,41 +22,44 @@ using Xml;
 using Xml.XPath;
 using Gee;
 
-/**
- * Klasse fuer XML-Operationen
- */
-class HMPXML {
-    // Line indentation
-    protected int indent = 0;
-    
+using HMP;
+namespace HMP {
     /**
-     * Konstrukter
+     * Klasse fuer XML-Operationen
      */
-    public HMPXML() {
-    	print("Erstelle HMPXml-Klasse\n");
-    	// Initialisation, not instantiation since the parser is a static class
-    	Parser.init ();
-    	// Beispiel
-		//string simple_xml = HMPXml.create_simple_xml ();
-		//print ("Simple XML is:\n%s\n", simple_xml);
-    }
-    
-    /**
-     * Dekonstrukter
-     */
-    ~HMPXML() {
-		// Do the parser cleanup to free the used memory
-		Parser.cleanup ();
-    }
+    class XML {
+        // Line indentation
+        protected int indent = 0;
+        
+        /**
+         * Konstrukter
+         */
+        public XML() {
+        	print("Erstelle HMPXml-Klasse\n");
+        	// Initialisation, not instantiation since the parser is a static class
+        	Parser.init ();
+        	// Beispiel
+    		//string simple_xml = HMPXml.create_simple_xml ();
+    		//print ("Simple XML is:\n%s\n", simple_xml);
+        }
+        
+        /**
+         * Dekonstrukter
+         */
+        ~XML() {
+    		// Do the parser cleanup to free the used memory
+    		Parser.cleanup ();
+        }
 
-	/**
-	 * Gibt einen Wert der XML aus
-	 * @param node Nodename
-	 * @param content Wert vom Nodename
-	 * @param token Wert der der Ausgabe vorangestellt wird
-	 */
-    protected void print_indent (string node, string content, char token = '+') {
-        string indent = string.nfill (this.indent * 2, ' ');
-        print ("%s%c%s: %s\n", indent, token, node, content);
+    	/**
+    	 * Gibt einen Wert der XML aus
+    	 * @param node Nodename
+    	 * @param content Wert vom Nodename
+    	 * @param token Wert der der Ausgabe vorangestellt wird
+    	 */
+        protected void print_indent (string node, string content, char token = '+') {
+            string indent = string.nfill (this.indent * 2, ' ');
+            print ("%s%c%s: %s\n", indent, token, node, content);
+        }
     }
 }

@@ -13,7 +13,6 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-
 /**
  * Einfache Klasse fuer Vektoren und deren Mathematik.
  */

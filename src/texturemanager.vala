@@ -13,4 +13,7 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
+using HMP;
+namespace HMP {
 
+}

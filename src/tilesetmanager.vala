@@ -15,111 +15,116 @@
  */
 using Gee;
 using GLib;
-/**
- * Klasse fuer TileSetManager
- */
-public class TileSetManager {
-	Gee.List<TileSet> tileset;
-	string path;
+
+using HMP;
+namespace HMP {
 	/**
-	 * Konstruktor
+	 * Klasse fuer TileSetManager
 	 */
-	public TileSetManager() {
-		print("Erstelle TileSet\n");
-		tileset = new Gee.ArrayList<TileSet>();
-	}
-	/**
-	 * Dekonstruktor
-	 */
-	~TileSetManager() {
-		print("Lösche TileSet\n");
-	}
+	public class TileSetManager {
+		Gee.List<TileSet> tileset;
+		string path;
+		/**
+		 * Konstruktor
+		 */
+		public TileSetManager(string path = "./data/tileset/") {
+			print("Erstelle TileSetManager\n");
+			tileset = new Gee.ArrayList<TileSet>();
+			loadAllFromPath(path);
+		}
+		/**
+		 * Dekonstruktor
+		 */
+		~TileSetManager() {
+			print("Lösche TileSetManager\n");
+		}
 
-	/**
-	 * Ladet alle Tilesets aus dem Verzeichniss "path"
-	 *
-	 * Dabei werden alle Dateien mit der Endung .tsx berücksichtigt.
-	 * Das Parsen der XML wird von der Klasse TileSet übernommen.
-	 * Anschließend wird jedes TileSet in eine ArrayList gespeichert.
-	 *
-	 * @param path der Ordnername aus dem gelesen werden soll.
-	 */
-	public void loadAllFromPath(string path = "./data/tileset") {
-		this.path = path;
-		File directory = File.new_for_path(path);
-		FileEnumerator enumerator;
-	
-	    try {
-	    	FileInfo file_info;
-	    	// 'Oeffnet' das Verzeichnis path
-	        directory = File.new_for_path (path);
-	        // Ladet die Dateien die sich im Verzeichnis path befinden
-	        enumerator = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0);
-	        // Durchläuft alle gefundenen Dateien und werte desen Informationen zur Weiterverarbeitung aus
-	        while ((file_info = enumerator.next_file ()) != null) {
-	        	string filename = file_info.get_name ();
-	        	string extension;
+		/**
+		 * Ladet alle Tilesets aus dem Verzeichniss "path"
+		 *
+		 * Dabei werden alle Dateien mit der Endung .tsx berücksichtigt.
+		 * Das Parsen der XML wird von der Klasse TileSet übernommen.
+		 * Anschließend wird jedes TileSet in eine ArrayList gespeichert.
+		 *
+		 * @param path der Ordnername aus dem gelesen werden soll.
+		 */
+		private void loadAllFromPath(string path = "./data/tileset/") {
+			this.path = path;
+			File directory = File.new_for_path(path);
+			FileEnumerator enumerator;
+		
+		    try {
+		    	FileInfo file_info;
+		    	// 'Oeffnet' das Verzeichnis path
+		        directory = File.new_for_path (path);
+		        // Ladet die Dateien die sich im Verzeichnis path befinden
+		        enumerator = directory.enumerate_children (FileAttribute.STANDARD_NAME, 0);
+		        // Durchläuft alle gefundenen Dateien und werte desen Informationen zur Weiterverarbeitung aus
+		        while ((file_info = enumerator.next_file ()) != null) {
+		        	string filename = file_info.get_name ();
+		        	string extension;
 
-	        	print ("%s\n", filename);
-	        	//print ("Content type: %s\n", file_info.get_content_type ());
-	        	//extrahiert die Dateiendung
-	        	extension = filename.substring(filename.last_index_of (".", 0), -1);
-	        	print ("extension: %s\n", extension);
-	            if (extension == ".tsx") {
-	            	TileSet tmptileset = new TileSet();
-	            	tmptileset.loadFromPath(path+filename);
-	            	tileset.add(tmptileset);
-	            }
-	        }
+		        	print ("%s\n", filename);
+		        	//print ("Content type: %s\n", file_info.get_content_type ());
+		        	//extrahiert die Dateiendung
+		        	extension = filename.substring(filename.last_index_of (".", 0), -1);
+		        	print ("extension: %s\n", extension);
+		            if (extension == ".tsx") {
+		            	TileSet tmptileset = new TileSet();
+		            	tmptileset.loadFromPath(path+filename);
+		            	tileset.add(tmptileset);
+		            }
+		        }
 
-	    } catch (Error e) {
-	        error ("Error: %s\n", e.message);
-	        //return 1;
-	    }
-	}
-	/**
-	 * Gibt das TileSet mit dem Namen "name" zurück
-	 *
-	 * @param name name des gesuchten TileSets
-	 * @return Bei Erfolg das gefundene TileSet, sonst ein neues Objekt TileSet
-	 */
-	public TileSet getFromName(string name) {
-		foreach (TileSet ts in tileset)
-				if (ts.getName() == name) {
-					print("TileSet gefunden!\n");
-					return ts;
-				}
-					
-		return new TileSet();
-	}
+		    } catch (Error e) {
+		        error ("Error: %s\n", e.message);
+		        //return 1;
+		    }
+		}
+		/**
+		 * Gibt das TileSet mit dem Namen "name" zurück
+		 *
+		 * @param name name des gesuchten TileSets
+		 * @return Bei Erfolg das gefundene TileSet, sonst ein neues Objekt TileSet
+		 */
+		public TileSet getFromName(string name) {
+			foreach (TileSet ts in tileset)
+					if (ts.getName() == name) {
+						print("TileSet gefunden!\n");
+						return ts;
+					}
+						
+			return new TileSet();
+		}
 
-	/**
-	 * Gibt das TileSet mit dem Namen "name" zurück
-	 *
-	 * @param source Ort des gesuchten TileSets
-	 * @return Bei Erfolg das gefundene TileSet, sonst ein neues Objekt TileSet
-	 */
-	public TileSet getFromSource(string source) {
-		foreach (TileSet ts in tileset)
-				if (ts.getSource() == source) {
-					print("TileSet gefunden!\n");
-					return ts;
-				}
-					
-		return new TileSet();
-	}
+		/**
+		 * Gibt das TileSet mit dem Namen "name" zurück
+		 *
+		 * @param source Ort des gesuchten TileSets
+		 * @return Bei Erfolg das gefundene TileSet, sonst ein neues Objekt TileSet
+		 */
+		public TileSet getFromSource(string source) {
+			foreach (TileSet ts in tileset)
+					if (ts.getSource() == source) {
+						print("TileSet gefunden!\n");
+						return ts;
+					}
+						
+			return new TileSet();
+		}
 
-	/*public TileSet loadFromPath(string filename) {
+		/*public TileSet loadFromPath(string filename) {
 
-		return loadFromPath(path+filename);
-	}*/
+			return loadFromPath(path+filename);
+		}*/
 
-	/**
-	 * Gibt die Werte aller TileSets in der Liste aus.
-	 */
-	public void printAll() {
-		foreach (TileSet ts in tileset) {
-				ts.printValues ();
-    	}
+		/**
+		 * Gibt die Werte aller TileSets in der Liste aus.
+		 */
+		public void printAll() {
+			foreach (TileSet ts in tileset) {
+					ts.printValues ();
+	    	}
+		}
 	}
 }

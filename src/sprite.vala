@@ -13,20 +13,22 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-
-/**
- * Allgemeine Klasse fuer Tiles
- */
-public class Sprite {
+using HMP;
+namespace HMP {
 	/**
-	 * Spritetyp
+	 * Allgemeine Klasse fuer Tiles
 	 */
-	public uint type;
+	public class Sprite {
+		/**
+		 * Spritetyp
+		 */
+		public uint type;
 
-	/**
-	 * Konstruktor 
-	 */
-	public Sprite() {
-		type = 0;
+		/**
+		 * Konstruktor 
+		 */
+		public Sprite() {
+			type = 0;
+		}
 	}
 }

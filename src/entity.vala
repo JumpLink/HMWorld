@@ -13,21 +13,23 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-
-/**
- * Allgemeine Entityklasse.
- * hiervon erben Spieler, NPCs und andere Dynamische Objekte.
- */
-public class Entity {
+using HMP;
+namespace HMP {
 	/**
-	 * Position des Entities
+	 * Allgemeine Entityklasse.
+	 * hiervon erben Spieler, NPCs und andere Dynamische Objekte.
 	 */
-	Vector pos;
+	public class Entity {
+		/**
+		 * Position des Entities
+		 */
+		Vector pos;
 
-	/**
-	 * Konstruktor
-	 */
-	public Entity() {
-		pos = new Vector(2);
+		/**
+		 * Konstruktor
+		 */
+		public Entity() {
+			pos = new Vector(2);
+		}
 	}
 }

@@ -5,10 +5,10 @@
 VERSION       = 0.1
 
 # Name des Pakets
-PKG_NAME      = HMP
+PKG_NAME      = HMP-ALL
 
 # Quelldateien
-SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala inventory.vala tool.vala emptyHands.vala #spriteset.vala sprite.vala 
+SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala mapmanager.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala inventory.vala tool.vala emptyHands.vala spriteset.vala sprite.vala 
 
 # ausfuehrbares Ziel
 TARGET        = hmp
@@ -37,7 +37,7 @@ VC            = valac
 # Valadoc
 VD            = valadoc
 # Valadoc Driver
-VDD           = 0.14.0
+VDD           = 0.15.3
 
 # Bazaar
 BZR           = bzr
@@ -104,12 +104,12 @@ c: dirs $(SRC_FILES)
 
 doc: $(SRC_FILES)
 	@echo "Generating Documentation..."
-	@$(VD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION)
+	@$(VD) --driver $(VDD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION)
 	@gnome-open ./doc/index.html
 
 doc-internal: $(SRC_FILES)
 	@echo "Generating Documentation..."
-	@$(VD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION) --private --internal
+	@$(VD) --driver $(VDD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION) --private --internal
 	@gnome-open ./doc/index.html
 
 doc-publish: $(SRC_FILES)

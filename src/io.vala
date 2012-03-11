@@ -19,307 +19,312 @@ using GLU;
 using GLUT;
 using SDL;
 using SDLImage;
-TileSetManager tm;
-TileSet tileset;
 
-class IOlong {
+using HMP;
+namespace HMP {
+	HMP.TileSetManager tm;
+	HMP.TileSet tileset;
+	HMP.MapManager mm;
+	HMP.Map map;
 
-	public IOlong() {
-		// Tests!! TODO
-		//t.loadFromFile("./data/tileset/Stadt - Sommer.png");
-		//t.bindTexture ();
-		tm = new TileSetManager();
-		tm.loadAllFromPath("./data/tileset/");
-		//tm.get("Stadt - Sommer").tile[0,0].tex.bindTexture();
-		tileset = tm.getFromName("Stadt - Sommer");
-		tileset.printValues();
-		
-		//tile.tex.bindTexture();
-	}
+	class IOlong {
 
-	/**
-	 * Setzen der Projektionsmatrix.
-	 * Setzt die Projektionsmatrix fuer die Szene.
-	 *
-	 * @param aspect Seitenverhaeltnis des Anzeigefensters (In).
-	 */
-	static void setProjection (double aspect)
-	{
-		/* Nachfolgende Operationen beeinflussen Projektionsmatrix */
-		glMatrixMode (GL_PROJECTION);
-		/* Matrix zuruecksetzen - Einheitsmatrix laden */
-		glLoadIdentity ();
+		public IOlong() {
+			tm = new HMP.TileSetManager("./data/tileset/");
+			tileset = tm.getFromName("Stadt - Sommer");
+			tileset.printValues();
+			mm = new HMP.MapManager("./data/map/");
+			map = mm.getFromFilename("testmap.tmx");
+			//map.printValues();
 
-		/* Ortho-Projektion, Koordinatensystem bleibt quadratisch */
-		if (aspect <= 1) {
-			gluOrtho2D (-1.0, 1.0,                    /* links, rechts */
-				        -1.0 / aspect, 1.0 / aspect); /* unten, oben */
-		} else {
-			gluOrtho2D (-1.0 * aspect, 1.0 * aspect,  /* links, rechts */
-				        -1.0, 1.0);                   /* unten, oben */
+			
+			//tile.tex.bindTexture();
 		}
-	}
 
-	/**
-	 * Timer-Callback.
-	 * Initiiert Berechnung der aktuellen Position und Farben und anschliessendes
-	 * Neuzeichnen, setzt sich selbst erneut als Timer-Callback.
-	 *
-	 * @param lastCallTime Zeitpunkt, zu dem die Funktion als Timer-Funktion
-	 *   registriert wurde (In).
-	 */
-	static void cbTimer (int lastCallTime)
-	{
-		/* Seit dem Programmstart vergangene Zeit in Millisekunden */
-		int thisCallTime = glutGet (GLUT_ELAPSED_TIME);
-		/* Seit dem letzten Funktionsaufruf vergangene Zeit in Sekunden */
-		//double interval = (double) (thisCallTime - lastCallTime) / 1000.0f;
+		/**
+		 * Setzen der Projektionsmatrix.
+		 * Setzt die Projektionsmatrix fuer die Szene.
+		 *
+		 * @param aspect Seitenverhaeltnis des Anzeigefensters (In).
+		 */
+		static void setProjection (double aspect)
+		{
+			/* Nachfolgende Operationen beeinflussen Projektionsmatrix */
+			glMatrixMode (GL_PROJECTION);
+			/* Matrix zuruecksetzen - Einheitsmatrix laden */
+			glLoadIdentity ();
 
-		/* neue Position berechnen (zeitgesteuert) */
-		//doLogic (interval);
+			/* Ortho-Projektion, Koordinatensystem bleibt quadratisch */
+			if (aspect <= 1) {
+				gluOrtho2D (-1.0, 1.0,                    /* links, rechts */
+					        -1.0 / aspect, 1.0 / aspect); /* unten, oben */
+			} else {
+				gluOrtho2D (-1.0 * aspect, 1.0 * aspect,  /* links, rechts */
+					        -1.0, 1.0);                   /* unten, oben */
+			}
+		}
 
-		/* Wieder als Timer-Funktion registrieren, falls nicht pausiert */
-		//if(!getStatus()->paused)
-			glutTimerFunc (1000 / TIMER_CALLS_PS, cbTimer, thisCallTime);
+		/**
+		 * Timer-Callback.
+		 * Initiiert Berechnung der aktuellen Position und Farben und anschliessendes
+		 * Neuzeichnen, setzt sich selbst erneut als Timer-Callback.
+		 *
+		 * @param lastCallTime Zeitpunkt, zu dem die Funktion als Timer-Funktion
+		 *   registriert wurde (In).
+		 */
+		static void cbTimer (int lastCallTime)
+		{
+			/* Seit dem Programmstart vergangene Zeit in Millisekunden */
+			int thisCallTime = glutGet (GLUT_ELAPSED_TIME);
+			/* Seit dem letzten Funktionsaufruf vergangene Zeit in Sekunden */
+			//double interval = (double) (thisCallTime - lastCallTime) / 1000.0f;
 
-		/* Neuzeichnen anstossen */
-		glutPostRedisplay ();
-	}
+			/* neue Position berechnen (zeitgesteuert) */
+			//doLogic (interval);
 
-	/**
-	 * Zeichen-Callback.
-	 * Loescht die Buffer, ruft das Zeichnen der Szene auf und tauscht den Front-
-	 * und Backbuffer.
-	 */
-	static void cbDisplay ()
-	{
-		/* Colorbuffer leeren */
-		glClear (GL_COLOR_BUFFER_BIT);
+			/* Wieder als Timer-Funktion registrieren, falls nicht pausiert */
+			//if(!getStatus()->paused)
+				glutTimerFunc (1000 / TIMER_CALLS_PS, cbTimer, thisCallTime);
 
-		/* Nachfolgende Operationen beeinflussen Modelviewmatrix */
-		glMatrixMode (GL_MODELVIEW);
+			/* Neuzeichnen anstossen */
+			glutPostRedisplay ();
+		}
 
-		/* Szene zeichnen */
-		// OpenGL rendering goes here...
-		    glBegin (GL_QUADS);
-			glTexCoord2f(0,0);
-		        glVertex3f ( -1.0f,  1.0f, 0.0f);
-			glTexCoord2f(1,0);
-		        glVertex3f (  1.0f,  1.0f, 0.0f);
-			glTexCoord2f(1,1);
-		        glVertex3f (  1.0f, -1.0f, 0.0f);
-			glTexCoord2f(0,1);
-		        glVertex3f ( -1.0f, -1.0f, 0.0f);
-		    glEnd ();
+		/**
+		 * Zeichen-Callback.
+		 * Loescht die Buffer, ruft das Zeichnen der Szene auf und tauscht den Front-
+		 * und Backbuffer.
+		 */
+		static void cbDisplay ()
+		{
+			/* Colorbuffer leeren */
+			glClear (GL_COLOR_BUFFER_BIT);
 
-		/* Szene anzeigen / Buffer tauschen */
-		glutSwapBuffers ();
-	}
-	static void cbDisplayTests ()
-	{
-		/* Colorbuffer leeren */
-		glClear (GL_COLOR_BUFFER_BIT);
+			/* Nachfolgende Operationen beeinflussen Modelviewmatrix */
+			glMatrixMode (GL_MODELVIEW);
 
-		/* Nachfolgende Operationen beeinflussen Modelviewmatrix */
-		glMatrixMode (GL_MODELVIEW);
+			/* Szene zeichnen */
+			// OpenGL rendering goes here...
+			    glBegin (GL_QUADS);
+				glTexCoord2f(0,0);
+			        glVertex3f ( -1.0f,  1.0f, 0.0f);
+				glTexCoord2f(1,0);
+			        glVertex3f (  1.0f,  1.0f, 0.0f);
+				glTexCoord2f(1,1);
+			        glVertex3f (  1.0f, -1.0f, 0.0f);
+				glTexCoord2f(0,1);
+			        glVertex3f ( -1.0f, -1.0f, 0.0f);
+			    glEnd ();
 
-		/* Szene zeichnen */
-		tileset.tile[0,0].tex.bindTexture();
-		// OpenGL rendering goes here...
-		    glBegin (GL_QUADS);
-			glTexCoord2f(0,0);
-		        glVertex3f ( -0.0f,  1.0f, 0.0f);
-			glTexCoord2f(1,0);
-		        glVertex3f (  1.0f,  1.0f, 0.0f);
-			glTexCoord2f(1,1);
-		        glVertex3f (  1.0f, -0.0f, 0.0f);
-			glTexCoord2f(0,1);
-		        glVertex3f ( -0.0f, -0.0f, 0.0f);
-		    glEnd ();
+			/* Szene anzeigen / Buffer tauschen */
+			glutSwapBuffers ();
+		}
+		static void cbDisplayTests ()
+		{
+			/* Colorbuffer leeren */
+			glClear (GL_COLOR_BUFFER_BIT);
 
-		tileset.tile[0,9].tex.bindTexture();
-		    glBegin (GL_QUADS);
-			glTexCoord2f(0,0);
-		        glVertex3f ( -1.0f,  0.0f, 0.0f);
-			glTexCoord2f(1,0);
-		        glVertex3f (  0.0f,  0.0f, 0.0f);
-			glTexCoord2f(1,1);
-		        glVertex3f (  0.0f, -1.0f, 0.0f);
-			glTexCoord2f(0,1);
-		        glVertex3f ( -1.0f, -1.0f, 0.0f);
-		    glEnd ();
+			/* Nachfolgende Operationen beeinflussen Modelviewmatrix */
+			glMatrixMode (GL_MODELVIEW);
 
-		/* Szene anzeigen / Buffer tauschen */
-		glutSwapBuffers ();
-	}
+			/* Szene zeichnen */
+			tileset.tile[0,0].tex.bindTexture();
+			// OpenGL rendering goes here...
+			    glBegin (GL_QUADS);
+				glTexCoord2f(0,0);
+			        glVertex3f ( -0.0f,  1.0f, 0.0f);
+				glTexCoord2f(1,0);
+			        glVertex3f (  1.0f,  1.0f, 0.0f);
+				glTexCoord2f(1,1);
+			        glVertex3f (  1.0f, -0.0f, 0.0f);
+				glTexCoord2f(0,1);
+			        glVertex3f ( -0.0f, -0.0f, 0.0f);
+			    glEnd ();
 
-	/**
-	 * Callback fuer Aenderungen der Fenstergroesse.
-	 * Initiiert Anpassung der Projektionsmatrix an veränderte Fenstergroesse.
-	 * @param w Fensterbreite (In).
-	 * @param h Fensterhoehe (In).
-	 */
-	static void cbReshape (int w, int h)
-	{
-		/* Das ganze Fenster ist GL-Anzeigebereich */
-		glViewport (0, 0, (GLsizei) w, (GLsizei) h);
+			tileset.tile[0,9].tex.bindTexture();
+			    glBegin (GL_QUADS);
+				glTexCoord2f(0,0);
+			        glVertex3f ( -1.0f,  0.0f, 0.0f);
+				glTexCoord2f(1,0);
+			        glVertex3f (  0.0f,  0.0f, 0.0f);
+				glTexCoord2f(1,1);
+			        glVertex3f (  0.0f, -1.0f, 0.0f);
+				glTexCoord2f(0,1);
+			        glVertex3f ( -1.0f, -1.0f, 0.0f);
+			    glEnd ();
 
-		/* Anpassen der Projektionsmatrix an das Seitenverhältnis des Fensters */
-		setProjection ((double) w / (double) h);
-		print("- Fensterinhalt nach groesse angepasst -");
-	}
+			/* Szene anzeigen / Buffer tauschen */
+			glutSwapBuffers ();
+		}
 
-	/**
-	 * Verarbeitung eines Tasturereignisses.
-	 * q,ESC: Beenden
-	 *
-	 * @param key Taste, die das Ereignis ausgeloest hat. (ASCII-Wert oder WERT des
-	 *        GLUT_KEY_<SPECIAL>.
-	 * @param status Status der Taste, true=gedrueckt, false=losgelassen.
-	 * @param isSpecialKey ist die Taste eine Spezialtaste?
-	 * @param x x-Position des Mauszeigers zum Zeitpunkt der Ereignisausloesung.
-	 * @param y y-Position des Mauszeigers zum Zeitpunkt der Ereignisausloesung.
-	 */
-	static void handleKeyboardEvent (int key, GL.GLenum status, bool isSpecialKey, int x, int y)
-	{
-		/* Taste gedrueckt */
-		if (status == GLUT_DOWN) {
-			/* nicht-Spezialtasten */
-			if (!isSpecialKey) {
-				switch (key) {
-					/* Programm beenden */
-					case 'q':
-					case 'Q':
-					case ESC:
-						//cleanupLogic();
-						//exit (0);
-						//TODO Callback für beenden einrichten
-						print("Jetzt sollte egtl. das Programm beendet werden..");
-						break;
+		/**
+		 * Callback fuer Aenderungen der Fenstergroesse.
+		 * Initiiert Anpassung der Projektionsmatrix an veränderte Fenstergroesse.
+		 * @param w Fensterbreite (In).
+		 * @param h Fensterhoehe (In).
+		 */
+		static void cbReshape (int w, int h)
+		{
+			/* Das ganze Fenster ist GL-Anzeigebereich */
+			glViewport (0, 0, (GLsizei) w, (GLsizei) h);
+
+			/* Anpassen der Projektionsmatrix an das Seitenverhältnis des Fensters */
+			setProjection ((double) w / (double) h);
+			print("- Fensterinhalt nach groesse angepasst -");
+		}
+
+		/**
+		 * Verarbeitung eines Tasturereignisses.
+		 * q,ESC: Beenden
+		 *
+		 * @param key Taste, die das Ereignis ausgeloest hat. (ASCII-Wert oder WERT des
+		 *        GLUT_KEY_<SPECIAL>.
+		 * @param status Status der Taste, true=gedrueckt, false=losgelassen.
+		 * @param isSpecialKey ist die Taste eine Spezialtaste?
+		 * @param x x-Position des Mauszeigers zum Zeitpunkt der Ereignisausloesung.
+		 * @param y y-Position des Mauszeigers zum Zeitpunkt der Ereignisausloesung.
+		 */
+		static void handleKeyboardEvent (int key, GL.GLenum status, bool isSpecialKey, int x, int y)
+		{
+			/* Taste gedrueckt */
+			if (status == GLUT_DOWN) {
+				/* nicht-Spezialtasten */
+				if (!isSpecialKey) {
+					switch (key) {
+						/* Programm beenden */
+						case 'q':
+						case 'Q':
+						case ESC:
+							//cleanupLogic();
+							//exit (0);
+							//TODO Callback für beenden einrichten
+							print("Jetzt sollte egtl. das Programm beendet werden..");
+							break;
+					}
 				}
 			}
 		}
-	}
 
-	/**
-	 * Callback fuer Tastendruck.
-	 * Ruft Ereignisbehandlung fuer Tastaturereignis auf.
-	 *
-	 * @param key betroffene Taste (In).
-	 * @param x x-Position der Maus zur Zeit des Tastendrucks (In).
-	 * @param y y-Position der Maus zur Zeit des Tastendrucks (In).
-	 */
-	static void cbKeyboard ( uchar key, int x, int y)
-	{
-		handleKeyboardEvent (key, GLUT_DOWN, false, x, y);
-	}
-	
-	/**
-	 * Callback fuer Druck auf Spezialtasten.
-	 * Ruft Ereignisbehandlung fuer Tastaturereignis auf.
-	 *
-	 * @param key betroffene Taste (In).
-	 * @param x x-Position der Maus zur Zeit des Tastendrucks (In).
-	 * @param y y-Position der Maus zur Zeit des Tastendrucks (In).
-	 */
-	static void cbSpecial (int key, int x, int y)
-	{
-		handleKeyboardEvent (key, GLUT_DOWN, true, x, y);
-	}
-
-	/**
-	 * Registrierung der GLUT-Callback-Routinen.
-	 */
-	static void registerCallbacks ()
-	{
-		/* Tasten-Druck-Callback - wird ausgefuehrt, wenn eine Taste gedrueckt wird */
-		glutKeyboardFunc (cbKeyboard);
-
-		/* Spezialtasten-Druck-Callback - wird ausgefuehrt, wenn Spezialtaste
-		 * (F1 - F12, Links, Rechts, Oben, Unten, Bild-Auf, Bild-Ab, Pos1, Ende oder
-		 * Einfuegen) gedrueckt wird */
-		glutSpecialFunc (cbSpecial);
-
-		/* Mouse-Button-Callback (wird ausgefuehrt, wenn eine Maustaste
-		 * gedrueckt oder losgelassen wird) */
-		//glutMouseFunc (cbMouseButton);
-
-		/* Mausbewegungs-Callback bei gedrueckter Taste */
-		//glutMotionFunc (cbMouseMotion);
-
-		/* Timer-Callback - wird einmalig nach msescs Millisekunden ausgefuehrt */
-		glutTimerFunc (1000 / TIMER_CALLS_PS,         /* msecs - bis Aufruf von func */
-					   cbTimer,                       /* func  - wird aufgerufen    */
-					   glutGet (GLUT_ELAPSED_TIME));  /* value - Parameter, mit dem
-													   func aufgerufen wird */
-
-		/* Reshape-Callback - wird ausgefuehrt, wenn neu gezeichnet wird (z.B. nach
-		 * Erzeugen oder Groessenaenderungen des Fensters) */
-		 
-		glutReshapeFunc (cbReshape);
-
-		/* Display-Callback - wird an mehreren Stellen imlizit (z.B. im Anschluss an
-		 * Reshape-Callback) oder explizit (durch glutPostRedisplay) angestossen */
-		//glutDisplayFunc (cbDisplay); TODO
-		glutDisplayFunc (cbDisplayTests);
-	}
-
-	/**
-	 * Initialisiert das Programm (inkl. I/O und OpenGL) und startet die
-	 * Ereignisbehandlung.
-	 *
-	 * @param title Beschriftung des Fensters
-	 * @param width Breite des Fensters
-	 * @param height Hoehe des Fensters
-	 * @return ID des erzeugten Fensters, false im Fehlerfall
-	 */
-	public bool initAndStart (string title, int width, int height)
-	{
-		int windowID = 0;
-		/* Kommandozeile immitieren */
-		int argc = 1;
-		string[] argv = {"cmd"};
-
-		/* Glut initialisieren */
-		glutInit (ref argc, argv);
-
-		/* Initialisieren des Fensters */
-		/* RGB-Framewbuffer, Double-Buffering und z-Buffer anfordern */
-		glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-		glutInitWindowSize (width, height);
-		glutInitWindowPosition (0, 0);
+		/**
+		 * Callback fuer Tastendruck.
+		 * Ruft Ereignisbehandlung fuer Tastaturereignis auf.
+		 *
+		 * @param key betroffene Taste (In).
+		 * @param x x-Position der Maus zur Zeit des Tastendrucks (In).
+		 * @param y y-Position der Maus zur Zeit des Tastendrucks (In).
+		 */
+		static void cbKeyboard ( uchar key, int x, int y)
+		{
+			handleKeyboardEvent (key, GLUT_DOWN, false, x, y);
+		}
 		
-		/* SDL initialisieren */
-		if (SDL.init(SDL.InitFlag.EVERYTHING) != 0) {
-			print("Unable to initialize SDL: %s\n", SDL.get_error());
-			return true;
-		}
-		if (SDLImage.init(0) != 0) {
-			print("Unable to initialize SDL-Image: %s\n", SDLImage.get_error());
-			return true;
+		/**
+		 * Callback fuer Druck auf Spezialtasten.
+		 * Ruft Ereignisbehandlung fuer Tastaturereignis auf.
+		 *
+		 * @param key betroffene Taste (In).
+		 * @param x x-Position der Maus zur Zeit des Tastendrucks (In).
+		 * @param y y-Position der Maus zur Zeit des Tastendrucks (In).
+		 */
+		static void cbSpecial (int key, int x, int y)
+		{
+			handleKeyboardEvent (key, GLUT_DOWN, true, x, y);
 		}
 
-		/* Fenster erzeugen */
-		windowID = glutCreateWindow (title);
+		/**
+		 * Registrierung der GLUT-Callback-Routinen.
+		 */
+		static void registerCallbacks ()
+		{
+			/* Tasten-Druck-Callback - wird ausgefuehrt, wenn eine Taste gedrueckt wird */
+			glutKeyboardFunc (cbKeyboard);
 
-		if (windowID != 0) {
-			/* Logik initialisieren */
-			//initLogic ();
-			/* Szene initialisieren */
-			if (Scene.init ()) {
-				/* Callbacks registrieren */
-				registerCallbacks ();
-				/* Eintritt in die Ereignisschleife */
-				glutMainLoop ();
-			} else {
-				/* Szene konnte nicht initialisiert werden */
-				glutDestroyWindow (windowID);
-				windowID = 0;
+			/* Spezialtasten-Druck-Callback - wird ausgefuehrt, wenn Spezialtaste
+			 * (F1 - F12, Links, Rechts, Oben, Unten, Bild-Auf, Bild-Ab, Pos1, Ende oder
+			 * Einfuegen) gedrueckt wird */
+			glutSpecialFunc (cbSpecial);
+
+			/* Mouse-Button-Callback (wird ausgefuehrt, wenn eine Maustaste
+			 * gedrueckt oder losgelassen wird) */
+			//glutMouseFunc (cbMouseButton);
+
+			/* Mausbewegungs-Callback bei gedrueckter Taste */
+			//glutMotionFunc (cbMouseMotion);
+
+			/* Timer-Callback - wird einmalig nach msescs Millisekunden ausgefuehrt */
+			glutTimerFunc (1000 / TIMER_CALLS_PS,         /* msecs - bis Aufruf von func */
+						   cbTimer,                       /* func  - wird aufgerufen    */
+						   glutGet (GLUT_ELAPSED_TIME));  /* value - Parameter, mit dem
+														   func aufgerufen wird */
+
+			/* Reshape-Callback - wird ausgefuehrt, wenn neu gezeichnet wird (z.B. nach
+			 * Erzeugen oder Groessenaenderungen des Fensters) */
+			 
+			glutReshapeFunc (cbReshape);
+
+			/* Display-Callback - wird an mehreren Stellen imlizit (z.B. im Anschluss an
+			 * Reshape-Callback) oder explizit (durch glutPostRedisplay) angestossen */
+			//glutDisplayFunc (cbDisplay); TODO
+			glutDisplayFunc (cbDisplayTests);
+		}
+
+		/**
+		 * Initialisiert das Programm (inkl. I/O und OpenGL) und startet die
+		 * Ereignisbehandlung.
+		 *
+		 * @param title Beschriftung des Fensters
+		 * @param width Breite des Fensters
+		 * @param height Hoehe des Fensters
+		 * @return ID des erzeugten Fensters, false im Fehlerfall
+		 */
+		public bool initAndStart (string title, int width, int height)
+		{
+			int windowID = 0;
+			/* Kommandozeile immitieren */
+			int argc = 1;
+			string[] argv = {"cmd"};
+
+			/* Glut initialisieren */
+			glutInit (ref argc, argv);
+
+			/* Initialisieren des Fensters */
+			/* RGB-Framewbuffer, Double-Buffering und z-Buffer anfordern */
+			glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+			glutInitWindowSize (width, height);
+			glutInitWindowPosition (0, 0);
+			
+			/* SDL initialisieren */
+			if (SDL.init(SDL.InitFlag.EVERYTHING) != 0) {
+				print("Unable to initialize SDL: %s\n", SDL.get_error());
+				return true;
 			}
-		} else {
-			/* Fenster konnte nicht erzeugt werden */
-		}
+			if (SDLImage.init(0) != 0) {
+				print("Unable to initialize SDL-Image: %s\n", SDLImage.get_error());
+				return true;
+			}
 
-		return windowID != 0;
+			/* Fenster erzeugen */
+			windowID = glutCreateWindow (title);
+
+			if (windowID != 0) {
+				/* Logik initialisieren */
+				//initLogic ();
+				/* Szene initialisieren */
+				if (Scene.init ()) {
+					/* Callbacks registrieren */
+					registerCallbacks ();
+					/* Eintritt in die Ereignisschleife */
+					glutMainLoop ();
+				} else {
+					/* Szene konnte nicht initialisiert werden */
+					glutDestroyWindow (windowID);
+					windowID = 0;
+				}
+			} else {
+				/* Fenster konnte nicht erzeugt werden */
+			}
+
+			return windowID != 0;
+		}
 	}
 }

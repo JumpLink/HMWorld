@@ -13,64 +13,69 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-
-/**
- * Klasse fuer SpriteSets
- */
-public class SpriteSet {
-
+using HMP;
+namespace HMP {
 	/**
-	 * Klasse fuer XML-Operationen
+	 * Klasse fuer SpriteSets
 	 */
-	class XML : HMPXML {
-		//TODO
-	}
+	public class SpriteSet {
 
-	/**
-	 * Struktur fuer SpriteSets
-	 */
-	public struct Data {
-		/** Name des SpriteSets. */
-		public string name;
-		/** Breite eines Sprites */
-		public uint spritewidth;
-		/** Hoehe eines Sprites */
-		public uint spriteheight;
-		/** Dateiname des SpriteSets */
-		public string source;
-		/** Transparente Farbe im SpriteSets */
-		public string trans;
-		/** Gesamtbreite des SpriteSets */
-		public uint width;
-		/** Gesamthoehe des SpriteSets */
-		public uint height;
-	}
+		/**
+		 * Klasse fuer XML-Operationen
+		 */
+		class XML : HMP.XML {
+			//TODO
+		}
 
-	/**
-	 * Struktur fuer TileSets
-	 */
-	public struct Data {
-		/** Name des TileSets. */
-		public string name;
-	}
+		/**
+		 * Struktur fuer SpriteSets
+		 */
+		public struct Data {
+			/**
+			 * Name des SpriteSets.
+			 */
+			public string name;
+			/**
+			 * Breite eines Sprites
+			 */
+			public uint spritewidth;
+			/**
+			 * Hoehe eines Sprites7
+			 */
+			public uint spriteheight;
+			/**
+			 * Dateiname des SpriteSets
+			 */
+			public string source;
+			/**
+			 * Transparente Farbe im SpriteSets
+			 */
+			public string trans;
+			/**
+			 * Gesamtbreite des SpriteSets
+			 */
+			public uint width;
+			/**
+			 * Gesamthoehe des SpriteSets
+			 */
+			public uint height;
+		}
 
-	//SpriteSet.Data data;
-	/**
-	 * Array fuer die einzelnen Tiles
-	 */	
-	private Sprite[,] sprites;
+		/**
+		 * Array fuer die einzelnen Sprites
+		 */	
+		private Sprite[,] sprites;
 
-	/**
-	 * Konstruktor
-	 */
-	public SpriteSet() {
-		getSpriteSetFromFile ("foobar");
-		//tiles = new Tile[,];
-	}
-	
-	public void getSpriteSetFromFile(string path) {
-	
-		var xml = new HMPXml ();
-		var data = xml.getSpriteSetDataFromFile(path);
+		/**
+		 * Konstruktor
+		 */
+		public SpriteSet() {
+			getSpriteSetFromFile ("foobar");
+			//tiles = new Tile[,];
+		}
+		
+		public void getSpriteSetFromFile(string path) {
+
+		}
 	}
 }

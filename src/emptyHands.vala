@@ -13,14 +13,16 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-
-/**
- * Klasse fuer leere Haende als Werkzeug.
- */
- public class EmptyHands : Tool {
- 	
- 	public override void use (Map m, uint x, uint y, Direction d) {
- 		/* nichts */
- 	}
- 	
- }
+using HMP;
+namespace HMP {
+	/**
+	 * Klasse fuer leere Haende als Werkzeug.
+	 */
+	 public class EmptyHands : Tool {
+	 	
+	 	public override void use (Map m, uint x, uint y, Direction d) {
+	 		/* nichts */
+	 	}
+	 	
+	}
+}

@@ -13,25 +13,27 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
+using HMP;
+namespace HMP {
+	public class SubTile {
+	 	EdgeShape edge;
 
- public class SubTile {
- 	EdgeShape edge;
+	 	public SubTile () {
+	 		edge = EdgeShape.FULL;
+	 	}
 
- 	public SubTile () {
- 		edge = EdgeShape.FULL;
- 	}
-
- 	public void calcEdge (uint [] neighbours, uint type, uint location) {
- 		assert (neighbours.length == 3);
- 		if (neighbours[0] == type && neighbours[1] == type && neighbours[2] == type)
- 			edge = EdgeShape.FULL;
- 		else if (neighbours[0] == type && neighbours[1] != type && neighbours[2] == type)
- 			edge = EdgeShape.INNER_CORNER;
- 		else if (neighbours[0] != type && neighbours[2] != type)
- 			edge = EdgeShape.OUTER_CORNER;
- 		else if (neighbours[0] == type && neighbours[1] == type && neighbours[2] != type)
- 			edge = (location % 2 == 0) ? EdgeShape.V_LINE : EdgeShape.H_LINE;
- 		else if (neighbours[0] != type && neighbours[1] == type && neighbours[2] == type)
- 			edge = (location % 2 == 0) ? EdgeShape.H_LINE : EdgeShape.V_LINE;
- 	}
- }
+	 	public void calcEdge (uint [] neighbours, uint type, uint location) {
+	 		assert (neighbours.length == 3);
+	 		if (neighbours[0] == type && neighbours[1] == type && neighbours[2] == type)
+	 			edge = EdgeShape.FULL;
+	 		else if (neighbours[0] == type && neighbours[1] != type && neighbours[2] == type)
+	 			edge = EdgeShape.INNER_CORNER;
+	 		else if (neighbours[0] != type && neighbours[2] != type)
+	 			edge = EdgeShape.OUTER_CORNER;
+	 		else if (neighbours[0] == type && neighbours[1] == type && neighbours[2] != type)
+	 			edge = (location % 2 == 0) ? EdgeShape.V_LINE : EdgeShape.H_LINE;
+	 		else if (neighbours[0] != type && neighbours[1] == type && neighbours[2] == type)
+	 			edge = (location % 2 == 0) ? EdgeShape.H_LINE : EdgeShape.V_LINE;
+	 	}
+	}
+}

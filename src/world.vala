@@ -14,25 +14,28 @@
  *	Patrick König <knuffi@gmail.com>
  */
 using Gee;
-/**
- * Klasse fuer die gesamte Welt
- */
-public class World {
+using HMP;
+namespace HMP {
 	/**
-	 * Maps der Welt
+	 * Klasse fuer die gesamte Welt
 	 */
-	public Gee.List<Map> maps;
-	/**
-	 * Spieler in der Welt
-	 */
-	public Gee.List<Player> players;
-	/* TODO Datum, Zeit, Wetter, ... */
+	public class World {
+		/**
+		 * Maps der Welt
+		 */
+		public Gee.List<Map> maps;
+		/**
+		 * Spieler in der Welt
+		 */
+		public Gee.List<Player> players;
+		/* TODO Datum, Zeit, Wetter, ... */
 
-	/**
-	 * Konstruktor
-	 */
-	public World() {
-		//maps = new List<Map>();
-		//	players = new List<Player>();
+		/**
+		 * Konstruktor
+		 */
+		public World() {
+			//maps = new List<Map>();
+			//	players = new List<Player>();
+		}
 	}
 }

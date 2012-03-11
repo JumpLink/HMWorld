@@ -13,22 +13,24 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-
-/**
- * Allgemeine Klasse fuer Tiles
- */
-public abstract class Tile {
+using HMP;
+namespace HMP {
 	/**
-	 * Tiletyp
+	 * Allgemeine Klasse fuer Tiles
 	 */
-	public uint type;
+	public abstract class Tile {
+		/**
+		 * Tiletyp
+		 */
+		public uint type;
 
-	/**
-	 * Konstruktor 
-	 */
-	public Tile() {
-		type = 0;
+		/**
+		 * Konstruktor 
+		 */
+		public Tile() {
+			type = 0;
+		}
+
+		public abstract void calcEdges (uint[] neighbours);
 	}
-
-	public abstract void calcEdges (uint[] neighbours);
 }

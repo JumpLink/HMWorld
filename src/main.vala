@@ -13,16 +13,18 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
- 
-class Game {
-	//public signal void exit();
-	
-	bool mainloop () {
-		return new IOlong().initAndStart ("Titel", 640, 480);
-	}
+using HMP;
+namespace HMP {
+	class Game {
+		//public signal void exit();
+		
+		bool mainloop () {
+			return new IOlong().initAndStart ("Titel", 640, 480);
+		}
 
-	public static int main (string[] args) {
-		Game run = new Game();
-		return (int) run.mainloop();;
+		public static int main (string[] args) {
+			Game run = new Game();
+			return (int) run.mainloop();;
+		}
 	}
 }

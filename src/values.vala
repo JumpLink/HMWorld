@@ -13,52 +13,53 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-
-const int TIMER_CALLS_PS = 60;
-/**
- * Keycode der ESC-Taste
- */
-const int ESC = 27;
-
-const uint EMPTY_TILE = 42;
-
-/**
- * Szenenhintergrundfarbe
- */
-const GL.GLclampf colBG[] = {0.6f, 0.6f, 1.0f, 0.0f};
-/**
- * Benamsung der Farbindizes
- */
-enum ColorIndex {
+using HMP;
+namespace HMP {
+	const int TIMER_CALLS_PS = 60;
 	/**
-	 * Rot
+	 * Keycode der ESC-Taste
 	 */
-	R=0,
-	/**
-	 * Gruen
-	 */
-	G=1,
-	/**
-	 * Blau
-	 */
-	B=2,
-	/**
-	 * Alpha
-	 */
-	A=3 }
+	const int ESC = 27;
 
-enum EdgeShape {
-	FULL,
-	OUTER_CORNER,
-	INNER_CORNER,
-	V_LINE,
-	H_LINE
+	const uint EMPTY_TILE = 42;
+
+	/**
+	 * Szenenhintergrundfarbe
+	 */
+	const GL.GLclampf colBG[] = {0.6f, 0.6f, 1.0f, 0.0f};
+	/**
+	 * Benamsung der Farbindizes
+	 */
+	enum ColorIndex {
+		/**
+		 * Rot
+		 */
+		R=0,
+		/**
+		 * Gruen
+		 */
+		G=1,
+		/**
+		 * Blau
+		 */
+		B=2,
+		/**
+		 * Alpha
+		 */
+		A=3 }
+
+	enum EdgeShape {
+		FULL,
+		OUTER_CORNER,
+		INNER_CORNER,
+		V_LINE,
+		H_LINE
+	}
+
+	public enum Direction {
+		NORTH,
+		EAST,
+		SOUTH,
+		WEST
+	}
 }
-
-public enum Direction {
-	NORTH,
-	EAST,
-	SOUTH,
-	WEST
-}
-

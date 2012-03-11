@@ -13,57 +13,59 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-
-/**
- * Klasse fuer das Spielerinventar.
- */
- public class Inventory {
- 	/**
- 	 * Primaeres Werkzeug (ausgeruestet).
- 	 */
- 	public Tool primary;
-
- 	/**
- 	 * Sekundaeres Werkzeug (Reserve).
- 	 */
- 	public Tool secondary;
-
- 	/**
-	 * Konstruktor
+using HMP;
+namespace HMP {
+	/**
+	 * Klasse fuer das Spielerinventar.
 	 */
- 	public Inventory () {
- 		primary = new EmptyHands ();
- 		secondary = new EmptyHands ();
- 	}
+	 public class Inventory {
+	 	/**
+	 	 * Primaeres Werkzeug (ausgeruestet).
+	 	 */
+	 	public Tool primary;
 
- 	/**
- 	 * Ruestet sekundaeres Werkzeug aus.
- 	 */
- 	public void swapTools () {
- 		Tool tmp = primary;
- 		primary = secondary;
- 		secondary = tmp;
- 	}
+	 	/**
+	 	 * Sekundaeres Werkzeug (Reserve).
+	 	 */
+	 	public Tool secondary;
 
- 	/**
- 	 * Fuegt ein neues Werkzeug hinzu.
- 	 * @param t Das neue Werkzeug.
- 	 * @return Das alte Primaerwerkzeug.
- 	 */
- 	public Tool equip (Tool t) {
- 		Tool tmp = primary;
- 		primary = t;
- 		return tmp;
- 	}
+	 	/**
+		 * Konstruktor
+		 */
+	 	public Inventory () {
+	 		primary = new EmptyHands ();
+	 		secondary = new EmptyHands ();
+	 	}
 
- 	/**
- 	 * Benutzt ausgeruestetes Werkzeug mit Umgebung.
- 	 * @param m Die Umgebung.
- 	 * @param x Die X-Position.
- 	 * @param y Die Y-Position.
- 	 * @param d Die Richtung.
- 	 */
- 	public void use (Map m, uint x, uint y, Direction d) {
- 		primary.use (m, x, y, d);
- 	}
- }
+	 	/**
+	 	 * Ruestet sekundaeres Werkzeug aus.
+	 	 */
+	 	public void swapTools () {
+	 		Tool tmp = primary;
+	 		primary = secondary;
+	 		secondary = tmp;
+	 	}
+
+	 	/**
+	 	 * Fuegt ein neues Werkzeug hinzu.
+	 	 * @param t Das neue Werkzeug.
+	 	 * @return Das alte Primaerwerkzeug.
+	 	 */
+	 	public Tool equip (Tool t) {
+	 		Tool tmp = primary;
+	 		primary = t;
+	 		return tmp;
+	 	}
+
+	 	/**
+	 	 * Benutzt ausgeruestetes Werkzeug mit Umgebung.
+	 	 * @param m Die Umgebung.
+	 	 * @param x Die X-Position.
+	 	 * @param y Die Y-Position.
+	 	 * @param d Die Richtung.
+	 	 */
+	 	public void use (Map m, uint x, uint y, Direction d) {
+	 		primary.use (m, x, y, d);
+	 	}
+	 }
+}
