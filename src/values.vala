@@ -55,3 +55,10 @@ enum EdgeShape {
 	H_LINE
 }
 
+public enum Direction {
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST
+}
+

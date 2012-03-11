@@ -23,12 +23,32 @@ public class Player : Entity {
 	 */
 	public string name;
 
-	/* TODO map auf der sich der spieler befindet, inventar und weitere spielereigenschaften hierher */
+	/**
+	 * Inventar
+	 */
+	public Inventory tools;
+
+	/**
+	 * Karte, auf der sich der Spieler befindet.
+	 */
+	public Map map;
+
+	/**
+	 * Position des Spielers
+	 */
+	public float x;
+	public float y;
+
+	/**
+	 * Ausrichtung des Spielers
+	 */
+	public Direction direction;
 
 	/**
 	 * Konstruktor
 	 */
 	public Player() {
 		this.name = "foobert";
+		tools = new Inventory ();
 	}
 }

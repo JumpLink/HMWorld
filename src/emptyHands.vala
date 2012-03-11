@@ -13,26 +13,14 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-using Gee;
-/**
- * Klasse fuer die gesamte Welt
- */
-public class World {
-	/**
-	 * Maps der Welt
-	 */
-	public Gee.List<Map> maps;
-	/**
-	 * Spieler in der Welt
-	 */
-	public Gee.List<Player> players;
-	/* TODO Datum, Zeit, Wetter, ... */
 
-	/**
-	 * Konstruktor
-	 */
-	public World() {
-		//maps = new List<Map>();
-		//	players = new List<Player>();
-	}
-}
+/**
+ * Klasse fuer leere Haende als Werkzeug.
+ */
+ public class EmptyHands : Tool {
+ 	
+ 	public override void use (Map m, uint x, uint y, Direction d) {
+ 		/* nichts */
+ 	}
+ 	
+ }

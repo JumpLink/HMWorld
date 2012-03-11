@@ -13,26 +13,19 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-using Gee;
-/**
- * Klasse fuer die gesamte Welt
- */
-public class World {
-	/**
-	 * Maps der Welt
-	 */
-	public Gee.List<Map> maps;
-	/**
-	 * Spieler in der Welt
-	 */
-	public Gee.List<Player> players;
-	/* TODO Datum, Zeit, Wetter, ... */
 
-	/**
-	 * Konstruktor
-	 */
-	public World() {
-		//maps = new List<Map>();
-		//	players = new List<Player>();
-	}
-}
+/**
+ * Klasse fuer ein Werkzeug.
+ */
+ public abstract class Tool {
+ 	
+ 	/**
+ 	 * Benutzt das Werkzeug mit seiner Umgebung an einer Position in eine Richtung.
+ 	 * @param m Die Umgebung.
+ 	 * @param x Die X-Position.
+ 	 * @param y Die Y-Position.
+ 	 * @param d Die Richtung.
+ 	 */
+ 	public abstract void use (Map m, uint x, uint y, Direction d);
+ 	
+ }
