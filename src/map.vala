@@ -56,14 +56,28 @@ namespace HMP {
 				tileheight = int.parse(properties.get ("tileheight"));
 			}
 
-			/*public Gee.List<Layer> loadLayer () {
-				Xml.Node* node = evalExpression("/map");
+			public Gee.List<Layer> loadLayers () {
 				Gee.List<Layer> layer = new Gee.ArrayList<Layer>();
-				loadProperties(node);
+				unowned Xml.XPath.Object obj = ctx.eval_expression("/map/layer");
+				if(obj==null) print("failed to evaluate xpath\n");
+				for (int i=0;(obj.nodesetval != null && obj.nodesetval->item(i) != null);i++) {
+					print("i %i\n",i);
+					Xml.Node* node = obj.nodesetval->item(i);
+					Gee.HashMap<string, string> properties = loadProperties(node);
+					//TODO tiles
+					print("Fuege Layer mit Namen %s hinzu\n", properties.get ("name"));
+					layer.add(
+						new Layer.all( 
+							(string) properties.get ("name"),
+							0, //TODO
+							int.parse(properties.get ("width")),
+							int.parse(properties.get ("height"))
+						)
+					);
+				}
+
 				return layer;
-
-
-			}*/
+			}
 
 		    protected Gee.HashMap<string, string> loadProperties(Xml.Node* node) {
 		        Xml.Attr* attr = null;
@@ -91,7 +105,6 @@ namespace HMP {
 		        }
 		        return node;
 		    }
-
 		}
 
 		public struct TileSetMapData {
@@ -166,7 +179,7 @@ namespace HMP {
 			this.filename = fn;
 			XML xml = new XML(path+filename);
 			xml.loadGlobalMapProperties(out orientation, out version, out width, out height, out tilewidth, out tileheight);
-			//xml.loadLayer();
+			layers = xml.loadLayers();
 		}
 
 		public int getIndexOfLayerName(string name) {
@@ -183,12 +196,11 @@ namespace HMP {
 			Layer tmp_layer = layers.get(index);
 			//Vector = tileNumberToVektor(number, width, height);
 		}
-
-
 		/**
-		 * Gibt alle Werte der Map auf der Konsole aus
+		 * Gibt alle Werte (bis auf die Layer) der Map auf der Konsole aus
 		 */
 		public void printValues() {
+			print("==MAP==\n");
 			print("filename: %s\n", filename);
 			print("orientation: %s\n", orientation);
 			print("version: %s\n", version);
@@ -196,6 +208,23 @@ namespace HMP {
 			print("height: %u\n", height);
 			print("tilewidth: %u\n", tilewidth);
 			print("tileheight: %u\n", tileheight);
+		}
+		/**
+		 * Gibt die Werte aller Layer der Map auf der Konsole aus
+		 */
+		public void printLayers() {
+			print("====ALL LAYERS FROM MAP %s====\n", filename);
+			foreach (HMP.Layer l in layers) {
+				l.printValues();
+				l.printTiles();
+	   		}
+		}
+		/**
+		 * Gibt alle Werte und alle Layer der Map auf der Konsole aus
+		 */
+		public void printAll() {
+			printValues();
+			printLayers();
 		}
 	}
 }

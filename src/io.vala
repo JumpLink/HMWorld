@@ -34,6 +34,7 @@ namespace HMP {
 			tileset = tm.getFromName("Stadt - Sommer");
 			tileset.printValues();
 			mm = new HMP.MapManager("./data/map/");
+			mm.printAll();
 			map = mm.getFromFilename("testmap.tmx");
 			//map.printValues();
 

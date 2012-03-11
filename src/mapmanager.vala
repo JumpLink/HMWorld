@@ -94,13 +94,14 @@ namespace HMP {
 						
 			return new HMP.Map();
 		}
-
 		/**
 		 * Gibt die Werte aller Maps in der Liste aus.
 		 */
 		public void printAll() {
+			print("=====ALL MAPS====\n");
 			foreach (HMP.Map m in map) {
 					m.printValues ();
+					m.printLayers ();
 	   		}
 		}
 	}

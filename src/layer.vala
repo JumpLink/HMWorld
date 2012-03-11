@@ -66,7 +66,7 @@ namespace HMP {
 		 * Konstruktor mit allen Werten non-default
 		 */
 		public Layer.all(string name, double zoff, int width, int height) {
-			this.name = "new Layer";
+			this.name = name;
 			this.zoff = 0;
 			this.width = width;
 			this.height = height;
@@ -92,6 +92,30 @@ namespace HMP {
 					neighbours[7] = ( r < height && c != 0 ) ? tiles[c - 1, r + 1].type : EMPTY_TILE;
 					tiles[c, r].calcEdges(neighbours);
 				}
+		}
+		/**
+		 * Gibt alle Werte des Layers (bis auf die Tiles) auf der Konsole aus
+		 */
+		public void printValues() {
+			print("==Layer==\n");
+			print("name: %s\n", name);
+			print("zoff: %f\n", zoff);
+			print("width: %u\n", width);
+			print("height: %u\n", height);
+		}
+		/**
+		 * Gibt die Tiles des Layers auf der Konsole aus
+		 */
+		public void printTiles() {
+			print("==Tiles==\n");
+			print("TODO\n");
+		}
+		/**
+		 * Gibt alle Werte des Layers und dessen Tiles auf der Konsole aus
+		 */
+		public void printAll() {
+			printValues();
+			printTiles();
 		}
 	}
 }
