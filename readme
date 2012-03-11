@@ -40,6 +40,10 @@ Dokumentations
 	Glib
 		vala: http://unstable.valadoc.org/#!api=glib-2.0/GLib
 		original: http://developer.gnome.org/glib/
+
+	XPath
+		vala: http://unstable.valadoc.org/#!api=libxml-2.0/Xml.XPath
+		original: http://xmlsoft.org/html/libxml-xpath.html
 		
 To compile this software install the following dependencies on Ubuntu 11.10
 
@@ -56,4 +60,4 @@ To compile this software install the following dependencies on Ubuntu 11.10
 	ValaDoc
 		sudo apt-get install valadoc libvaladoc0 libvaladoc-dev
 	To generate vapis
-		sudo apt-get install gobject-introspection ..unvollsteanding
+		sudo apt-get install gobject-introspection ..unvollsteanding"

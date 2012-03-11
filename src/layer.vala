@@ -29,11 +29,11 @@ public class Layer {
 	/**
 	 * Breite des Layers
 	 */
-	public uint sizeX;
+	public uint width;
 	/**
 	 * Hoehe des Layers
 	 */
-	public uint sizeY;
+	public uint height;
 	/**
 	 * Tiles des Layers
 	 */
@@ -45,45 +45,45 @@ public class Layer {
 	public Layer() {
 		name = "new Layer";
 		zoff = 0;
-		sizeX = 10;
-		sizeY = 10;
-		tiles = new Tile[sizeX, sizeY];
+		width = 10;
+		height = 10;
+		tiles = new Tile[width, height];
 	}
 
 	/**
 	 * Konstruktor mit Groessenangaben
 	 */
-	public Layer.sized(int sizeX, int sizeY) {
+	public Layer.sized(int width, int height) {
 		name = "new Layer";
 		zoff = 0;
-		this.sizeX = sizeX;
-		this.sizeY = sizeY;
-		tiles = new Tile[sizeX, sizeY];
+		this.width = width;
+		this.height = height;
+		tiles = new Tile[width, height];
 	}
 
 	/**
 	 * Konstruktor mit allen Werten non-default
 	 */
-	public Layer.all(string name, double zoff, int sizeX, int sizeY) {
+	public Layer.all(string name, double zoff, int width, int height) {
 		this.name = "new Layer";
 		this.zoff = 0;
-		this.sizeX = sizeX;
-		this.sizeY = sizeY;
-		tiles = new Tile[sizeX, sizeY];
+		this.width = width;
+		this.height = height;
+		tiles = new Tile[width, height];
 	}
 
 	public void calcEdges () {
 		uint[] neighbours = new uint[8];
-		for (uint r = 0; r < sizeY; ++r)
-			for (uint c = 0; c < sizeX; ++c) {
+		for (uint r = 0; r < height; ++r)
+			for (uint c = 0; c < width; ++c) {
 				neighbours[0] = ( c != 0 ) ? tiles[c - 1, r].type : EMPTY_TILE;
 				neighbours[1] = (c != 0 && r != 0 ) ? tiles[c - 1, r - 1].type : EMPTY_TILE;
 				neighbours[2] = ( r != 0 ) ? tiles[c, r - 1].type : EMPTY_TILE;
-				neighbours[3] = ( r != 0 && c < sizeX ) ? tiles[c + 1, r - 1].type : EMPTY_TILE;
-				neighbours[4] = ( c < sizeX ) ? tiles[c + 1, r].type : EMPTY_TILE;
-				neighbours[5] = ( r < sizeY && c < sizeX ) ? tiles[c + 1, r + 1].type : EMPTY_TILE;
-				neighbours[6] = ( r < sizeY ) ? tiles[c, r + 1].type : EMPTY_TILE;
-				neighbours[7] = ( r < sizeY && c != 0 ) ? tiles[c - 1, r + 1].type : EMPTY_TILE;
+				neighbours[3] = ( r != 0 && c < width ) ? tiles[c + 1, r - 1].type : EMPTY_TILE;
+				neighbours[4] = ( c < width ) ? tiles[c + 1, r].type : EMPTY_TILE;
+				neighbours[5] = ( r < height && c < width ) ? tiles[c + 1, r + 1].type : EMPTY_TILE;
+				neighbours[6] = ( r < height ) ? tiles[c, r + 1].type : EMPTY_TILE;
+				neighbours[7] = ( r < height && c != 0 ) ? tiles[c - 1, r + 1].type : EMPTY_TILE;
 				tiles[c, r].calcEdges(neighbours);
 			}
 	}

@@ -14,246 +14,176 @@
  *	Patrick König <knuffi@gmail.com>
  */
 using Xml;
+using Xml.XPath;
 using Gee;
 /**
  * Klasse fuer Maps
  */
 public class Map {
 
-	/**
-	 * Klasse fuer XML-Operationen
-	 */
 	class XML : HMPXML {
+		string path;
+		Xml.Doc* doc;
+		Context ctx;
 
-		/**
-		 * Daten der Map.
-		 */
-		protected Data data = Data();
+		public XML(string path) {
+			Parser.init ();
+			this.path = path;
+			doc = Parser.parse_file (path);
+			if(doc==null) print("failed to read the .xml file\n");
+			
+			ctx = new Context(doc);
+			if(ctx==null) print("failed to create the xpath context\n");
+		}
 
-		/**
-		 * Läd die Werte einer TileSet-XML.tsx
-		 * 
-		 * @param path Pfad mit Dateiname der auszulesenden XML
-		 * @return struct TileSet.Data mit den gespeicherten Werten
-		 */
-	    public void createMapFromFile (string path) {
-	    	//print("\tFuehre getTileSetDataFromFile aus\n");
-	    	
-	    	parse_file (path);
+		~XML() {
+			delete doc;
+			Parser.cleanup ();
+		}
+
+		public void loadGlobalMapProperties (out string orientation, out string version, out uint width, out uint height, out uint tilewidth, out uint tileheight) {
+			Xml.Node* node = evalExpression("/map");
+			Gee.HashMap<string, string> properties = loadProperties(node);
+
+			orientation = (string) properties.get ("orientation");
+			version = (string) properties.get ("version");
+			width = int.parse(properties.get ("width"));
+			height = int.parse(properties.get ("height"));
+			tilewidth = int.parse(properties.get ("tilewidth"));
+			tileheight = int.parse(properties.get ("tileheight"));
+		}
+
+		public Gee.List<Layer> loadLayer () {
+			Xml.Node* node = evalExpression("/map");
+			Gee.List<Layer> layer = new Gee.ArrayList<Layer>();
+			//loadProperties(node);
+			return layer;
+
+
+		}
+
+	    protected Gee.HashMap<string, string> loadProperties(Xml.Node* node) {
+	        Xml.Attr* attr = null;
+	        attr = node->properties;
+	        Gee.HashMap<string, string> properties = new Gee.HashMap<string, string>();
+
+	        while ( attr != null ) {
+	            print("Attribute: \tname: %s\tvalue: %s\n", attr->name, attr->children->content);
+	            properties.set(attr->name, attr->children->content);
+	            attr = attr->next;
+	        }
+	        return properties;
 	    }
 
+	    protected Xml.Node* evalExpression (string expression ) {
+	        unowned Xml.XPath.Object obj = ctx.eval_expression(expression);
+	        if(obj==null) print("failed to evaluate xpath\n");
 
-		/**
-		 * Hilfsfunktion welche eine XML auslesen kann
-		 *
-		 * @return true bei Fehler, sonst false
-		 */
-	    private bool parse_file (string path) {
-	    	//print("\tbeginne Datei zu parsen\n");
-	        // Parse the document from path
-	        Xml.Doc* doc = Parser.parse_file (path);
-	        if (doc == null) {
-	            error ("File %s not found or permissions missing", path);
-	            //return true;
+	        Xml.Node* node = null;
+	        if ( obj.nodesetval != null && obj.nodesetval->item(0) != null ) {
+	            node = obj.nodesetval->item(0);
+	            print("Found the node we want");
+	        } else {
+	            print("failed to find the expected node");
 	        }
-
-	        // Get the root node. notice the dereferencing operator -> instead of .
-	        Xml.Node* root = doc->get_root_element ();
-	        if (root == null) {
-	            // Free the document manually before returning
-	            delete doc;
-	            print ("The xml file '%s' is empty", path);
-	            return true;
-	        }
-	        string root_name = root->name;
-	        print_indent ("XML document", path, '-');
-
-	        // Print the root node's name
-	        print_indent ("Root node", root_name);
-
-			// Sucht nach den Werten innerhalb der Node
-			parse_properties (root, root_name);
-
-	        // Let's parse those nodes
-	        parse_node (root);
-
-	        // Free the document
-	        delete doc;
-	        return true;
+	        return node;
 	    }
 
-		/**
-		 * 
-		 */
-	    private void parse_node (Xml.Node* node) {
-	    	//print("\tbeginne Node zu parsen\n");
-	        this.indent++;
-	        // Loop over the passed node's children
-	        for (Xml.Node* iter = node->children; iter != null; iter = iter->next) {
-	            // Spaces between tags are also nodes, discard them
-	            if (iter->type != ElementType.ELEMENT_NODE) {
-	                continue;
-	            }
-
-	            // Get the node's name
-	            string node_name = iter->name;
-	            // Get the node's content with <tags> stripped
-	            string node_content = iter->get_content ();
-	            print_indent (node_name, node_content);
-			    
-			    // Sucht nach den Werten innerhalb der Node
-				parse_properties (iter, node_name);
-	        
-	            // Followed by its children nodes
-	            parse_node (iter);
-	        }
-	        this.indent--;
-	    }
-
-		/**
-		 * 
-		 */
-	    private void parse_properties (Xml.Node* node, string nodename) {
-	    	//print("\tbeginne Werte zu parsen\n");
-	    	TileSetMapData tilesetdata = TileSetMapData();
-
-	    	switch (nodename) {
-	    		case "tileset":
-	    		break;
-	    	}
-
-	        // Loop over the passed node's properties (attributes)
-	        for (Xml.Attr* prop = node->properties; prop != null; prop = prop->next) {
-	            string attr_name = prop->name;
-	            // Notice the ->children which points to a Node*
-	            // (Attr doesn't feature content)
-	            string attr_content = prop->children->content;
-
-				print_indent (attr_name, attr_content, '|');
-				switch (nodename) {
-					case "map":
-						switch (attr_name) {
-							case "version":
-								data.version = int.parse(attr_content);
-							break;
-							case "orientation":
-								data.orientation = attr_content;
-							break;
-							case "width":
-								data.width = int.parse( attr_content );
-							break;
-							case "height":
-								data.height = int.parse( attr_content );
-							break;
-							case "tilewidth":
-								data.tilewidth = int.parse( attr_content );
-							break;
-							case "tileheight":
-								data.tileheight = int.parse( attr_content );
-							break;
-							default:
-							break;
-						}
-					break;
-					case "tileset":
-						switch (attr_name) {
-							case "firstgid":
-								tilesetdata.firstgid = int.parse( attr_content );
-							break;
-							case "source":
-
-							break;
-						}
-					break;
-					case "layer":
-						switch (attr_name) {
-							case "name":
-
-							break;
-							case "width":
-
-							break;
-							case "height":
-
-							break;
-						}
-					break;
-					case "data":
-						switch (attr_name) {
-							case "tile":
-
-							break;
-						}
-					break;
-				}
-	        }
-	    }
 	}
 
 	public struct TileSetMapData {
 		/**
 		 * Quelle des TileSets.
 		 */
-		public TileSet source;
+		public string source;
 		/**
 		 * TODO
 		 */
 		public uint firstgid;
 	}
 	/**
-	 * Struktur fuer Maps
+	 * orientation der Map.
 	 */
-	public struct Data {
-		/**
-		 * orientation der Map.
-		 */
-		public string orientation;
-		/**
-		 * Version des Kartenformats?
-		 */
-		public uint version;
-		/**
-		 * Gesamtbreite der map
-		 */
-		public uint width;
-		/**
-		 * Gesamthoehe der Map
-		 */
-		public uint height;
-		/**
-		 * Breite eines Tiles
-		 */
-		public uint tilewidth;
-		/**
-		 * Höhe eines Tiles
-		 */
-		public uint tileheight;
-		/**
-		 * Tilesets die für auf der Map verwendet werden
-		 */
-		public Gee.List<TileSetMapData?> tileset;
-		/**
-		 * Layer der Map.
-		 */
-		public Gee.List<Layer> layers;
-		/** 
-		 * Entities auf der Map
-		 */
-		public Gee.List<Entity> entities;
-	}
-
+	public string orientation;
 	/**
-	 * Name der Map.
+	 * Version des Kartenformats?
 	 */
-	protected Data data = Data();
-	//data.tileset = new Gee.List<TileSetMapData>();
+	public string version;
+	/**
+	 * Gesamtbreite der map
+	 */
+	public uint width;
+	/**
+	 * Gesamthoehe der Map
+	 */
+	public uint height;
+	/**
+	 * Breite eines Tiles
+	 */
+	public uint tilewidth;
+	/**
+	 * Höhe eines Tiles
+	 */
+	public uint tileheight;
+	/**
+	 * Dateiname der Map
+	 */
+	public string source;
+	/**
+	 * Tilesets die für auf der Map verwendet werden
+	 */
+	public Gee.List<TileSetMapData?> tileset;
+	/**
+	 * Layer der Map.
+	 */
+	public Gee.List<Layer> layers;
+	/** 
+	 * Entities auf der Map
+	 */
+	public Gee.List<Entity> entities;
 
 	/**
 	 * Konstruktor
 	 */
-	public Map() {
-		data.layers = new Gee.ArrayList<Layer>();
-		data.entities = new Gee.ArrayList<Entity>();
-		data.tileset = new Gee.ArrayList<TileSetMapData?>();
+	public Map(string path, string filename) {
+		layers = new Gee.ArrayList<Layer>();
+		entities = new Gee.ArrayList<Entity>();
+		tileset = new Gee.ArrayList<TileSetMapData?>();
+		source = filename;
+		XML xml = new XML(path);
+		xml.loadGlobalMapProperties(out orientation, out version, out width, out height, out tilewidth, out tileheight);
+		xml.loadLayer();
+	}
+
+	public int getIndexOfLayerName(string name) {
+		foreach (Layer i in layers) {
+			if (name == i.name) {
+				return layers.index_of(i);
+			}
+		}
+		return -1;
+	}
+
+	public void addLayerTile(string layer_name, uint number, uint value) {
+		int index = getIndexOfLayerName(layer_name);
+		Layer tmp_layer = layers.get(index);
+		//Vector = tileNumberToVektor(number, width, height);
+	}
+
+	public static Vector tileNumberToVektor(uint number, uint width, uint height) {
+		Vector vector = new Vector(2);
+		return vector;
+	}
+	/**
+	 * Gibt alle Werte der Map auf der Konsole aus
+	 */
+	public void printValues() {
+		print("source: %s\n", source);
+		print("orientation: %s\n", orientation);
+		print("version: %s\n", version);
+		print("width: %u\n", width);
+		print("height: %u\n", height);
+		print("tilewidth: %u\n", tilewidth);
+		print("tileheight: %u\n", tileheight);
 	}
 }

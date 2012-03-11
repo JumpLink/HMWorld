@@ -220,7 +220,6 @@ public class TileSet {
 	
 		var xml = new XML ();
 		data = xml.getDataFromFile(path);
-		printValues();
 		loadTiles();
 	}
 

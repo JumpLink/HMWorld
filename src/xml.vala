@@ -19,6 +19,7 @@
  */
 
 using Xml;
+using Xml.XPath;
 using Gee;
 
 /**
@@ -44,7 +45,6 @@ class HMPXML {
      * Dekonstrukter
      */
     ~HMPXML() {
-     	//print("Loesche HMPXml-Klasse\n");
 		// Do the parser cleanup to free the used memory
 		Parser.cleanup ();
     }

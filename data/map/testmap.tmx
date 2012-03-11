@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
- <tileset firstgid="1" source="../../../RPGProject/TileSet/Stadt - Sommer.tsx"/>
- <tileset firstgid="511" source="Stadt - Sommer.tsx"/>
+ <tileset firstgid="1" source="../tileset/Stadt - Sommer.tsx"/>
  <layer name="under hero 1" width="50" height="50">
+  <properties>
+   <property name="z" value="-2"/>
+  </properties>
   <data>
    <tile gid="271"/>
    <tile gid="272"/>
@@ -2507,6 +2509,9 @@
   </data>
  </layer>
  <layer name="under hero 2" width="50" height="50">
+  <properties>
+   <property name="z" value="-1"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -5011,6 +5016,9 @@
   </data>
  </layer>
  <layer name="same as hero 1" width="50" height="50">
+  <properties>
+   <property name="z" value="0"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -7515,8 +7523,12 @@
   </data>
  </layer>
  <layer name="same as hero 2" width="50" height="50">
+  <properties>
+   <property name="z" value="0"/>
+  </properties>
   <data>
    <tile gid="0"/>
+   <tile gid="1"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -7565,8 +7577,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="480"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -10019,6 +10030,9 @@
   </data>
  </layer>
  <layer name="over hero 1" width="50" height="50">
+  <properties>
+   <property name="z" value="1"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -12523,6 +12537,9 @@
   </data>
  </layer>
  <layer name="over hero 2" width="50" height="50">
+  <properties>
+   <property name="z" value="2"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
