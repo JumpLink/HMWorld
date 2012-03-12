@@ -23,13 +23,56 @@ namespace HMP {
 		/**
 		 * Position des Entities
 		 */
-		Vector pos;
+		public Vector pos;
+
+		/**
+		 * Karte, auf der sich die Entitaet befindet.
+		 */
+		public Map map;
+
+		/**
+		 * Ausrichtung der Entitaet.
+		 */
+		public Direction direction;
 
 		/**
 		 * Konstruktor
 		 */
 		public Entity() {
 			pos = new Vector(2);
+		}
+
+		/**
+		 * Bewegt die Entitaet zeitabhaengig.
+		 * @param interval Zeitraum
+		 * @param d Bewewgungsrichtung
+		 */
+		public void move (double interval, Direction d) {
+			/* Rotation */
+			if (direction != d)
+				direction = d;
+			/* Bewegung */
+			else {
+				switch (d) {
+					case Direction.NORTH:
+						pos.vec[1] -= interval;
+						break;
+					case Direction.EAST:
+						pos.vec[0] += interval;
+						break;
+					case Direction.SOUTH:
+						pos.vec[1] += interval;
+						break;
+					case Direction.WEST:
+						pos.vec[0] -= interval;
+						break;
+				}
+				Vector min 	= new Vector (2),
+						max = new Vector (2);
+				max.vec[0] = map.width;
+				max.vec[1] = map.height;
+				pos.crop (min, max);
+			}
 		}
 	}
 }

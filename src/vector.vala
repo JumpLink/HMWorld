@@ -54,6 +54,11 @@ public class Vector {
 		return r;
 	}
 	
+	/**
+	 * Multipliziert Vektor mit Vektor.
+	 * @param v Vektor.
+	 * @return Das Kreuzprodukt.
+	 */
 	public Vector VectorProduct (Vector v) {
 		Vector r = new Vector (dim);
 		if (dim == 3 && v.dim == 3) {
@@ -64,6 +69,11 @@ public class Vector {
 		return r;
 	}
 	
+	/**
+	 * Teilt Vektor durch Skalar.
+	 * @param s Skalar.
+	 * @return Der Vektor.
+	 */
 	public Vector divideByScalar (double s) {
 		if (s != 0.0)
 			for (int i = 0; i < dim; ++i)
@@ -71,12 +81,21 @@ public class Vector {
 		return this;
 	}
 	
+	/**
+	 * Multipliziert Vektor mit Skalar.
+	 * @param s Skalar.
+	 * @return Der Vektor.
+	 */
 	public Vector multScalar (double s) {
 		for (int i = 0; i < dim; ++i)
 			vec[i] *= s;
 		return this;
 	}
 	
+	/**
+	 * Berechnet Betrag eines Vektors.
+	 * @return Der Betrag.
+	 */
 	public double VectorNorm () {
 		double r = 0.0;
 		for (int i = 0; i < dim; ++i)
@@ -84,15 +103,43 @@ public class Vector {
 		return Math.sqrt (r);
 	}
 	
+	/**
+	 * Normiert Vektor.
+	 * @return Der Vektor.
+	 */
 	public Vector normVector () {
 		return divideByScalar (VectorNorm ());	
 	}
 	
+	/**
+	 * Multipliziert Vektor mit Matrix.
+	 * @param m Matrix.
+	 * @param v irgendein anderer Vektor ?????.
+	 * @return Der Vektor.
+	 */
 	public Vector multMatrix(Matrix m, Vector v) {
 		for (int i = 0; i < dim; ++i) {
 			vec[i] = 0;
 			for (int j = 0; j < dim; ++j)
 				vec[i] += vec[j] * m.mat[i,j]; /* TODO nicht sicher ob ij richtig. */
+		}
+		return this;
+	}
+
+	/**
+	 * Beschneidet Vektor komponentenweise.
+	 * @param min Untergrenze.
+	 * @param max Obergrenze.
+	 * @return Der beschnittene Vektor.
+	 */
+	public Vector crop (Vector min, Vector max) {
+		if (dim == min.dim && dim == max.dim) {
+			for (int i = 0; i < dim; ++i) {
+				if (vec[i] < min.vec[i])
+					vec[i] = min.vec[i];
+				if (vec[i] > max.vec[i])
+					vec[i] = max.vec[i];
+			}
 		}
 		return this;
 	}

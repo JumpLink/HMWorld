@@ -22,34 +22,41 @@ namespace HMP {
 	 	/**
 	 	 * Pflanze lebt.
 	 	 */
-	 	bool alive;
+	 	protected bool alive;
 	 	/**
 	 	 * Pflanze wurde begossen.
 	 	 */
-	 	bool watered;
+	 	protected bool watered;
 	 	/**
 	 	 * Tage, die bis zur naechsten Ernte vergehen muessen.
 	 	 */
-	 	uint daysUntilHarvest;
+	 	protected uint daysUntilHarvest;
 	 	/**
 	 	 * Pflanze kann noch so oft geerntet werden.
 	 	 */
-	 	uint cropsLeft;
-
+	 	protected uint cropsLeft;
 	 	/**
 	 	 * Minimale Zeit zwischen Ernten.
 	 	 */
-	 	static uint timeBetweenCrops;
-
+	 	protected static uint timeBetweenCrops;
 	 	/**
 	 	 * Maximale Anzahl an Ernten.
 	 	 */
-	 	static uint maxCrops;
-
+	 	protected static uint maxCrops;
 	 	/**
 	 	 * Art der Ernte.
 	 	 */
-	 	static CropType crop;
+	 	protected static CropType crop;
+
+	 	/**
+	 	 * Konstruktor.
+	 	 */
+	 	Plant () {
+	 		alive = true;
+	 		watered = false;
+	 		daysUntilHarvest = timeBetweenCrops;
+	 		cropsLeft = maxCrops;
+	 	}
 
 	 	/**
 	 	 * Pflanze wachsen lassen.
