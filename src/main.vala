@@ -19,7 +19,7 @@ namespace HMP {
 		//public signal void exit();
 		
 		bool mainloop () {
-			return new IOlong().initAndStart ("Titel", 640, 480);
+			return new IO().initAndStart ("Titel", 640, 480);
 		}
 
 		public static int main (string[] args) {

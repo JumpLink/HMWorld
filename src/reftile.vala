@@ -34,7 +34,7 @@ namespace HMP {
 			this.gid = gid;
 		}
 		public override void draw(Gee.List<HMP.TileSetReference> tileset) {
-
+			//TODO
 		}
 		/**
 		 * Ungenutzte Methode

@@ -26,13 +26,13 @@ namespace HMP {
 	HMP.TileSet tileset;
 	HMP.MapManager mm;
 	HMP.Map map;
+	/**
+	 * Setzen der Projektionsmatrix.
+	 */
+	class IO {
 
-	class IOlong {
+		public IO() {
 
-		public IOlong() {
-			mm = new HMP.MapManager();
-			map = mm.getFromFilename("testmap.tmx");
-			map.draw();
 		}
 
 		/**
@@ -91,30 +91,7 @@ namespace HMP {
 		 */
 		static void cbDisplay ()
 		{
-			/* Colorbuffer leeren */
-			glClear (GL_COLOR_BUFFER_BIT);
 
-			/* Nachfolgende Operationen beeinflussen Modelviewmatrix */
-			glMatrixMode (GL_MODELVIEW);
-
-			/* Szene zeichnen */
-			// OpenGL rendering goes here...
-			    glBegin (GL_QUADS);
-				glTexCoord2f(0,0);
-			        glVertex3f ( -1.0f,  1.0f, 0.0f);
-				glTexCoord2f(1,0);
-			        glVertex3f (  1.0f,  1.0f, 0.0f);
-				glTexCoord2f(1,1);
-			        glVertex3f (  1.0f, -1.0f, 0.0f);
-				glTexCoord2f(0,1);
-			        glVertex3f ( -1.0f, -1.0f, 0.0f);
-			    glEnd ();
-
-			/* Szene anzeigen / Buffer tauschen */
-			glutSwapBuffers ();
-		}
-		static void cbDisplayTests ()
-		{
 			/* Colorbuffer leeren */
 			glClear (GL_COLOR_BUFFER_BIT);
 
@@ -165,6 +142,9 @@ namespace HMP {
 			/* Anpassen der Projektionsmatrix an das Seitenverhältnis des Fensters */
 			setProjection ((double) w / (double) h);
 			print("- Fensterinhalt nach groesse angepasst -");
+
+			/* map zeichen */
+			map.draw();
 		}
 
 		/**
@@ -258,8 +238,7 @@ namespace HMP {
 
 			/* Display-Callback - wird an mehreren Stellen imlizit (z.B. im Anschluss an
 			 * Reshape-Callback) oder explizit (durch glutPostRedisplay) angestossen */
-			//glutDisplayFunc (cbDisplay); TODO
-			glutDisplayFunc (cbDisplayTests);
+			glutDisplayFunc (cbDisplay);
 		}
 
 		/**
@@ -296,6 +275,10 @@ namespace HMP {
 				print("Unable to initialize SDL-Image: %s\n", SDLImage.get_error());
 				return true;
 			}
+			/* Mapmanager erzeugen */
+			mm = new HMP.MapManager();
+			/* Startmap auswaehlen */
+			map = mm.getFromFilename("testmap.tmx");
 
 			/* Fenster erzeugen */
 			windowID = glutCreateWindow (title);

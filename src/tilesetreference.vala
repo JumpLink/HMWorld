@@ -54,5 +54,26 @@ namespace HMP {
 			print("source: %s\n", source);
 			print("firstgid: %u\n", firstgid);
 		}
+		/**
+		 * Gibt das echte passende TileSet zurueck.
+		 * Es ist keine uebergabe des TileSetManagers noetig,
+		 * das hat aber lange Ladezeiten zum Preis.
+		 *
+		 * @return Das passende echte TileSet
+		 */
+		public HMP.TileSet get_TileSet(){
+			HMP.TileSetManager tm = new HMP.TileSetManager("./data/tileset/");
+			return tm.getFromFilename(source);
+		}
+		/**
+		 * Gibt das echte passende TileSet zurueck.
+		 * Es muss ein TileSetManager uebergeben werden,
+		 * dadurch muss dieser nicht komplett neu erzeugt werden (Was Ladezeiten erspart).
+		 *
+		 * @return Das passende echte TileSet
+		 */
+		public HMP.TileSet get_TileSetFromTM(HMP.TileSetManager tm){
+			return tm.getFromFilename(source);
+		}
 	}
 }

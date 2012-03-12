@@ -18,7 +18,8 @@ using GLib;
 using HMP;
 namespace HMP {
 	/**
-	 * Klasse fuer TileSetManager
+	 * Klasse fuer den MapManager, mit dieser Klasse werden alle Maps im Spiel verwaltet.
+	 * Sie kann beispielsweise alle Maps aus einem angegebenen Verzeichnis Laden.
 	 */
 	public class MapManager {
 		Gee.List<HMP.Map> map;

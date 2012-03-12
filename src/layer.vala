@@ -91,13 +91,15 @@ namespace HMP {
 		public void draw(Gee.List<HMP.TileSetReference> tileset) {
 			HMP.TileSetManager tm = new HMP.TileSetManager("./data/tileset/");
 			HMP.TileSet current_ts;
-			print("==DRAW REFTILE==\n");
+			print("==DRAW LAYER==\n");
 			foreach (HMP.TileSetReference ts in tileset) {
 					string tilesetname = ts.get_Filename();
 					print("tilesetname %s\n", tilesetname);
 					current_ts = tm.getFromFilename(tilesetname);
-					current_ts.printValues();
+					current_ts.printValues(); //TODO nue testweises ausgeben auf der Konsole
+	   		//TODO evtl extra Klasse fuer Zeichnungen und nicht hier als Methode einbauen?
 	   		}
+	   		//TODO tiles zeichnen
 			/*for (int y=0;y<height;y++) {
 				for (int x=0;x<width;x++) {
 					tiles[x,y].draw(tileset);
