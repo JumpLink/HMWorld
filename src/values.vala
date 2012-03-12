@@ -62,4 +62,10 @@ namespace HMP {
 		SOUTH,
 		WEST
 	}
+
+	public enum CropType {
+		EMPTY_CROP,
+		GRASS,
+		POTATO
+	}
 }
