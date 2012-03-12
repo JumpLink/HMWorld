@@ -19,15 +19,45 @@ using Gee;
 
 namespace HMP {
 	/**
-	 * Klasse fuer Maps
+	 * Klasse fuer Maps.
+	 * Diese Klasse dient zur Speicherung von Mapinformationen.
+	 * Sie kann zudem die Maps auf der Konsole ausgeben und eine Map-Datei laden.
 	 */
 	public class Map {
-
+		/**
+		 * Unterklasse von Maps als Hilfe fuer das Laden einer XML-basierten Map-Datei.
+		 * Wir verwenden dafuer das Dateiformat von "Tiled", einem Mapeditor
+		 * der hier zu finden ist: [[http://www.mapeditor.org/|mapeditor.org]]
+		 * Derzeit werden noch keine komprimierten Dateien unterstuetzt.
+		 * Die zu ladenden Maps werden fuer gewoehnlich von der Klasse HMP.MapManager
+		 * uebernommen.
+		 * Die definitionen des Kartenformats sind [[https://github.com/bjorn/tiled/wiki/TMX-Map-Format|hier]] zu finden.
+		 *
+		 * @see HMP.MapManager
+		 */
 		class XML : HMP.XML {
+			/**
+			 * Speichert den path der zu bearbeitenden Mapdatei
+			 */
 			string path;
-			Xml.Doc* doc;
+			/**
+			 * Hilsvariable mit Dateityp von libxml2, fuer weitere Informationen siehe
+			 * [[http://xmlsoft.org/html/libxml-tree.html#xmlDoc|xmlsoft.org]]
+			 * und [[http://valadoc.org/libxml-2.0/Xml.Doc.html|valadoc.org]]
+			 */
+			private Xml.Doc* doc;
+			/**
+			 * Hilsvariable mit Dateityp von libxml2, fuer weitere Informationen siehe
+			 * [[http://xmlsoft.org/html/libxml-xpath.html#xmlXPathContext|xmlsoft.org]]
+			 * und [[http://valadoc.org/libxml-2.0/Xml.XPath.Context.html|valadoc.org]]
+			 */
 			Context ctx;
-
+			/**
+			 * Konstrukter der internen XML-Klasse.
+			 * Hier wird der Parser initialisiert und die uebergebene Datei vorbereitet.
+			 *
+			 * @param path Pfadangabe der vorzubereitenden XML-Datei
+			 */
 			public XML(string path) {
 				print("Erstelle XML-Objekt vom Path %s\n", path);
 				Parser.init ();
@@ -38,16 +68,31 @@ namespace HMP {
 				ctx = new Context(doc);
 				if(ctx==null) print("failed to create the xpath context\n");
 			}
-
+			/**
+			 * Dekonstrukter der internen XML-Klasse.
+			 * Hier wird der Parser gesaeubert und Variablen wieder freigegeben.
+			 */
 			~XML() {
 				delete doc;
 				Parser.cleanup ();
 			}
-
+			/**
+			 * In dieser Methode werden die globalen Mapwerte aus der XML gelesen
+			 * und als Parameter zurueck gegeben. In der XML sind es die properties des map-Tags
+			 *
+			 * @param orientation Die Ausgelsene Orientierung der Karte wird hier gespeichert, es wird nur "orthogonal" unterstützt.
+			 * @param version The TMX format version, generally 1.0.
+			 * @param width The map width in tiles.
+			 * @param height The map height in tiles.
+			 * @param tilewidth The width of a tile.
+			 * @param tileheight The height of a tile.
+			 */
 			public void loadGlobalMapProperties (out string orientation, out string version, out uint width, out uint height, out uint tilewidth, out uint tileheight) {
+				//XPath-Expression verarbeiten
 				Xml.Node* node = evalExpression("/map");
+				//properties des resultats verarbeiten.
 				Gee.HashMap<string, string> properties = loadProperties(node);
-
+				//geparsten properties speichern.
 				orientation = (string) properties.get ("orientation");
 				version = (string) properties.get ("version");
 				width = int.parse(properties.get ("width"));
@@ -55,33 +100,83 @@ namespace HMP {
 				tilewidth = int.parse(properties.get ("tilewidth"));
 				tileheight = int.parse(properties.get ("tileheight"));
 			}
-
+			/**
+			 * In dieser Methode werden die TileSet-Werte aus der XML gelesen
+			 * und als return zurueck gegeben.
+			 * In der XML sind dies die properties des tileset-Tags.
+			 * Eine Karte kann mehrere TileSets beinhalten, daher wird mit einer Liste von TileSets gearbeitet.
+			 *
+			 * @return Liste mit allen gefundenen TileSets
+			 */
+			public Gee.List<HMP.TileSetReference> loadTileSets () {
+				Gee.List<HMP.TileSetReference> tileset = new Gee.ArrayList<HMP.TileSetReference>(); //Speichert diie TileSets in einer Liste
+				//XPath-Expression ausfuehren
+				unowned Xml.XPath.Object obj = ctx.eval_expression("/map/tileset");
+				if(obj==null) print("failed to evaluate xpath\n");
+				//Durchläuft alle Nodes, also alle resultierten TileSet-Tags
+				for (int i=0;(obj.nodesetval != null && obj.nodesetval->item(i) != null);i++) {
+					//Holt entsprechenden Layer
+					Xml.Node* node = obj.nodesetval->item(i);
+					//Parst dessen properties
+					Gee.HashMap<string, string> properties = loadProperties(node);
+					//Speichert die geparsten properties
+					string source = (string) properties.get ("source");
+					int firstgid = int.parse(properties.get ("firstgid"));
+					//Den zusammengestellten neuen TileSet in die Liste einfuegen
+					tileset.add( new TileSetReference(firstgid, source));
+				}
+				return tileset;
+			}
+			/**
+			 * In dieser Methode werden die Layer-Werte aus der XML gelesen
+			 * und als return zurueck gegeben.
+			 * In der XML sind dies die properties und die Kinder des layer-Tags.
+			 * Eine Karte kann mehrere Layer beinhalten, daher wird mit einer Liste von Layern gearbeitet.
+			 *
+			 * @return Gee.ArrayList vom Typ HMP.Layer aller Layer
+			 * @see HMP.Layer
+			 * @see Gee.ArrayList
+			 */
 			public Gee.List<Layer> loadLayers () {
-				Gee.List<Layer> layer = new Gee.ArrayList<Layer>();
+				Gee.List<Layer> layer = new Gee.ArrayList<Layer>(); //Speichert die Layers
+				//XPath-Expression ausfuehren
 				unowned Xml.XPath.Object obj = ctx.eval_expression("/map/layer");
 				if(obj==null) print("failed to evaluate xpath\n");
+				//Durchläuft alle Nodes, also alle resultierten Layer-Tags
 				for (int i=0;(obj.nodesetval != null && obj.nodesetval->item(i) != null);i++) {
-					print("i %i\n",i);
+					//Holt entsprechenden Layer
 					Xml.Node* node = obj.nodesetval->item(i);
+					//Parst dessen properties
 					Gee.HashMap<string, string> properties = loadProperties(node);
+					//Speichert die geparsten properties
 					string name = (string) properties.get ("name");
 					int width = int.parse(properties.get ("width"));
 					int height = int.parse(properties.get ("height"));
 					int.parse(properties.get ("height"));
 					print("Lade Tiles\n");
+					//Holt sich auch gleich den Tile-Tag
 					Tile[,] tiles = loadTiles(i, width, height);
 					print("Fuege Layer mit Namen %s hinzu\n", properties.get ("name"));
-					double z;
-					loadLayerZ(i, width, height, out z);
+					double z = 0; //Zu speichernder Z-Wert
+					//Holt sich auch gleich den Z-Wert
+					loadLayerZ(i, out z);
+					//Den zusammengestellten Layer in die Liste einfuegen
 					layer.add( new Layer.all( name, z, width, height, tiles));
 				}
-
 				return layer;
 			}
-			private bool loadLayerZ (uint layer_number, uint width, uint height, out double z) {
+			/**
+			 * In dieser Methode wird der Z-Wert aus der XML gelesen
+			 * und als Parameter zurueck gegeben.
+			 * In der XML ist der Z-Wert ein zusaetlicher costum Wert, ziehe dazu [[https://github.com/bjorn/tiled/wiki/TMX-Map-Format|hier]] unter dem properties-tag
+			 *
+			 * @param layer_number Layer-Index aus dem der Z-Wert gewonnen werden soll. Wird als Information fuer die richtige XPath-Expression benoetigt.
+			 * @param z Z-Wert der ausgelesen werden und gespeichert werden soll.
+			 * @return false bei Fehler sonst true
+			 */
+			private bool loadLayerZ (uint layer_number, out double z) {
 				Xml.Node* node = evalExpression("/map/layer["+(layer_number+1).to_string()+"]/properties/property");
 				Xml.Attr* attr = node->properties;
-				Tile[,] tiles = new Tile[width, height];
 				string name;
 				string content;
 				while ( attr != null) {
@@ -106,22 +201,38 @@ namespace HMP {
 				}
 				return false;
 			}
-
+			/**
+			 * In dieser Methode werden die Tile-Werte aus der XML gelesen und als return zurueck gegeben.
+			 * In der XML sind es jeweils nur ein propertie mit dem namen "gid" des entsprechenden tile-Tags.
+			 * Eine Karte kann mehrere Tiles beinhalten, daher wird mit einem Array von Tiles gearbeitet.
+			 *
+			 * @return Array mit den geparsten Tiles
+			 */
 			public Tile[,] loadTiles (uint layer_number, uint width, uint height) {
-				Tile[,] tiles = new Tile[width,height];
+				Tile[,] tiles = new Tile[width,height]; // Zur Speicherung der Tiles
+				//XPath-Expression ausfuehren
 				unowned Xml.XPath.Object obj = ctx.eval_expression("/map/layer["+(layer_number+1).to_string()+"]/data/tile");
 				if(obj==null) print("failed to evaluate xpath\n");
+				//Alle Tiles des XPath-Expression-Ergebnisses durchlaufen
 				for (int i=0;(obj.nodesetval != null && obj.nodesetval->item(i) != null);i++) {
-					print("i %i\n",i);
+					//Holt sich das Tile
 					Xml.Node* node = obj.nodesetval->item(i);
-
+					//Parst die gid
 					Gee.HashMap<string, string> properties = loadProperties(node);
+					//Neues Tile mit geparster gid
 					Tile tmp_tile = new RefTile.fromGid(int.parse(properties.get ("gid")));
+					//Tile dem Array mit berechneten x- und y-Werten hinzufuegen
 					tiles[(int)(i%width),(int)(i/width)] = tmp_tile;
 
 				}
 				return tiles;
 			}
+			/**
+			 * Allgemeine Hilfsmethode fuer das Parsen von properties eines Knotens.
+			 *
+			 * @param node der zu parsenden properties.
+			 * @return Liste mit den geparsten properties, key ist der propertiename und value ist der propertievalue.
+			 */
 			protected Gee.HashMap<string, string> loadProperties(Xml.Node* node) {
 				Xml.Attr* attr = node->properties;
 				Gee.HashMap<string, string> properties = new Gee.HashMap<string, string>();
@@ -133,7 +244,12 @@ namespace HMP {
 				}
 				return properties;
 			}
-
+			/**
+			 * Allgemeine Hilfsmethode fuer das ausfuhren einer XPath-Expression.
+			 *
+			 * @param expression Auszufuehrende Expression als String.
+			 * @return node mit dem Ergebniss der Expression.
+			 */
 		    protected Xml.Node* evalExpression (string expression ) {
 		        unowned Xml.XPath.Object obj = ctx.eval_expression(expression);
 		        if(obj==null) print("failed to evaluate xpath\n");
@@ -211,8 +327,14 @@ namespace HMP {
 			XML xml = new XML(path+filename);
 			xml.loadGlobalMapProperties(out orientation, out version, out width, out height, out tilewidth, out tileheight);
 			layers = xml.loadLayers();
+			tileset = xml.loadTileSets();
 		}
-
+		/**
+		 * Gibt den Index eines gesuchten Layers mit dem Namen name zurueck.
+		 *
+		 * @param name Gesichter Layername
+		 * @return Index aus der Layerliste
+		 */
 		public int getIndexOfLayerName(string name) {
 			foreach (Layer i in layers) {
 				if (name == i.name) {
@@ -220,12 +342,6 @@ namespace HMP {
 				}
 			}
 			return -1;
-		}
-
-		public void addLayerTile(string layer_name, uint number, uint value) {
-			int index = getIndexOfLayerName(layer_name);
-			Layer tmp_layer = layers.get(index);
-			//Vector = tileNumberToVektor(number, width, height);
 		}
 		/**
 		 * Gibt alle Werte (bis auf die Layer) der Map auf der Konsole aus
@@ -248,7 +364,16 @@ namespace HMP {
 			foreach (HMP.Layer l in layers) {
 				l.printValues();
 				l.printTiles();
-	   		}
+			}
+		}
+		/**
+		 * Gibt die Werte aller TileSets der Map auf der Konsole aus
+		 */
+		public void printTileSets() {
+			print("====ALL TILESETS FROM MAP %s====\n", filename);
+			foreach (HMP.TileSetReference tsr in tileset) {
+				tsr.printValues();
+			}
 		}
 		/**
 		 * Gibt alle Werte und alle Layer der Map auf der Konsole aus
@@ -256,6 +381,7 @@ namespace HMP {
 		public void printAll() {
 			printValues();
 			printLayers();
+			printTileSets();
 		}
 	}
 }

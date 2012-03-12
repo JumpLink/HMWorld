@@ -28,38 +28,33 @@ namespace HMP {
 		}
 
 		/**
-		 * Struktur fuer SpriteSets
+		 * Name des SpriteSets.
 		 */
-		public struct Data {
-			/**
-			 * Name des SpriteSets.
-			 */
-			public string name;
-			/**
-			 * Breite eines Sprites
-			 */
-			public uint spritewidth;
-			/**
-			 * Hoehe eines Sprites7
-			 */
-			public uint spriteheight;
-			/**
-			 * Dateiname des SpriteSets
-			 */
-			public string source;
-			/**
-			 * Transparente Farbe im SpriteSets
-			 */
-			public string trans;
-			/**
-			 * Gesamtbreite des SpriteSets
-			 */
-			public uint width;
-			/**
-			 * Gesamthoehe des SpriteSets
-			 */
-			public uint height;
-		}
+		public string name;
+		/**
+		 * Breite eines Sprites
+		 */
+		public uint spritewidth;
+		/**
+		 * Hoehe eines Sprites7
+		 */
+		public uint spriteheight;
+		/**
+		 * Dateiname des SpriteSets
+		 */
+		public string source;
+		/**
+		 * Transparente Farbe im SpriteSets
+		 */
+		public string trans;
+		/**
+		 * Gesamtbreite des SpriteSets
+		 */
+		public uint width;
+		/**
+		 * Gesamthoehe des SpriteSets
+		 */
+		public uint height;
 
 		/**
 		 * Array fuer die einzelnen Sprites
@@ -73,9 +68,22 @@ namespace HMP {
 			getSpriteSetFromFile ("foobar");
 			//tiles = new Tile[,];
 		}
-		
+		/**
+		 * Konstruktor welcher direkt ein angegebenes SpriteSet ladet
+		 *
+		 * @param path String mit Pfadangabe fuer die zu Ladene Datei
+		 */
+		public SpriteSet.fromFile(string path) {
+			getSpriteSetFromFile (path);
+			//tiles = new Tile[,];
+		}
+		/**
+		 * Ladet ein SpriteSet von einer Datei
+		 *
+		 * @param path String mit Pfadangabe fuer die zu Ladene Datei
+		 */
 		public void getSpriteSetFromFile(string path) {
-
+			//TODO
 		}
 	}
 }

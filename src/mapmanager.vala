@@ -23,7 +23,8 @@ namespace HMP {
 	public class MapManager {
 		Gee.List<HMP.Map> map;
 		/**
-		 * Konstruktor
+		 * Konstruktor mit uebergebenem Ordner fuer das Map-Verzeichnis.
+		 * @param Verzeichnis der Maps, default ist: "./data/map/".
 		 */
 		public MapManager(string folder = "./data/map/") {
 			print("Erstelle MapManager\n");
@@ -80,7 +81,7 @@ namespace HMP {
 		}
 
 		/**
-		 * Gibt die Map mit dem Dateinamen "filename" zurück
+		 * Gibt die Map mit dem Dateinamen "filename" zurueck
 		 *
 		 * @param filename Dateiname der gesuchten Map
 		 * @return Bei Erfolg die gefundene Map, sonst ein neues Objekt Map
@@ -100,8 +101,7 @@ namespace HMP {
 		public void printAll() {
 			print("=====ALL MAPS====\n");
 			foreach (HMP.Map m in map) {
-					m.printValues ();
-					m.printLayers ();
+					m.printAll();
 	   		}
 		}
 	}

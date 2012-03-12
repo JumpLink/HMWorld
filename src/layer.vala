@@ -73,11 +73,6 @@ namespace HMP {
 			this.tiles = tiles;
 		}
 
-		public static Vector tileNumberToVektor(uint number, uint width, uint height) {
-			Vector vector = new Vector(2);
-			return vector;
-		}
-
 		public void calcEdges () {
 			uint[] neighbours = new uint[8];
 			for (uint r = 0; r < height; ++r)
