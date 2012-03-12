@@ -30,16 +30,9 @@ namespace HMP {
 	class IOlong {
 
 		public IOlong() {
-			tm = new HMP.TileSetManager("./data/tileset/");
-			tileset = tm.getFromName("Stadt - Sommer");
-			tileset.printValues();
-			mm = new HMP.MapManager("./data/map/");
-			mm.printAll();
+			mm = new HMP.MapManager();
 			map = mm.getFromFilename("testmap.tmx");
-			//map.printValues();
-
-			
-			//tile.tex.bindTexture();
+			map.draw();
 		}
 
 		/**
@@ -129,7 +122,7 @@ namespace HMP {
 			glMatrixMode (GL_MODELVIEW);
 
 			/* Szene zeichnen */
-			tileset.tile[0,0].tex.bindTexture();
+			//tileset.tile[0,0].tex.bindTexture();
 			// OpenGL rendering goes here...
 			    glBegin (GL_QUADS);
 				glTexCoord2f(0,0);
@@ -142,7 +135,7 @@ namespace HMP {
 			        glVertex3f ( -0.0f, -0.0f, 0.0f);
 			    glEnd ();
 
-			tileset.tile[0,9].tex.bindTexture();
+			//tileset.tile[0,9].tex.bindTexture();
 			    glBegin (GL_QUADS);
 				glTexCoord2f(0,0);
 			        glVertex3f ( -1.0f,  0.0f, 0.0f);

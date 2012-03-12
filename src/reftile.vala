@@ -16,7 +16,7 @@
 using HMP;
 namespace HMP {
 	/**
-	 * Klasse für Tiles die nur auf ein bestimmtes Tile referenzieren.
+	 * Klasse fuer Tiles die nur auf ein bestimmtes Tile referenzieren.
 	 * Diese Klasse ist gedacht fuer die Speicherung von Tileinformationen auf einer Map.
 	 * Die Speicherung der Texturierung in Tiles wird vom TileSetManager uebernommen. 
 	 */
@@ -32,6 +32,9 @@ namespace HMP {
 		 */		
 		public RefTile.fromGid(uint gid) {
 			this.gid = gid;
+		}
+		public override void draw(Gee.List<HMP.TileSetReference> tileset) {
+
 		}
 		/**
 		 * Ungenutzte Methode

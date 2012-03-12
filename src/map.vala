@@ -59,7 +59,7 @@ namespace HMP {
 			 * @param path Pfadangabe der vorzubereitenden XML-Datei
 			 */
 			public XML(string path) {
-				print("Erstelle XML-Objekt vom Path %s\n", path);
+				//print("Erstelle XML-Objekt vom Path %s\n", path);
 				Parser.init ();
 				this.path = path;
 				doc = Parser.parse_file (path);
@@ -153,10 +153,10 @@ namespace HMP {
 					int width = int.parse(properties.get ("width"));
 					int height = int.parse(properties.get ("height"));
 					int.parse(properties.get ("height"));
-					print("Lade Tiles\n");
+					//print("Lade Tiles\n");
 					//Holt sich auch gleich den Tile-Tag
 					Tile[,] tiles = loadTiles(i, width, height);
-					print("Fuege Layer mit Namen %s hinzu\n", properties.get ("name"));
+					//print("Fuege Layer mit Namen %s hinzu\n", properties.get ("name"));
 					double z = 0; //Zu speichernder Z-Wert
 					//Holt sich auch gleich den Z-Wert
 					loadLayerZ(i, out z);
@@ -182,15 +182,15 @@ namespace HMP {
 				while ( attr != null) {
 					name = (string) attr->name;
 					content = (string) attr->children->content;
-					print("Attribute: \tname: %s\tvalue: %s\n", name, content);
+					//print("Attribute: \tname: %s\tvalue: %s\n", name, content);
 					if (name == "name" && content == "z") {
-						print("Z-Wert folgt\n");
+						//print("Z-Wert folgt\n");
 						attr = attr->next;
 						if (attr != null) {
 							name = (string) attr->name;
 							content = (string) attr->children->content;
 							if (name == "value" ) {
-								print("Attribute: \tname: %s\tvalue: %s\n", name, content);
+								//print("Attribute: \tname: %s\tvalue: %s\n", name, content);
 								z = double.parse(content);
 								return true;
 						}
@@ -238,7 +238,7 @@ namespace HMP {
 				Gee.HashMap<string, string> properties = new Gee.HashMap<string, string>();
 
 				while ( attr != null ) {
-					print("Attribute: \tname: %s\tvalue: %s\n", attr->name, attr->children->content);
+					//print("Attribute: \tname: %s\tvalue: %s\n", attr->name, attr->children->content);
 					properties.set(attr->name, attr->children->content);
 					attr = attr->next;
 				}
@@ -269,7 +269,7 @@ namespace HMP {
 		 */
 		public string orientation;
 		/**
-		 * Version des Kartenformats?
+		 * Version des Kartenformats, fuer gewoehnloch 1.0
 		 */
 		public string version;
 		/**
@@ -342,6 +342,12 @@ namespace HMP {
 				}
 			}
 			return -1;
+		}
+		public void draw() {
+			print("==DrawMap==\n");
+			foreach (Layer l in layers) {
+				l.draw(tileset);
+			}
 		}
 		/**
 		 * Gibt alle Werte (bis auf die Layer) der Map auf der Konsole aus

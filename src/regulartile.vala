@@ -41,7 +41,9 @@ namespace HMP {
 			public Pixbuf get_Pixbuf () {
 				return tex.get_Pixbuf();
 			}
-
+			public override void draw(Gee.List<HMP.TileSetReference> tileset) {
+				//nichts
+			}
 			public override void calcEdges (uint[] neighbours) {
 				//nichts
 			}

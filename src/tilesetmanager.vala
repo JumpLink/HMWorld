@@ -71,7 +71,7 @@ namespace HMP {
 		        	print ("extension: %s\n", extension);
 		            if (extension == ".tsx") {
 		            	TileSet tmptileset = new TileSet();
-		            	tmptileset.loadFromPath(path+filename);
+		            	tmptileset.loadFromPath(path, filename);
 		            	tileset.add(tmptileset);
 		            }
 		        }
@@ -96,7 +96,21 @@ namespace HMP {
 						
 			return new TileSet();
 		}
-
+		/**
+		 * Gibt das TileSet mit dem Dateiname "filename" zurück
+		 *
+		 * @param filename Dateiname des gesuchten TileSets
+		 * @return Bei Erfolg das gefundene TileSet, sonst ein neues Objekt TileSet
+		 */
+		public TileSet getFromFilename(string filename) {
+			foreach (TileSet ts in tileset)
+					if (ts.getFilename() == filename) {
+						print("TileSet gefunden!\n");
+						return ts;
+					}
+						
+			return new TileSet();
+		}
 		/**
 		 * Gibt das TileSet mit dem Namen "name" zurück
 		 *

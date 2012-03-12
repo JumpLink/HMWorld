@@ -32,7 +32,9 @@ namespace HMP {
 				foreach (SubTile s in subTiles)
 					s = new SubTile ();
 			}
-
+			public override void draw(Gee.List<HMP.TileSetReference> tileset) {
+				//nichts
+			}
 			public override void calcEdges (uint[] neighbours) {
 				assert (neighbours.length == 8);
 				uint[] n = new uint[3];

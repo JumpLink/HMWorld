@@ -43,6 +43,9 @@ namespace HMP {
 			this.firstgid = firstgid;
 			this.source = source;
 		}
+		public string get_Filename() {
+			return source.substring(source.last_index_of ("/", 0)+1, -1);
+		}
 		/**
 		 * Gibt alle Werte des TileSets auf der Konsole aus
 		 */

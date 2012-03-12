@@ -88,6 +88,23 @@ namespace HMP {
 					tiles[c, r].calcEdges(neighbours);
 				}
 		}
+		public void draw(Gee.List<HMP.TileSetReference> tileset) {
+			HMP.TileSetManager tm = new HMP.TileSetManager("./data/tileset/");
+			HMP.TileSet current_ts;
+			print("==DRAW REFTILE==\n");
+			foreach (HMP.TileSetReference ts in tileset) {
+					string tilesetname = ts.get_Filename();
+					print("tilesetname %s\n", tilesetname);
+					current_ts = tm.getFromFilename(tilesetname);
+					current_ts.printValues();
+	   		}
+			/*for (int y=0;y<height;y++) {
+				for (int x=0;x<width;x++) {
+					tiles[x,y].draw(tileset);
+				}
+				print("\n");
+			}*/
+		}
 		/**
 		 * Gibt alle Werte des Layers (bis auf die Tiles) auf der Konsole aus
 		 */

@@ -33,6 +33,7 @@ namespace HMP {
 		public Tile() {
 			type = 0;
 		}
+		public abstract void draw(Gee.List<HMP.TileSetReference> tileset);
 
 		public abstract void calcEdges (uint[] neighbours);
 	}

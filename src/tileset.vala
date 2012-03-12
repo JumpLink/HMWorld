@@ -35,16 +35,17 @@ namespace HMP {
 			 * @param path Pfad mit Dateiname der auszulesenden XML
 			 * @return struct TileSet.Data mit den gespeicherten Werten
 			 */
-		    public TileSet.Data getDataFromFile (string path) {
+		    public TileSet.Data getDataFromFile (string path, string filename) {
 		    	//print("\tFuehre getTileSetDataFromFile aus\n");
 		    	
 				TileSet.Data data = TileSet.Data();
 		    	Gee.HashMap<string, string> tileset_global_properties = new Gee.HashMap<string, string>();
 		    	Gee.HashMap<string, string> tileset_image_properties = new Gee.HashMap<string, string>();
 				
-		    	parse_file (path, tileset_global_properties, tileset_image_properties);
+		    	parse_file (path+filename, tileset_global_properties, tileset_image_properties);
 		    	
 		    	// Zuweisung der geparsten Werte
+		    	data.filename = filename;
 		    	data.name = (string) tileset_global_properties.get ("name");
 		    	data.tilewidth = int.parse(tileset_global_properties.get ("tilewidth"));
 		    	data.tileheight = int.parse(tileset_global_properties.get ("tileheight"));
@@ -176,6 +177,10 @@ namespace HMP {
 			 */
 			public string name;
 			/**
+			 * Dateiname des TileSets.
+			 */
+			public string filename;
+			/**
 			 * Breite eines Tiles
 			 */
 			public uint tilewidth;
@@ -184,7 +189,7 @@ namespace HMP {
 			 */
 			public uint tileheight;
 			/**
-			 * Dateiname des TileSets
+			 * Dateiname des TileSetbildes
 			 */
 			public string source;
 			/**
@@ -219,10 +224,10 @@ namespace HMP {
 		~TileSet() {
 			print("Lösche TileSet Objekt\n");
 		}
-		public void loadFromPath(string path) {
+		public void loadFromPath(string path, string filename) {
 		
 			var xml = new XML ();
-			data = xml.getDataFromFile(path);
+			data = xml.getDataFromFile(path, filename);
 			loadTiles();
 		}
 
@@ -248,7 +253,27 @@ namespace HMP {
 		public uint getCountX() {
 			return (int) getTotalWidth() / getTileWidth();
 		}
-
+		/**
+		 * Gibt den Namen des TileSets zurück
+		 * @return Name des TileSets
+		 */
+		public string getName() {
+			return data.name;
+		}
+		/**
+		 * Gibt den Dateinamen des TileSets zurück
+		 * @return Dateiname des TileSets
+		 */
+		public string getFilename() {
+			return data.filename;
+		}
+		/**
+		 * Gibt den Sourcenamen des TileSets zurück
+		 * @return source des TileSets
+		 */
+		public string getSource() {
+			return data.source;
+		}
 		private void loadTiles() {
 			Texture tex = new Texture();
 			tex.loadFromFile("./data/tileset/"+getSource());
@@ -275,28 +300,13 @@ namespace HMP {
 		 */
 		public void printValues() {
 			print("name: %s\n", data.name);
+			print("filename: %s\n", data.filename);
 			print("tilewidth: %u\n", data.tilewidth);
 			print("tileheight: %u\n", data.tileheight);
 			print("source: %s\n", data.source);
 			print("trans: %s\n", data.trans);
 			print("width: %u\n", data.width);
 			print("height: %u\n", data.height);
-		}
-
-		/**
-		 * Gibt den Namen des TileSets zurück
-		 * @return Name des TileSets
-		 */
-		public string getName() {
-			return data.name;
-		}
-
-		/**
-		 * Gibt den Sourcenamen des TileSets zurück
-		 * @return source des TileSets
-		 */
-		public string getSource() {
-			return data.source;
 		}
 	}
 }

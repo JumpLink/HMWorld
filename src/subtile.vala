@@ -21,7 +21,6 @@ namespace HMP {
 	 	public SubTile () {
 	 		edge = EdgeShape.FULL;
 	 	}
-
 	 	public void calcEdge (uint [] neighbours, uint type, uint location) {
 	 		assert (neighbours.length == 3);
 	 		if (neighbours[0] == type && neighbours[1] == type && neighbours[2] == type)
