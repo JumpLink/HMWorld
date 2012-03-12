@@ -15,12 +15,27 @@
  */
 using HMP;
 namespace HMP {
-	class RefTile : Tile {		
+	/**
+	 * Klasse für Tiles die nur auf ein bestimmtes Tile referenzieren.
+	 * Diese Klasse ist gedacht fuer die Speicherung von Tileinformationen auf einer Map.
+	 * Die Speicherung der Texturierung in Tiles wird vom TileSetManager uebernommen. 
+	 */
+	class RefTile : Tile {
+		/**
+		 * Konstruktor ohne Werte
+		 */		
 		public RefTile() {
+
 		}
+		/**
+		 * Konstruktor mit gid
+		 */		
 		public RefTile.fromGid(uint gid) {
 			this.gid = gid;
 		}
+		/**
+		 * Ungenutzte Methode
+		 */
 		public override void calcEdges (uint[] neighbours) {
 			//nichts
 		}

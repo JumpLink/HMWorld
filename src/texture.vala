@@ -21,15 +21,24 @@ using Gdk;
 using GLib;
 using HMP;
 namespace HMP {
+	/**
+	 * Klasse zur Speicherung einer Textur und um diese an OpenGL zu binden.
+	 */
 	public class Texture {
 		GLuint* texID = new GLuint[1];
 		GLenum texture_format;
 		private Gdk.Pixbuf pixbuf;
-
+		/**
+		 * Ladet eine Textur aus einer Datei.
+		 * @param path Pfadangabe der zu ladenden Grafikdatei.
+		 */
 		public void loadFromFile(string path) {
 			loadFromFileWithGdk(path);
 		}
-		
+		/**
+		 * Ladet eine Textur aus einer Datei mittels Gdk.
+		 * @param path Pfadangabe der zu ladenden Grafikdatei.
+		 */
 		public void loadFromFileWithGdk(string path) {
 	 		try {
 				pixbuf = new Pixbuf.from_file (path);
@@ -42,7 +51,9 @@ namespace HMP {
 			loadFromPixbuf(pixbuf);
 		}
 
-
+		/**
+		 * Ladet eine Textur aus einem Pixbuf in die Klasse.
+		 */
 		public void loadFromPixbuf(Gdk.Pixbuf pixbuf) {
 			this.pixbuf = pixbuf;
 			if(pixbuf.colorspace == Colorspace.RGB)
@@ -59,7 +70,9 @@ namespace HMP {
 				print("warning: the image is not truecolor..  this will probably break\n");
 			}
 		}
-
+		/**
+		 * Bindet die Textur an OpenGL.
+		 */
 		public void bindTexture () {
 			//print("binde textur \n");
 			if (get_width() > 0 && get_height() > 0)
@@ -73,31 +86,45 @@ namespace HMP {
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			}
 		}
-
+		/**
+		 * TODO
+		 */
 		public uint get_width() {
 			return this.pixbuf.get_width();
 		}
-
+		/**
+		 * TODO
+		 */
 		public uint get_height() {
 			return this.pixbuf.get_height();
 		}
-
+		/**
+		 * TODO
+		 */
 		public void* get_pixels() {
 			return this.pixbuf.get_pixels();
 		}
-
+		/**
+		 * TODO
+		 */
 		public bool has_alpha() {
 			return this.pixbuf.get_has_alpha();
 		}
-
+		/**
+		 * TODO
+		 */
 		public Colorspace get_colorspace() {
 			return this.pixbuf.get_colorspace();
 		}
-
+		/**
+		 * TODO
+		 */
 		public Pixbuf get_Pixbuf() {
 			return this.pixbuf;
 		}
-
+		/*
+		 * TODO
+		 */
 		/*public Pixbuf[,] createSplits(int split_width, int split_height, int count_y, int count_x) {
 			Pixbuf[,] splits = new Pixbuf[count_y,count_x];
 			for(int y = 0; y < count_y; y++) {
