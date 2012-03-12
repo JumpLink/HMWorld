@@ -108,7 +108,13 @@ namespace HMP {
 		 */
 		public void printTiles() {
 			print("==Tiles==\n");
-			print("TODO\n");
+			for (int y=0;y<height;y++) {
+				for (int x=0;x<width;x++) {
+					print("%u ", tiles[x,y].gid);
+				}
+				print("\n");
+			}
+			
 		}
 		/**
 		 * Gibt alle Werte des Layers und dessen Tiles auf der Konsole aus

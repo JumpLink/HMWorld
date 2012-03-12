@@ -23,14 +23,15 @@ namespace HMP {
 		 * Tiletyp
 		 */
 		public uint type;
+		/*
+		 * Tile-ID fuer Referenzierung
+		 */
 		public uint gid;
-
 		/**
 		 * Konstruktor 
 		 */
 		public Tile() {
 			type = 0;
-			gid =0;
 		}
 
 		public abstract void calcEdges (uint[] neighbours);

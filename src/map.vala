@@ -107,20 +107,21 @@ namespace HMP {
 				return false;
 			}
 
-			private Tile[,] loadTiles (uint layer_number, uint width, uint height) {
-				Xml.Node* node = evalExpression("/map/layer["+(layer_number+1).to_string()+"]/data");
-				Xml.Attr* attr = node->properties;
-				Tile[,] tiles = new Tile[width, height];
+			public Tile[,] loadTiles (uint layer_number, uint width, uint height) {
+				Tile[,] tiles = new Tile[width,height];
+				unowned Xml.XPath.Object obj = ctx.eval_expression("/map/layer["+(layer_number+1).to_string()+"]/data/tile");
+				if(obj==null) print("failed to evaluate xpath\n");
+				for (int i=0;(obj.nodesetval != null && obj.nodesetval->item(i) != null);i++) {
+					print("i %i\n",i);
+					Xml.Node* node = obj.nodesetval->item(i);
 
-				while ( attr != null ) {
-					print("Attribute: \tname: %s\tvalue: %s, x: %u y: %u\n", attr->name, attr->children->content, layer_number%width, layer_number/width);
-					Tile tmp_tile = new RegularTile.fromGid(int.parse(attr->children->content));
-					tiles[(int)(layer_number%width),(int)(layer_number/width)] = tmp_tile;
-					attr = attr->next;
+					Gee.HashMap<string, string> properties = loadProperties(node);
+					Tile tmp_tile = new RefTile.fromGid(int.parse(properties.get ("gid")));
+					tiles[(int)(i%width),(int)(i/width)] = tmp_tile;
+
 				}
 				return tiles;
 			}
-
 			protected Gee.HashMap<string, string> loadProperties(Xml.Node* node) {
 				Xml.Attr* attr = node->properties;
 				Gee.HashMap<string, string> properties = new Gee.HashMap<string, string>();
@@ -146,17 +147,6 @@ namespace HMP {
 		        }
 		        return node;
 		    }
-		}
-
-		public struct TileSetMapData {
-			/**
-			 * Quelle des TileSets.
-			 */
-			public string source;
-			/**
-			 * TODO
-			 */
-			public uint firstgid;
 		}
 		/**
 		 * orientation der Map.
@@ -189,7 +179,7 @@ namespace HMP {
 		/**
 		 * Tilesets die für auf der Map verwendet werden
 		 */
-		public Gee.List<TileSetMapData?> tileset;
+		public Gee.List<HMP.TileSetReference> tileset;
 		/**
 		 * Layer der Map.
 		 */
@@ -206,7 +196,7 @@ namespace HMP {
 			print("Erstelle leeres Map Objekt\n");
 			layers = new Gee.ArrayList<Layer>();
 			entities = new Gee.ArrayList<Entity>();
-			tileset = new Gee.ArrayList<TileSetMapData?>();
+			tileset = new Gee.ArrayList<TileSetReference>();
 		}
 		/**
 		 * Konstrukter, ladet Map mit Daten einer Mapdatei

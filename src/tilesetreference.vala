@@ -13,37 +13,23 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-using Gdk;
+
 using HMP;
+
 namespace HMP {
-	/**
-	 * Klasse fuer nicht unterteilte Tiles
-	 */
-		public class RegularTile : Tile {
-			/**
-			 * Tiletyp
-			 */
-			public Texture tex;
-			/**
-			 * Konstruktor 
-			 */
-			public RegularTile () {
-				type = 0;
-				tex = new Texture();
-			}
 
-			public RegularTile.FromPixbuf (Pixbuf pixbuf) {
-				tex = new Texture();
-				tex.loadFromPixbuf(pixbuf);
-				type = 0;
-			}
-
-			public Pixbuf get_Pixbuf () {
-				return tex.get_Pixbuf();
-			}
-
-			public override void calcEdges (uint[] neighbours) {
-				//nichts
-			}
+	public class TileSetReference {
+		/**
+		 * Quelle des TileSets.
+		 */
+		public string source;
+		/**
+		 * TODO
+		 */
+		public uint firstgid;
+		public TileSetReference(uint firstgid, string source) {
+			this.firstgid = firstgid;
+			this.source = source;
+		}
 	}
 }
