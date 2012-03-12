@@ -65,12 +65,12 @@ namespace HMP {
 		/**
 		 * Konstruktor mit allen Werten non-default
 		 */
-		public Layer.all(string name, double zoff, int width, int height) {
+		public Layer.all(string name, double zoff, int width, int height, Tile[,] tiles) {
 			this.name = name;
-			this.zoff = 0;
+			this.zoff = zoff;
 			this.width = width;
 			this.height = height;
-			tiles = new Tile[width, height];
+			this.tiles = tiles;
 		}
 
 		public static Vector tileNumberToVektor(uint number, uint width, uint height) {

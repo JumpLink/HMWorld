@@ -64,33 +64,74 @@ namespace HMP {
 					print("i %i\n",i);
 					Xml.Node* node = obj.nodesetval->item(i);
 					Gee.HashMap<string, string> properties = loadProperties(node);
-					//TODO tiles
+					string name = (string) properties.get ("name");
+					int width = int.parse(properties.get ("width"));
+					int height = int.parse(properties.get ("height"));
+					int.parse(properties.get ("height"));
+					print("Lade Tiles\n");
+					Tile[,] tiles = loadTiles(i, width, height);
 					print("Fuege Layer mit Namen %s hinzu\n", properties.get ("name"));
-					layer.add(
-						new Layer.all( 
-							(string) properties.get ("name"),
-							0, //TODO
-							int.parse(properties.get ("width")),
-							int.parse(properties.get ("height"))
-						)
-					);
+					double z;
+					loadLayerZ(i, width, height, out z);
+					layer.add( new Layer.all( name, z, width, height, tiles));
 				}
 
 				return layer;
 			}
+			private bool loadLayerZ (uint layer_number, uint width, uint height, out double z) {
+				Xml.Node* node = evalExpression("/map/layer["+(layer_number+1).to_string()+"]/properties/property");
+				Xml.Attr* attr = node->properties;
+				Tile[,] tiles = new Tile[width, height];
+				string name;
+				string content;
+				while ( attr != null) {
+					name = (string) attr->name;
+					content = (string) attr->children->content;
+					print("Attribute: \tname: %s\tvalue: %s\n", name, content);
+					if (name == "name" && content == "z") {
+						print("Z-Wert folgt\n");
+						attr = attr->next;
+						if (attr != null) {
+							name = (string) attr->name;
+							content = (string) attr->children->content;
+							if (name == "value" ) {
+								print("Attribute: \tname: %s\tvalue: %s\n", name, content);
+								z = double.parse(content);
+								return true;
+						}
+					}
+					} else {
+						attr = attr->next;
+					}
+				}
+				return false;
+			}
 
-		    protected Gee.HashMap<string, string> loadProperties(Xml.Node* node) {
-		        Xml.Attr* attr = null;
-		        attr = node->properties;
-		        Gee.HashMap<string, string> properties = new Gee.HashMap<string, string>();
+			private Tile[,] loadTiles (uint layer_number, uint width, uint height) {
+				Xml.Node* node = evalExpression("/map/layer["+(layer_number+1).to_string()+"]/data");
+				Xml.Attr* attr = node->properties;
+				Tile[,] tiles = new Tile[width, height];
 
-		        while ( attr != null ) {
-		            print("Attribute: \tname: %s\tvalue: %s\n", attr->name, attr->children->content);
-		            properties.set(attr->name, attr->children->content);
-		            attr = attr->next;
-		        }
-		        return properties;
-		    }
+				while ( attr != null ) {
+					print("Attribute: \tname: %s\tvalue: %s, x: %u y: %u\n", attr->name, attr->children->content, layer_number%width, layer_number/width);
+					Tile tmp_tile = new RegularTile.fromGid(int.parse(attr->children->content));
+					tiles[(int)(layer_number%width),(int)(layer_number/width)] = tmp_tile;
+					attr = attr->next;
+				}
+				return tiles;
+			}
+
+			protected Gee.HashMap<string, string> loadProperties(Xml.Node* node) {
+				Xml.Attr* attr = node->properties;
+				Gee.HashMap<string, string> properties = new Gee.HashMap<string, string>();
+
+				while ( attr != null ) {
+					print("Attribute: \tname: %s\tvalue: %s\n", attr->name, attr->children->content);
+					properties.set(attr->name, attr->children->content);
+					attr = attr->next;
+				}
+				return properties;
+			}
 
 		    protected Xml.Node* evalExpression (string expression ) {
 		        unowned Xml.XPath.Object obj = ctx.eval_expression(expression);

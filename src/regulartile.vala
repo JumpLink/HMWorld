@@ -37,6 +37,11 @@ namespace HMP {
 				tex.loadFromPixbuf(pixbuf);
 				type = 0;
 			}
+			public RegularTile.fromGid (uint gid) {
+				tex = new Texture();
+				this.gid = gid;
+				type = 0;
+			}
 
 			public Pixbuf get_Pixbuf () {
 				return tex.get_Pixbuf();
