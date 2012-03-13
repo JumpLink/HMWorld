@@ -47,11 +47,43 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "hmp.sublime-project",
+			"settings":
+			{
+				"buffer_size": 724,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "hmp.sublime-workspace",
+			"settings":
+			{
+				"buffer_size": 9033,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/emptyHands.vala",
+			"settings":
+			{
+				"buffer_size": 819,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/layer.vala",
+			"settings":
+			{
+				"buffer_size": 3826,
+				"line_ending": "Unix"
+			}
+		}
 	],
-	"build_system": "make",
+	"build_system": "clean",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 75.0,
 		"selected_items":
 		[
 		],
@@ -72,6 +104,9 @@
 	},
 	"file_history":
 	[
+		"/home/jumplink/.config/sublime-text-2/Packages/Makefile/Makefile.sublime-settings",
+		"/home/jumplink/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
+		"/home/jumplink/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
 		"/home/jumplink/Dokumente/Studium/hmprojekt-reloaded/0.1/Makefile",
 		"/home/jumplink/Dokumente/Studium/hmprojekt-reloaded/0.1/hmp.sublime-project",
 		"/home/jumplink/Dokumente/Studium/hmprojekt-reloaded/0.1/readme",
@@ -119,8 +154,6 @@
 		"/home/jumplink/.gvfs/SFTP als root auf 176.9.28.187/var/www/bugwelder-shop/app/design/frontend/default/default/template/luxe/yalc/badge.phtml",
 		"/home/jumplink/.gvfs/SFTP als root auf 176.9.28.187/var/www/bugwelder-shop/skin/frontend/default/bugwelder/css/yalc.css",
 		"/home/jumplink/.gvfs/SFTP als root auf 176.9.28.187/var/www/bugwelder-shop/skin/frontend/default/bugwelder/css/style.css",
-		"/home/jumplink/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
-		"/home/jumplink/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
 		"/home/jumplink/Dokumente/Studium/hmprojekt-reloaded/0.1/data/testmap.tmx",
 		"/home/jumplink/Dokumente/Studium/hmprojekt-reloaded/0.1/src/splitTile.vala",
 		"/home/jumplink/Dokumente/Studium/hmprojekt-reloaded/0.1/src/subTile.vala",
@@ -263,8 +296,117 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "hmp.sublime-project",
+					"settings":
+					{
+						"buffer_size": 724,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								711,
+								711
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 330.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "hmp.sublime-workspace",
+					"settings":
+					{
+						"buffer_size": 9033,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4738.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/emptyHands.vala",
+					"settings":
+					{
+						"buffer_size": 819,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								749,
+								749
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vala/Syntaxes/Vala.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/layer.vala",
+					"settings":
+					{
+						"buffer_size": 3826,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								988,
+								988
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vala/Syntaxes/Vala.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1404.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		},
 		{
@@ -311,6 +453,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 118.0
+	},
 	"replace":
 	{
 		"height": 64.0
