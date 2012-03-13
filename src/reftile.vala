@@ -33,7 +33,7 @@ namespace HMP {
 		public RefTile.fromGid(uint gid) {
 			this.gid = gid;
 		}
-		public override void draw(Gee.List<HMP.TileSetReference> tileset) {
+		public override void draw (Gee.List<HMP.TileSetReference> tileset, double x, double y, double width) {
 			//TODO
 		}
 		/**

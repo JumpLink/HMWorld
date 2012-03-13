@@ -99,13 +99,13 @@ namespace HMP {
 					current_ts.printValues(); //TODO nue testweises ausgeben auf der Konsole
 	   		//TODO evtl extra Klasse fuer Zeichnungen und nicht hier als Methode einbauen?
 	   		}
-	   		//TODO tiles zeichnen
-			/*for (int y=0;y<height;y++) {
+	   		double w = 2.0 / width;
+			for (int y=0;y<height;y++) {
 				for (int x=0;x<width;x++) {
-					tiles[x,y].draw(tileset);
+					tiles[x,y].draw(tileset, -1 + x * w, 1 - (y + 1) * w, w);
 				}
 				print("\n");
-			}*/
+			}
 		}
 		/**
 		 * Gibt alle Werte des Layers (bis auf die Tiles) auf der Konsole aus

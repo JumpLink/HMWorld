@@ -33,7 +33,15 @@ namespace HMP {
 		public Tile() {
 			type = 0;
 		}
-		public abstract void draw(Gee.List<HMP.TileSetReference> tileset);
+
+		/**
+		 * Zeichnet das Tile an einer Bildschirmposition.
+		 * @param tileset Tileset
+		 * @param x linke x-Koordinate
+		 * @param y untere y-Koordinate
+		 * @param width Breite des Tiles
+		 */
+		public abstract void draw (Gee.List<HMP.TileSetReference> tileset, double x, double y, double width);
 
 		public abstract void calcEdges (uint[] neighbours);
 	}
