@@ -20,13 +20,13 @@ namespace HMP {
 	 */
 	public abstract class Tile {
 		/**
+		 * Tiletextur, die Pixel des Tiles
+		 */
+		public Texture tex;
+		/**
 		 * Tiletyp
 		 */
 		public TileType type;
-		/*
-		 * Tile-ID fuer Referenzierung
-		 */
-		public uint gid;
 		/**
 		 * Pflanze.
 		 */

@@ -37,7 +37,6 @@ namespace HMP {
 			}
 			public override void printValues (){
 				print("ich bin ein reftile: ");
-				print("gid: %u",gid);
 				print("type: %u\n",type);
 			}
 			public override void calcEdges (TileType[] neighbours) {

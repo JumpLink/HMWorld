@@ -29,7 +29,7 @@ namespace HMP {
 		/**
 		 * Quelle des TileSets.
 		 */
-		public string source;
+		public HMP.TileSet source;
 		/**
 		 * The first global tile ID of this tileset (this global ID maps to the first tile in this tileset).
 		 */
@@ -39,31 +39,18 @@ namespace HMP {
 		 * @param firstgid Die erste gid die von diesem diesem TileSet verwendet wird
 		 * @param source TileSet-Quelle als Referenzangabe.
 		 */
-		public TileSetReference(uint firstgid, string source) {
+		public TileSetReference(uint firstgid, HMP.TileSet source) {
+
 			this.firstgid = firstgid;
 			this.source = source;
 		}
-		public string get_Filename() {
-			return source.substring(source.last_index_of ("/", 0)+1, -1);
-		}
 		/**
-		 * Gibt alle Werte des TileSets auf der Konsole aus
+		 * Gibt alle Werte des TileSets und der Reference auf der Konsole aus
 		 */
 		public void printValues() {
-			print("==TileSet==\n");
-			print("source: %s\n", source);
+			print("==TileSetReference==\n");
 			print("firstgid: %u\n", firstgid);
-		}
-		/**
-		 * Gibt das echte passende TileSet zurueck.
-		 * Es ist keine uebergabe des TileSetManagers noetig,
-		 * da es in der Klasse IO durch die initialisierung ein
-		 * Globales Objekt von TileSetManager gibt.
-		 *
-		 * @return Das passende echte TileSet
-		 */
-		public HMP.TileSet get_TileSet(){
-			return TILESETMANAGER.getFromFilename(source);
+			source.printValues();
 		}
 	}
 }

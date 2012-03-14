@@ -33,30 +33,25 @@ namespace HMP {
 			/**
 			 * Läd die Werte einer TileSet-XML.tsx
 			 * 
-			 * @param path Pfad mit Dateiname der auszulesenden XML
-			 * @return struct TileSet.Data mit den gespeicherten Werten
+			 * @param folder Ordner in dem sich die auszulesende XML befindet
+			 * @param filename Dateiname der auszulesenden XML
 			 */
-		    public TileSet.Data getDataFromFile (string path, string filename) {
+		    public void getDataFromFile (string folder, string filename, out string name, out uint tilewidth, out uint tileheight, out string source, out string trans, out uint width, out uint height) {
 		    	//print("\tFuehre getTileSetDataFromFile aus\n");
-		    	
-				TileSet.Data data = TileSet.Data();
 		    	Gee.HashMap<string, string> tileset_global_properties = new Gee.HashMap<string, string>();
 		    	Gee.HashMap<string, string> tileset_image_properties = new Gee.HashMap<string, string>();
 				
-		    	parse_file (path+filename, tileset_global_properties, tileset_image_properties);
+		    	parse_file (folder+filename, tileset_global_properties, tileset_image_properties);
 		    	
 		    	// Zuweisung der geparsten Werte
-		    	data.filename = filename;
-		    	data.name = (string) tileset_global_properties.get ("name");
-		    	data.tilewidth = int.parse(tileset_global_properties.get ("tilewidth"));
-		    	data.tileheight = int.parse(tileset_global_properties.get ("tileheight"));
+		    	name = (string) tileset_global_properties.get ("name");
+		    	tilewidth = int.parse(tileset_global_properties.get ("tilewidth"));
+		    	tileheight = int.parse(tileset_global_properties.get ("tileheight"));
 		    	
-		    	data.source = (string) tileset_image_properties.get ("source");
-		    	data.trans = (string) tileset_image_properties.get ("trans");
-		    	data.width = int.parse(tileset_image_properties.get ("width"));
-		    	data.height = int.parse(tileset_image_properties.get ("height"));
-		    	
-		    	return data;
+		    	source = (string) tileset_image_properties.get ("source");
+		    	trans = (string) tileset_image_properties.get ("trans");
+		    	width = int.parse(tileset_image_properties.get ("width"));
+		    	height = int.parse(tileset_image_properties.get ("height"));
 		    }
 
 
@@ -168,46 +163,41 @@ namespace HMP {
 		        }
 		    }
 		}
-
 		/**
-		 * Struktur fuer TileSets
+		 * Name des TileSets.
 		 */
-		public struct Data {
-			/**
-			 * Name des TileSets.
-			 */
-			public string name;
-			/**
-			 * Dateiname des TileSets.
-			 */
-			public string filename;
-			/**
-			 * Breite eines Tiles
-			 */
-			public uint tilewidth;
-			/**
-			 * Hoehe eines Tiles
-			 */
-			public uint tileheight;
-			/**
-			 * Dateiname des TileSetbildes
-			 */
-			public string source;
-			/**
-			 * Transparente Farbe im TileSet
-			 */
-			public string trans;
-			/**
-			 * Gesamtbreite des TileSets
-			 */
-			public uint width;
-			/**
-			 * Gesamthoehe des TileSets
-			 */
-			public uint height;
-		}
-
-		TileSet.Data data;
+		public string name;
+		/**
+		 * Dateiname des TileSets.
+		 */
+		public string filename;
+		/**
+		 * Breite eines Tiles
+		 */
+		public uint tilewidth;
+		/**
+		 * Hoehe eines Tiles
+		 */
+		public uint tileheight;
+		/**
+		 * Dateiname des TileSet-Bildes
+		 */
+		public string source;
+		/**
+		 * Transparente Farbe im TileSet
+		 */
+		public string trans;
+		/**
+		 * Gesamtbreite des TileSets
+		 */
+		public uint width;
+		/**
+		 * Gesamthoehe des TileSets
+		 */
+		public uint height;
+		/**
+		 * Die Tiles in Form eines 2D-Array des TileSets
+		 */
 		public Tile[,] tile;
 		/** Array fuer die einzelnen Tiles */	
 		//private Tile[,]	 tiles;
@@ -226,26 +216,26 @@ namespace HMP {
 			print("Lösche TileSet Objekt\n");
 		}
 		public void loadFromPath(string path, string filename) {
-		
+			this.filename = filename;
 			var xml = new XML ();
-			data = xml.getDataFromFile(path, filename);
+			xml.getDataFromFile(path, filename, out name, out tilewidth, out tileheight, out source, out trans, out width, out height);
 			loadTiles();
 		}
 
 		public uint getTotalWidth() {
-			return data.width;
+			return width;
 		}
 
 		public uint getTotalHeight() {
-			return data.height;
+			return height;
 		}
 
 		public uint getTileWidth() {
-			return data.tilewidth;
+			return tilewidth;
 		}
 
 		public uint getTileHeight() {
-			return data.tileheight;
+			return tileheight;
 		}
 		public uint getCountY() {
 			return (int) getTotalHeight() / getTileHeight();
@@ -259,21 +249,21 @@ namespace HMP {
 		 * @return Name des TileSets
 		 */
 		public string getName() {
-			return data.name;
+			return name;
 		}
 		/**
 		 * Gibt den Dateinamen des TileSets zurück
 		 * @return Dateiname des TileSets
 		 */
 		public string getFilename() {
-			return data.filename;
+			return filename;
 		}
 		/**
 		 * Gibt den Sourcenamen des TileSets zurück
 		 * @return source des TileSets
 		 */
 		public string getSource() {
-			return data.source;
+			return source;
 		}
 		/**
 		 * Gibt ein gesuchtes Tile anhand seines Index zurueck.
@@ -286,8 +276,8 @@ namespace HMP {
 			uint count = 0;
 			bool found = false;
 			HMP.Tile result = null;
-			for (int y=0;y<data.height&&!found;y++) {
-				for (int x=0;x<data.width&&!found;x++) {
+			for (int y=0;y<height&&!found;y++) {
+				for (int x=0;x<width&&!found;x++) {
 					if (count == index) {
 						found = true;
 						result = tile[x,y];
@@ -331,23 +321,25 @@ namespace HMP {
 			print("==Tiles==\n");
 			for (uint y=0;y<getCountY();y++) {
 				for (uint x=0;x<getCountX();x++) {
-					print("%u ", tile[x,y].gid);
+					//print("%u ", tile[x,y].type);
+					tile[x,y].printValues();
 				}
 				print("\n");
 			}
+			print("\nWenn du dies siehst konnten alle Tiles durchlaufen werden\n");
 		}
 		/**
 		 * Gibt alle Werte des TileSets auf der Konsole aus
 		 */
 		public void printValues() {
-			print("name: %s\n", data.name);
-			print("filename: %s\n", data.filename);
-			print("tilewidth: %u\n", data.tilewidth);
-			print("tileheight: %u\n", data.tileheight);
-			print("source: %s\n", data.source);
-			print("trans: %s\n", data.trans);
-			print("width: %u\n", data.width);
-			print("height: %u\n", data.height);
+			print("name: %s\n", name);
+			print("filename: %s\n", filename);
+			print("tilewidth: %u\n", tilewidth);
+			print("tileheight: %u\n", tileheight);
+			print("source: %s\n", source);
+			print("trans: %s\n", trans);
+			print("width: %u\n", width);
+			print("height: %u\n", height);
 		}
 		/**
 		 * Gibt alle Werte und die Tiles des TileSets auf der Konsole aus

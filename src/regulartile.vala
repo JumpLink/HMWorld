@@ -22,14 +22,9 @@ namespace HMP {
 	 */
 		public class RegularTile : Tile {
 			/**
-			 * Tiletyp
-			 */
-			public Texture tex;
-			/**
 			 * Konstruktor 
 			 */
 			public RegularTile () {
-				type = 0;
 				tex = new Texture();
 			}
 

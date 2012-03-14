@@ -50,15 +50,15 @@ namespace HMP {
 		 */
 		private void loadAllFromPath(string path = "./data/tileset/") {
 			this.path = path;
-			File directory = File.new_for_path(path);
+			GLib.File directory = GLib.File.new_for_path(path);
 			FileEnumerator enumerator;
 		
 		    try {
-		    	FileInfo file_info;
+		    	GLib.FileInfo file_info;
 		    	// 'Oeffnet' das Verzeichnis path
-		        directory = File.new_for_path (path);
+		        directory = GLib.File.new_for_path (path);
 		        // Ladet die Dateien die sich im Verzeichnis path befinden
-		        enumerator = directory.enumerate_children (FileAttribute.STANDARD_NAME, 0);
+		        enumerator = directory.enumerate_children (GLib.FileAttribute.STANDARD_NAME, 0);
 		        // Durchläuft alle gefundenen Dateien und werte desen Informationen zur Weiterverarbeitung aus
 		        while ((file_info = enumerator.next_file ()) != null) {
 		        	string filename = file_info.get_name ();

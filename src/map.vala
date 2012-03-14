@@ -119,8 +119,10 @@ namespace HMP {
 					Xml.Node* node = obj.nodesetval->item(i);
 					//Parst dessen properties
 					Gee.HashMap<string, string> properties = loadProperties(node);
+					//string zerschneiden um den Dateinamen zu bekommen
+					string filename = HMP.File.PathToFilename((string) properties.get ("source"));
 					//Speichert die geparsten properties
-					string source = (string) properties.get ("source");
+					HMP.TileSet source = TILESETMANAGER.getFromFilename(filename);
 					int firstgid = int.parse(properties.get ("firstgid"));
 					//Den zusammengestellten neuen TileSet in die Liste einfuegen
 					tileset.add( new TileSetReference(firstgid, source));
@@ -137,7 +139,7 @@ namespace HMP {
 			 * @see HMP.Layer
 			 * @see Gee.ArrayList
 			 */
-			public Gee.List<Layer> loadLayers () {
+			public Gee.List<Layer> loadLayers (Gee.List<HMP.TileSetReference> tilesetrefs) {
 				Gee.List<Layer> layer = new Gee.ArrayList<Layer>(); //Speichert die Layers
 				//XPath-Expression ausfuehren
 				unowned Xml.XPath.Object obj = ctx.eval_expression("/map/layer");
@@ -155,7 +157,7 @@ namespace HMP {
 					int.parse(properties.get ("height"));
 					//print("Lade Tiles\n");
 					//Holt sich auch gleich den Tile-Tag
-					Tile[,] tiles = loadTiles(i, width, height);
+					Tile[,] tiles = loadTiles(i, width, height, tilesetrefs);
 					//print("Fuege Layer mit Namen %s hinzu\n", properties.get ("name"));
 					double z = 0; //Zu speichernder Z-Wert
 					//Holt sich auch gleich den Z-Wert
@@ -208,19 +210,35 @@ namespace HMP {
 			 *
 			 * @return Array mit den geparsten Tiles
 			 */
-			public Tile[,] loadTiles (uint layer_number, uint width, uint height) {
-				Tile[,] tiles = new Tile[width,height]; // Zur Speicherung der Tiles
+			public Tile[,] loadTiles (uint layer_number, uint width, uint height, Gee.List<HMP.TileSetReference> tilesetrefs) {
+				HMP.Tile[,] tiles = new Tile[width,height]; // Zur Speicherung der Tiles
+				HMP.TileSetReference tmp_tilesetref;
+				HMP.Tile tmp_tile;
+				Gee.HashMap<string, string> properties;
+				Xml.Node* node;
+				uint gid;
 				//XPath-Expression ausfuehren
 				unowned Xml.XPath.Object obj = ctx.eval_expression("/map/layer["+(layer_number+1).to_string()+"]/data/tile");
 				if(obj==null) print("failed to evaluate xpath\n");
 				//Alle Tiles des XPath-Expression-Ergebnisses durchlaufen
 				for (int i=0;(obj.nodesetval != null && obj.nodesetval->item(i) != null);i++) {
 					//Holt sich das Tile
-					Xml.Node* node = obj.nodesetval->item(i);
+					node = obj.nodesetval->item(i);
 					//Parst die gid
-					Gee.HashMap<string, string> properties = loadProperties(node);
+					properties = loadProperties(node);
 					//Neues Tile mit geparster gid
-					Tile tmp_tile = new RefTile.fromGid(int.parse(properties.get ("gid")));
+					gid = int.parse(properties.get ("gid"));
+					//Gid = 0 bedeutet kein tile
+					if(gid > 0) {
+						// Sucht das passende TileSetRef fuer die gid
+						tmp_tilesetref = HMP.Map.getTileSetRefFromGid(tilesetrefs, gid);
+						// Berechnet den Index des Tiles anhand der Gid und der firstgid und gibt das entsprechende Tile mit dem Index zurueck.
+						tmp_tile = tmp_tilesetref.source.getTileFromIndex(gid - tmp_tilesetref.firstgid);
+					}
+					else {
+						tmp_tile = new RegularTile();
+						tmp_tile.type = TileType.EMPTY_TILE;
+					}
 					//Tile dem Array mit berechneten x- und y-Werten hinzufuegen
 					tiles[(int)(i%width),(int)(i/width)] = tmp_tile;
 
@@ -326,8 +344,24 @@ namespace HMP {
 			this.filename = fn;
 			XML xml = new XML(path+filename);
 			xml.loadGlobalMapProperties(out orientation, out version, out width, out height, out tilewidth, out tileheight);
-			layers = xml.loadLayers();
 			tileset = xml.loadTileSets();
+			layers = xml.loadLayers(tileset);
+		}
+		/**
+		 * Gibt das zur gid passende TileSetReference zurueck.
+		 * Dabei wird nach der firstgid gesucht die kleiner ist als die gid
+		 * aber groesser ist als alle anderen firstgids
+		 * @param tilesetrefs Liste von TileSetReference's in der gesucht werden soll.
+		 * @param gid Die zu der das passende TileSet gesucht werden soll.
+		 * @return Das gefundene TileSetReference.
+		 */
+		public static TileSetReference getTileSetRefFromGid(Gee.List<HMP.TileSetReference> tilesetrefs, uint gid) {	
+			HMP.TileSetReference found = tilesetrefs[0];
+			foreach (HMP.TileSetReference tsr in tilesetrefs) {
+				if ( tsr.firstgid < gid && found.firstgid > tsr.firstgid)
+					found = tsr;
+			}
+			return found;
 		}
 		/**
 		 * Gibt den Index eines gesuchten Layers mit dem Namen name zurueck.
@@ -346,7 +380,7 @@ namespace HMP {
 		public void draw() {
 			//print("==DrawMap==\n");
 			foreach (Layer l in layers) {
-				l.draw(tileset);
+				l.draw();
 			}
 		}
 		/**
