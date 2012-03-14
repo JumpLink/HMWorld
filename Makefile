@@ -8,7 +8,13 @@ VERSION       = 0.1
 PKG_NAME      = HMP-ALL
 
 # Quelldateien
-SRCS          = main.vala scene.vala values.vala io.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala mapmanager.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala inventory.vala tool.vala emptyHands.vala spriteset.vala sprite.vala tilesetreference.vala plant.vala hoe.vala axe.vala pickaxe.vala singletool.vala wateringcan.vala sprinkler.vala circletool.vala file.vala
+SRCS          = main.vala $(ASRCS)
+
+# Allgemeine Quelldateien
+ASRCS          = scene.vala values.vala io.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala mapmanager.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala inventory.vala tool.vala emptyHands.vala spriteset.vala sprite.vala tilesetreference.vala plant.vala hoe.vala axe.vala pickaxe.vala singletool.vala wateringcan.vala sprinkler.vala circletool.vala file.vala
+
+# Quelltestdateien
+TSRCS         = main.vala tileset.vala
 
 # ausfuehrbares Ziel
 TARGET        = hmp
@@ -19,6 +25,8 @@ CFLAGS        = -lglut -lSDL_image
 
 # Quellverzeichnis
 SRC_DIR       = src/
+# Test-Quellverzeichnis
+TSRC_DIR       = test/
 # Vapiverzeichnis
 VAPI_DIR      = vapi/
 # Verzeichnis fuer erzeuge Binaries
@@ -44,6 +52,10 @@ BZR           = bzr
 
 # Quelldateien mit Pfad
 SRC_FILES     = $(SRCS:%.vala=$(SRC_DIR)%.vala)
+# Allgemeine Quelldateien mit Pfad
+ASRC_FILES     = $(ASRCS:%.vala=$(SRC_DIR)%.vala)
+# Test-Quelldateien mit Pfad
+TSRC_FILES     = $(ASRC_FILES) $(TSRCS:%.vala=$(TSRC_DIR)%.vala)
 # Zieldatei mit Pfad
 TARGET_FILE   = $(TARGET:%=$(BIN_DIR)%)
 # Paketflags
@@ -56,7 +68,7 @@ COMP		  = $(-o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(S
 
 # Targets
 
-.PHONY: all run dirs pull commit commit-* push push-* help clean
+.PHONY: all run dirs pull commit commit-* push push-* help clean test
 
 ## * make (all): Programm compilieren
 all: dirs $(TARGET_FILE)
@@ -101,17 +113,19 @@ $(TARGET_FILE): $(SRC_FILES)
 c: dirs $(SRC_FILES)
 	@echo "Compiling Binary..."
 	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) -C
-
+## * make doc: Dokumentation generieren
 doc: $(SRC_FILES)
 	@echo "Generating Documentation..."
 	@$(VD) --driver $(VDD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION)
 	@gnome-open ./doc/index.html
 
+## * make doc-internal: Dokumentation generieren, inkl. nicht oeffentlicher Bereiche
 doc-internal: $(SRC_FILES)
 	@echo "Generating Documentation..."
 	@$(VD) --driver $(VDD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION) --private --internal
 	@gnome-open ./doc/index.html
 
+## * make doc-publish: Zuvor generierte Doc veroeffentlichen
 doc-publish: $(SRC_FILES)
 	@mkdir -p $(PUB_DIR)
 	@cp $(DOC_DIR) $(PUB_DIR) -r
@@ -127,3 +141,16 @@ clean:
 ## * make help: Diese Hilfe anzeigen
 help:
 	@grep '^##' 'Makefile' | sed -e 's/## //g'
+
+## * Valadate aus dem Repo installieren, unfollstaendig, fehlerhaft.
+install-valadate:
+	@sudo apt-get install gobject-introspection -y
+	@rm tmp -rf
+	@mkdir tmp
+	@git clone git://gitorious.org/~serbanjora/valadate/serbanjora-valadate.git ./tmp/
+	@cd ./tmp && ./waf configure && ./waf install
+test: dirs
+	@echo "Compiling Test Binary..."
+	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(TSRC_FILES)
+	@echo "Running $(TARGET_FILE)..."
+	@$(TARGET_FILE)
