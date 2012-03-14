@@ -249,13 +249,13 @@ namespace HMP {
 				print("Unable to initialize SDL-Image: %s\n", SDLImage.get_error());
 				return true;
 			}
+			/* Globalen TileSetManager erzeugen */
+			TILESETMANAGER = new HMP.TileSetManager();
 			/* Globalen Mapmanager erzeugen */
 			MAPMANAGER = new HMP.MapManager();
 			/* Globle Startmap auswaehlen */
 			MAP = MAPMANAGER.getFromFilename("testmap.tmx");
 			MAP.printAll();
-			/* Globalen TileSetManager erzeugen */
-			TILESETMANAGER = new HMP.TileSetManager();
 
 			/* Fenster erzeugen */
 			windowID = glutCreateWindow (title);
