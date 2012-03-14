@@ -57,23 +57,13 @@ namespace HMP {
 		/**
 		 * Gibt das echte passende TileSet zurueck.
 		 * Es ist keine uebergabe des TileSetManagers noetig,
-		 * das hat aber lange Ladezeiten zum Preis.
+		 * da es in der Klasse IO durch die initialisierung ein
+		 * Globales Objekt von TileSetManager gibt.
 		 *
 		 * @return Das passende echte TileSet
 		 */
 		public HMP.TileSet get_TileSet(){
-			HMP.TileSetManager tm = new HMP.TileSetManager("./data/tileset/");
-			return tm.getFromFilename(source);
-		}
-		/**
-		 * Gibt das echte passende TileSet zurueck.
-		 * Es muss ein TileSetManager uebergeben werden,
-		 * dadurch muss dieser nicht komplett neu erzeugt werden (Was Ladezeiten erspart).
-		 *
-		 * @return Das passende echte TileSet
-		 */
-		public HMP.TileSet get_TileSetFromTM(HMP.TileSetManager tm){
-			return tm.getFromFilename(source);
+			return TILESETMANAGER.getFromFilename(source);
 		}
 	}
 }

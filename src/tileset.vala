@@ -274,6 +274,29 @@ namespace HMP {
 		public string getSource() {
 			return data.source;
 		}
+		/**
+		 * Gibt ein gesuchtes Tile anhand seines Index zurueck.
+		 *
+		 * @param index Index des gesuchten Tiles
+		 */
+		public HMP.Tile getTileFromIndex(uint index) {
+			uint count = 0;
+			bool found = false;
+			for (int y=0;y<data.height&&!found;y++) {
+				for (int x=0;x<data.width&&!found;x++) {
+					if (count == index) {
+						found = true;
+						return tile[x,y];
+					}
+					count++;
+				}
+			}
+			return null;
+		}
+		/**
+		 * Ladet die Pixel fuer die Tiles.
+		 * Zur Zeit alle noch als RegularTile.
+		 */
 		private void loadTiles() {
 			Texture tex = new Texture();
 			tex.loadFromFile("./data/tileset/"+getSource());

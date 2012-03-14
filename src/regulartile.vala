@@ -14,6 +14,7 @@
  *	Patrick König <knuffi@gmail.com>
  */
 using Gdk;
+using GL;
 using HMP;
 namespace HMP {
 	/**
@@ -41,8 +42,19 @@ namespace HMP {
 			public Pixbuf get_Pixbuf () {
 				return tex.get_Pixbuf();
 			}
-			public override void draw(Gee.List<HMP.TileSetReference> tileset) {
-				//nichts
+
+			public override void draw( double x, double y, double width) {
+				tex.bindTexture();
+				glBegin (GL_QUADS);
+				glTexCoord2d(0,0);
+			        glVertex3d ( x,  y, 0.0f);
+				glTexCoord2d(1,0);
+			        glVertex3d (  x + width,  y, 0.0f);
+				glTexCoord2d(1,1);
+			        glVertex3d (  x + width, y + width, 0.0f);
+				glTexCoord2d(0,1);
+			        glVertex3d ( x, y + width, 0.0f);
+			    glEnd ();
 			}
 			public override void calcEdges (uint[] neighbours) {
 				//nichts

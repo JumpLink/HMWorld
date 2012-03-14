@@ -88,24 +88,28 @@ namespace HMP {
 					tiles[c, r].calcEdges(neighbours);
 				}
 		}
-		public void draw(Gee.List<HMP.TileSetReference> tileset) {
-			HMP.TileSetManager tm = new HMP.TileSetManager("./data/tileset/");
-			HMP.TileSet current_ts;
-			print("==DRAW LAYER==\n");
-			foreach (HMP.TileSetReference ts in tileset) {
+		public void draw(Gee.List<HMP.TileSetReference> tilesetref) {
+			HMP.TileSet current_ts = null;
+			HMP.Tile current_tile = null;
+			//print("==DRAW LAYER==\n");
+			foreach (HMP.TileSetReference ts in tilesetref) {
 					string tilesetname = ts.get_Filename();
-					print("tilesetname %s\n", tilesetname);
-					current_ts = tm.getFromFilename(tilesetname);
-					current_ts.printValues(); //TODO nue testweises ausgeben auf der Konsole
+					//print("tilesetname %s\n", tilesetname);
+					current_ts = TILESETMANAGER.getFromFilename(tilesetname); //TODO fuer alle tilesets
+					//current_ts.printValues(); //TODO nue testweises ausgeben auf der Konsole
 	   		//TODO evtl extra Klasse fuer Zeichnungen und nicht hier als Methode einbauen?
 	   		}
-	   		//TODO tiles zeichnen
-			/*for (int y=0;y<height;y++) {
+	   		double w = 2.0 / width;
+			for (int y=0;y<height;y++) {
 				for (int x=0;x<width;x++) {
-					tiles[x,y].draw(tileset);
+					/* tiles[x,y].gid <- reftile bzw. gid */
+					if(tiles[x,y].gid != 0) {
+						//Gibt das echte Tile zurueck und nicht nur ein RefTile
+						/*Speicherzugriffsfehler*///current_tile = current_ts.getTileFromIndex(tiles[x,y].gid - tilesetref[0].firstgid); //TODO fuer alle tilesets
+						current_tile.draw(-1 + x * w, 1 - (y + 1) * w, w);
+					}
 				}
-				print("\n");
-			}*/
+			}
 		}
 		/**
 		 * Gibt alle Werte des Layers (bis auf die Tiles) auf der Konsole aus

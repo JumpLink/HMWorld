@@ -22,10 +22,10 @@ using SDLImage;
 
 using HMP;
 namespace HMP {
-	HMP.TileSetManager tm;
-	HMP.TileSet tileset;
-	HMP.MapManager mm;
-	HMP.Map map;
+	HMP.TileSetManager TILESETMANAGER;
+	HMP.TileSet TILESET;
+	HMP.MapManager MAPMANAGER;
+	HMP.Map MAP;
 	/**
 	 * Setzen der Projektionsmatrix.
 	 */
@@ -98,31 +98,8 @@ namespace HMP {
 			/* Nachfolgende Operationen beeinflussen Modelviewmatrix */
 			glMatrixMode (GL_MODELVIEW);
 
-			/* Szene zeichnen */
-			//tileset.tile[0,0].tex.bindTexture();
-			// OpenGL rendering goes here...
-			    glBegin (GL_QUADS);
-				glTexCoord2f(0,0);
-			        glVertex3f ( -0.0f,  1.0f, 0.0f);
-				glTexCoord2f(1,0);
-			        glVertex3f (  1.0f,  1.0f, 0.0f);
-				glTexCoord2f(1,1);
-			        glVertex3f (  1.0f, -0.0f, 0.0f);
-				glTexCoord2f(0,1);
-			        glVertex3f ( -0.0f, -0.0f, 0.0f);
-			    glEnd ();
-
-			//tileset.tile[0,9].tex.bindTexture();
-			    glBegin (GL_QUADS);
-				glTexCoord2f(0,0);
-			        glVertex3f ( -1.0f,  0.0f, 0.0f);
-				glTexCoord2f(1,0);
-			        glVertex3f (  0.0f,  0.0f, 0.0f);
-				glTexCoord2f(1,1);
-			        glVertex3f (  0.0f, -1.0f, 0.0f);
-				glTexCoord2f(0,1);
-			        glVertex3f ( -1.0f, -1.0f, 0.0f);
-			    glEnd ();
+			/* map zeichen */
+			MAP.draw();
 
 			/* Szene anzeigen / Buffer tauschen */
 			glutSwapBuffers ();
@@ -142,9 +119,6 @@ namespace HMP {
 			/* Anpassen der Projektionsmatrix an das Seitenverhältnis des Fensters */
 			setProjection ((double) w / (double) h);
 			print("- Fensterinhalt nach groesse angepasst -");
-
-			/* map zeichen */
-			map.draw();
 		}
 
 		/**
@@ -275,10 +249,13 @@ namespace HMP {
 				print("Unable to initialize SDL-Image: %s\n", SDLImage.get_error());
 				return true;
 			}
-			/* Mapmanager erzeugen */
-			mm = new HMP.MapManager();
-			/* Startmap auswaehlen */
-			map = mm.getFromFilename("testmap.tmx");
+			/* Globalen Mapmanager erzeugen */
+			MAPMANAGER = new HMP.MapManager();
+			/* Globle Startmap auswaehlen */
+			MAP = MAPMANAGER.getFromFilename("testmap.tmx");
+			MAP.printAll();
+			/* Globalen TileSetManager erzeugen */
+			TILESETMANAGER = new HMP.TileSetManager();
 
 			/* Fenster erzeugen */
 			windowID = glutCreateWindow (title);

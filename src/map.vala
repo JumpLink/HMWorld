@@ -344,7 +344,7 @@ namespace HMP {
 			return -1;
 		}
 		public void draw() {
-			print("==DrawMap==\n");
+			//print("==DrawMap==\n");
 			foreach (Layer l in layers) {
 				l.draw(tileset);
 			}
