@@ -16,38 +16,28 @@
 using HMP;
 namespace HMP {
 	/**
-	 * Allgemeine Klasse fuer Tiles
+	 * Klasse fuer ein Werkzeug, das nur auf ein Tile wirkt.
 	 */
-	public abstract class Tile {
-		/**
-		 * Tiletyp
-		 */
-		public TileType type;
-		/*
-		 * Tile-ID fuer Referenzierung
-		 */
-		public uint gid;
-		/**
-		 * Pflanze.
-		 */
-		public Plant plant;
-		/**
-		 * Konstruktor 
-		 */
-		public Tile() {
-			type = TileType.EMPTY_TILE;
+	public abstract class SingleTool : Tool {
+
+		protected Tile Target (Map m, uint x, uint y, Direction d, string layerName) {
+			Layer l = m.layers.get (m.getIndexOfLayerName (layerName));
+			uint tx = x, ty = y;
+			switch (d) {
+				case Direction.NORTH:
+					ty = y - 1;
+					break;
+				case Direction.EAST:
+					tx = x + 1;
+					break;
+				case Direction.SOUTH:
+					ty = y + 1;
+					break;
+				case Direction.WEST:
+					tx = x - 1;
+					break;
+			}
+			return l.tiles[tx,ty];
 		}
-
-		/**
-		 * Zeichnet das Tile an einer Bildschirmposition.
-		 * @param x linke x-Koordinate
-		 * @param y untere y-Koordinate
-		 * @param width Breite des Tiles
-		 */
-		public abstract void draw (double x, double y, double width);
-
-		public abstract void printValues ();
-
-		public abstract void calcEdges (TileType[] neighbours);
 	}
 }

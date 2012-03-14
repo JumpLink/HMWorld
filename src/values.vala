@@ -22,6 +22,11 @@ namespace HMP {
 	const int ESC = 27;
 
 	/**
+	 * Kapazitaet der Giesskanne.
+	 */
+	const uint WATER_CAPACITY = 10;
+
+	/**
 	 * Szenenhintergrundfarbe
 	 */
 	const GL.GLclampf colBG[] = {0.6f, 0.6f, 1.0f, 0.0f};
@@ -70,6 +75,7 @@ namespace HMP {
 	public enum TileType {
 		EMPTY_TILE,
 		PLANTABLE,
+		PLANT,
 		GRASS,
 		PATH,
 		BUILDING,

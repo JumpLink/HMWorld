@@ -16,38 +16,14 @@
 using HMP;
 namespace HMP {
 	/**
-	 * Allgemeine Klasse fuer Tiles
+	 * Klasse fuer eine Hacke.
 	 */
-	public abstract class Tile {
-		/**
-		 * Tiletyp
-		 */
-		public TileType type;
-		/*
-		 * Tile-ID fuer Referenzierung
-		 */
-		public uint gid;
-		/**
-		 * Pflanze.
-		 */
-		public Plant plant;
-		/**
-		 * Konstruktor 
-		 */
-		public Tile() {
-			type = TileType.EMPTY_TILE;
+	public class Hoe : SingleTool {
+
+		public override void use (Map m, uint x, uint y, Direction d) {
+			Tile t = Target (m, x, y, d, "ground");
+			if (t.type == TileType.EMPTY_TILE || t.type == TileType.GRASS)
+				t.type = TileType.PLANTABLE;
 		}
-
-		/**
-		 * Zeichnet das Tile an einer Bildschirmposition.
-		 * @param x linke x-Koordinate
-		 * @param y untere y-Koordinate
-		 * @param width Breite des Tiles
-		 */
-		public abstract void draw (double x, double y, double width);
-
-		public abstract void printValues ();
-
-		public abstract void calcEdges (TileType[] neighbours);
 	}
 }

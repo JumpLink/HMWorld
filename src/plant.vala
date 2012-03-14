@@ -18,7 +18,7 @@ namespace HMP {
 	 /**
 	  * Klasse fuer Pflanzen.
 	  */
-	 abstract class Plant {
+	 public abstract class Plant {
 	 	/**
 	 	 * Pflanze lebt.
 	 	 */
@@ -51,7 +51,7 @@ namespace HMP {
 	 	/**
 	 	 * Konstruktor.
 	 	 */
-	 	Plant () {
+	 	public Plant () {
 	 		alive = true;
 	 		watered = false;
 	 		daysUntilHarvest = timeBetweenCrops;
@@ -61,7 +61,7 @@ namespace HMP {
 	 	/**
 	 	 * Pflanze wachsen lassen.
 	 	 */
-	 	void grow () {
+	 	public void grow () {
 	 		if (watered && daysUntilHarvest > 0)
 	 			--daysUntilHarvest;
 	 		watered = false;
@@ -70,7 +70,7 @@ namespace HMP {
 	 	/**
 	 	 * Pflanze begiessen, sofern sie noch lebt.
 	 	 */
-	 	void water () {
+	 	public void water () {
 	 		watered = alive;
 	 	}
 
@@ -78,7 +78,7 @@ namespace HMP {
 	 	 * Erntet eine Pflanze.
 	 	 * @return Die Ernte.
 	 	 */
-	 	CropType harvest () {
+	 	public CropType harvest () {
 	 		if (daysUntilHarvest == 0) {
 	 			--cropsLeft;
 	 			daysUntilHarvest = timeBetweenCrops;
