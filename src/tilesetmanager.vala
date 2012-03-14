@@ -102,14 +102,17 @@ namespace HMP {
 		 * @param filename Dateiname des gesuchten TileSets
 		 * @return Bei Erfolg das gefundene TileSet, sonst ein neues Objekt TileSet
 		 */
-		public TileSet getFromFilename(string filename) {
+		public TileSet getFromFilename(string filename)
+		requires (filename.length > 0)
+		{
+			TileSet result = null;
 			foreach (TileSet ts in tileset)
 					if (ts.getFilename() == filename) {
-						print("TileSet gefunden!\n");
-						return ts;
-					}
-						
-			return new TileSet();
+						print("TileSet mit gleichem Namen %s gefunden!\n", filename);
+						result = ts;
+						break;
+					}		
+			return result;
 		}
 		/**
 		 * Gibt das TileSet mit dem Namen "name" zurück

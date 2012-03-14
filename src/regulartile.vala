@@ -43,7 +43,15 @@ namespace HMP {
 				return tex.get_Pixbuf();
 			}
 
+			public override void printValues (){
+				print("ich bin ein RegularTile: ");
+				//print("gid: %u",gid);
+				print("type: %u\n",type);
+				tex.printValues();
+			}
+
 			public override void draw( double x, double y, double width) {
+				print("draw aus RefTile!\n");
 				tex.bindTexture();
 				glBegin (GL_QUADS);
 				glTexCoord2d(0,0);

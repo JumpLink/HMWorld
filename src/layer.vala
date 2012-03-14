@@ -89,24 +89,35 @@ namespace HMP {
 				}
 		}
 		public void draw(Gee.List<HMP.TileSetReference> tilesetref) {
-			HMP.TileSet current_ts = null;
-			HMP.Tile current_tile = null;
+			HMP.TileSet current_ts = TILESETMANAGER.getFromFilename(tilesetref[0].get_Filename());
+			HMP.Tile current_tile = current_ts.getTileFromIndex(0);
+			//current_tile.printValues();
+			current_ts.printAll();
 			//print("==DRAW LAYER==\n");
-			foreach (HMP.TileSetReference ts in tilesetref) {
+			/*foreach (HMP.TileSetReference ts in tilesetref) {
 					string tilesetname = ts.get_Filename();
 					//print("tilesetname %s\n", tilesetname);
-					current_ts = TILESETMANAGER.getFromFilename(tilesetname); //TODO fuer alle tilesets
+					 //TODO fuer alle tilesets
 					//current_ts.printValues(); //TODO nue testweises ausgeben auf der Konsole
-	   		//TODO evtl extra Klasse fuer Zeichnungen und nicht hier als Methode einbauen?
-	   		}
+	   			//TODO evtl extra Klasse fuer Zeichnungen und nicht hier als Methode einbauen?
+	   		}*/
+	   		assert (current_ts != null);
+	   		uint gid;
+	   		uint firstgid;
 	   		double w = 2.0 / width;
 			for (int y=0;y<height;y++) {
 				for (int x=0;x<width;x++) {
 					/* tiles[x,y].gid <- reftile bzw. gid */
-					if(tiles[x,y].gid != 0) {
+					if(tiles[x,y].gid > 0) {
+						gid = tiles[x,y].gid;
+						firstgid = tilesetref[0].firstgid; //TODO fuer alle tilesets
 						//Gibt das echte Tile zurueck und nicht nur ein RefTile
-						/*Speicherzugriffsfehler*///current_tile = current_ts.getTileFromIndex(tiles[x,y].gid - tilesetref[0].firstgid); //TODO fuer alle tilesets
+						/*Speicherzugriffsfehler*/
+						print("x: %i y: %i gid: %u firstgid: %u\n", x,y,gid,firstgid);
+						current_tile = current_ts.getTileFromIndex(gid - firstgid);
+
 						current_tile.draw(-1 + x * w, 1 - (y + 1) * w, w);
+						current_tile.printValues();
 					}
 				}
 			}
@@ -132,7 +143,6 @@ namespace HMP {
 				}
 				print("\n");
 			}
-			
 		}
 		/**
 		 * Gibt alle Werte des Layers und dessen Tiles auf der Konsole aus

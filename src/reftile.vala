@@ -34,7 +34,13 @@ namespace HMP {
 			this.gid = gid;
 		}
 		public override void draw (double x, double y, double width) {
+			print("draw aus RefTile!\n");
 			//TODO
+		}
+		public override void printValues (){
+			print("ich bin ein reftile: ");
+			print("gid: %u",gid);
+			print("type: %u\n",type);
 		}
 		/**
 		 * Ungenutzte Methode

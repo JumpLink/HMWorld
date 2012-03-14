@@ -35,6 +35,11 @@ namespace HMP {
 			public override void draw (double x, double y, double width) {
 				//Einzelteile zeichnen
 			}
+			public override void printValues (){
+				print("ich bin ein reftile: ");
+				print("gid: %u",gid);
+				print("type: %u\n",type);
+			}
 			public override void calcEdges (uint[] neighbours) {
 				assert (neighbours.length == 8);
 				uint[] n = new uint[3];

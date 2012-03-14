@@ -16,6 +16,7 @@
 using Xml;
 using Gee;
 using Gdk;
+//using GLib; //Fuer assertions
 
 using HMP;
 namespace HMP {
@@ -207,7 +208,7 @@ namespace HMP {
 		}
 
 		TileSet.Data data;
-		public RegularTile[,] tile;
+		public Tile[,] tile;
 		/** Array fuer die einzelnen Tiles */	
 		//private Tile[,]	 tiles;
 
@@ -279,19 +280,22 @@ namespace HMP {
 		 *
 		 * @param index Index des gesuchten Tiles
 		 */
-		public HMP.Tile getTileFromIndex(uint index) {
+		public HMP.Tile getTileFromIndex(uint index)
+		requires (index >= 0) {
+			print("==GETTILEFROMINDEX==\n");
 			uint count = 0;
 			bool found = false;
+			HMP.Tile result = null;
 			for (int y=0;y<data.height&&!found;y++) {
 				for (int x=0;x<data.width&&!found;x++) {
 					if (count == index) {
 						found = true;
-						return tile[x,y];
+						result = tile[x,y];
 					}
 					count++;
 				}
 			}
-			return null;
+			return result;
 		}
 		/**
 		 * Ladet die Pixel fuer die Tiles.
@@ -304,20 +308,34 @@ namespace HMP {
 			int count_x = (int) getCountX();
 			int split_width = (int) getTileWidth();
 			int split_height = (int) getTileHeight();
-			tile = new RegularTile[getCountY(),getCountX()];
+			tile = new Tile[getCountY(),getCountX()];
+			//int count = 0;
 			Pixbuf pxb = tex.get_Pixbuf();
-
+			print("=====LOADTILES=====\n");
 			for(int y = 0; y < count_y; y++) {
 				for(int x = 0; x < count_x; x++) {
 					Pixbuf split = new Pixbuf(Gdk.Colorspace.RGB, pxb.get_has_alpha(), pxb.get_bits_per_sample(), split_width, split_height);
-					//print("count_y: %i count_x:%i split_width:%i split_height:%i ", count_y, count_x, split_width, split_height);
+					//print("y: %i x:%i split_width:%i split_height:%i count %i", y, x, split_width, split_height, count);
 					pxb.copy_area((int) split_width*x, (int) split_height*y, (int) split_width, (int) split_height, split, 0, 0);
 					tile[y,x] = new RegularTile.FromPixbuf(split);
+					//count++;
+					//tile[y,x].printValues();
 				}
 			}
 			print("Tiles zerteilt\n");
 		}
-
+		/**
+		 * Gibt alle Werte Tiles auf der Konsole aus
+		 */
+		public void printTiles() {
+			print("==Tiles==\n");
+			for (uint y=0;y<getCountY();y++) {
+				for (uint x=0;x<getCountX();x++) {
+					print("%u ", tile[x,y].gid);
+				}
+				print("\n");
+			}
+		}
 		/**
 		 * Gibt alle Werte des TileSets auf der Konsole aus
 		 */
@@ -330,6 +348,13 @@ namespace HMP {
 			print("trans: %s\n", data.trans);
 			print("width: %u\n", data.width);
 			print("height: %u\n", data.height);
+		}
+		/**
+		 * Gibt alle Werte und die Tiles des TileSets auf der Konsole aus
+		 */
+		public void printAll() {
+			printValues();
+			printTiles();
 		}
 	}
 }

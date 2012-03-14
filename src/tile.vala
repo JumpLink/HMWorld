@@ -42,6 +42,8 @@ namespace HMP {
 		 */
 		public abstract void draw (double x, double y, double width);
 
+		public abstract void printValues ();
+
 		public abstract void calcEdges (uint[] neighbours);
 	}
 }

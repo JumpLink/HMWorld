@@ -122,6 +122,13 @@ namespace HMP {
 		public Pixbuf get_Pixbuf() {
 			return this.pixbuf;
 		}
+
+		public void printValues() {
+			print("=Tex=\n");
+			print("width: %u\n", get_width());
+			print("height: %u\n", get_height());
+			if (has_alpha()) print("has alpha: yes\n");
+		}
 		/*
 		 * TODO
 		 */
