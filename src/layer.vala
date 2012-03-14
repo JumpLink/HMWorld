@@ -74,17 +74,17 @@ namespace HMP {
 		}
 
 		public void calcEdges () {
-			uint[] neighbours = new uint[8];
+			TileType[] neighbours = new TileType[8];
 			for (uint r = 0; r < height; ++r)
 				for (uint c = 0; c < width; ++c) {
-					neighbours[0] = ( c != 0 ) ? tiles[c - 1, r].type : EMPTY_TILE;
-					neighbours[1] = (c != 0 && r != 0 ) ? tiles[c - 1, r - 1].type : EMPTY_TILE;
-					neighbours[2] = ( r != 0 ) ? tiles[c, r - 1].type : EMPTY_TILE;
-					neighbours[3] = ( r != 0 && c < width ) ? tiles[c + 1, r - 1].type : EMPTY_TILE;
-					neighbours[4] = ( c < width ) ? tiles[c + 1, r].type : EMPTY_TILE;
-					neighbours[5] = ( r < height && c < width ) ? tiles[c + 1, r + 1].type : EMPTY_TILE;
-					neighbours[6] = ( r < height ) ? tiles[c, r + 1].type : EMPTY_TILE;
-					neighbours[7] = ( r < height && c != 0 ) ? tiles[c - 1, r + 1].type : EMPTY_TILE;
+					neighbours[0] = ( c != 0 ) ? tiles[c - 1, r].type : TileType.EMPTY_TILE;
+					neighbours[1] = (c != 0 && r != 0 ) ? tiles[c - 1, r - 1].type : TileType.EMPTY_TILE;
+					neighbours[2] = ( r != 0 ) ? tiles[c, r - 1].type : TileType.EMPTY_TILE;
+					neighbours[3] = ( r != 0 && c < width ) ? tiles[c + 1, r - 1].type : TileType.EMPTY_TILE;
+					neighbours[4] = ( c < width ) ? tiles[c + 1, r].type : TileType.EMPTY_TILE;
+					neighbours[5] = ( r < height && c < width ) ? tiles[c + 1, r + 1].type : TileType.EMPTY_TILE;
+					neighbours[6] = ( r < height ) ? tiles[c, r + 1].type : TileType.EMPTY_TILE;
+					neighbours[7] = ( r < height && c != 0 ) ? tiles[c - 1, r + 1].type : TileType.EMPTY_TILE;
 					tiles[c, r].calcEdges(neighbours);
 				}
 		}
@@ -104,7 +104,7 @@ namespace HMP {
 	   		assert (current_ts != null);
 	   		uint gid;
 	   		uint firstgid;
-	   		double w = 2.0 / width;
+	   		double w = current_ts.getTileWidth();
 			for (int y=0;y<height;y++) {
 				for (int x=0;x<width;x++) {
 					/* tiles[x,y].gid <- reftile bzw. gid */

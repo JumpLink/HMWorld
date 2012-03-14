@@ -64,7 +64,7 @@ namespace HMP {
 			        glVertex3d ( x, y + width, 0.0f);
 			    glEnd ();
 			}
-			public override void calcEdges (uint[] neighbours) {
+			public override void calcEdges (TileType[] neighbours) {
 				//nichts
 			}
 	}

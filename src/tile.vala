@@ -22,7 +22,7 @@ namespace HMP {
 		/**
 		 * Tiletyp
 		 */
-		public uint type;
+		public TileType type;
 		/*
 		 * Tile-ID fuer Referenzierung
 		 */
@@ -31,7 +31,7 @@ namespace HMP {
 		 * Konstruktor 
 		 */
 		public Tile() {
-			type = 0;
+			type = TileType.EMPTY_TILE;
 		}
 
 		/**
@@ -44,6 +44,6 @@ namespace HMP {
 
 		public abstract void printValues ();
 
-		public abstract void calcEdges (uint[] neighbours);
+		public abstract void calcEdges (TileType[] neighbours);
 	}
 }

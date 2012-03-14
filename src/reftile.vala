@@ -45,7 +45,7 @@ namespace HMP {
 		/**
 		 * Ungenutzte Methode
 		 */
-		public override void calcEdges (uint[] neighbours) {
+		public override void calcEdges (TileType[] neighbours) {
 			//nichts
 		}
 	}

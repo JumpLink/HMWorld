@@ -21,8 +21,6 @@ namespace HMP {
 	 */
 	const int ESC = 27;
 
-	const uint EMPTY_TILE = 42;
-
 	/**
 	 * Szenenhintergrundfarbe
 	 */
@@ -67,5 +65,16 @@ namespace HMP {
 		EMPTY_CROP,
 		GRASS,
 		POTATO
+	}
+
+	public enum TileType {
+		EMPTY_TILE,
+		PLANTABLE,
+		GRASS,
+		PATH,
+		BUILDING,
+		ROCK,
+		WOOD,
+		WATER
 	}
 }
