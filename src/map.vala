@@ -211,7 +211,7 @@ namespace HMP {
 			 * @return Array mit den geparsten Tiles
 			 */
 			public Tile[,] loadTiles (uint layer_number, uint width, uint height, Gee.List<HMP.TileSetReference> tilesetrefs) {
-				HMP.Tile[,] tiles = new Tile[width,height]; // Zur Speicherung der Tiles
+				HMP.Tile[,] tiles = new Tile[height,width]; // Zur Speicherung der Tiles
 				HMP.TileSetReference tmp_tilesetref;
 				HMP.Tile tmp_tile;
 				Gee.HashMap<string, string> properties;
@@ -240,8 +240,9 @@ namespace HMP {
 						tmp_tile = new RegularTile();
 						tmp_tile.type = TileType.NO_TILE;
 					}
+					print("x: %u, y: %u\t",(uint)((i/width)),(uint)(i%width));
 					//Tile dem Array mit berechneten x- und y-Werten hinzufuegen
-					tiles[(int)(i%width),(int)(i/width)] = tmp_tile;
+					tiles[(uint)(i/width),(uint)(i%width)] = tmp_tile;
 
 				}
 				return tiles;

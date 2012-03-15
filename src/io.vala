@@ -50,11 +50,11 @@ namespace HMP {
 
 			/* Ortho-Projektion, Koordinatensystem bleibt quadratisch */
 			if (aspect <= 1) {
-				gluOrtho2D (-1.0, 1.0,                    /* links, rechts */
-					        -1.0 / aspect, 1.0 / aspect); /* unten, oben */
+				gluOrtho2D (-200.0, 200.0,                    /* links, rechts */
+					        -200.0 / aspect, 200.0 / aspect); /* unten, oben */
 			} else {
-				gluOrtho2D (-1.0 * aspect, 1.0 * aspect,  /* links, rechts */
-					        -1.0, 1.0);                   /* unten, oben */
+				gluOrtho2D (-200.0 * aspect, 200.0 * aspect,  /* links, rechts */
+					        -200.0, 200.0);                   /* unten, oben */
 			}
 		}
 

@@ -238,11 +238,11 @@ namespace HMP {
 			return tileheight;
 		}
 		public uint getCountY() {
-			return (int) getTotalHeight() / getTileHeight();
+			return (int) (getTotalHeight() / getTileHeight());
 		}
 
 		public uint getCountX() {
-			return (int) getTotalWidth() / getTileWidth();
+			return (int) (getTotalWidth() / getTileWidth());
 		}
 		/**
 		 * Gibt den Namen des TileSets zurück

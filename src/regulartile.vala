@@ -53,7 +53,7 @@ namespace HMP {
 				if(type != TileType.NO_TILE) {
 					//print("draw aus RefTile!\n");
 					tex.bindTexture();
-						glBegin (GL_QUADS);
+					glBegin (GL_QUADS);
 						glTexCoord2d(0,0);
 							glVertex3d ( x,  y, 0.0f);
 						glTexCoord2d(1,0);
