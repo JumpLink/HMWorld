@@ -26,12 +26,13 @@ namespace HMP {
 			 */
 			public RegularTile () {
 				tex = new Texture();
+				type = HMP.TileType.EMPTY_TILE;
 			}
 
 			public RegularTile.FromPixbuf (Pixbuf pixbuf) {
 				tex = new Texture();
 				tex.loadFromPixbuf(pixbuf);
-				type = 0;
+				type = HMP.TileType.EMPTY_TILE;
 			}
 
 			public Pixbuf get_Pixbuf () {
@@ -42,25 +43,28 @@ namespace HMP {
 				print("ich bin ein RegularTile: ");
 				//print("gid: %u",gid);
 				print("type: %u\n",type);
-				tex.printValues();
+				if(type != TileType.NO_TILE) {
+					tex.printValues();
+				}
 			}
 
-			public override void draw( double x, double y, double width) {
+			public override void draw( double x, double y) {
+				double width = get_width();
 				if(type != TileType.NO_TILE) {
-					print("draw aus RefTile!\n");
+					//print("draw aus RefTile!\n");
 					tex.bindTexture();
-					glBegin (GL_QUADS);
-					glTexCoord2d(0,0);
-						glVertex3d ( x,  y, 0.0f);
-					glTexCoord2d(1,0);
-						glVertex3d (  x + width,  y, 0.0f);
-					glTexCoord2d(1,1);
-						glVertex3d (  x + width, y + width, 0.0f);
-					glTexCoord2d(0,1);
-						glVertex3d ( x, y + width, 0.0f);
+						glBegin (GL_QUADS);
+						glTexCoord2d(0,0);
+							glVertex3d ( x,  y, 0.0f);
+						glTexCoord2d(1,0);
+							glVertex3d (  x + width,  y, 0.0f);
+						glTexCoord2d(1,1);
+							glVertex3d (  x + width, y + width, 0.0f);
+						glTexCoord2d(0,1);
+							glVertex3d ( x, y + width, 0.0f);
 				    glEnd ();
 				    } else {
-				    	print("Tile ist kein Tile zum zeichnen\n");
+				    	//print("Tile ist kein Tile zum zeichnen\n");
 				    }
 			}
 			public override void calcEdges (TileType[] neighbours) {

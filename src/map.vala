@@ -384,6 +384,7 @@ namespace HMP {
 			foreach (Layer l in layers) {
 				l.draw();
 			}
+			//layers[0].draw();
 		}
 		/**
 		 * Gibt alle Werte (bis auf die Layer) der Map auf der Konsole aus

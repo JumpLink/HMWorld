@@ -35,7 +35,19 @@ namespace HMP {
 		 * Konstruktor 
 		 */
 		public Tile() {
-			type = TileType.EMPTY_TILE;
+			type = TileType.NO_TILE;
+		}
+		public double get_width() {
+			if (type != TileType.NO_TILE)
+				return tex.get_width();
+			else
+				return 0;
+		}
+		public double get_height() {
+			if (type != TileType.NO_TILE)
+				return tex.get_height();
+			else
+				return 0;
 		}
 
 		/**
@@ -44,7 +56,7 @@ namespace HMP {
 		 * @param y untere y-Koordinate
 		 * @param width Breite des Tiles
 		 */
-		public abstract void draw (double x, double y, double width);
+		public abstract void draw (double x, double y);
 
 		public abstract void printValues ();
 
