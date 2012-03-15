@@ -89,12 +89,12 @@ namespace HMP {
 				}
 		}
 		public void draw() {
-	   		double w = tiles[0,0].tex.get_width();
+	   		double w = 16; //TODO an Ole, in der textur befinden sich groessenangaben die direkt in der draw methode verwenden kannst, dann waere keine uebergabe noetig.
 			for (int y=0;y<height;y++) {
 				for (int x=0;x<width;x++) {
-					if(tiles[x,y].type != TileType.EMPTY_TILE) {
-						print("x: %i y: %i\n", x,y);
-						tiles[x,y].printValues();
+					if(tiles[x,y].type != TileType.NO_TILE) {
+						//print("x: %i y: %i\n", x,y);
+						//tiles[x,y].printValues();
 						tiles[x,y].draw(-1 + x * w, 1 - (y + 1) * w, w);
 					}
 				}

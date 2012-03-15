@@ -236,8 +236,9 @@ namespace HMP {
 						tmp_tile = tmp_tilesetref.source.getTileFromIndex(gid - tmp_tilesetref.firstgid);
 					}
 					else {
+						//TODO echtes leeres Tile welches wirklich gar nichts hat wird benoetigt
 						tmp_tile = new RegularTile();
-						tmp_tile.type = TileType.EMPTY_TILE;
+						tmp_tile.type = TileType.NO_TILE;
 					}
 					//Tile dem Array mit berechneten x- und y-Werten hinzufuegen
 					tiles[(int)(i%width),(int)(i/width)] = tmp_tile;
@@ -361,6 +362,7 @@ namespace HMP {
 				if ( tsr.firstgid < gid && found.firstgid > tsr.firstgid)
 					found = tsr;
 			}
+			//print("Das passende TileSet ist %s\n", found.source.name);
 			return found;
 		}
 		/**

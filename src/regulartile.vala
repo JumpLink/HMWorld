@@ -46,18 +46,22 @@ namespace HMP {
 			}
 
 			public override void draw( double x, double y, double width) {
-				print("draw aus RefTile!\n");
-				tex.bindTexture();
-				glBegin (GL_QUADS);
-				glTexCoord2d(0,0);
-			        glVertex3d ( x,  y, 0.0f);
-				glTexCoord2d(1,0);
-			        glVertex3d (  x + width,  y, 0.0f);
-				glTexCoord2d(1,1);
-			        glVertex3d (  x + width, y + width, 0.0f);
-				glTexCoord2d(0,1);
-			        glVertex3d ( x, y + width, 0.0f);
-			    glEnd ();
+				if(type != TileType.NO_TILE) {
+					print("draw aus RefTile!\n");
+					tex.bindTexture();
+					glBegin (GL_QUADS);
+					glTexCoord2d(0,0);
+						glVertex3d ( x,  y, 0.0f);
+					glTexCoord2d(1,0);
+						glVertex3d (  x + width,  y, 0.0f);
+					glTexCoord2d(1,1);
+						glVertex3d (  x + width, y + width, 0.0f);
+					glTexCoord2d(0,1);
+						glVertex3d ( x, y + width, 0.0f);
+				    glEnd ();
+				    } else {
+				    	print("Tile ist kein Tile zum zeichnen\n");
+				    }
 			}
 			public override void calcEdges (TileType[] neighbours) {
 				//nichts

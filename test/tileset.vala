@@ -15,21 +15,31 @@
  */
 
 using HMP;
-namespace HMP { namespace Test {
+namespace HMP {
 	/**
 	 * Klasse fuer TileSets Tests
 	 */
-	public class TileSet {
+	public class TileSetTest {
 
 		/**
 		 * Konstruktor
 		 */
-		public TileSet() {
+		public TileSetTest() {
 			print("Erstelle TileSet Test-Objekt\n");
 		}
 		public void test_a() {
-			HMP.MapManager tilesetmanager = new HMP.MapManager("./test/data/tileset/");
-			tilesetmanager.printAll();
+			print("test_a:\n");
+			var tileset = new HMP.TileSet();
+			tileset.loadFromPath("./test/data/tileset/", "Stadt - Sommer.tsx");
+			var tile_a = tileset.getTileFromIndex(302);
+			tile_a.printValues();
+		}
+		public void test_b() {
+			print("test_b:\n");
+			var tileset = new HMP.TileSet();
+			tileset.loadFromPath("./test/data/tileset/", "Stadt - Sommer.tsx");
+			var tile_a = tileset.getTileFromIndex(354);
+			tile_a.printValues();
 		}
 	}
-}}
+}

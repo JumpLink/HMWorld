@@ -23,6 +23,7 @@ namespace HMP {
 namespace Test {
 	class Tester {
 		public Tester() {
+			print("initialisiere Tester\n");
 			int windowID = 0;
 			/* Kommandozeile immitieren */
 			int argc = 1;
@@ -47,18 +48,19 @@ namespace Test {
 				//return true;
 			}
 			/* Globalen TileSetManager erzeugen */
-			TILESETMANAGER = new HMP.TileSetManager();
+			//TILESETMANAGER = new HMP.TileSetManager();
 			/* Globalen Mapmanager erzeugen */
-			MAPMANAGER = new HMP.MapManager();
+			//MAPMANAGER = new HMP.MapManager();
 			/* Globle Startmap auswaehlen */
-			MAP = MAPMANAGER.getFromFilename("testmap.tmx");
+			//MAP = MAPMANAGER.getFromFilename("testmap.tmx");
 		}
 		
 		bool run () {
 			print("Beginne mit Tests\n");
 			bool error = false;
-			var tilesettest = new HMP.Test.TileSet();
+			var tilesettest = new TileSetTest();
 			tilesettest.test_a();
+			tilesettest.test_b();
 			return error;
 		}
 
@@ -66,7 +68,8 @@ namespace Test {
 			print("Beginne mit Testprogramm\n");
 
 			Tester tester = new Tester();
-			return (int) tester.run;;
+			print("Tester erstellt\n");
+			return (int) tester.run();
 		}
 	}
 }}

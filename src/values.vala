@@ -73,6 +73,7 @@ namespace HMP {
 	}
 
 	public enum TileType {
+		NO_TILE,
 		EMPTY_TILE,
 		PLANTABLE,
 		PLANT,

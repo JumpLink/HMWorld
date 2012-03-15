@@ -272,19 +272,24 @@ namespace HMP {
 		 */
 		public HMP.Tile getTileFromIndex(uint index)
 		requires (index >= 0) {
-			print("==GETTILEFROMINDEX==\n");
+			//print("==GETTILEFROMINDEX==\n");
 			uint count = 0;
 			bool found = false;
 			HMP.Tile result = null;
-			for (int y=0;y<height&&!found;y++) {
-				for (int x=0;x<width&&!found;x++) {
+			//print(" index: %u \n", index);
+			for (int y=0;(y<getCountY()&&!found);y++) {
+				for (int x=0;(x<getCountX()&&!found);x++) {
+					//print("- ");
 					if (count == index) {
+						//print("X ");
 						found = true;
-						result = tile[x,y];
+						result = tile[y,x];
 					}
 					count++;
 				}
+				//print("\n");
 			}
+			//print("\n");
 			return result;
 		}
 		/**
@@ -321,8 +326,8 @@ namespace HMP {
 			print("==Tiles==\n");
 			for (uint y=0;y<getCountY();y++) {
 				for (uint x=0;x<getCountX();x++) {
-					//print("%u ", tile[x,y].type);
-					tile[x,y].printValues();
+					//print("%u ", tile[y,x].type);
+					tile[y,x].printValues();
 				}
 				print("\n");
 			}

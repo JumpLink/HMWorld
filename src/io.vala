@@ -255,7 +255,7 @@ namespace HMP {
 			MAPMANAGER = new HMP.MapManager();
 			/* Globle Startmap auswaehlen */
 			MAP = MAPMANAGER.getFromFilename("testmap.tmx");
-			MAP.printAll();
+			//MAP.printAll();
 
 			/* Fenster erzeugen */
 			windowID = glutCreateWindow (title);
