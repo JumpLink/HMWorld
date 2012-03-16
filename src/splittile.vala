@@ -32,7 +32,7 @@ namespace HMP {
 				foreach (SubTile s in subTiles)
 					s = new SubTile ();
 			}
-			public override void draw (double x, double y) {
+			public override void draw (double x, double y, double zoff) {
 				//Einzelteile zeichnen
 			}
 			public override void save (string filename) {

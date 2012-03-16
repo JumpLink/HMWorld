@@ -68,7 +68,7 @@ namespace HMP {
 		 * @param x linke x-Koordinate
 		 * @param y untere y-Koordinate
 		 */
-		public abstract void draw (double x, double y);
+		public abstract void draw (double x, double y, double zoff);
 		/**
 		 * Gibt alle Werte eines Tiles auf der Konsole aus.
 		 */

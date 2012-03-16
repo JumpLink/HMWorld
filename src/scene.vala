@@ -49,6 +49,13 @@ namespace HMP {
 			
 			glEnable(GL_TEXTURE_2D);
 
+			/* Alphakanal fuer Texturen aktivieren */
+			glEnable(GL_ALPHA_TEST);
+			/* Wertebereich fuer Transparenz*/
+			glAlphaFunc(GL_GREATER, (GL.GLclampf) 0.1);
+			/* Tiefentest damit Tiles keine anderen Tiles verdecken */
+			glDepthFunc(GL_ALWAYS);
+
 			/**
 			 * Alles in Ordnung?
 			 */

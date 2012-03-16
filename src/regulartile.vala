@@ -60,7 +60,7 @@ namespace HMP {
 				}
 			}
 
-			public override void draw( double x, double y) {
+			public override void draw( double x, double y, double zoff) {
 				double width = get_width();
 				double height = get_height();
 				if(type != TileType.NO_TILE) {
@@ -68,13 +68,13 @@ namespace HMP {
 					tex.bindTexture();
 					glBegin (GL_QUADS);
 						glTexCoord2d(0,0);
-							glVertex3d ( x, y, 0.0f);
+							glVertex3d ( x, y, zoff);
 						glTexCoord2d(1,0);
-							glVertex3d ( x + width, y, 0.0f);
+							glVertex3d ( x + width, y, zoff);
 						glTexCoord2d(1,1);
-							glVertex3d ( x + width, y + height, 0.0f);
+							glVertex3d ( x + width, y + height, zoff);
 						glTexCoord2d(0,1);
-							glVertex3d ( x, y + height, 0.0f);
+							glVertex3d ( x, y + height, zoff);
 				    glEnd ();
 				    } else {
 				    	//print("Tile ist kein Tile zum zeichnen\n");
