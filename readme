@@ -59,5 +59,7 @@ To compile this software install the following dependencies on Ubuntu 11.10
 		sudo apt-get install libxml2 libxml2-dev
 	ValaDoc
 		sudo apt-get install valadoc libvaladoc0 libvaladoc-dev
+	For Debuggin
+		sudo apt-get install nemiver
 	To generate vapis
 		sudo apt-get install gobject-introspection ..unvollsteanding"

@@ -152,9 +152,15 @@ install-valadate:
 	@mkdir tmp
 	@git clone git://gitorious.org/~serbanjora/valadate/serbanjora-valadate.git ./tmp/
 	@cd ./tmp && ./waf configure && ./waf install
+## * Fuert das Testprogramm aus.
 test: dirs
 	@mkdir -p $(TMP_DIR)
 	@echo "Compiling Test Binary..."
 	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(TSRC_FILES)
 	@echo "Running $(TARGET_FILE)..."
 	@$(TARGET_FILE)
+## * Fuert das Testprogramm aus.
+debuging: dirs $(SRC_FILES)
+	@echo "Debuging.."
+	@$(VC) -g --save-temps -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES)
+	@nemiver $(TARGET_FILE)

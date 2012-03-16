@@ -62,7 +62,7 @@ namespace HMP {
 						error ("Error! Konnte Tile nicht Speichern: %s\n", e.message);
 					}
 				}
-			}	
+			}
 
 			public override void draw( double x, double y, double zoff) {
 				double width = get_width();
