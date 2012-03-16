@@ -32,7 +32,8 @@ namespace HMP {
 		 */
 		public Plant plant;
 		/**
-		 * Konstruktor 
+		 * Konstruktor erzeugt ein leeres Tile vom Typ TileType.NO_TILE
+		 * @see TileType.NO_TILE
 		 */
 		public Tile() {
 			type = TileType.NO_TILE;
@@ -73,7 +74,11 @@ namespace HMP {
 		 * Gibt alle Werte eines Tiles auf der Konsole aus.
 		 */
 		public abstract void printValues ();
-
+		/**
+		 * Berechnet anhand der Nachbartiles das aussehen dieses Tiles,
+		 * dies findet beispielsweise bei Wegen, Strassen, Sand oder Grass verwendung.
+		 * TODO an Ole, ueberpruefe diese Beschreibung!
+		 */
 		public abstract void calcEdges (TileType[] neighbours);
 	}
 }

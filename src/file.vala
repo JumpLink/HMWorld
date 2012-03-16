@@ -15,6 +15,9 @@
  */
 using HMP;
 namespace HMP {
+	/**
+	 * Klasse fuer ausgelagerte Dateioperationen
+	 */
 	class File {
 		/**
 		 * Extrahiert den Dateinamen eines kompletten Pfades.

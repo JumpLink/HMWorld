@@ -58,6 +58,7 @@ namespace HMP {
 
 		/**
 		 * Ladet eine Textur aus einem Pixbuf in die Klasse.
+		 * @param pixbuf Der pixbuf aus dem die Textur erstellt werden soll.
 		 */
 		public void loadFromPixbuf(Gdk.Pixbuf pixbuf) {
 			this.pixbuf = pixbuf;
@@ -97,42 +98,57 @@ namespace HMP {
 			}
 		}
 		/**
-		 * TODO
+		 * Gibt die Breite der Textur zurueck.
+		 * @return Breite der Textur
 		 */
 		public uint get_width() {
 			return this.pixbuf.get_width();
 		}
 		/**
-		 * TODO
+		 * Gibt die Hoehe der Textur zurueck.
 		 */
 		public uint get_height() {
 			return this.pixbuf.get_height();
 		}
 		/**
-		 * TODO
+		 * Liefert ein Zeiger auf ein Array uint8[] mit den Pixelwerten,
+		 * der hier vorgegebene Rueckgabetyp ist hier void* damit dieser mit OpenGL
+		 * kompatibel ist.
 		 */
 		public void* get_pixels() {
 			return this.pixbuf.get_pixels();
 		}
 		/**
-		 * TODO
+		 * Liefert Information darueber ob die Textur einen Alphakanal enthaelt.
+		 * @return  True wenn die Textur einen Alphakanal, sonst false.
+		 * @see Gdk.Pixbuf.get_has_alpha
 		 */
 		public bool has_alpha() {
 			return this.pixbuf.get_has_alpha();
 		}
 		/**
-		 * TODO
+		 * Liefert den Farbraum der Textur, zur Zeit wird nur RGB unterstuetzt,
+		 * Weitere Informationen dazu gibt es hier:<<BR>>
+		 * *[[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Colorspace.html]]<<BR>>
+		 * *[[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Pixbuf.colorspace.html]]
+		 * @return Den Farbraum, wird zur Zeit immer RGB sein.
+		 * @see Gdk.Pixbuf.colorspace
 		 */
 		public Colorspace get_colorspace() {
 			return this.pixbuf.get_colorspace();
 		}
 		/**
-		 * TODO
+		 * Liefert den Pixbuf der Textur, Pixbuf wird fuer die Verwalltung der Pixel verwendet.<<BR>>
+		 * * Weitere Informationen: [[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Pixbuf.html]]
+		 * @return Der Pixbuf aus gdk-pixbuf.
+		 * @see Gdk.Pixbuf
 		 */
 		public Pixbuf get_Pixbuf() {
 			return this.pixbuf;
 		}
-
+		/**
+		 * Gibt die Werte der Textur auf der Konsole aus.
+		 */
 		public void printValues() {
 			print("=Tex=\n");
 			print("width: %u\n", get_width());

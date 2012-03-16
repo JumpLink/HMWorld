@@ -22,6 +22,9 @@ using HMP;
 namespace HMP {
 namespace Test {
 	class Tester {
+		/**
+		 * Klasse fuer Tests
+		 */
 		public Tester() {
 			print("initialisiere Tester\n");
 			int windowID = 0;

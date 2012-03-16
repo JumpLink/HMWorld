@@ -7,13 +7,13 @@ VERSION       = 0.1
 # Name des Pakets
 PKG_NAME      = HMP-ALL
 
-# Quelldateien
-SRCS          = main.vala $(ASRCS)
+# Quelldateien nur fuer das Spiel
+SRCS          = main.vala
 
-# Allgemeine Quelldateien
+# Allgemeine Quelldateien fuer Tests und das Spiel
 ASRCS          = scene.vala values.vala io.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala mapmanager.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala inventory.vala tool.vala emptyHands.vala spriteset.vala sprite.vala tilesetreference.vala plant.vala hoe.vala axe.vala pickaxe.vala singletool.vala wateringcan.vala sprinkler.vala circletool.vala file.vala potato.vala potatoseed.vala storage.vala scythe.vala multiscythe.vala seed.vala grass.vala grassseed.vala
 
-# Quelltestdateien
+# Quelltestdateien nur fuer Tests
 TSRCS         = main.vala tileset.vala
 
 # ausfuehrbares Ziel
@@ -33,6 +33,8 @@ VAPI_DIR      = vapi/
 BIN_DIR       = bin/
 # Verzeichnis fuer Doku
 DOC_DIR       = doc/
+# Verzeichnis fuer Doku
+TST_DOC_DIR       = test/doc/
 # Öffentliches Verzeichnis für die Dokumentationsveröffentlichung
 PUB_DIR       = ~/Dropbox/Public/hmp/
 # Verzeichnis fuer Temporaere Dateien
@@ -52,10 +54,10 @@ VDD           = 0.15.3
 # Bazaar
 BZR           = bzr
 
-# Quelldateien mit Pfad
-SRC_FILES     = $(SRCS:%.vala=$(SRC_DIR)%.vala)
 # Allgemeine Quelldateien mit Pfad
 ASRC_FILES     = $(ASRCS:%.vala=$(SRC_DIR)%.vala)
+# Quelldateien mit Pfad
+SRC_FILES      = $(ASRC_FILES) $(SRCS:%.vala=$(SRC_DIR)%.vala)
 # Test-Quelldateien mit Pfad
 TSRC_FILES     = $(ASRC_FILES) $(TSRCS:%.vala=$(TSRC_DIR)%.vala)
 # Zieldatei mit Pfad
@@ -115,6 +117,10 @@ $(TARGET_FILE): $(SRC_FILES)
 c: dirs $(SRC_FILES)
 	@echo "Compiling Binary..."
 	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) -C
+## * make doc-test: Dokumentation fuer die Tests generieren, inkl. nicht oeffentlicher Bereiche
+doc-test: $(SRC_FILES)
+	@echo "Generating internal Documentation for Tests..."
+	@$(VD) --driver $(VDD) -o $(TST_DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(TSRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION) --private --internal
 ## * make doc: Dokumentation generieren
 doc: $(SRC_FILES)
 	@echo "Generating Documentation..."
@@ -123,8 +129,8 @@ doc: $(SRC_FILES)
 
 ## * make doc-internal: Dokumentation generieren, inkl. nicht oeffentlicher Bereiche
 doc-internal: $(SRC_FILES)
-	@echo "Generating Documentation..."
-	@$(VD) --driver $(VDD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION) --private --internal
+	@echo "Generating internal Documentation"
+	@$(VD) --driver $(VDD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION) --private --internal --importdir=$(TST_DOC_DIR) #fix importdir
 	@gnome-open ./doc/index.html
 
 ## * make doc-publish: Zuvor generierte Doc veroeffentlichen
@@ -140,6 +146,7 @@ clean:
 	@rm -rf $(DOC_DIR)
 	@rm -rf $(SRC_DIR)*.c
 	@rm -rf $(TMP_DIR)
+	@rm -rf $(TST_DOC_DIR)
 
 ## * make help: Diese Hilfe anzeigen
 help:

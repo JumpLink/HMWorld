@@ -32,18 +32,34 @@ namespace HMP {
 				foreach (SubTile s in subTiles)
 					s = new SubTile ();
 			}
+			/**
+			 * {@inheritDoc}
+			 * @see HMP.Tile.draw
+			 */
 			public override void draw (double x, double y, double zoff) {
 				//Einzelteile zeichnen
 			}
+			/**
+			 * {@inheritDoc}
+			 * @see HMP.Tile.save
+			 */
 			public override void save (string filename) {
 				if(type != TileType.NO_TILE) {
 					//Einzelteile speichern
 				}
 			}
+			/**
+			 * {@inheritDoc}
+			 * @see HMP.Tile.printValues
+			 */
 			public override void printValues (){
 				print("ich bin ein reftile: ");
 				print("type: %u\n",type);
 			}
+			/**
+			 * {@inheritDoc}
+			 * @see HMP.Tile.calcEdges
+			 */
 			public override void calcEdges (TileType[] neighbours) {
 				assert (neighbours.length == 8);
 				TileType[] n = new TileType[3];

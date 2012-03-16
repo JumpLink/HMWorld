@@ -34,7 +34,7 @@ namespace HMP {
 	/**
 	 * Szenenhintergrundfarbe
 	 */
-	const GL.GLclampf colBG[] = {0.6f, 0.6f, 1.0f, 0.0f};
+	const GL.GLclampf colBG[] = {0.0f, 0.0f, 0.0f, 0.0f};
 	/**
 	 * Benamsung der Farbindizes
 	 */
@@ -55,7 +55,9 @@ namespace HMP {
 		 * Alpha
 		 */
 		A=3 }
-
+	/**
+	 * TODO Ole
+	 */
 	enum EdgeShape {
 		FULL,
 		OUTER_CORNER,
@@ -63,30 +65,87 @@ namespace HMP {
 		V_LINE,
 		H_LINE
 	}
-
+	/**
+	 * TODO Ole
+	 */
 	public enum Direction {
+		/**
+		 * Noerdliche (oben) Richtung.
+		 */
 		NORTH,
+		/**
+		 * Oestliche (echts) Richtung.
+		 */
 		EAST,
+		/**
+		 * Suedliche (unten) Richtung.
+		 */
 		SOUTH,
+		/**
+		 * Westliche (links) Richtung.
+		 */
 		WEST
 	}
-
+	/**
+	 * TODO Ole
+	 */
 	public enum CropType {
+		/**
+		 * TODO Ole
+		 */
 		EMPTY_CROP,
+		/**
+		 * TODO Ole
+		 */
 		GRASS,
+		/**
+		 * TODO Ole
+		 */
 		POTATO
 	}
-
+	/**
+	 * TODO Ole
+	 */
 	public enum TileType {
+		/**
+		 * TileTyp fuer Tiles die nicht gezeichnet werden, bzw. gar nicht existieren.
+		 */
 		NO_TILE,
+		/**
+		 * TODO Ole
+		 */
 		EMPTY_TILE,
+		/**
+		 * TODO Ole
+		 */
 		PLANTABLE,
+		/**
+		 * TODO Ole
+		 */
 		PLANT,
+		/**
+		 * TODO Ole
+		 */
 		GRASS,
+		/**
+		 * TODO Ole
+		 */
 		PATH,
+		/**
+		 * TODO Ole
+		 */
 		BUILDING,
+		/**
+		 * TODO Ole
+		 */
 		ROCK,
+		/**
+		 * TODO Ole
+		 */
 		WOOD,
+		/**
+		 * TODO Ole
+		 */
 		WATER
 	}
 }

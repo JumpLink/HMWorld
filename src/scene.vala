@@ -24,7 +24,7 @@ namespace HMP {
 		 * Initialisierung der Szene (inbesondere der OpenGL-Statusmaschine).
 		 * Setzt Hintergrund, Zeichenfarbe und sonstige Attribute fuer die
 		 * OpenGL-Statusmaschine.
-		 * @return Rueckgabewert: im Fehlerfall 0, sonst 1.
+		 * @return Rueckgabewert: im Fehlerfall 0, sonst 1, glaube ich..
 		 */
 		static bool init ()
 		{

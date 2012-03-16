@@ -22,11 +22,13 @@ namespace HMP {
 	 */
 		public class RegularTile : Tile {
 			/**
-			 * Konstruktor 
+			 * Konstruktor erzeugt standardmaessig ein Tile vom Typ HMP.TileType.NO_TILE
+			 * mit einer leeren Textur
+			 * @see HMP.TileType.EMPTY_TILE
 			 */
 			public RegularTile () {
 				tex = new Texture();
-				type = HMP.TileType.EMPTY_TILE;
+				type = HMP.TileType.NO_TILE;
 			}
 			/**
 			 * Konstruktor mit uebergabe eines bereits existierenden und zu verwendenen Pixbuf.
@@ -44,7 +46,10 @@ namespace HMP {
 			public Pixbuf get_Pixbuf () {
 				return tex.get_Pixbuf();
 			}
-
+			/**
+			 * {@inheritDoc}
+			 * @see HMP.Tile.printValues
+			 */
 			public override void printValues (){
 				print("ich bin ein RegularTile: ");
 				//print("gid: %u",gid);
@@ -53,7 +58,10 @@ namespace HMP {
 					tex.printValues();
 				}
 			}
-
+			/**
+			 * {@inheritDoc}
+			 * @see HMP.Tile.save
+			 */
 			public override void save (string filename) {
 				if(type != TileType.NO_TILE) {
 					try {
@@ -63,7 +71,10 @@ namespace HMP {
 					}
 				}
 			}
-
+			/**
+			 * {@inheritDoc}
+			 * @see HMP.Tile.draw
+			 */
 			public override void draw( double x, double y, double zoff) {
 				double width = get_width();
 				double height = get_height();
@@ -87,6 +98,10 @@ namespace HMP {
 				    	//print("Tile ist kein Tile zum zeichnen\n");
 				    }
 			}
+			/**
+			 * {@inheritDoc}
+			 * @see HMP.Tile.calcEdges
+			 */
 			public override void calcEdges (TileType[] neighbours) {
 				//nichts
 			}

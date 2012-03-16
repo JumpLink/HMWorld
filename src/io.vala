@@ -22,10 +22,22 @@ using SDLImage;
 
 using HMP;
 namespace HMP {
+	/**
+	 * Globaler TileSetManager fuer zugriff auf alle TileSets von ueberall aus.
+	 */
 	HMP.TileSetManager TILESETMANAGER;
-	//HMP.TileSet TILESET;
+	/**
+	 * Globaler MapManager fuer zugriff auf alle Maps von ueberall aus.
+	 */
 	HMP.MapManager MAPMANAGER;
+	/**
+	 * Globale Map fuer die gerade aktive Map
+	 */
 	HMP.Map MAP;
+	/**
+	 * Globale Angaben ueber die Fenstergroesse.
+	 */
+	int[] M_VIEWPORT;
 	/**
 	 * Setzen der Projektionsmatrix.
 	 */
@@ -38,20 +50,15 @@ namespace HMP {
 		/**
 		 * Setzen der Projektionsmatrix.
 		 * Setzt die Projektionsmatrix fuer die Szene.
-		 *
-		 * @param aspect Seitenverhaeltnis des Anzeigefensters (In).
 		 */
-		static void setProjection (double aspect)
+		static void setProjection ()
 		{
-			/* Gibt die aktuelle Fenstergroesse zurueck*/
-			int[4] m_viewport = {0,0,0,0};
-			glGetIntegerv( GL_VIEWPORT, m_viewport );
 			/* Nachfolgende Operationen beeinflussen Projektionsmatrix */
 			glMatrixMode (GL_PROJECTION);
 			/* Matrix zuruecksetzen - Einheitsmatrix laden */
 			glLoadIdentity ();
-			glOrtho (	0, m_viewport[2],						/* links, rechts */
-					 	m_viewport[3], 0,						/* unten, oben */
+			glOrtho (	0, M_VIEWPORT[2],						/* links, rechts */
+					 	M_VIEWPORT[3], 0,						/* unten, oben */
 						-128, 128);								/* tiefe */
 		}
 		/**
@@ -111,10 +118,11 @@ namespace HMP {
 		{
 			/* Das ganze Fenster ist GL-Anzeigebereich */
 			glViewport (0, 0, (GLsizei) w, (GLsizei) h);
-
+			/* Gibt die aktuelle Fenstergroesse an M_VIEWPORT zurueck*/
+			glGetIntegerv( GL_VIEWPORT, M_VIEWPORT );
 			/* Anpassen der Projektionsmatrix an das Seitenverhältnis des Fensters */
-			setProjection ((double) w / (double) h);
-			print("- Fensterinhalt nach groesse angepasst -");
+			setProjection ();
+			//print("- Fensterinhalt nach groesse angepasst -");
 		}
 
 		/**
@@ -255,6 +263,10 @@ namespace HMP {
 
 			/* Fenster erzeugen */
 			windowID = glutCreateWindow (title);
+
+			M_VIEWPORT = new int[4];
+			/* Gibt die aktuelle Fenstergroesse an M_VIEWPORT zurueck*/
+			glGetIntegerv( GL_VIEWPORT, M_VIEWPORT );
 
 			if (windowID != 0) {
 				/* Logik initialisieren */

@@ -27,10 +27,10 @@ namespace HMP {
 		/**
 		 * Unterklasse von Maps als Hilfe fuer das Laden einer XML-basierten Map-Datei.
 		 * Wir verwenden dafuer das Dateiformat von "Tiled", einem Mapeditor
-		 * der hier zu finden ist: [[http://www.mapeditor.org/|mapeditor.org]]
+		 * der hier zu finden ist: [[http://www.mapeditor.org/|mapeditor.org]]<<BR>>
 		 * Derzeit werden noch keine komprimierten Dateien unterstuetzt.
 		 * Die zu ladenden Maps werden fuer gewoehnlich von der Klasse HMP.MapManager
-		 * uebernommen.
+		 * uebernommen.<<BR>>
 		 * Die definitionen des Kartenformats sind [[https://github.com/bjorn/tiled/wiki/TMX-Map-Format|hier]] zu finden.
 		 *
 		 * @see HMP.MapManager
@@ -383,8 +383,10 @@ namespace HMP {
 		}
 		public void draw() {
 			//print("==DrawMap==\n");
+			int shift_x = (int) (M_VIEWPORT[2] - width * tilewidth)/2;
+			int shift_y = (int) (M_VIEWPORT[3] - height * tileheight)/2;
 			foreach (Layer l in layers) {
-				l.draw();
+				l.draw(shift_x, shift_y);
 			}
 			//layers[0].draw();
 		}

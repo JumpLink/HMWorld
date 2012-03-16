@@ -15,12 +15,24 @@
  */
 using HMP;
 namespace HMP {
+	/**
+	 * Klasse fuer Subtiles, ein Tile kann auch aus mehreren Subtiles bestehen.
+	 * Sie wird fuer zusammengesetzte Tiles verwendet um beispielsweise Wegkanten
+	 * darzustellen. TODDO an OLE, ueberpruefen
+	 */
 	public class SubTile {
 	 	EdgeShape edge;
-
+	 	/**
+	 	 * Konstruktor, erzeugt ein leeres SubTile vom Typ EdgeShape.FULL.
+	 	 * @see EdgeShape.FULL
+	 	 */
 	 	public SubTile () {
 	 		edge = EdgeShape.FULL;
 	 	}
+	 	/**
+		 * Aehnlich wie: 
+		 * {@link HMP.Tile.calcEdges}
+		 */
 	 	public void calcEdge (TileType [] neighbours, TileType type, uint location) {
 	 		assert (neighbours.length == 3);
 	 		if (neighbours[0] == type && neighbours[1] == type && neighbours[2] == type)
