@@ -55,6 +55,12 @@ namespace HMP {
 			glAlphaFunc(GL_GREATER, (GL.GLclampf) 0.1);
 			/* Tiefentest damit Tiles keine anderen Tiles verdecken */
 			glDepthFunc(GL_ALWAYS);
+			/*Blending gegen Verdeckung*/
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			/* Rueckseiten nicht zeichnen*/
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_BACK);
 
 			/**
 			 * Alles in Ordnung?

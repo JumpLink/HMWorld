@@ -56,7 +56,11 @@ namespace HMP {
 
 			public override void save (string filename) {
 				if(type != TileType.NO_TILE) {
-					get_Pixbuf().save(filename, "png");
+					try {
+						get_Pixbuf().save(filename, "png");
+					} catch (GLib.Error e) {
+						error ("Error! Konnte Tile nicht Speichern: %s\n", e.message);
+					}
 				}
 			}
 
@@ -67,6 +71,8 @@ namespace HMP {
 					//print("draw aus RefTile!\n");
 					tex.bindTexture();
 					glBegin (GL_QUADS);
+						/*Farbe fuers Blending*/
+						//glBlendColor(0,0,0,0);
 						glTexCoord2d(0,0);
 							glVertex3d ( x, y, zoff);
 						glTexCoord2d(1,0);

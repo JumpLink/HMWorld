@@ -23,7 +23,7 @@ using SDLImage;
 using HMP;
 namespace HMP {
 	HMP.TileSetManager TILESETMANAGER;
-	HMP.TileSet TILESET;
+	//HMP.TileSet TILESET;
 	HMP.MapManager MAPMANAGER;
 	HMP.Map MAP;
 	/**
@@ -50,11 +50,13 @@ namespace HMP {
 
 			/* Ortho-Projektion, Koordinatensystem bleibt quadratisch */
 			if (aspect <= 1) {
-				gluOrtho2D (-200.0, 200.0,                    /* links, rechts */
-					        -200.0 / aspect, 200.0 / aspect); /* unten, oben */
+				glOrtho (	-200.0, 200.0,						/* links, rechts */
+					        -200.0 / aspect, 200.0 / aspect,	/* unten, oben */
+							-128, 128);							/* tiefe */
 			} else {
-				gluOrtho2D (-200.0 * aspect, 200.0 * aspect,  /* links, rechts */
-					        -200.0, 200.0);                   /* unten, oben */
+				glOrtho (	-200.0 * aspect, 200.0 * aspect,	/* links, rechts */
+					        -200.0, 200.0,						/* unten, oben */
+							-128, 128);							/* tiefe */
 			}
 		}
 

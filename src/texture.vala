@@ -59,11 +59,14 @@ namespace HMP {
 			if(pixbuf.colorspace == Colorspace.RGB)
 				if (pixbuf.get_has_alpha()) {
 					texture_format = GL_RGBA;
+					/**/
 					//texture_format = GL_BGRA;
+					//print("RGBA\n");
 				}
 				else {
 					texture_format = GL_RGB;
 					//texture_format = GL_BGR;
+					//print("RGB\n");
 				}
 			else {
 				texture_format = 0;
@@ -79,8 +82,9 @@ namespace HMP {
 			{
 				glGenTextures(1, texID);
 				glBindTexture(GL_TEXTURE_2D, texID[0]);
+				//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-				glTexImage2D(GL_TEXTURE_2D, 0, 3, (GL.GLsizei) get_width(), (GL.GLsizei) get_height(), 0, texture_format, GL_UNSIGNED_BYTE, get_pixels());
+				glTexImage2D(GL_TEXTURE_2D, 0, 4, (GL.GLsizei) get_width(), (GL.GLsizei) get_height(), 0, texture_format, GL_UNSIGNED_BYTE, get_pixels());
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

@@ -3,7 +3,7 @@
  <tileset firstgid="1" source="../tileset/Stadt - Sommer.tsx"/>
  <layer name="under hero 1" width="18" height="14">
   <properties>
-   <property name="z" value="-0.2"/>
+   <property name="z" value="2"/>
   </properties>
   <data>
    <tile gid="332"/>
@@ -262,7 +262,7 @@
  </layer>
  <layer name="under hero 2" width="18" height="14">
   <properties>
-   <property name="z" value="-0.1"/>
+   <property name="z" value="1"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -521,7 +521,7 @@
  </layer>
  <layer name="same as hero 1" width="18" height="14">
   <properties>
-   <property name="z" value="0.1"/>
+   <property name="z" value="0"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -780,7 +780,7 @@
  </layer>
  <layer name="same as hero 2" width="18" height="14">
   <properties>
-   <property name="z" value="0.2"/>
+   <property name="z" value="-1"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -1039,7 +1039,7 @@
  </layer>
  <layer name="over hero 1" width="18" height="14">
   <properties>
-   <property name="z" value="0.5"/>
+   <property name="z" value="-10"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -1298,7 +1298,7 @@
  </layer>
  <layer name="over hero 2" width="18" height="14">
   <properties>
-   <property name="z" value="0.6"/>
+   <property name="z" value="-11"/>
   </properties>
   <data>
    <tile gid="0"/>

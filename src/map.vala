@@ -181,6 +181,7 @@ namespace HMP {
 				Xml.Attr* attr = node->properties;
 				string name;
 				string content;
+				z = 0;
 				while ( attr != null) {
 					name = (string) attr->name;
 					content = (string) attr->children->content;

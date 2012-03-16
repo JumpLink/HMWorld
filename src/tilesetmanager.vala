@@ -76,10 +76,10 @@ namespace HMP {
 		            }
 		        }
 
-		    } catch (Error e) {
-		        error ("Error: %s\n", e.message);
-		        //return 1;
-		    }
+			} catch (Error e) {
+				error ("Error: %s\n", e.message);
+				//return 1;
+			}
 		}
 		/**
 		 * Gibt das TileSet mit dem Namen "name" zurück
