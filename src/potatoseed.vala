@@ -15,15 +15,15 @@
  */
 using HMP;
 namespace HMP {
-	class File {
-		/**
-		 * Extrahiert den Dateinamen eines kompletten Pfades.
-		 * @param path Der pfad dessen Dateiname zurueck gegeben werden soll.
-		 */
-		public static string PathToFilename(string path) {
-			return path.substring(path.last_index_of ("/", 0)+1, -1);
+	/**
+	 * Klasse fuer Kartoffeln zum sähen.
+	 */
+	public class PotatoSeed : CircleTool {
+		protected override void applyToTile (Tile t) {
+			if (t.type == TileType.PLANTABLE) {
+				t.type = TileType.PLANT;
+				t.plant = new Potato ();
+			}
 		}
 	}
 }
-
-

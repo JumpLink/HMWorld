@@ -11,7 +11,7 @@ PKG_NAME      = HMP-ALL
 SRCS          = main.vala $(ASRCS)
 
 # Allgemeine Quelldateien
-ASRCS          = scene.vala values.vala io.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala mapmanager.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala inventory.vala tool.vala emptyHands.vala spriteset.vala sprite.vala tilesetreference.vala plant.vala hoe.vala axe.vala pickaxe.vala singletool.vala wateringcan.vala sprinkler.vala circletool.vala file.vala
+ASRCS          = scene.vala values.vala io.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala mapmanager.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala inventory.vala tool.vala emptyHands.vala spriteset.vala sprite.vala tilesetreference.vala plant.vala hoe.vala axe.vala pickaxe.vala singletool.vala wateringcan.vala sprinkler.vala circletool.vala file.vala potato.vala potatoseed.vala storage.vala scythe.vala
 
 # Quelltestdateien
 TSRCS         = main.vala tileset.vala

@@ -26,8 +26,9 @@ namespace HMP {
 	 	 * @param x Die X-Position.
 	 	 * @param y Die Y-Position.
 	 	 * @param d Die Richtung.
+	 	 * @param s Das Lager, dem evtl. Material hinzugefuegt wird.
 	 	 */
-	 	public abstract void use (Map m, uint x, uint y, Direction d);
+	 	public abstract void use (Map m, uint x, uint y, Direction d, Storage s);
 	 	
 	}
 }

@@ -20,7 +20,7 @@ namespace HMP {
 	 */
 	 public class EmptyHands : Tool {
 	 	
-	 	public override void use (Map m, uint x, uint y, Direction d) {
+	 	public override void use (Map m, uint x, uint y, Direction d, Storage s) {
 	 		/* nichts */
 	 	}
 	 	

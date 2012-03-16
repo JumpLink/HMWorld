@@ -40,5 +40,9 @@ namespace HMP {
 				for (uint iy = y - 1; iy < (y + 1); ++iy)
 					applyToTile (l.tiles[ix, iy]);
 		}
+
+		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
+			applyToLayer (m, x, y, "player");
+		}
 	}
 }

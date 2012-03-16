@@ -20,7 +20,7 @@ namespace HMP {
 	 */
 	public class PickAxe : SingleTool {
 
-		public override void use (Map m, uint x, uint y, Direction d) {
+		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
 			Tile t = Target (m, x, y, d, "player");
 			if (t.type == TileType.ROCK)
 				t.type = TileType.EMPTY_TILE;

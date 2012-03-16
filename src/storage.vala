@@ -15,15 +15,11 @@
  */
 using HMP;
 namespace HMP {
-	class File {
-		/**
-		 * Extrahiert den Dateinamen eines kompletten Pfades.
-		 * @param path Der pfad dessen Dateiname zurueck gegeben werden soll.
-		 */
-		public static string PathToFilename(string path) {
-			return path.substring(path.last_index_of ("/", 0)+1, -1);
-		}
+	/**
+	 * Klasse fuer Lager.
+	 */
+	public class Storage {
+		public uint hay;
+		public uint wood;
 	}
 }
-
-

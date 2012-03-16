@@ -64,8 +64,8 @@ namespace HMP {
 	 	 * @param y Die Y-Position.
 	 	 * @param d Die Richtung.
 	 	 */
-	 	public void use (Map m, uint x, uint y, Direction d) {
-	 		primary.use (m, x, y, d);
+	 	public void use (Map m, uint x, uint y, Direction d, Storage s) {
+	 		primary.use (m, x, y, d, s);
 	 	}
 	 }
 }

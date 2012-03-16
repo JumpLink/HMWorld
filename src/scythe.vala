@@ -15,15 +15,17 @@
  */
 using HMP;
 namespace HMP {
-	class File {
-		/**
-		 * Extrahiert den Dateinamen eines kompletten Pfades.
-		 * @param path Der pfad dessen Dateiname zurueck gegeben werden soll.
-		 */
-		public static string PathToFilename(string path) {
-			return path.substring(path.last_index_of ("/", 0)+1, -1);
+	/**
+	 * Klasse fuer eine Sense.
+	 */
+	public class Scythe : SingleTool {
+
+		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
+			Tile t = Target (m, x, y, d, "player");
+			if (t.type == TileType.GRASS && t.plant != null) {
+				t.plant.harvest();
+				s.hay++;
+			}
 		}
 	}
 }
-
-

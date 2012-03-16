@@ -20,10 +20,12 @@ namespace HMP {
 	 */
 	public class Axe : SingleTool {
 
-		public override void use (Map m, uint x, uint y, Direction d) {
+		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
 			Tile t = Target (m, x, y, d, "player");
-			if (t.type == TileType.WOOD)
+			if (t.type == TileType.WOOD) {
 				t.type = TileType.EMPTY_TILE;
+				s.wood++;
+			}
 		}
 	}
 }

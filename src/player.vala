@@ -30,18 +30,29 @@ namespace HMP {
 		public Inventory tools;
 
 		/**
+		 * Aufgehobener Gegenstand.
+		 */
+		public Entity item;
+
+		/**
+		 * Lager.
+		 */
+		public Storage storage;
+
+		/**
 		 * Konstruktor
 		 */
 		public Player() {
 			this.name = "foobert";
 			tools = new Inventory ();
+			storage = new Storage ();
 		}
 
 		/**
 	 	 * Benutzt ausgeruestetes Werkzeug mit Spielerumgebung.
 	 	 */
 		void use () {
-			tools.use (map, ((uint) pos.vec[0]), ((uint) pos.vec[1]), direction);
+			tools.use (map, ((uint) pos.vec[0]), ((uint) pos.vec[1]), direction, storage);
 		}
 	}
 }
