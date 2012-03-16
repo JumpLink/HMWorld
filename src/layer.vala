@@ -90,13 +90,13 @@ namespace HMP {
 		}
 		public void draw() {
 			//print("draw layer\n");
-	   		//double w = 16; //TODO an Ole, in der textur befinden sich groessenangaben die direkt in der draw methode verwenden kannst, dann waere keine uebergabe noetig.
+			//double w = 16; //TODO an Ole, in der textur befinden sich groessenangaben die direkt in der draw methode verwenden kannst, dann waere keine uebergabe noetig.
 			for (int y=0;y<height;y++) {
 				for (int x=0;x<width;x++) {
 					if(tiles[y,x].type != TileType.NO_TILE) {
 						//print("x: %i y: %i\n", x,y);
 						//tiles[x,y].printValues();
-						tiles[y,x].draw(-1 + x * tiles[y,x].get_width(), 1 - (y + 1) * tiles[y,x].get_height(), zoff);
+						tiles[y,x].draw(x * tiles[y,x].get_width(), y * tiles[y,x].get_height(), zoff);
 					}
 				}
 			}

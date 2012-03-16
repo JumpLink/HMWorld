@@ -75,12 +75,13 @@ namespace HMP {
 						//glBlendColor(0,0,0,0);
 						glTexCoord2d(0,0);
 							glVertex3d ( x, y, zoff);
-						glTexCoord2d(1,0);
-							glVertex3d ( x + width, y, zoff);
-						glTexCoord2d(1,1);
-							glVertex3d ( x + width, y + height, zoff);
 						glTexCoord2d(0,1);
 							glVertex3d ( x, y + height, zoff);
+						glTexCoord2d(1,1);
+							glVertex3d ( x + width, y + height, zoff);
+						glTexCoord2d(1,0);
+							glVertex3d ( x + width, y, zoff);
+
 				    glEnd ();
 				    } else {
 				    	//print("Tile ist kein Tile zum zeichnen\n");

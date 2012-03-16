@@ -49,15 +49,18 @@ namespace HMP {
 			glLoadIdentity ();
 
 			/* Ortho-Projektion, Koordinatensystem bleibt quadratisch */
-			if (aspect <= 1) {
-				glOrtho (	-200.0, 200.0,						/* links, rechts */
-					        -200.0 / aspect, 200.0 / aspect,	/* unten, oben */
-							-128, 128);							/* tiefe */
-			} else {
-				glOrtho (	-200.0 * aspect, 200.0 * aspect,	/* links, rechts */
-					        -200.0, 200.0,						/* unten, oben */
-							-128, 128);							/* tiefe */
-			}
+			// if (aspect <= 1) {
+			// 	glOrtho (	-200.0, 200.0,						/* links, rechts */
+			// 		        -200.0 / aspect, 200.0 / aspect,	/* unten, oben */
+			// 				-128, 128);							/* tiefe */
+			// } else {
+			// 	glOrtho (	-200.0 * aspect, 200.0 * aspect,	/* links, rechts */
+			// 		        -200.0, 200.0,						/* unten, oben */
+			// 				-128, 128);							/* tiefe */
+			// }
+			glOrtho (	0, 640,									/* links, rechts */
+					 	480, 0,								/* unten, oben */
+						-128, 128);								/* tiefe */
 		}
 
 		/**
