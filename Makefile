@@ -164,3 +164,4 @@ debuging: dirs $(SRC_FILES)
 	@echo "Debuging.."
 	@$(VC) -g --save-temps -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES)
 	@nemiver $(TARGET_FILE)
+	#gdb $(TARGET_FILE)
