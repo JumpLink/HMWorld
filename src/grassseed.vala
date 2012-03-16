@@ -15,15 +15,20 @@
  */
 using HMP;
 namespace HMP {
-	class File {
-		/**
-		 * Extrahiert den Dateinamen eines kompletten Pfades.
-		 * @param path Der pfad dessen Dateiname zurueck gegeben werden soll.
-		 */
-		public static string PathToFilename(string path) {
-			return path.substring(path.last_index_of ("/", 0)+1, -1);
+	/**
+	 * Klasse fuer Grasssamen.
+	 */
+	public class GrassSeed : Seed {
+		protected override void applyToTile (Tile t, Storage s) {
+				if (t.type == TileType.PLANTABLE && seed > 0) {
+					t.type = TileType.PLANT;
+					t.plant = new Grass ();
+					--seed;
+			}
+		}
+
+		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
+			applyToLayer (m, x, y, "ground", s);
 		}
 	}
 }
-
-

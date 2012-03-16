@@ -27,6 +27,11 @@ namespace HMP {
 	const uint WATER_CAPACITY = 10;
 
 	/**
+	 * Samen pro Sack.
+	 */
+	const uint SEED_PER_BAG = 10;
+
+	/**
 	 * Szenenhintergrundfarbe
 	 */
 	const GL.GLclampf colBG[] = {0.6f, 0.6f, 1.0f, 0.0f};

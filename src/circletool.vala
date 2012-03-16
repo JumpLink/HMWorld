@@ -23,8 +23,9 @@ namespace HMP {
 		/**
 		 * Wendet das Werkzeug auf ein Tile an.
 		 * @param t Das Tile.
+		 * @param s Das Lager.
 		 */
-		protected abstract void applyToTile (Tile t);
+		protected abstract void applyToTile (Tile t, Storage s);
 
 		/**
 		 * Wendet das Werkzeug auf alle Tiles im unmittelbaren Umkreis des Spielers 
@@ -34,15 +35,15 @@ namespace HMP {
 		 * @param m y y-Koordinate des Spielers.
 		 * @param layerName Name der Ebene.
 		 */
-		protected void applyToLayer (Map m, uint x, uint y, string layerName) {
+		protected void applyToLayer (Map m, uint x, uint y, string layerName, Storage s) {
 			Layer l = m.layers.get (m.getIndexOfLayerName (layerName));
 			for (uint ix = x - 1; ix < (x + 1); ++ix)
 				for (uint iy = y - 1; iy < (y + 1); ++iy)
-					applyToTile (l.tiles[ix, iy]);
+					applyToTile (l.tiles[ix, iy], s);
 		}
 
 		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
-			applyToLayer (m, x, y, "player");
+			applyToLayer (m, x, y, "player", s);
 		}
 	}
 }
