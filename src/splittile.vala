@@ -35,6 +35,11 @@ namespace HMP {
 			public override void draw (double x, double y) {
 				//Einzelteile zeichnen
 			}
+			public override void save (string filename) {
+				if(type != TileType.NO_TILE) {
+					//Einzelteile speichern
+				}
+			}
 			public override void printValues (){
 				print("ich bin ein reftile: ");
 				print("type: %u\n",type);

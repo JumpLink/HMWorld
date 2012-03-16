@@ -61,6 +61,7 @@ namespace Test {
 			var tilesettest = new TileSetTest();
 			tilesettest.test_a();
 			tilesettest.test_b();
+			tilesettest.test_c();
 			return error;
 		}
 

@@ -320,6 +320,17 @@ namespace HMP {
 			print("Tiles zerteilt\n");
 		}
 		/**
+		 * Speichert alle Tiles als Datei.
+		 * @param folder Ordner in dem die Bilder gespeichert werden sollen.
+		 */
+		public void save(string folder = "./tmp/") {
+			for (uint y=0;y<getCountY();y++) {
+				for (uint x=0;x<getCountX();x++) {
+					tile[y,x].save(folder+name+"_y"+y.to_string()+"_x"+x.to_string()+".png");
+				}
+			}
+		}
+		/**
 		 * Gibt alle Werte Tiles auf der Konsole aus
 		 */
 		public void printTiles() {

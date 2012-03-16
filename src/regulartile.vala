@@ -28,13 +28,19 @@ namespace HMP {
 				tex = new Texture();
 				type = HMP.TileType.EMPTY_TILE;
 			}
-
+			/**
+			 * Konstruktor mit uebergabe eines bereits existierenden und zu verwendenen Pixbuf.
+			 * @param pixbuf Pixelbufer der in das Tile uebernommen werden soll.
+			 */
 			public RegularTile.FromPixbuf (Pixbuf pixbuf) {
 				tex = new Texture();
 				tex.loadFromPixbuf(pixbuf);
 				type = HMP.TileType.EMPTY_TILE;
 			}
-
+			/**
+			 * Gibt den Pixelbufer der Textur zurueck
+			 * @return Die vom tile verwendete Textur als Pixbuf
+			 */
 			public Pixbuf get_Pixbuf () {
 				return tex.get_Pixbuf();
 			}
@@ -48,20 +54,27 @@ namespace HMP {
 				}
 			}
 
+			public override void save (string filename) {
+				if(type != TileType.NO_TILE) {
+					get_Pixbuf().save(filename, "png");
+				}
+			}
+
 			public override void draw( double x, double y) {
 				double width = get_width();
+				double height = get_height();
 				if(type != TileType.NO_TILE) {
 					//print("draw aus RefTile!\n");
 					tex.bindTexture();
 					glBegin (GL_QUADS);
 						glTexCoord2d(0,0);
-							glVertex3d ( x,  y, 0.0f);
+							glVertex3d ( x, y, 0.0f);
 						glTexCoord2d(1,0);
-							glVertex3d (  x + width,  y, 0.0f);
+							glVertex3d ( x + width, y, 0.0f);
 						glTexCoord2d(1,1);
-							glVertex3d (  x + width, y + width, 0.0f);
+							glVertex3d ( x + width, y + height, 0.0f);
 						glTexCoord2d(0,1);
-							glVertex3d ( x, y + width, 0.0f);
+							glVertex3d ( x, y + height, 0.0f);
 				    glEnd ();
 				    } else {
 				    	//print("Tile ist kein Tile zum zeichnen\n");

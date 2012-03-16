@@ -240,7 +240,7 @@ namespace HMP {
 						tmp_tile = new RegularTile();
 						tmp_tile.type = TileType.NO_TILE;
 					}
-					print("x: %u, y: %u\t",(uint)((i/width)),(uint)(i%width));
+					//print("y: %u, x: %u\t",(uint)((i/width)),(uint)(i%width));
 					//Tile dem Array mit berechneten x- und y-Werten hinzufuegen
 					tiles[(uint)(i/width),(uint)(i%width)] = tmp_tile;
 

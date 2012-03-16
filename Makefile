@@ -35,6 +35,8 @@ BIN_DIR       = bin/
 DOC_DIR       = doc/
 # Öffentliches Verzeichnis für die Dokumentationsveröffentlichung
 PUB_DIR       = ~/Dropbox/Public/hmp/
+# Verzeichnis fuer Temporaere Dateien
+TMP_DIR		  = tmp/
 
 # Bazaar-Repository
 BZR_REPO      = bzr+ssh://bazaar.launchpad.net/%2Bbranch/hmproject/0.1/
@@ -137,6 +139,7 @@ clean:
 	@rm -rf $(BIN_DIR)
 	@rm -rf $(DOC_DIR)
 	@rm -rf $(SRC_DIR)*.c
+	@rm -rf $(TMP_DIR)
 
 ## * make help: Diese Hilfe anzeigen
 help:
@@ -150,6 +153,7 @@ install-valadate:
 	@git clone git://gitorious.org/~serbanjora/valadate/serbanjora-valadate.git ./tmp/
 	@cd ./tmp && ./waf configure && ./waf install
 test: dirs
+	@mkdir -p $(TMP_DIR)
 	@echo "Compiling Test Binary..."
 	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(TSRC_FILES)
 	@echo "Running $(TARGET_FILE)..."
