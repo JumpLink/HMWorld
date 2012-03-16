@@ -29,6 +29,10 @@ namespace HMP {
 		GLenum texture_format;
 		GL.GLint read_channel = 3;
 		private Gdk.Pixbuf pixbuf;
+		public Texture() {
+			/*nicht in der bindTexture aufrufen, wir brauchen nur einmal einen neuen Namen*/
+			glGenTextures(1, texID);
+		}
 		/**
 		 * Ladet eine Textur aus einer Datei.
 		 * @param path Pfadangabe der zu ladenden Grafikdatei.
@@ -81,13 +85,12 @@ namespace HMP {
 		 */
 		public void bindTexture () {
 			//print("binde textur \n");
-			if (get_width() > 0 && get_height() > 0)
+			if (get_width() > 1 && get_height() > 1)
 			{
-				glGenTextures(1, texID);
 				glBindTexture(GL_TEXTURE_2D, texID[0]);
 				//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-				glTexImage2D(GL_TEXTURE_2D, 0, read_channel, (GL.GLsizei) get_width(), (GL.GLsizei) get_height(), 0, texture_format, GL_UNSIGNED_BYTE, get_pixels());
+				glTexImage2D(GL_TEXTURE_2D, 0, read_channel, (GL.GLsizei) get_width(), (GL.GLsizei) get_height(), 0, texture_format, GL_UNSIGNED_INT_8_8_8_8_REV, get_pixels());
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
