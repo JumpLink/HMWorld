@@ -43,10 +43,14 @@ namespace HMP {
 		 */
 		static void setProjection (double aspect)
 		{
+			/* Gibt die aktuelle Fenstergroesse zurueck*/
+			int[4] m_viewport = {0,0,0,0};
+			glGetIntegerv( GL_VIEWPORT, m_viewport );
 			/* Nachfolgende Operationen beeinflussen Projektionsmatrix */
 			glMatrixMode (GL_PROJECTION);
 			/* Matrix zuruecksetzen - Einheitsmatrix laden */
 			glLoadIdentity ();
+
 
 			/* Ortho-Projektion, Koordinatensystem bleibt quadratisch */
 			// if (aspect <= 1) {
@@ -58,11 +62,10 @@ namespace HMP {
 			// 		        -200.0, 200.0,						/* unten, oben */
 			// 				-128, 128);							/* tiefe */
 			// }
-			glOrtho (	0, 640,									/* links, rechts */
-					 	480, 0,								/* unten, oben */
+			glOrtho (	0, m_viewport[2],						/* links, rechts */
+					 	m_viewport[3], 0,						/* unten, oben */
 						-128, 128);								/* tiefe */
 		}
-
 		/**
 		 * Timer-Callback.
 		 * Initiiert Berechnung der aktuellen Position und Farben und anschliessendes
