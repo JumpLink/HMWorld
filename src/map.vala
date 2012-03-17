@@ -381,6 +381,12 @@ namespace HMP {
 			}
 			return -1;
 		}
+		/**
+		 * Die draw-Methode der Layer-Klasse durchlaeuft seine enthaltenen Layers und ruft jeweils ihre eigene draw-Methode
+		 * mit ihrer entsprechenden Verschiebung auf und Zeichnet somit die komplette Map.
+		 * @see HMP.Layer.draw
+		 * @see HMP.Tile.draw
+		 */
 		public void draw() {
 			//print("==DrawMap==\n");
 			int shift_x = (int) (M_VIEWPORT[2] - width * tilewidth)/2;

@@ -72,7 +72,9 @@ namespace HMP {
 			this.height = height;
 			this.tiles = tiles;
 		}
-
+		/*
+		 * TODO OLE
+		 */
 		public void calcEdges () {
 			TileType[] neighbours = new TileType[8];
 			for (uint r = 0; r < height; ++r)
@@ -88,6 +90,15 @@ namespace HMP {
 					tiles[c, r].calcEdges(neighbours);
 				}
 		}
+		/**
+		 * Die draw-Methode der Layer-Klasse durchlaeuft seine enthaltenen Tiles und ruft jeweils ihre eigene draw-Methode
+		 * mit ihren entsprechenden Koordinaten auf und Zeichnet somit das komplette Layer.
+		 * @param shift_x Verschiebung in X-Richtung. wird verwendet um die Layerposition im Bildschirm zu bestimmen,
+		 * sie wird meistens dazu verwendet den Layer innerhalb des Fensters mittig zu verschieben.
+		 * @param shift_y wie shift_x nur in y-Richtung.
+		 * @see HMP.Map.draw
+		 * @see HMP.Tile.draw
+		 */
 		public void draw(int shift_x, int shift_y) {
 			//print("draw layer\n");
 			for (int y=0;y<height;y++) {

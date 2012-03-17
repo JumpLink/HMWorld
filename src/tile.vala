@@ -63,11 +63,11 @@ namespace HMP {
 		 * @param filename Zu verwendender Dateiname
 		 */
 		public abstract void save (string filename);
-
 		/**
 		 * Zeichnet das Tile an einer Bildschirmposition.
 		 * @param x linke x-Koordinate
 		 * @param y untere y-Koordinate
+		 * @param zoff Angabe der hoehe des Tiles Z.B unter, ueber, gleich, .. dem Held.
 		 */
 		public abstract void draw (double x, double y, double zoff);
 		/**
