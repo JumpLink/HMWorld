@@ -128,8 +128,8 @@ namespace HMP {
 		 */
 		public void draw() {
 			//print("==DrawMap==\n");
-			int shift_x = (int) (M_VIEWPORT[2] - width * tilewidth)/2;
-			int shift_y = (int) (M_VIEWPORT[3] - height * tileheight)/2;
+			int shift_x = (int) (WORLD.STATE.VIEWPORT[2] - width * tilewidth)/2;
+			int shift_y = (int) (WORLD.STATE.VIEWPORT[3] - height * tileheight)/2;
 			foreach (Layer l in layers) {
 				l.draw(shift_x, shift_y);
 			}

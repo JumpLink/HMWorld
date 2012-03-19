@@ -23,14 +23,13 @@ using SDLImage;
 using HMP;
 namespace HMP {
 	/**
-	 * Globale Angaben ueber die Fenstergroesse.
-	 */
-	int[] M_VIEWPORT;
-	/**
-	 * Setzen der Projektionsmatrix.
+	 * Klasse fuer Ein-/Ausgabe-Verarbeitung.
 	 */
 	class IO {
 
+		/**
+		 * Konstruktor.
+		 */
 		public IO() {
 
 		}
@@ -45,8 +44,8 @@ namespace HMP {
 			glMatrixMode (GL_PROJECTION);
 			/* Matrix zuruecksetzen - Einheitsmatrix laden */
 			glLoadIdentity ();
-			glOrtho (	0, M_VIEWPORT[2],						/* links, rechts */
-					 	M_VIEWPORT[3], 0,						/* unten, oben */
+			glOrtho (	0, WORLD.STATE.VIEWPORT[2],						/* links, rechts */
+					 	WORLD.STATE.VIEWPORT[3], 0,						/* unten, oben */
 						-128, 128);								/* tiefe */
 		}
 		/**
@@ -106,8 +105,8 @@ namespace HMP {
 		{
 			/* Das ganze Fenster ist GL-Anzeigebereich */
 			glViewport (0, 0, (GLsizei) w, (GLsizei) h);
-			/* Gibt die aktuelle Fenstergroesse an M_VIEWPORT zurueck*/
-			glGetIntegerv( GL_VIEWPORT, M_VIEWPORT );
+			/* Gibt die aktuelle Fenstergroesse an WORLD.STATE.VIEWPORT zurueck*/
+			glGetIntegerv( GL_VIEWPORT, WORLD.STATE.VIEWPORT );
 			/* Anpassen der Projektionsmatrix an das Seitenverhältnis des Fensters */
 			setProjection ();
 			//print("- Fensterinhalt nach groesse angepasst -");
@@ -267,9 +266,8 @@ namespace HMP {
 			/* Fenster erzeugen */
 			windowID = glutCreateWindow (title);
 
-			M_VIEWPORT = new int[4];
-			/* Gibt die aktuelle Fenstergroesse an M_VIEWPORT zurueck*/
-			glGetIntegerv( GL_VIEWPORT, M_VIEWPORT );
+			/* Gibt die aktuelle Fenstergroesse an WORLD.STATE.VIEWPORT zurueck*/
+			glGetIntegerv( GL_VIEWPORT, WORLD.STATE.VIEWPORT );
 
 			if (windowID != 0) {
 				/* Logik initialisieren */

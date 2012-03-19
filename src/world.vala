@@ -32,6 +32,8 @@ namespace HMP {
 		 * Globale Map fuer die gerade aktive Map
 		 */
 		public Map CURRENT_MAP;
+
+		public GameState STATE;
 		/**
 		 * Spieler in der Welt
 		 */
@@ -42,7 +44,7 @@ namespace HMP {
 		 * Konstruktor
 		 */
 		public World() {
-
+			STATE = new GameState ();
 		}
 		public void init() {
 			//players = new List<Player>();
