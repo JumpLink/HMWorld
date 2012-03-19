@@ -16,19 +16,16 @@
 using HMP;
 namespace HMP {
 	/**
-	 * Klasse fuer Grasssamen.
+	 * Klasse fuer eine Mehrfachhacke.
 	 */
-	public class GrassSeed : Seed {
-		protected override void applyToTile (Tile t, Storage s) {
-				if (t.type == TileType.PLANTABLE && seed > 0) {
-					t.type = TileType.PLANT;
-					t.plant = new Grass ();
-					--seed;
-			}
-		}
-
+	public class MultiHoe : CircleTool {
 		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
 			applyToLayer (m, x, y, "ground", s);
+		}
+
+		protected override void applyToTile (Tile t, Storage s) {
+			if (t.type == TileType.EMPTY_TILE || t.type == TileType.GRASS)
+				t.type = TileType.PLANTABLE;
 		}
 	}
 }
