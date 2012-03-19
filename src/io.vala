@@ -26,7 +26,6 @@ namespace HMP {
 	 * Globale Angaben ueber die Fenstergroesse.
 	 */
 	int[] M_VIEWPORT;
-
 	/**
 	 * Setzen der Projektionsmatrix.
 	 */
@@ -242,7 +241,28 @@ namespace HMP {
 				print("Unable to initialize SDL-Image: %s\n", SDLImage.get_error());
 				return true;
 			}
+			//WORLD = new World ();
+			/* Globalen TileSetManager erzeugen */
+			/*WORLD.TILESETMANAGER = new HMP.TileSetManager();
+			if (WORLD.TILESETMANAGER == null) {
+				GLib.error("TILESETMANAGER konnte nicht erstellt werden!\n");
+				assert(false);
+			}
+			/* Globalen Mapmanager erzeugen */
+			/*WORLD.MAPMANAGER = new HMP.MapManager();
+			if (WORLD.MAPMANAGER == null) {
+				GLib.error("MAPMANAGER konnte nicht erstellt werden!\n");
+				assert(false);
+			}
+			/* Globle Startmap auswaehlen */
+			/*WORLD.CURRENT_MAP = WORLD.MAPMANAGER.getFromFilename("testmap.tmx");
+			if (WORLD.CURRENT_MAP == null) {
+				GLib.error("MAPMANAGER konnte nicht erstellt werden!\n");
+				assert(false);
+			}
 			//MAP.printAll();
+			*/
+			WORLD.init();
 
 			/* Fenster erzeugen */
 			windowID = glutCreateWindow (title);

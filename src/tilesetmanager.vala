@@ -23,7 +23,7 @@ namespace HMP {
 	 */
 	public class TileSetManager {
 		Gee.List<TileSet> tileset;
-		string folder;
+		//string folder;
 		/**
 		 * Konstruktor
 		 */
@@ -51,6 +51,7 @@ namespace HMP {
 		private void loadAllFromFolder(string folder = "./data/tileset/") {
 			Gee.List<string> files = HMP.File.loadAllFromFolder(folder, ".tsx");
 			foreach (string filename in files) {
+				print("Dateiname: %s\n\n", filename);
 				tileset.add(new HMP.TileSet.fromPath(folder, filename));
 			}
 		}

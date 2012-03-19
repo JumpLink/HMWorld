@@ -42,14 +42,16 @@ namespace HMP {
 		 * Konstruktor
 		 */
 		public World() {
-			//maps = new List<Map>();
-			//	players = new List<Player>();
+
+		}
+		public void init() {
+			//players = new List<Player>();
 			/* Globalen TileSetManager erzeugen */
-			TILESETMANAGER = new HMP.TileSetManager();
+			this.TILESETMANAGER = new HMP.TileSetManager();
 			/* Globalen Mapmanager erzeugen */
-			MAPMANAGER = new HMP.MapManager();
+			this.MAPMANAGER = new HMP.MapManager();
 			/* Globle Startmap auswaehlen */
-			CURRENT_MAP = MAPMANAGER.getFromFilename("testmap.tmx");
+			this.CURRENT_MAP = MAPMANAGER.getFromFilename("testmap.tmx");
 		}
 	}
 }

@@ -15,20 +15,16 @@
  */
 using HMP;
 namespace HMP {
-
 	HMP.World WORLD;
-
 	class Game {
-		//public signal void exit();
-		
-		bool mainloop () {
-			return new IO().initAndStart ("Titel", 640, 480);
+		public Game() {
+			
 		}
 
 		public static int main (string[] args) {
-			WORLD = new World ();
 			Game run = new Game();
-			return (int) run.mainloop();;
+			WORLD = new World ();
+			return (int) new IO().initAndStart ("Titel", 640, 480);
 		}
 	}
 }

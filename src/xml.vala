@@ -42,7 +42,10 @@ namespace HMP {
 		 * und [[http://valadoc.org/libxml-2.0/Xml.XPath.Context.html|valadoc.org]]
 		 */
 		protected Context ctx;
-        
+		/**
+		 * Speichert den path der zu bearbeitenden Mapdatei
+		 */
+        string path;
         /**
          * Konstrukter
          */
@@ -50,7 +53,7 @@ namespace HMP {
         	print("Erstelle HMPXml-Klasse\n");
         	// Initialisation, not instantiation since the parser is a static class
         	Parser.init ();
-			//this.path = path;
+			this.path = path;
 			doc = Parser.parse_file (path);
 			if(doc==null) print("failed to read the .xml file\n");
 			
@@ -89,8 +92,6 @@ namespace HMP {
 			Gee.HashMap<string, string> propertie;
 
 			Xml.Node* node;
-			int gid;
-			int[,] ids = new int[height,width];	
 			//XPath-Expression ausfuehren
 			unowned Xml.XPath.Object obj = ctx.eval_expression(eval_expression);
 			if(obj==null) print("failed to evaluate xpath\n");
@@ -133,10 +134,6 @@ namespace HMP {
 	 * @see HMP.MapManager
 	 */
 	class TMX : HMP.XML {
-		/**
-		 * Speichert den path der zu bearbeitenden Mapdatei
-		 */
-		string path;
 		/**
 		 * Konstrukter der internen XML-Klasse.
 		 * Hier wird der Parser initialisiert und die uebergebene Datei vorbereitet.
