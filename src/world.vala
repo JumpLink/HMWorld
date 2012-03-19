@@ -21,9 +21,17 @@ namespace HMP {
 	 */
 	public class World {
 		/**
-		 * Maps der Welt
+		 * Globaler TileSetManager fuer zugriff auf alle TileSets von ueberall aus.
 		 */
-		public Gee.List<Map> maps;
+		public TileSetManager TILESETMANAGER;
+		/**
+		 * Globaler MapManager fuer zugriff auf alle Maps von ueberall aus.
+		 */
+		public MapManager MAPMANAGER;
+		/**
+		 * Globale Map fuer die gerade aktive Map
+		 */
+		public Map CURRENT_MAP;
 		/**
 		 * Spieler in der Welt
 		 */
@@ -36,6 +44,12 @@ namespace HMP {
 		public World() {
 			//maps = new List<Map>();
 			//	players = new List<Player>();
+			/* Globalen TileSetManager erzeugen */
+			TILESETMANAGER = new HMP.TileSetManager();
+			/* Globalen Mapmanager erzeugen */
+			MAPMANAGER = new HMP.MapManager();
+			/* Globle Startmap auswaehlen */
+			CURRENT_MAP = MAPMANAGER.getFromFilename("testmap.tmx");
 		}
 	}
 }

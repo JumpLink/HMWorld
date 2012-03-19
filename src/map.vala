@@ -122,7 +122,7 @@ namespace HMP {
 					//string zerschneiden um den Dateinamen zu bekommen
 					string filename = HMP.File.PathToFilename((string) properties.get ("source"));
 					//Speichert die geparsten properties
-					HMP.TileSet source = TILESETMANAGER.getFromFilename(filename);
+					HMP.TileSet source = WORLD.TILESETMANAGER.getFromFilename(filename);
 					int firstgid = int.parse(properties.get ("firstgid"));
 					//Den zusammengestellten neuen TileSet in die Liste einfuegen
 					tileset.add( new TileSetReference(firstgid, source));

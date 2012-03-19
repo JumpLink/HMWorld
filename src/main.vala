@@ -15,6 +15,9 @@
  */
 using HMP;
 namespace HMP {
+
+	HMP.World WORLD;
+
 	class Game {
 		//public signal void exit();
 		
@@ -23,6 +26,7 @@ namespace HMP {
 		}
 
 		public static int main (string[] args) {
+			WORLD = new World ();
 			Game run = new Game();
 			return (int) run.mainloop();;
 		}

@@ -23,21 +23,10 @@ using SDLImage;
 using HMP;
 namespace HMP {
 	/**
-	 * Globaler TileSetManager fuer zugriff auf alle TileSets von ueberall aus.
-	 */
-	HMP.TileSetManager TILESETMANAGER;
-	/**
-	 * Globaler MapManager fuer zugriff auf alle Maps von ueberall aus.
-	 */
-	HMP.MapManager MAPMANAGER;
-	/**
-	 * Globale Map fuer die gerade aktive Map
-	 */
-	HMP.Map MAP;
-	/**
 	 * Globale Angaben ueber die Fenstergroesse.
 	 */
 	int[] M_VIEWPORT;
+
 	/**
 	 * Setzen der Projektionsmatrix.
 	 */
@@ -102,7 +91,7 @@ namespace HMP {
 			glMatrixMode (GL_MODELVIEW);
 
 			/* map zeichen */
-			MAP.draw();
+			WORLD.CURRENT_MAP.draw();
 
 			/* Szene anzeigen / Buffer tauschen */
 			glutSwapBuffers ();
@@ -253,12 +242,6 @@ namespace HMP {
 				print("Unable to initialize SDL-Image: %s\n", SDLImage.get_error());
 				return true;
 			}
-			/* Globalen TileSetManager erzeugen */
-			TILESETMANAGER = new HMP.TileSetManager();
-			/* Globalen Mapmanager erzeugen */
-			MAPMANAGER = new HMP.MapManager();
-			/* Globle Startmap auswaehlen */
-			MAP = MAPMANAGER.getFromFilename("testmap.tmx");
 			//MAP.printAll();
 
 			/* Fenster erzeugen */
