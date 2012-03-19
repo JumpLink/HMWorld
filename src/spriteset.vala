@@ -24,7 +24,9 @@ namespace HMP {
 		 * Klasse fuer XML-Operationen
 		 */
 		class XML : HMP.XML {
-			//TODO
+			public XML(string path) {
+				base(path);
+			}
 		}
 
 		/**

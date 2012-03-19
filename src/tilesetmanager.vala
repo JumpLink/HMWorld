@@ -23,14 +23,14 @@ namespace HMP {
 	 */
 	public class TileSetManager {
 		Gee.List<TileSet> tileset;
-		string path;
+		string folder;
 		/**
 		 * Konstruktor
 		 */
-		public TileSetManager(string path = "./data/tileset/") {
+		public TileSetManager(string folder = "./data/tileset/") {
 			print("Erstelle TileSetManager\n");
 			tileset = new Gee.ArrayList<TileSet>();
-			loadAllFromPath(path);
+			loadAllFromFolder(folder);
 		}
 		/**
 		 * Dekonstruktor
@@ -40,45 +40,18 @@ namespace HMP {
 		}
 
 		/**
-		 * Ladet alle Tilesets aus dem Verzeichniss "path"
+		 * Ladet alle Tilesets aus dem Verzeichniss "folder"
 		 *
 		 * Dabei werden alle Dateien mit der Endung .tsx berücksichtigt.
 		 * Das Parsen der XML wird von der Klasse TileSet übernommen.
 		 * Anschließend wird jedes TileSet in eine ArrayList gespeichert.
 		 *
-		 * @param path der Ordnername aus dem gelesen werden soll.
+		 * @param folder der Ordnername aus dem gelesen werden soll.
 		 */
-		private void loadAllFromPath(string path = "./data/tileset/") {
-			this.path = path;
-			GLib.File directory = GLib.File.new_for_path(path);
-			FileEnumerator enumerator;
-		
-		    try {
-		    	GLib.FileInfo file_info;
-		    	// 'Oeffnet' das Verzeichnis path
-		        directory = GLib.File.new_for_path (path);
-		        // Ladet die Dateien die sich im Verzeichnis path befinden
-		        enumerator = directory.enumerate_children (GLib.FileAttribute.STANDARD_NAME, 0);
-		        // Durchläuft alle gefundenen Dateien und werte desen Informationen zur Weiterverarbeitung aus
-		        while ((file_info = enumerator.next_file ()) != null) {
-		        	string filename = file_info.get_name ();
-		        	string extension;
-
-		        	print ("%s\n", filename);
-		        	//print ("Content type: %s\n", file_info.get_content_type ());
-		        	//extrahiert die Dateiendung
-		        	extension = filename.substring(filename.last_index_of (".", 0), -1);
-		        	print ("extension: %s\n", extension);
-		            if (extension == ".tsx") {
-		            	TileSet tmptileset = new TileSet();
-		            	tmptileset.loadFromPath(path, filename);
-		            	tileset.add(tmptileset);
-		            }
-		        }
-
-			} catch (Error e) {
-				error ("Error: %s\n", e.message);
-				//return 1;
+		private void loadAllFromFolder(string folder = "./data/tileset/") {
+			Gee.List<string> files = HMP.File.loadAllFromFolder(folder, ".tsx");
+			foreach (string filename in files) {
+				tileset.add(new HMP.TileSet.fromPath(folder, filename));
 			}
 		}
 		/**

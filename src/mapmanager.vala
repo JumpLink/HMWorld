@@ -49,36 +49,11 @@ namespace HMP {
 		 * @param folder der Ordnername aus dem gelesen werden soll.
 		 */
 		private void loadAllFromFolder(string folder) {
-			print("Fuehre MapManager.loadAllFromPath mit folder %s aus.\n", folder);
-			GLib.File directory = GLib.File.new_for_path(folder);
-			FileEnumerator enumerator;
-		
-		    try {
-		    	FileInfo file_info;
-		    	// 'Oeffnet' das Verzeichnis path
-		        directory = GLib.File.new_for_path (folder);
-		        // Ladet die Dateien die sich im Verzeichnis path befinden
-		        enumerator = directory.enumerate_children (GLib.FileAttribute.STANDARD_NAME, 0);
-		        // Durchläuft alle gefundenen Dateien und werte desen Informationen zur Weiterverarbeitung aus
-		        while ((file_info = enumerator.next_file ()) != null) {
-		        	string filename = file_info.get_name ();
-		        	string extension;
-
-		        	print ("%s\n", filename);
-		        	//print ("Content type: %s\n", file_info.get_content_type ());
-		        	//extrahiert die Dateiendung
-		        	extension = filename.substring(filename.last_index_of (".", 0), -1);
-		        	print ("extension: %s\n", extension);
-		            if (extension == ".tmx") {
-		            	HMP.Map tmp_map = new HMP.Map.fromPath(folder, filename);
-		            	map.add(tmp_map);
-		            }
-		        }
-
-		    } catch (Error e) {
-		        error ("Error: %s\n", e.message);
-		        //return 1;
-		    }
+			//print("Fuehre MapManager.loadAllFromPath mit folder %s aus.\n", folder);
+			Gee.List<string> files = HMP.File.loadAllFromFolder(folder, ".tmx");
+			foreach (string filename in files) {
+				map.add(new HMP.Map.fromPath(folder, filename));
+			}
 		}
 
 		/**

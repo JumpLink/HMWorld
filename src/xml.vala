@@ -30,17 +30,32 @@ namespace HMP {
     class XML {
         // Line indentation
         protected int indent = 0;
+		/**
+		 * Hilsvariable mit Dateityp von libxml2, fuer weitere Informationen siehe
+		 * [[http://xmlsoft.org/html/libxml-tree.html#xmlDoc|xmlsoft.org]]
+		 * und [[http://valadoc.org/libxml-2.0/Xml.Doc.html|valadoc.org]]
+		 */
+		protected Xml.Doc* doc;
+		/**
+		 * Hilsvariable mit Dateityp von libxml2, fuer weitere Informationen siehe
+		 * [[http://xmlsoft.org/html/libxml-xpath.html#xmlXPathContext|xmlsoft.org]]
+		 * und [[http://valadoc.org/libxml-2.0/Xml.XPath.Context.html|valadoc.org]]
+		 */
+		protected Context ctx;
         
         /**
          * Konstrukter
          */
-        public XML() {
+        public XML(string path) {
         	print("Erstelle HMPXml-Klasse\n");
         	// Initialisation, not instantiation since the parser is a static class
         	Parser.init ();
-        	// Beispiel
-    		//string simple_xml = HMPXml.create_simple_xml ();
-    		//print ("Simple XML is:\n%s\n", simple_xml);
+			//this.path = path;
+			doc = Parser.parse_file (path);
+			if(doc==null) print("failed to read the .xml file\n");
+			
+			ctx = new Context(doc);
+			if(ctx==null) print("failed to create the xpath context\n");
         }
         
         /**
@@ -60,6 +75,403 @@ namespace HMP {
         protected void print_indent (string node, string content, char token = '+') {
             string indent = string.nfill (this.indent * 2, ' ');
             print ("%s%c%s: %s\n", indent, token, node, content);
-        }
-    }
+		}
+		/**
+		 * In dieser Methode werden die Tile-Werte aus der XML gelesen und als return zurueck gegeben.
+		 * In der XML sind es jeweils nur ein propertie mit dem namen "gid" des entsprechenden tile-Tags.
+		 * Eine Karte kann mehrere Tiles beinhalten, daher wird mit einem Array von Tiles gearbeitet.
+		 *
+		 * @return Array mit den geparsten Tiles
+		 */
+		protected Gee.List loadPropertiesOfSameNodes (string eval_expression, uint width, uint height) {
+			HMP.Tile tmp_tile;
+			Gee.List<Gee.HashMap<string, string>> properties = new Gee.ArrayList<Gee.HashMap<string, string>>();
+			Gee.HashMap<string, string> propertie;
+
+			Xml.Node* node;
+			int gid;
+			int[,] ids = new int[height,width];	
+			//XPath-Expression ausfuehren
+			unowned Xml.XPath.Object obj = ctx.eval_expression(eval_expression);
+			if(obj==null) print("failed to evaluate xpath\n");
+			//Alle Tiles des XPath-Expression-Ergebnisses durchlaufen
+			for (int i=0;(obj.nodesetval != null && obj.nodesetval->item(i) != null);i++) {
+				//Holt sich das Tile
+				node = obj.nodesetval->item(i);
+				propertie = loadProperties(node);
+				properties.add(propertie);
+			}
+			return properties;
+		}
+		/**
+		 * Allgemeine Hilfsmethode fuer das Parsen von properties eines Knotens.
+		 *
+		 * @param node der zu parsenden properties.
+		 * @return Liste mit den geparsten properties, key ist der propertiename und value ist der propertievalue.
+		 */
+		protected Gee.HashMap<string, string> loadProperties(Xml.Node* node) {
+			Xml.Attr* attr = node->properties;
+			Gee.HashMap<string, string> properties = new Gee.HashMap<string, string>();
+
+			while ( attr != null ) {
+				//print("Attribute: \tname: %s\tvalue: %s\n", attr->name, attr->children->content);
+				properties.set(attr->name, attr->children->content);
+				attr = attr->next;
+			}
+			return properties;
+		}
+	}
+	/**
+	 * Unterklasse von Maps als Hilfe fuer das Laden einer XML-basierten Map-Datei.
+	 * Wir verwenden dafuer das Dateiformat von "Tiled", einem Mapeditor
+	 * der hier zu finden ist: [[http://www.mapeditor.org/|mapeditor.org]]<<BR>>
+	 * Derzeit werden noch keine komprimierten Dateien unterstuetzt.
+	 * Die zu ladenden Maps werden fuer gewoehnlich von der Klasse HMP.MapManager
+	 * uebernommen.<<BR>>
+	 * Die definitionen des Kartenformats sind [[https://github.com/bjorn/tiled/wiki/TMX-Map-Format|hier]] zu finden.
+	 *
+	 * @see HMP.MapManager
+	 */
+	class TMX : HMP.XML {
+		/**
+		 * Speichert den path der zu bearbeitenden Mapdatei
+		 */
+		string path;
+		/**
+		 * Konstrukter der internen XML-Klasse.
+		 * Hier wird der Parser initialisiert und die uebergebene Datei vorbereitet.
+		 *
+		 * @param path Pfadangabe der vorzubereitenden XML-Datei
+		 */
+		public TMX(string path) {
+			base(path);
+		}
+		/**
+		 * Dekonstrukter der internen XML-Klasse.
+		 * Hier wird der Parser gesaeubert und Variablen wieder freigegeben.
+		 */
+		~TMX() {
+			delete doc;
+			Parser.cleanup ();
+		}
+		/**
+		 * In dieser Methode werden die globalen Mapwerte aus der XML gelesen
+		 * und als Parameter zurueck gegeben. In der XML sind es die properties des map-Tags
+		 *
+		 * @param orientation Die Ausgelsene Orientierung der Karte wird hier gespeichert, es wird nur "orthogonal" unterstützt.
+		 * @param version The TMX format version, generally 1.0.
+		 * @param width The map width in tiles.
+		 * @param height The map height in tiles.
+		 * @param tilewidth The width of a tile.
+		 * @param tileheight The height of a tile.
+		 */
+		public void loadGlobalMapProperties (out string orientation, out string version, out uint width, out uint height, out uint tilewidth, out uint tileheight) {
+			//XPath-Expression verarbeiten
+			Xml.Node* node = evalExpression("/map");
+			//properties des resultats verarbeiten.
+			Gee.HashMap<string, string> properties = loadProperties(node);
+			//geparsten properties speichern.
+			orientation = (string) properties.get ("orientation");
+			version = (string) properties.get ("version");
+			width = int.parse(properties.get ("width"));
+			height = int.parse(properties.get ("height"));
+			tilewidth = int.parse(properties.get ("tilewidth"));
+			tileheight = int.parse(properties.get ("tileheight"));
+		}
+		/**
+		 * In dieser Methode werden die TileSet-Werte aus der XML gelesen
+		 * und als return zurueck gegeben.
+		 * In der XML sind dies die properties des tileset-Tags.
+		 * Eine Karte kann mehrere TileSets beinhalten, daher wird mit einer Liste von TileSets gearbeitet.
+		 *
+		 * @return Liste mit allen gefundenen TileSets
+		 */
+		public Gee.List<HMP.TileSetReference> loadTileSets () {
+			Gee.List<HMP.TileSetReference> tileset = new Gee.ArrayList<HMP.TileSetReference>(); //Speichert diie TileSets in einer Liste
+			//XPath-Expression ausfuehren
+			unowned Xml.XPath.Object obj = ctx.eval_expression("/map/tileset");
+			if(obj==null) print("failed to evaluate xpath\n");
+			//Durchläuft alle Nodes, also alle resultierten TileSet-Tags
+			for (int i=0;(obj.nodesetval != null && obj.nodesetval->item(i) != null);i++) {
+				//Holt entsprechenden Layer
+				Xml.Node* node = obj.nodesetval->item(i);
+				//Parst dessen properties
+				Gee.HashMap<string, string> properties = loadProperties(node);
+				//string zerschneiden um den Dateinamen zu bekommen
+				string filename = HMP.File.PathToFilename((string) properties.get ("source"));
+				//Speichert die geparsten properties
+				HMP.TileSet source = WORLD.TILESETMANAGER.getFromFilename(filename);
+				int firstgid = int.parse(properties.get ("firstgid"));
+				//Den zusammengestellten neuen TileSet in die Liste einfuegen
+				tileset.add( new TileSetReference(firstgid, source));
+			}
+			return tileset;
+		}
+		/**
+		 * In dieser Methode werden die Layer-Werte aus der XML gelesen
+		 * und als return zurueck gegeben.
+		 * In der XML sind dies die properties und die Kinder des layer-Tags.
+		 * Eine Karte kann mehrere Layer beinhalten, daher wird mit einer Liste von Layern gearbeitet.
+		 *
+		 * @return Gee.ArrayList vom Typ HMP.Layer aller Layer
+		 * @see HMP.Layer
+		 * @see Gee.ArrayList
+		 */
+		public Gee.List<Layer> loadLayers (Gee.List<HMP.TileSetReference> tilesetrefs) {
+			Gee.List<Layer> layer = new Gee.ArrayList<Layer>(); //Speichert die Layers
+			//XPath-Expression ausfuehren
+			unowned Xml.XPath.Object obj = ctx.eval_expression("/map/layer");
+			if(obj==null) print("failed to evaluate xpath\n");
+			//Durchläuft alle Nodes, also alle resultierten Layer-Tags
+			for (int i=0;(obj.nodesetval != null && obj.nodesetval->item(i) != null);i++) {
+				//Holt entsprechenden Layer
+				Xml.Node* node = obj.nodesetval->item(i);
+				//Parst dessen properties
+				Gee.HashMap<string, string> properties = loadProperties(node);
+				//Speichert die geparsten properties
+				string name = (string) properties.get ("name");
+				int width = int.parse(properties.get ("width"));
+				int height = int.parse(properties.get ("height"));
+				int.parse(properties.get ("height"));
+				//print("Lade Tiles\n");
+				//Holt sich auch gleich den Tile-Tag
+				Tile[,] tiles = loadTiles(i, width, height, tilesetrefs);
+				//print("Fuege Layer mit Namen %s hinzu\n", properties.get ("name"));
+				double z = 0; //Zu speichernder Z-Wert
+				//Holt sich auch gleich den Z-Wert
+				loadLayerZ(i, out z);
+				//Den zusammengestellten Layer in die Liste einfuegen
+				layer.add( new Layer.all( name, z, width, height, tiles));
+			}
+			return layer;
+		}
+		/**
+		 * In dieser Methode wird der Z-Wert aus der XML gelesen
+		 * und als Parameter zurueck gegeben.
+		 * In der XML ist der Z-Wert ein zusaetlicher costum Wert, ziehe dazu [[https://github.com/bjorn/tiled/wiki/TMX-Map-Format|hier]] unter dem properties-tag
+		 *
+		 * @param layer_number Layer-Index aus dem der Z-Wert gewonnen werden soll. Wird als Information fuer die richtige XPath-Expression benoetigt.
+		 * @param z Z-Wert der ausgelesen werden und gespeichert werden soll.
+		 * @return false bei Fehler sonst true
+		 */
+		private bool loadLayerZ (uint layer_number, out double z) {
+			Xml.Node* node = evalExpression("/map/layer["+(layer_number+1).to_string()+"]/properties/property");
+			Xml.Attr* attr = node->properties;
+			string name;
+			string content;
+			z = 0;
+			while ( attr != null) {
+				name = (string) attr->name;
+				content = (string) attr->children->content;
+				//print("Attribute: \tname: %s\tvalue: %s\n", name, content);
+				if (name == "name" && content == "z") {
+					//print("Z-Wert folgt\n");
+					attr = attr->next;
+					if (attr != null) {
+						name = (string) attr->name;
+						content = (string) attr->children->content;
+						if (name == "value" ) {
+							//print("Attribute: \tname: %s\tvalue: %s\n", name, content);
+							z = double.parse(content);
+							return true;
+					}
+				}
+				} else {
+					attr = attr->next;
+				}
+			}
+			return false;
+		}
+		/**
+		 * In dieser Methode werden die Tile-Werte aus der XML gelesen und als return zurueck gegeben.
+		 * In der XML sind es jeweils nur ein propertie mit dem namen "gid" des entsprechenden tile-Tags.
+		 * Eine Karte kann mehrere Tiles beinhalten, daher wird mit einem Array von Tiles gearbeitet.
+		 *
+		 * @return Array mit den geparsten Tiles
+		 */
+		public Tile[,] loadTiles (uint layer_number, uint width, uint height, Gee.List<HMP.TileSetReference> tilesetrefs) {
+			HMP.Tile[,] tiles = new Tile[height,width]; // Zur Speicherung der Tiles
+			HMP.TileSetReference tmp_tilesetref;
+			HMP.Tile tmp_tile;
+			int[,] ids = loadIDs("/map/layer["+(layer_number+1).to_string()+"]/data/tile", width, height);
+			for(int y = 0; y < height; y++) {
+				for(int x = 0; x < width; x++) {
+					if(ids[y,x] > 0) {
+						// Sucht das passende TileSetRef fuer die ids[y,x]
+						tmp_tilesetref = HMP.Map.getTileSetRefFromGid(tilesetrefs, ids[y,x]);
+						// Berechnet den Index des Tiles anhand der Gid und der firstgid und gibt das entsprechende Tile mit dem Index zurueck.
+						tmp_tile = tmp_tilesetref.source.getTileFromIndex(ids[y,x] - tmp_tilesetref.firstgid);
+					}
+					else {
+						tmp_tile = new RegularTile();
+						tmp_tile.type = TileType.NO_TILE;
+					}
+					tiles[y,x] = tmp_tile;
+				}
+			}
+			return tiles;
+		}
+		private int[,] loadIDs (string eval_expression, uint width, uint height) {
+			Gee.List<Gee.HashMap<string, string>> properties = loadPropertiesOfSameNodes (eval_expression, width, height);
+			int[,] ids = new int[height,width];
+			int count = 0;
+			foreach (Gee.HashMap<string, string> propertie in properties) {
+				ids[(uint)(count/width),(uint)(count%width)] = int.parse(propertie.get ("gid"));
+				count++;
+			}
+			return ids;
+		}
+		/**
+		 * Allgemeine Hilfsmethode fuer das ausfuhren einer XPath-Expression.
+		 *
+		 * @param expression Auszufuehrende Expression als String.
+		 * @return node mit dem Ergebniss der Expression.
+		 */
+	    protected Xml.Node* evalExpression (string expression ) {
+	        unowned Xml.XPath.Object obj = ctx.eval_expression(expression);
+	        if(obj==null) print("failed to evaluate xpath\n");
+
+	        Xml.Node* node = null;
+	        if ( obj.nodesetval != null && obj.nodesetval->item(0) != null ) {
+	            node = obj.nodesetval->item(0);
+	            print("Found the node we want\n");
+	        } else {
+	            print("failed to find the expected node\n");
+	        }
+	        return node;
+	    }
+	}
+	/**
+	 * Klasse fuer XML-Operationen
+	 */
+	class TSX : HMP.XML {
+		public TSX(string path) {
+			base(path);
+		}
+		/**
+		 * Läd die Werte einer TileSet-XML.tsx
+		 * 
+		 * @param folder Ordner in dem sich die auszulesende XML befindet
+		 * @param filename Dateiname der auszulesenden XML
+		 */
+	    public void getDataFromFile (string folder, string filename, out string name, out uint tilewidth, out uint tileheight, out string source, out string trans, out uint width, out uint height) {
+	    	//print("\tFuehre getTileSetDataFromFile aus\n");
+	    	Gee.HashMap<string, string> tileset_global_properties = new Gee.HashMap<string, string>();
+	    	Gee.HashMap<string, string> tileset_image_properties = new Gee.HashMap<string, string>();
+			
+	    	parse_file (folder+filename, tileset_global_properties, tileset_image_properties);
+	    	
+	    	// Zuweisung der geparsten Werte
+	    	name = (string) tileset_global_properties.get ("name");
+	    	tilewidth = int.parse(tileset_global_properties.get ("tilewidth"));
+	    	tileheight = int.parse(tileset_global_properties.get ("tileheight"));
+	    	
+	    	source = (string) tileset_image_properties.get ("source");
+	    	trans = (string) tileset_image_properties.get ("trans");
+	    	width = int.parse(tileset_image_properties.get ("width"));
+	    	height = int.parse(tileset_image_properties.get ("height"));
+	    }
+
+		/**
+		 * Hilfsfunktion welche eine XML auslesen kann
+		 *
+		 * @return true bei Fehler, sonst false
+		 */
+	    private bool parse_file (string path, Gee.HashMap<string, string> tileset_global_properties, Gee.HashMap<string, string> tileset_image_properties) {
+	    	//print("\tbeginne Datei zu parsen\n");
+
+	        // Get the root node. notice the dereferencing operator -> instead of .
+	        Xml.Node* root = doc->get_root_element ();
+	        if (root == null) {
+	            // Free the document manually before returning
+	            delete doc;
+	            print ("The xml file '%s' is empty", path);
+	            return true;
+	        }
+
+	        print_indent ("XML document", path, '-');
+
+	        // Print the root node's name
+	        print_indent ("Root node", root->name);
+	        
+	    	// Prüfe ob root bereits eines der gesuchten Nodes beinhaltet
+			switch (root->name) {
+				case "tileset":
+					//print("\t%s in root gefunden\n",root->name);
+					parse_properties (root, tileset_global_properties);
+				break;
+				case "image":
+					//print("\t%s in root gefunden\n",root->name);
+					parse_properties (root, tileset_image_properties);
+				break;
+				default:
+					print("Keine passende Node gefunden!\n");
+				break;
+			}
+	        
+	        // Let's parse those nodes
+	        parse_node (root, tileset_global_properties, tileset_image_properties);
+
+	        // Free the document
+	        delete doc;
+	        return true;
+	    }
+
+		/**
+		 * 
+		 */
+	    private void parse_node (Xml.Node* node, Gee.HashMap<string, string> tileset_global_properties, Gee.HashMap<string, string> tileset_image_properties) {
+	    	//print("\tbeginne Node zu parsen\n");
+	        this.indent++;
+	        // Loop over the passed node's children
+	        for (Xml.Node* iter = node->children; iter != null; iter = iter->next) {
+	            // Spaces between tags are also nodes, discard them
+	            if (iter->type != ElementType.ELEMENT_NODE) {
+	                continue;
+	            }
+
+	            // Get the node's name
+	            string node_name = iter->name;
+	            // Get the node's content with <tags> stripped
+	            string node_content = iter->get_content ();
+	            print_indent (node_name, node_content);
+			    
+				// Prüfe ob node eines der gesuchten Nodes beinhaltet
+				switch (iter->name) {
+					case "tileset":
+						//print("\t%s in node gefunden\n",iter->name);
+						parse_properties (iter, tileset_global_properties);
+					break;
+					case "image":
+						//print("\t%s in node gefunden\n",iter->name);
+						parse_properties (iter, tileset_image_properties);
+					break;
+					default:
+						print("\tKeine (weiteren) passende Nodes gefunden!\n");
+					break;
+				}
+	        
+	            // Followed by its children nodes
+	            parse_node (iter, tileset_global_properties, tileset_image_properties);
+	        }
+	        this.indent--;
+	    }
+
+		/**
+		 * 
+		 */
+	    private void parse_properties (Xml.Node* node, Gee.HashMap<string, string> properties) {
+	    	//print("\tbeginne Werte zu parsen\n");
+	        // Loop over the passed node's properties (attributes)
+	        for (Xml.Attr* prop = node->properties; prop != null; prop = prop->next) {
+	            string attr_name = prop->name;
+	            // Notice the ->children which points to a Node*
+	            // (Attr doesn't feature content)
+	            string attr_content = prop->children->content;
+
+				print_indent (attr_name, attr_content, '|');
+				properties.set(attr_name, attr_content);
+	        }
+	    }
+	}
 }
