@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriteset name="Hero" width="11" height="41" spritewidth="64" spriteheight="64" >
+ <layer name="Player 1" type="base">
+  <image source="player1.png" trans="000000" width="480" height="256"/>
+ </layer>
+ <animation name="go left" repeat="true" mirrir="none">
+  <data>
+   <sprite gid="2"/>
+   <sprite gid="13"/>
+   <sprite gid="24"/>
+  </data>
+ </animation>
+ <animation name="stay left" repeat="false" mirrir="none">
+  <data>
+   <sprite gid="2"/>
+  </data>
+ </animation>
+</spriteset>
