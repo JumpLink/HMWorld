@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spriteset name="Hero" width="11" height="41" spritewidth="64" spriteheight="64" >
- <layer name="Player 1" type="base">
+<spriteset version="1.0" name="Hero" width="11" height="41" spritewidth="64" spriteheight="64">
+ <layer name="Player 1" type="base" width="11" height="41" spritewidth="64" spriteheight="64">
   <image source="player1.png" trans="000000" width="704" height="2624"/>
  </layer>
  <animation name="stay" direction="south" repeat="false">

@@ -13,7 +13,6 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-using Xml;
 using Gee;
 using Gdk;
 //using GLib; //Fuer assertions

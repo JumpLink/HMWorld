@@ -92,11 +92,10 @@ namespace HMP {
 							glVertex3d ( x + width, y + height, zoff);
 						glTexCoord2d(1,0);
 							glVertex3d ( x + width, y, zoff);
-
 				    glEnd ();
-				    } else {
-				    	//print("Tile ist kein Tile zum zeichnen\n");
-				    }
+				} else {
+					//print("Tile ist kein Tile zum zeichnen\n");
+				}
 			}
 			/**
 			 * {@inheritDoc}

@@ -44,7 +44,9 @@ namespace HMP {
 		 * Ladet eine Textur aus einer Datei mittels Gdk.
 		 * @param path Pfadangabe der zu ladenden Grafikdatei.
 		 */
-		public void loadFromFileWithGdk(string path) {
+		public void loadFromFileWithGdk(string path)
+		requires (path != null)
+		{
 	 		try {
 				pixbuf = new Pixbuf.from_file (path);
 			}
@@ -60,7 +62,9 @@ namespace HMP {
 		 * Ladet eine Textur aus einem Pixbuf in die Klasse.
 		 * @param pixbuf Der pixbuf aus dem die Textur erstellt werden soll.
 		 */
-		public void loadFromPixbuf(Gdk.Pixbuf pixbuf) {
+		public void loadFromPixbuf(Gdk.Pixbuf pixbuf)
+		requires (pixbuf != null)
+		{
 			this.pixbuf = pixbuf;
 			if(pixbuf.colorspace == Colorspace.RGB)
 				if (pixbuf.get_has_alpha()) {

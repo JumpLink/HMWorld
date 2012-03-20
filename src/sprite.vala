@@ -13,22 +13,76 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
+using Gee;
+using Gdk;
+using GL;	
 using HMP;
 namespace HMP {
+	public Texture tex;
 	/**
-	 * Allgemeine Klasse fuer Tiles
+	 * Allgemeine Klasse fuer Sprites
 	 */
 	public class Sprite {
 		/**
-		 * Spritetyp
+		 * Konstruktor mit uebergabe eines bereits existierenden und zu verwendenen Pixbuf.
+		 * @param pixbuf Pixelbufer der in das Tile uebernommen werden soll.
 		 */
-		public uint type;
-
+		public Sprite (Pixbuf pixbuf) {
+			tex = new Texture();
+			tex.loadFromPixbuf(pixbuf);
+			//type = HMP.TileType.EMPTY_TILE;
+		}
 		/**
-		 * Konstruktor 
+		 * Gibt die Breite eines Sprites zurueck.
+		 * @return Brteite des Sprites 
 		 */
-		public Sprite() {
-			type = 0;
+		public double get_width() {
+			return tex.get_width();
+		}
+		/**
+		 * Gibt die Hoehe eines Sprites zurueck.
+		 * @return Hoehe des Sprites 
+		 */
+		public double get_height() {
+			return tex.get_height();
+		}
+		/**
+		 * Gibt den Pixelbufer der Textur zurueck
+		 * @return Die vom tile verwendete Textur als Pixbuf
+		 */
+		public Pixbuf get_Pixbuf () {
+			return tex.get_Pixbuf();
+		}
+		/**
+		 * 
+		 * @see HMP.Tile.printValues
+		 */
+		public void printValues (){
+			print("ich bin ein Sprite: ");
+			tex.printValues();
+		}
+		public void printAll (){
+			printValues();
+		}
+		/**
+		 * 
+		 * @see HMP.Tile.save
+		 */
+		public void save (string filename) {
+			//if(type != TileType.NO_TILE) {
+				try {
+					get_Pixbuf().save(filename, "png");
+				} catch (GLib.Error e) {
+					error ("Error! Konnte Sprite nicht Speichern: %s\n", e.message);
+				}
+			//}
+		}
+		/**
+		 * 
+		 * @see HMP.Tile.draw
+		 */
+		public void draw( double x, double y, double zoff) {
+
 		}
 	}
 }

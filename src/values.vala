@@ -72,19 +72,19 @@ namespace HMP {
 		/**
 		 * Noerdliche (oben) Richtung.
 		 */
-		NORTH,
+		NORTH=0,
 		/**
 		 * Oestliche (echts) Richtung.
 		 */
-		EAST,
+		EAST=1,
 		/**
 		 * Suedliche (unten) Richtung.
 		 */
-		SOUTH,
+		SOUTH=2,
 		/**
 		 * Westliche (links) Richtung.
 		 */
-		WEST
+		WEST=3
 	}
 	/**
 	 * TODO Ole
@@ -111,41 +111,76 @@ namespace HMP {
 		 * TileTyp fuer Tiles die nicht gezeichnet werden, bzw. gar nicht existieren.
 		 */
 		NO_TILE,
-		/**
-		 * TODO Ole
-		 */
 		EMPTY_TILE,
-		/**
-		 * TODO Ole
-		 */
 		PLANTABLE,
-		/**
-		 * TODO Ole
-		 */
 		PLANT,
-		/**
-		 * TODO Ole
-		 */
 		GRASS,
-		/**
-		 * TODO Ole
-		 */
 		PATH,
-		/**
-		 * TODO Ole
-		 */
 		BUILDING,
-		/**
-		 * TODO Ole
-		 */
 		ROCK,
-		/**
-		 * TODO Ole
-		 */
 		WOOD,
-		/**
-		 * TODO Ole
-		 */
 		WATER
+	}
+		/**
+		 * SpriteLayerTypes fuer SpriteLayer, beschreibt die Art des Layers.
+		 */
+	public enum SpriteLayerType {
+		/**
+		 * Basistyp, die Grundlage eines Sprites
+		 */
+		BASE,
+		/**
+		 * Itemtyp, Erweiterungen des Sprites, z.B. Klamotten.
+		 */
+		ITEM
+	}
+	public class AnimationData {
+		public int x;
+		public int y;
+		public Mirror mirror;
+	}
+	public enum Mirror {
+		NONE,
+		VERTICAL,
+		HORIZONTAL
+	}
+	class Value{
+		public Value() {
+
+		}
+		public static Direction DirectionParse (string str) {
+			switch (str) {
+				case "north":
+					return HMP.Direction.NORTH;
+				case "east":
+					return HMP.Direction.EAST;
+				case "west":
+					return HMP.Direction.WEST;
+				case "south":
+					return HMP.Direction.SOUTH;
+				default:
+					return HMP.Direction.NORTH;
+			}
+		}
+		public static Mirror MirrorParse (string str) {
+			switch (str) {
+				case "vertical":
+					return HMP.Mirror.VERTICAL;
+				case "horizontal":
+					return HMP.Mirror.HORIZONTAL;
+				case "none":
+				default:
+					return HMP.Mirror.NONE;
+			}
+		}
+		public static SpriteLayerType SpriteLayerTypeParse (string str) {
+			switch (str) {
+				case "item":
+					return HMP.SpriteLayerType.ITEM;
+				case "base":
+				default:
+					return HMP.SpriteLayerType.BASE;
+			}
+		}
 	}
 }

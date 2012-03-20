@@ -32,6 +32,10 @@ namespace HMP {
 		 * Globale Map fuer die gerade aktive Map
 		 */
 		public Map CURRENT_MAP;
+		/**
+		 * Globale Map fuer die gerade aktive Map
+		 */
+		public SpriteSetManager SPRITESETMANAGER;
 
 		public GameState STATE;
 		/**
@@ -52,6 +56,9 @@ namespace HMP {
 			this.TILESETMANAGER = new HMP.TileSetManager();
 			/* Globalen Mapmanager erzeugen */
 			this.MAPMANAGER = new HMP.MapManager();
+			/* Globalen SpriteSetManager erzeugen */
+			this.SPRITESETMANAGER = new HMP.SpriteSetManager();
+			this.SPRITESETMANAGER.printAll();
 			/* Globle Startmap auswaehlen */
 			this.CURRENT_MAP = MAPMANAGER.getFromFilename("testmap.tmx");
 		}

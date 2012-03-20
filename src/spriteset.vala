@@ -13,22 +13,18 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
+using Gee;
+using Gdk;	
 using HMP;
 namespace HMP {
 	/**
 	 * Klasse fuer SpriteSets
 	 */
 	public class SpriteSet {
-
 		/**
-		 * Klasse fuer XML-Operationen
+		 * Dateiname des SpriteSets.
 		 */
-		class XML : HMP.XML {
-			public XML(string path) {
-				base(path);
-			}
-		}
-
+		public string filename;
 		/**
 		 * Name des SpriteSets.
 		 */
@@ -42,14 +38,6 @@ namespace HMP {
 		 */
 		public uint spriteheight;
 		/**
-		 * Dateiname des SpriteSets
-		 */
-		public string source;
-		/**
-		 * Transparente Farbe im SpriteSets
-		 */
-		public string trans;
-		/**
 		 * Gesamtbreite des SpriteSets
 		 */
 		public uint width;
@@ -57,35 +45,89 @@ namespace HMP {
 		 * Gesamthoehe des SpriteSets
 		 */
 		public uint height;
-
+		string version;
 		/**
-		 * Array fuer die einzelnen Sprites
-		 */	
-		private Sprite[,] sprites;
-
+		 * Ein Sprite kann aus mehreren Layern bestehen, sie werden mit einer Map gespeichert,
+		 * der Map-Key ist gleichzeitig der Layername.
+		 */
+		public Gee.List<SpriteLayer> spritelayers;
+		public Gee.List<Animation> animations;
 		/**
 		 * Konstruktor
 		 */
 		public SpriteSet() {
-			getSpriteSetFromFile ("foobar");
-			//tiles = new Tile[,];
+
 		}
 		/**
-		 * Konstruktor welcher direkt ein angegebenes SpriteSet ladet
+		 * Konstrukter, ladet SpriteSet mit Daten einer SpriteSetDatei
 		 *
-		 * @param path String mit Pfadangabe fuer die zu Ladene Datei
+		 * @param folder Das Verzeichnis aus dem gelesen werden soll
+		 * @param fn Der Dateiname der gelesen werden soll
 		 */
-		public SpriteSet.fromFile(string path) {
-			getSpriteSetFromFile (path);
-			//tiles = new Tile[,];
+		public SpriteSet.fromPath (string folder = "./data/map/", string fn) {
+			print("Lade Mapdateien von %s + %s\n", folder, fn);
+
+			this.filename = fn;
+			SSX xml = new SSX(folder+filename);
+			xml.loadGlobalProperties(out name, out version, out width, out height, out spritewidth, out spriteheight);
+			spritelayers = xml.loadLayers();
+			animations = xml.loadAnimations(width, height);
+			//tileset = xml.loadTileSets();
+			//layers = xml.loadLayers(tileset);
+		}
+		public uint get_totalHeight() {
+			return (int) (height * spriteheight);
+		}
+
+		public uint get_totalWidth() {
+			return (int) (width * spritewidth);
+		}
+		public SpriteLayer? get_baseLayer()
+		requires (spritelayers != null)
+		{
+			foreach (SpriteLayer sl in spritelayers) {
+				if (sl.type == HMP.SpriteLayerType.BASE)
+					return sl;
+				else return null;
+			}
+			return null;
 		}
 		/**
-		 * Ladet ein SpriteSet von einer Datei
-		 *
-		 * @param path String mit Pfadangabe fuer die zu Ladene Datei
+		 * Gibt alle Werte Tiles auf der Konsole aus
 		 */
-		public void getSpriteSetFromFile(string path) {
-			//TODO
+		public void printSpriteLayers()
+		requires (spritelayers != null)
+		{
+			if (spritelayers.size > 0) {
+				print("==SpriteLayer==\n");
+				int count=0;
+				foreach (SpriteLayer sl in spritelayers) {
+					print("Nr. %i: ",count);
+					sl.printAll();
+					count++;
+				}
+			} else {
+				error("Keine SpriteLayer vorhanden!\n");
+			}
+		}
+		/**
+		 * Gibt alle Werte des TileSets auf der Konsole aus
+		 */
+		public void printValues() {
+			print("SpriteSetValues\n");
+			print("name: %s\n", name);
+			print("filename: %s\n", filename);
+			print("spritewidth: %u\n", spritewidth);
+			print("spritewidth: %u\n", spritewidth);
+			print("width: %u\n", width);
+			print("height: %u\n", height);
+		}
+		/**
+		 * Gibt alle Werte und die Tiles des TileSets auf der Konsole aus
+		 */
+		public void printAll() {
+			printValues();
+			printSpriteLayers();
 		}
 	}
 }

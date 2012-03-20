@@ -50,7 +50,7 @@ namespace HMP {
          * Konstrukter
          */
         public XML(string path) {
-        	print("Erstelle HMPXml-Klasse\n");
+        	print("Erstelle Xml-Objekt\n");
         	// Initialisation, not instantiation since the parser is a static class
         	Parser.init ();
 			this.path = path;
@@ -65,7 +65,9 @@ namespace HMP {
          * Dekonstrukter
          */
         ~XML() {
+        	print("loesche XML-Objekt\n");
     		// Do the parser cleanup to free the used memory
+			//delete doc;
     		Parser.cleanup ();
         }
 
@@ -86,7 +88,7 @@ namespace HMP {
 		 *
 		 * @return Array mit den geparsten Tiles
 		 */
-		protected Gee.List loadPropertiesOfSameNodes (string eval_expression, uint width, uint height) {
+		protected Gee.List loadPropertiesOfSameNodes (string eval_expression) {
 			HMP.Tile tmp_tile;
 			Gee.List<Gee.HashMap<string, string>> properties = new Gee.ArrayList<Gee.HashMap<string, string>>();
 			Gee.HashMap<string, string> propertie;
@@ -121,6 +123,25 @@ namespace HMP {
 			}
 			return properties;
 		}
+		/**
+		 * Allgemeine Hilfsmethode fuer das ausfuhren einer XPath-Expression.
+		 *
+		 * @param expression Auszufuehrende Expression als String.
+		 * @return node mit dem Ergebniss der Expression.
+		 */
+	    protected Xml.Node* evalExpression (string expression ) {
+	        unowned Xml.XPath.Object obj = ctx.eval_expression(expression);
+	        if(obj==null) print("failed to evaluate xpath\n");
+
+	        Xml.Node* node = null;
+	        if ( obj.nodesetval != null && obj.nodesetval->item(0) != null ) {
+	            node = obj.nodesetval->item(0);
+	            print("Found the node we want\n");
+	        } else {
+	            print("failed to find the expected node\n");
+	        }
+	        return node;
+	    }
 	}
 	/**
 	 * Unterklasse von Maps als Hilfe fuer das Laden einer XML-basierten Map-Datei.
@@ -148,8 +169,8 @@ namespace HMP {
 		 * Hier wird der Parser gesaeubert und Variablen wieder freigegeben.
 		 */
 		~TMX() {
-			delete doc;
-			Parser.cleanup ();
+
+			//~base(path);
 		}
 		/**
 		 * In dieser Methode werden die globalen Mapwerte aus der XML gelesen
@@ -229,7 +250,6 @@ namespace HMP {
 				string name = (string) properties.get ("name");
 				int width = int.parse(properties.get ("width"));
 				int height = int.parse(properties.get ("height"));
-				int.parse(properties.get ("height"));
 				//print("Lade Tiles\n");
 				//Holt sich auch gleich den Tile-Tag
 				Tile[,] tiles = loadTiles(i, width, height, tilesetrefs);
@@ -309,7 +329,7 @@ namespace HMP {
 			return tiles;
 		}
 		private int[,] loadIDs (string eval_expression, uint width, uint height) {
-			Gee.List<Gee.HashMap<string, string>> properties = loadPropertiesOfSameNodes (eval_expression, width, height);
+			Gee.List<Gee.HashMap<string, string>> properties = loadPropertiesOfSameNodes (eval_expression);
 			int[,] ids = new int[height,width];
 			int count = 0;
 			foreach (Gee.HashMap<string, string> propertie in properties) {
@@ -318,25 +338,6 @@ namespace HMP {
 			}
 			return ids;
 		}
-		/**
-		 * Allgemeine Hilfsmethode fuer das ausfuhren einer XPath-Expression.
-		 *
-		 * @param expression Auszufuehrende Expression als String.
-		 * @return node mit dem Ergebniss der Expression.
-		 */
-	    protected Xml.Node* evalExpression (string expression ) {
-	        unowned Xml.XPath.Object obj = ctx.eval_expression(expression);
-	        if(obj==null) print("failed to evaluate xpath\n");
-
-	        Xml.Node* node = null;
-	        if ( obj.nodesetval != null && obj.nodesetval->item(0) != null ) {
-	            node = obj.nodesetval->item(0);
-	            print("Found the node we want\n");
-	        } else {
-	            print("failed to find the expected node\n");
-	        }
-	        return node;
-	    }
 	}
 	/**
 	 * Klasse fuer XML-Operationen
@@ -344,6 +345,9 @@ namespace HMP {
 	class TSX : HMP.XML {
 		public TSX(string path) {
 			base(path);
+		}
+		~TMX() {
+			//base(path);
 		}
 		/**
 		 * Läd die Werte einer TileSet-XML.tsx
@@ -470,5 +474,188 @@ namespace HMP {
 				properties.set(attr_name, attr_content);
 	        }
 	    }
+	}
+	/**
+	 * Klasse als Hilfe fuer das Laden einer XML-basierten SpriteSet-Datei.
+	 * Wir verwenden dafuer ein eigenes Dateiformat an das der Maps angelehnt.
+	 *
+	 */
+	class SSX : HMP.XML {
+		/**
+		 * Konstrukter der internen XML-Klasse.
+		 * Hier wird der Parser initialisiert und die uebergebene Datei vorbereitet.
+		 *
+		 * @param path Pfadangabe der vorzubereitenden XML-Datei
+		 */
+		public SSX(string path) {
+			base(path);
+		}
+		/**
+		 * Dekonstrukter der internen XML-Klasse.
+		 * Hier wird der Parser gesaeubert und Variablen wieder freigegeben.
+		 */
+		~SSX() {
+			delete doc;
+			Parser.cleanup ();
+		}
+		/**
+		 * In dieser Methode werden die globalen SpriteSetwerte aus der XML gelesen
+		 * und als Parameter zurueck gegeben. In der XML sind es die properties des map-Tags
+		 *
+		 * @param name Des SpriteSets
+		 * @param version The SSX format version, generally 1.0.
+		 * @param width The spriteset width in sprites.
+		 * @param height The spriteset height in sprites.
+		 * @param spritewidth The width of a sprite.
+		 * @param spriteheight The height of a sprite.
+		 */
+		public void loadGlobalProperties (out string name, out string version, out uint width, out uint height, out uint spritewidth, out uint spriteheight) {
+			//XPath-Expression verarbeiten
+			Xml.Node* node = evalExpression("/spriteset");
+			//properties des resultats verarbeiten.
+			Gee.HashMap<string, string> properties = loadProperties(node);
+			//geparsten properties speichern.
+			name = (string) properties.get ("name");
+			version = (string) properties.get ("version");
+			width = int.parse(properties.get ("width"));
+			height = int.parse(properties.get ("height"));
+			spritewidth = int.parse(properties.get ("spritewidth"));
+			spriteheight = int.parse(properties.get ("spriteheight"));
+		}
+		/**
+		 * In dieser Methode werden die Layer-Werte aus der XML gelesen
+		 * und als return zurueck gegeben.
+		 * In der XML sind dies die properties und die Kinder des layer-Tags.
+		 * Eine Karte kann mehrere Layer beinhalten, daher wird mit einer Liste von Layern gearbeitet.
+		 *
+		 * @return Gee.ArrayList vom Typ HMP.Layer aller Layer
+		 * @see HMP.Layer
+		 * @see Gee.ArrayList
+		 */
+		public Gee.List<Animation> loadAnimations (uint width, uint height) {
+			Gee.List<Animation> animation = new Gee.ArrayList<Animation>();
+			Gee.List<AnimationData> ani_datas;
+			string name;
+			string direction;
+			string repeat;
+			//XPath-Expression ausfuehren
+			unowned Xml.XPath.Object obj = ctx.eval_expression("/spriteset/animation");
+			if(obj==null) print("failed to evaluate xpath\n");
+			//Durchläuft alle Nodes, also alle resultierten Layer-Tags
+			for (int i=0;(obj.nodesetval != null && obj.nodesetval->item(i) != null);i++) {
+				//Holt entsprechenden Layer
+				Xml.Node* node = obj.nodesetval->item(i);
+				//Parst dessen properties
+				Gee.HashMap<string, string> properties = loadProperties(node);
+				//Speichert die geparsten properties
+				name = (string) properties.get ("name");
+				direction = (string) properties.get ("direction");
+				repeat = (string) properties.get ("repeat");
+
+				ani_datas = loadAnimationData(i, width, height);
+
+				animation.add( new Animation(name, bool.parse(repeat), HMP.Value.DirectionParse(direction), ani_datas) );
+			}
+			return animation;
+		}
+		/**
+		 * In dieser Methode werden die Tile-Werte aus der XML gelesen und als return zurueck gegeben.
+		 * In der XML sind es jeweils nur ein propertie mit dem namen "gid" des entsprechenden tile-Tags.
+		 * Eine Karte kann mehrere Tiles beinhalten, daher wird mit einem Array von Tiles gearbeitet.
+		 *
+		 * @return Array mit den geparsten Tiles
+		 */
+		public Gee.List<AnimationData> loadAnimationData (uint animation_number, uint width, uint height) {
+			int id = 0;
+			string direction = null;
+			string mirror = null;
+			Gee.List<AnimationData> res = new Gee.ArrayList<AnimationData>();
+			AnimationData tmp_ani_data = new AnimationData();
+			tmp_ani_data.x = 0;
+			tmp_ani_data.y = 0;
+			tmp_ani_data.mirror = HMP.Mirror.NONE;
+			string eval_expression = "/spriteset/animation["+(animation_number+1).to_string()+"]/data/sprite";
+			Gee.List<Gee.HashMap<string, string>> properties = loadPropertiesOfSameNodes (eval_expression);
+			int[,] ids = new int[height,width];
+			int count = 0;
+			foreach (Gee.HashMap<string, string> propertie in properties) {
+
+				id = int.parse(propertie.get ("gid")) - 1;
+				mirror = (string) propertie.get ("mirror");
+				tmp_ani_data.mirror = HMP.Value.MirrorParse(mirror);
+
+				if (id > 0) {
+					tmp_ani_data.x = (int)(id/width);
+					tmp_ani_data.y = (int)(id%width);
+
+				}
+				res.add(tmp_ani_data);
+				count++;
+			}
+			return res;
+		}
+		/**
+		 * In dieser Methode werden die Layer-Werte aus der XML gelesen
+		 * und als return zurueck gegeben.
+		 * In der XML sind dies die properties und die Kinder des layer-Tags.
+		 * Eine Karte kann mehrere Layer beinhalten, daher wird mit einer Liste von Layern gearbeitet.
+		 *
+		 * @return Gee.ArrayList vom Typ HMP.Layer aller Layer
+		 * @see HMP.Layer
+		 * @see Gee.ArrayList
+		 */
+		public Gee.List<SpriteLayer> loadLayers () {
+			Gee.List<SpriteLayer> res = new Gee.ArrayList<SpriteLayer>();
+			SpriteLayer tmp_spritelayer;
+			Xml.Node* node;
+			Gee.HashMap<string, string> properties;
+			string name;
+			string type;
+			string image_filename;
+			string trans;
+			uint width;
+			uint height;
+			uint spritewidth;
+			uint spriteheight;
+			//XPath-Expression ausfuehren
+			unowned Xml.XPath.Object obj = ctx.eval_expression("/spriteset/layer");
+			if(obj==null) print("failed to evaluate xpath\n");
+			//Durchläuft alle Nodes, also alle resultierten Layer-Tags
+			for (int i=0;(obj.nodesetval != null && obj.nodesetval->item(i) != null);i++) {
+				print("LadeLayer\n");
+				node = obj.nodesetval->item(i);
+				properties = loadProperties(node);
+				name = (string) properties.get ("name");
+				type = (string) properties.get ("type");
+				width = int.parse(properties.get ("width"));
+				height = int.parse(properties.get ("height"));
+				spritewidth = int.parse(properties.get ("spritewidth"));
+				spriteheight = int.parse(properties.get ("spriteheight"));
+				loadLayerImage(i, out image_filename, out trans);
+				tmp_spritelayer = new SpriteLayer(i, name, image_filename, HMP.Value.SpriteLayerTypeParse(type), trans, width, height, spritewidth, spriteheight);
+				res.add(tmp_spritelayer);
+			}
+			return res;
+		}
+		/**
+		 * In dieser Methode werden die globalen SpriteSetwerte aus der XML gelesen
+		 * und als Parameter zurueck gegeben. In der XML sind es die properties des map-Tags
+		 *
+		 * @param image_filename Des Bildes welches der Layer verwendet.
+		 * @param trans Transparente Farbe im Layer
+		 * //@param width The Image width in sprites.
+		 * //@param height The spriteset height in sprites.
+		 */
+		public void loadLayerImage (int spritelayer_number, out string image_filename, out string trans) {
+			//XPath-Expression verarbeiten
+			Xml.Node* node = evalExpression("/spriteset/layer["+(spritelayer_number+1).to_string()+"]/image");
+			//properties des resultats verarbeiten.
+			Gee.HashMap<string, string> properties = loadProperties(node);
+			//geparsten properties speichern.
+			image_filename = (string) properties.get ("source");
+			trans = (string) properties.get ("trans");
+			//width = int.parse(properties.get ("width"));
+			//height = int.parse(properties.get ("height"));
+		}
 	}
 }

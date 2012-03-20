@@ -13,18 +13,24 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
+using Gee;
+using Gdk;	
 using HMP;
 namespace HMP {
-	HMP.World WORLD;
-	class Game {
-		public Game() {
-			
-		}
+	/**
+	 * Allgemeine Klasse fuer Sprites
+	 */
+	public class Animation {
+		string name;
+		Direction direction;
+		bool repeat;
 
-		public static int main (string[] args) {
-			//Game run = new Game();
-			WORLD = new World ();
-			return (int) new IO().initAndStart ("Titel", 640, 480);
+		Gee.List<AnimationData> animationdata = new Gee.ArrayList<AnimationData>();
+		public Animation(string name, bool repeat, Direction direction, Gee.List<AnimationData> animationdata) {
+			this.animationdata = animationdata;
+			this.repeat = repeat;
+			this.direction = direction;
+
 		}
 	}
 }
