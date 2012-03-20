@@ -30,6 +30,7 @@
    <sprite gid="1" mirror="none"/>
    <sprite gid="23" mirror="none"/>
   </data>
+ </animation>
  <animation name="go" direction="west" repeat="true">
   <data>
    <sprite gid="2" mirror="none"/>
@@ -53,6 +54,5 @@
    <sprite gid="3" mirror="none"/>
    <sprite gid="25" mirror="none"/>
   </data>
- </animation>
  </animation>
 </spriteset>

@@ -162,6 +162,20 @@ namespace HMP {
 					return HMP.Direction.NORTH;
 			}
 		}
+		public static string DirectionTo_string (HMP.Direction d) {
+			switch (d) {
+				case HMP.Direction.NORTH:
+					return "NORTH";
+				case HMP.Direction.EAST:
+					return "EAST";
+				case HMP.Direction.WEST:
+					return "WEST";
+				case HMP.Direction.SOUTH:
+					return "SOUTH";
+				default:
+					return "Unbekannt";
+			}
+		}
 		public static Mirror MirrorParse (string str) {
 			switch (str) {
 				case "vertical":

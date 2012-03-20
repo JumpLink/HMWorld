@@ -110,8 +110,19 @@ namespace HMP {
 				error("Keine SpriteLayer vorhanden!\n");
 			}
 		}
+		public void printAnimation()
+		requires (animations != null)
+		{
+			print("==Animations==\n");
+			int count=0;
+			foreach (Animation ani in animations) {
+				print("Nr. %i: ",count);
+				ani.printAll();
+				count++;
+			}
+		}
 		/**
-		 * Gibt alle Werte des TileSets auf der Konsole aus
+		 * Gibt alle Werte des SpriteSets auf der Konsole aus
 		 */
 		public void printValues() {
 			print("SpriteSetValues\n");
@@ -128,6 +139,7 @@ namespace HMP {
 		public void printAll() {
 			printValues();
 			printSpriteLayers();
+			printAnimation();
 		}
 	}
 }

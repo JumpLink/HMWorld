@@ -27,10 +27,26 @@ namespace HMP {
 
 		Gee.List<AnimationData> animationdata = new Gee.ArrayList<AnimationData>();
 		public Animation(string name, bool repeat, Direction direction, Gee.List<AnimationData> animationdata) {
+			this.name = name;
 			this.animationdata = animationdata;
 			this.repeat = repeat;
 			this.direction = direction;
 
+		}
+		/**
+		 * Gibt alle Werte des SpriteSets auf der Konsole aus
+		 */
+		public void printValues() {
+			print("SpriteSetAnimationValues\n");
+			print("name: %s\n", name);
+			print("direction: %s\n", HMP.Value.DirectionTo_string(direction));
+			print("repeat: %s\n", repeat.to_string());
+		}
+		/**
+		 * Gibt alles des SpriteSets auf der Konsole aus
+		 */
+		public void printAll() {
+			printValues();
 		}
 	}
 }
