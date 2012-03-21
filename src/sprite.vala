@@ -36,28 +36,36 @@ namespace HMP {
 		 * Gibt die Breite eines Sprites zurueck.
 		 * @return Brteite des Sprites 
 		 */
-		public double get_width() {
+		public double get_width()
+		requires (tex != null)
+		{
 			return tex.get_width();
 		}
 		/**
 		 * Gibt die Hoehe eines Sprites zurueck.
 		 * @return Hoehe des Sprites 
 		 */
-		public double get_height() {
+		public double get_height()
+		requires (tex != null)
+		{
 			return tex.get_height();
 		}
 		/**
 		 * Gibt den Pixelbufer der Textur zurueck
 		 * @return Die vom tile verwendete Textur als Pixbuf
 		 */
-		public Pixbuf get_Pixbuf () {
+		public Pixbuf get_Pixbuf ()
+		requires (tex != null)
+		{
 			return tex.get_Pixbuf();
 		}
 		/**
 		 * 
 		 * @see HMP.Tile.printValues
 		 */
-		public void printValues (){
+		public void printValues ()
+		requires (tex != null)
+		{
 			print("ich bin ein Sprite: ");
 			tex.printValues();
 		}
@@ -69,20 +77,60 @@ namespace HMP {
 		 * @see HMP.Tile.save
 		 */
 		public void save (string filename) {
-			//if(type != TileType.NO_TILE) {
-				try {
-					get_Pixbuf().save(filename, "png");
-				} catch (GLib.Error e) {
-					error ("Error! Konnte Sprite nicht Speichern: %s\n", e.message);
-				}
-			//}
+			try {
+				get_Pixbuf().save(filename, "png");
+			} catch (GLib.Error e) {
+				error ("Error! Konnte Sprite nicht Speichern: %s\n", e.message);
+			}
 		}
 		/**
 		 * 
 		 * @see HMP.Tile.draw
 		 */
-		public void draw( double x, double y, double zoff) {
-
+		public void draw( double x, double y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
+			double width = get_width();
+			double height = get_height();
+			switch (mirror) {
+				case HMP.Mirror.NONE:
+					tex.bindTexture();
+					glBegin (GL_QUADS);
+						glTexCoord2d(0,0);
+							glVertex3d ( x, y, zoff);
+						glTexCoord2d(0,1);
+							glVertex3d ( x, y + height, zoff);
+						glTexCoord2d(1,1);
+							glVertex3d ( x + width, y + height, zoff);
+						glTexCoord2d(1,0);
+							glVertex3d ( x + width, y, zoff);
+					glEnd ();
+				break;
+				case HMP.Mirror.VERTICAL:
+					tex.bindTexture();
+					glBegin (GL_QUADS);
+						glTexCoord2d(0,1);
+							glVertex3d ( x, y, zoff);
+						glTexCoord2d(0,0);
+							glVertex3d ( x, y + height, zoff);
+						glTexCoord2d(1,0);
+							glVertex3d ( x + width, y + height, zoff);
+						glTexCoord2d(1,1);
+							glVertex3d ( x + width, y, zoff);
+					glEnd ();
+				break;
+				case HMP.Mirror.HORIZONTAL:
+					tex.bindTexture();
+					glBegin (GL_QUADS);
+						glTexCoord2d(1,0);
+							glVertex3d ( x, y, zoff);
+						glTexCoord2d(1,1);
+							glVertex3d ( x, y + height, zoff);
+						glTexCoord2d(0,1);
+							glVertex3d ( x + width, y + height, zoff);
+						glTexCoord2d(0,0);
+							glVertex3d ( x + width, y, zoff);
+					glEnd ();
+				break;
+			}
 		}
 	}
 }

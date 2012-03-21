@@ -134,10 +134,28 @@ namespace HMP {
 		 */
 		ITEM
 	}
+	public class Coord {
+		public Vector coord = new Vector(2);
+		public double x {
+			get { return coord.vec[1]; }
+			set { coord.vec[1] = value; }
+		}
+		public double y {
+			get { return coord.vec[0]; }
+			set { coord.vec[0] = value; }
+		}
+	}	
 	public class AnimationData {
-		public int x;
-		public int y;
+		private Coord coord = new Coord();
 		public Mirror mirror;
+		public double x {
+			get { return coord.x; }
+			set { coord.x = value; }
+		}
+		public double y {
+			get { return coord.y; }
+			set { coord.y = value; }
+		}
 	}
 	public enum Mirror {
 		NONE,

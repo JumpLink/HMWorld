@@ -36,7 +36,10 @@ namespace HMP {
 		 * Globale Map fuer die gerade aktive Map
 		 */
 		public SpriteSetManager SPRITESETMANAGER;
-
+		/**
+		 * Globales SPRITESET fuer den aktuellen Helden / Spieler
+		 */
+		public SpriteSet HERO;
 		public GameState STATE;
 		/**
 		 * Spieler in der Welt
@@ -58,7 +61,9 @@ namespace HMP {
 			this.MAPMANAGER = new HMP.MapManager();
 			/* Globalen SpriteSetManager erzeugen */
 			this.SPRITESETMANAGER = new HMP.SpriteSetManager();
-			this.SPRITESETMANAGER.printAll();
+			//this.SPRITESETMANAGER.printAll();
+			this.HERO = SPRITESETMANAGER.getFromName("Hero");
+			this.HERO.printAll();
 			/* Globle Startmap auswaehlen */
 			this.CURRENT_MAP = MAPMANAGER.getFromFilename("testmap.tmx");
 		}

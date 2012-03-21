@@ -45,18 +45,35 @@ namespace HMP {
 		 * Gesamthoehe des SpriteSets
 		 */
 		public uint height;
-		string version;
 		/**
-		 * Ein Sprite kann aus mehreren Layern bestehen, sie werden mit einer Map gespeichert,
-		 * der Map-Key ist gleichzeitig der Layername.
+		 * Die Version des SpriteSets-XML-Formates
+		 */
+		public string version;
+		/**
+		 * Ein Sprite kann aus mehreren Layern bestehen, sie werden mit einer Map gespeichert.
+		 * Es gibt aktive und inaktive Layer, die inaktiven Layer werden beim zeichnen uebersprungen.
 		 */
 		public Gee.List<SpriteLayer> spritelayers;
+		/**
+		 * Ein Sprite kann mehrere Animationen beinhalten, sie sind als Koordinaten des Sprites der SpriteLayers gespeichert.
+		 * Die Animationen sind unabhaenig von den derzeit aktiven Layern. 
+		 */
 		public Gee.List<Animation> animations;
+		public Animation current_animation;
 		/**
 		 * Konstruktor
 		 */
 		public SpriteSet() {
 
+		}
+		public Animation? set_Animation(string name, Direction direction)
+		requires (spritelayers != null)
+		{
+			foreach (Animation ani in animations) {
+				if (ani.name == name && ani.direction == direction)
+					return ani;
+			}
+			return null;
 		}
 		/**
 		 * Konstrukter, ladet SpriteSet mit Daten einer SpriteSetDatei
@@ -72,8 +89,6 @@ namespace HMP {
 			xml.loadGlobalProperties(out name, out version, out width, out height, out spritewidth, out spriteheight);
 			spritelayers = xml.loadLayers();
 			animations = xml.loadAnimations(width, height);
-			//tileset = xml.loadTileSets();
-			//layers = xml.loadLayers(tileset);
 		}
 		public uint get_totalHeight() {
 			return (int) (height * spriteheight);
@@ -93,7 +108,7 @@ namespace HMP {
 			return null;
 		}
 		/**
-		 * Gibt alle Werte Tiles auf der Konsole aus
+		 * Gibt alle Werte SpriteLayer auf der Konsole aus.
 		 */
 		public void printSpriteLayers()
 		requires (spritelayers != null)
@@ -110,6 +125,9 @@ namespace HMP {
 				error("Keine SpriteLayer vorhanden!\n");
 			}
 		}
+		/**
+		 * Gibt alle Animationen auf der Konsole aus.
+		 */
 		public void printAnimation()
 		requires (animations != null)
 		{
@@ -122,9 +140,11 @@ namespace HMP {
 			}
 		}
 		/**
-		 * Gibt alle Werte des SpriteSets auf der Konsole aus
+		 * Gibt alle Werte des SpriteSets auf der Konsole aus.
 		 */
-		public void printValues() {
+		public void printValues()
+		requires (name != null)
+		{
 			print("SpriteSetValues\n");
 			print("name: %s\n", name);
 			print("filename: %s\n", filename);
@@ -134,12 +154,13 @@ namespace HMP {
 			print("height: %u\n", height);
 		}
 		/**
-		 * Gibt alle Werte und die Tiles des TileSets auf der Konsole aus
+		 * Gibt alles vom SpriteSet auf der Konsole aus.
 		 */
 		public void printAll() {
 			printValues();
 			printSpriteLayers();
 			printAnimation();
 		}
+
 	}
 }

@@ -21,10 +21,11 @@ namespace HMP {
 	 * Allgemeine Klasse fuer Sprites
 	 */
 	public class Animation {
-		string name;
-		Direction direction;
-		bool repeat;
-		Gee.List<AnimationData> animationdata = new Gee.ArrayList<AnimationData>();
+		public string name;
+		public Direction direction;
+		public bool repeat;
+		public Gee.List<AnimationData> animationdata = new Gee.ArrayList<AnimationData>();
+		public int current_frame_index = 0;
 
 		public Animation(string name, bool repeat, Direction direction, Gee.List<AnimationData> animationdata) {
 			this.name = name;
@@ -33,6 +34,26 @@ namespace HMP {
 			this.direction = direction;
 
 		}
+		public AnimationData get_frame() {
+			return animationdata[current_frame_index];
+		}
+		public void incFrame() {
+			current_frame_index++;
+			if(current_frame_index < animationdata.size) {
+				//all right
+			}
+			else {
+				current_frame_index = 0;
+			}
+		}
+		public void decFrame() {
+			if(current_frame_index <= 0) {
+				current_frame_index = animationdata.size -1;
+			}
+			else {
+				current_frame_index--;
+			}
+		}
 		/**
 		 * Gibt alle Werte des SpriteSets auf der Konsole aus
 		 */
@@ -40,7 +61,7 @@ namespace HMP {
 			print("SpriteSetAnimationData\n");
 			int count = 0;
 			foreach (AnimationData ad in animationdata) {
-				print("# %i y: %i x: %i mirror: %s\n", count, ad.x, ad.y, Value.MirrorTo_string(ad.mirror));
+				print("# "+count.to_string()+" y: "+ad.y.to_string()+" x: "+ad.x.to_string()+" mirror: "+Value.MirrorTo_string(ad.mirror)+"\n");
 				count++;
 			}
 		}
