@@ -582,8 +582,8 @@ namespace HMP {
 				tmp_ani_data.mirror = HMP.Value.MirrorParse(mirror);
 
 				if (id >= 0) {
-					tmp_ani_data.x = (int)(id/width);
-					tmp_ani_data.y = (int)(id%width);
+					tmp_ani_data.x = (int)(id%width);
+					tmp_ani_data.y = (int)(id/width);
 
 				}
 				res.add(tmp_ani_data);

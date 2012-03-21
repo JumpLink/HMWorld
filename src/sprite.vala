@@ -107,26 +107,27 @@ namespace HMP {
 				case HMP.Mirror.VERTICAL:
 					tex.bindTexture();
 					glBegin (GL_QUADS);
-						glTexCoord2d(0,1);
-							glVertex3d ( x, y, zoff);
-						glTexCoord2d(0,0);
-							glVertex3d ( x, y + height, zoff);
 						glTexCoord2d(1,0);
-							glVertex3d ( x + width, y + height, zoff);
+							glVertex3d ( x, y, zoff);
 						glTexCoord2d(1,1);
+							glVertex3d ( x, y + height, zoff);
+						glTexCoord2d(0,1);
+							glVertex3d ( x + width, y + height, zoff);
+						glTexCoord2d(0,0);
 							glVertex3d ( x + width, y, zoff);
 					glEnd ();
 				break;
 				case HMP.Mirror.HORIZONTAL:
+
 					tex.bindTexture();
 					glBegin (GL_QUADS);
-						glTexCoord2d(1,0);
-							glVertex3d ( x, y, zoff);
-						glTexCoord2d(1,1);
-							glVertex3d ( x, y + height, zoff);
 						glTexCoord2d(0,1);
-							glVertex3d ( x + width, y + height, zoff);
+							glVertex3d ( x, y, zoff);
 						glTexCoord2d(0,0);
+							glVertex3d ( x, y + height, zoff);
+						glTexCoord2d(1,0);
+							glVertex3d ( x + width, y + height, zoff);
+						glTexCoord2d(1,1);
 							glVertex3d ( x + width, y, zoff);
 					glEnd ();
 				break;
