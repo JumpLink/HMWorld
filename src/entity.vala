@@ -95,7 +95,7 @@ namespace HMP {
 			//default: nichts passiert.
 		}
 		public void draw(double x, double y, double zoff) {
-			spriteset.draw(x,y,zoff);
+			spriteset.draw(pos.x + x, pos.y + y, zoff);
 		}
 	}
 }

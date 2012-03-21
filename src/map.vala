@@ -133,6 +133,9 @@ namespace HMP {
 			foreach (Layer l in layers) {
 				l.draw(shift_x, shift_y);
 			}
+			foreach (Entity e in entities) {
+				e.draw (shift_x, shift_y, 0.0);
+			}
 			//layers[0].draw();
 		}
 		/**
