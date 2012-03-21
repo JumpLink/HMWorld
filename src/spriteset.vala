@@ -108,6 +108,19 @@ namespace HMP {
 			}
 			return null;
 		}
+		public void draw(double x, double y, double zoff) {
+			AnimationData ani = current_animation.get_AnimationData();
+			double layer_zoff;
+			foreach (SpriteLayer sl in spritelayers) {
+				if (sl.active) {
+					/* zoff des Layers wird als Kommawert zum zoff dazu addiert*/
+					layer_zoff = zoff + (sl.number / 10);
+					sl.sprites[(uint) ani.coord.y, (uint) ani.coord.x].draw(x, y, zoff, ani.mirror);
+				}
+				
+				
+			}
+		}
 		/**
 		 * Gibt alle Werte SpriteLayer auf der Konsole aus.
 		 */

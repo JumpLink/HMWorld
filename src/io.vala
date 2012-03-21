@@ -61,10 +61,10 @@ namespace HMP {
 			/* Seit dem Programmstart vergangene Zeit in Millisekunden */
 			int thisCallTime = glutGet (GLUT_ELAPSED_TIME);
 			/* Seit dem letzten Funktionsaufruf vergangene Zeit in Sekunden */
-			//double interval = (double) (thisCallTime - lastCallTime) / 1000.0f;
+			double interval = (double) (thisCallTime - lastCallTime) / 1000.0f;
 
 			/* neue Position berechnen (zeitgesteuert) */
-			//doLogic (interval);
+			WORLD.timer (interval);
 
 			/* Wieder als Timer-Funktion registrieren, falls nicht pausiert */
 			//if(!getStatus()->paused)

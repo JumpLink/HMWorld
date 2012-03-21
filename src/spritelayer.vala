@@ -41,7 +41,7 @@ namespace HMP {
 		/**
 		 * Array fuer die einzelnen Sprites
 		 */	
-		private Sprite[,] sprites;
+		public Sprite[,] sprites;
 	
 		public SpriteLayer(int number, string name, string image_filename, SpriteLayerType type, string trans, uint count_x, uint count_y, uint spritewidth, uint spriteheight) {
 			this.name = name;
@@ -51,7 +51,7 @@ namespace HMP {
 			this.height = count_y;
 			this.spritewidth = spritewidth;
 			this.spriteheight = spriteheight;
-			this.active = false;
+			this.active = true;
 			this.loadSprites(count_y, count_x, spritewidth, spriteheight);
 
 		}

@@ -32,7 +32,6 @@ namespace HMP {
 			this.animationdata = animationdata;
 			this.repeat = repeat;
 			this.direction = direction;
-
 		}
 		public AnimationData get_frame() {
 			return animationdata[current_frame_index];
@@ -45,6 +44,9 @@ namespace HMP {
 			else {
 				current_frame_index = 0;
 			}
+		}
+		public AnimationData get_AnimationData () {
+			return animationdata[current_frame_index];
 		}
 		public void decFrame() {
 			if(current_frame_index <= 0) {

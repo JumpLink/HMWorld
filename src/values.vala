@@ -148,7 +148,10 @@ namespace HMP {
 		}
 	}	
 	public class AnimationData {
-		private Coord coord = new Coord();
+		public Coord coord { public get; private set; }
+		public AnimationData () {
+ 			coord = new Coord();
+		}
 		public Mirror mirror;
 		public double x {
 			get { return coord.x; }
