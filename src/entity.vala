@@ -33,7 +33,9 @@ namespace HMP {
 		/**
 		 * Ausrichtung der Entitaet.
 		 */
-		public Direction direction;
+		public Direction direction = Direction.SOUTH;
+
+		private bool motion = false;
 
 		/**
 		 * Konstruktor
@@ -45,18 +47,20 @@ namespace HMP {
 		 * SpriteSet der Entity, beinhaltet Animationen und deren Grafiken.
 		 */
 		public SpriteSet spriteset;
+
+		public void setMotion (Direction d, bool motion) {
+			this.motion = motion;
+			direction = d;
+			spriteset.set_Animation(motion ? "go" : "stay", d);
+		}
 		/**
 		 * Bewegt die Entitaet zeitabhaengig.
 		 * @param interval Zeitraum
 		 * @param d Bewewgungsrichtung
 		 */
-		public void move (double interval, Direction d) {
-			/* Rotation */
-			if (direction != d)
-				direction = d;
-			/* Bewegung */
-			else {
-				switch (d) {
+		public void move (double interval) {
+			if (motion) {
+				switch (direction) {
 					case Direction.NORTH:
 						pos.x -= interval;
 						break;
@@ -70,11 +74,11 @@ namespace HMP {
 						pos.y -= interval;
 						break;
 				}
-				Coord min = new Coord();
-				Coord max = new Coord();
-				max.y = map.width;
-				max.x = map.height;
-				pos.crop (min, max);
+				//Coord min = new Coord();
+				//Coord max = new Coord();
+				//max.y = map.width;
+				//max.x = map.height;
+				//pos.crop (min, max);
 			}
 		}
 
@@ -85,7 +89,7 @@ namespace HMP {
 		public abstract void interactWith (Player p);
 
 		public void timer (double interval) {
-			//TODO
+			move(interval);
 		}
 
 		/**

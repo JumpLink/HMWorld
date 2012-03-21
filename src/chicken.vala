@@ -20,7 +20,14 @@ namespace HMP {
 	 */
 	public class Chicken : Carryable {
 
+		//private static final uint FOOD_REQUIREMENT = 3;
+
+		//public uint daysWithoutFood = FOOD_REQUIREMENT;
+
 		public override void age () {
+			foreach (Entity e in WORLD.CURRENT_MAP.entities) {
+				
+			}
 			//TODO Ei legen, wenn Huhn bereit ist.
 		}
 	}

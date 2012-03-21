@@ -125,6 +125,7 @@ namespace HMP {
 		 */
 		static void handleKeyboardEvent (int key, GL.GLenum status, bool isSpecialKey, int x, int y)
 		{
+			Player p = WORLD.PLAYERS.first ();
 			/* Taste gedrueckt */
 			if (status == GLUT_DOWN) {
 				/* nicht-Spezialtasten */
@@ -139,7 +140,34 @@ namespace HMP {
 							//TODO Callback für beenden einrichten
 							print("Jetzt sollte egtl. das Programm beendet werden..");
 							break;
+						case 'w':
+							p.setMotion (Direction.NORTH, true);
+							break;
+						case 'a':
+							p.setMotion (Direction.WEST, true);
+							break;
+						case 's':
+							p.setMotion (Direction.SOUTH, true);
+							break;
+						case 'd':
+							p.setMotion (Direction.EAST, true);
+							break;
 					}
+				}
+			} else {
+				switch (key) {
+					case 'w':
+							p.setMotion (Direction.NORTH, false);
+							break;
+						case 'a':
+							p.setMotion (Direction.WEST, false);
+							break;
+						case 's':
+							p.setMotion (Direction.SOUTH, false);
+							break;
+						case 'd':
+							p.setMotion (Direction.EAST, false);
+							break;
 				}
 			}
 		}

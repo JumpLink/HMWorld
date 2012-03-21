@@ -20,5 +20,7 @@ namespace HMP {
 	 */
 	public class HayBale : Carryable {
 
+		public bool reserved = false;
+
 	}
 }
