@@ -48,6 +48,7 @@ namespace HMP {
 			this.spriteset = spriteset;
 			tools = new Inventory ();
 			storage = new Storage ();
+			spriteset.set_Animation("stay", Direction.SOUTH);
 		}
 
 		/**

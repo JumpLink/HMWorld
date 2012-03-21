@@ -87,29 +87,6 @@ dirs:
 	@echo "Creating output directory..."
 	@mkdir -p $(BIN_DIR)
 
-## * make pull: Aktuelle Version ziehen
-pull:
-	@echo "Pulling from Repository..."
-	@$(BZR) pull $(BZR_REPO)
-
-## * make commit: Committet die Aenderungen, falls kompiliert werden kann
-commit:
-	@echo "Testing compilation..." && $(MAKE) && echo "Committing changes..." && $(BZR) commit
-	
-## * make commit: Committet die Aenderungen, falls kompiliert werden kann
-commit-%:
-	@echo "Testing compilation..." && $(MAKE) && echo "Committing changes..." && $(BZR) commit -m "$*"
-
-## * make push: Committet und Pusht dann ins Launchpad-Repo
-push: commit
-	@echo "Pushing to Repository..."
-	@$(BZR) push $(BZR_REPO)
-	
-## * make push: Committet und Pusht dann ins Launchpad-Repo
-push-%: commit-%
-	@echo "Pushing to Repository..."
-	@$(BZR) push $(BZR_REPO)
-
 $(TARGET_FILE): $(SRC_FILES)
 	@echo "Compiling Binary..."
 	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES)
@@ -167,7 +144,7 @@ test: dirs
 	@echo "Running $(TARGET_FILE)..."
 	@$(TARGET_FILE)
 ## * Fuert das Testprogramm aus.
-debuging: dirs $(SRC_FILES)
+debug: dirs $(SRC_FILES)
 	@echo "Debuging.."
 	@$(VC) -g --save-temps -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES)
 	@nemiver $(TARGET_FILE)

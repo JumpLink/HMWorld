@@ -126,6 +126,8 @@ namespace HMP {
 		public void draw()
 		requires (layers != null)
 		requires (entities != null)
+		requires (layers[0] != null)
+		requires (entities[0] != null)
 		{
 			//print("==DrawMap==\n");
 			int shift_x = (int) (WORLD.STATE.VIEWPORT[2] - width * tilewidth)/2;

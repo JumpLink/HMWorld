@@ -45,7 +45,10 @@ namespace HMP {
 				current_frame_index = 0;
 			}
 		}
-		public AnimationData get_AnimationData () {
+		public AnimationData get_AnimationData ()
+		requires (animationdata != null)
+		requires (animationdata[current_frame_index] != null)
+		{
 			return animationdata[current_frame_index];
 		}
 		public void decFrame() {
