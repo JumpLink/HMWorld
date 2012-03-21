@@ -83,5 +83,7 @@ namespace HMP {
 		 * @param p Der Spieler.
 		 */
 		public abstract void interactWith (Player p);
+
+		public abstract void timer (double interval);
 	}
 }

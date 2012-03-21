@@ -43,7 +43,7 @@ namespace HMP {
 		/**
 		 * Entitaeten in der Welt
 		 */
-		public Gee.List<Player> players = new Gee.ArrayList<Player>();
+		public Gee.List<Player> PLAYERS = new Gee.ArrayList<Player>();
 		/* TODO Datum, Zeit, Wetter, ... */
 
 		/**
@@ -60,8 +60,8 @@ namespace HMP {
 			/* Globalen SpriteSetManager erzeugen */
 			this.SPRITESETMANAGER = new HMP.SpriteSetManager();
 			//this.SPRITESETMANAGER.printAll();
-			players.add (new Player("Hero", SPRITESETMANAGER.getFromName("Hero")));
-			players[0].printAll();
+			PLAYERS.add (new Player("Hero", SPRITESETMANAGER.getFromName("Hero")));
+			PLAYERS[0].printAll();
 			/* Globle Startmap auswaehlen */
 			this.CURRENT_MAP = MAPMANAGER.getFromFilename("testmap.tmx");
 		}
@@ -70,8 +70,9 @@ namespace HMP {
 			CURRENT_MAP.draw();
 		}
 
-		public void timer() {
-			
+		public void timer (double interval) {
+			foreach (Player p in PLAYERS)
+				p.timer(interval);
 		}
 	}
 }

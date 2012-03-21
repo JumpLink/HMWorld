@@ -19,6 +19,9 @@ namespace HMP {
 	 * Klasse fuer tragbare Entitaeten.
 	 */
 	public abstract class Carryable : Entity {
-		
+
+		public override void interactWith (Player p) {
+			p.item = this;
+		}
 	}
 }

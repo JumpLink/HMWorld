@@ -102,13 +102,17 @@ namespace HMP {
 		 */
 		public void interact () {
 			foreach (Entity e in WORLD.CURRENT_MAP.entities) {
-				if (inRange(e))
+				if (item == null && inRange(e))
 					e.interactWith(this);
 			}
 		}
 
 		public override void interactWith (Player p) {
 			//TODO Interaktion zwischen zwei Spielern.
+		}
+
+		public override void timer (double interval) {
+			//TODO
 		}
 	}
 }
