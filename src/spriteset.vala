@@ -75,8 +75,8 @@ namespace HMP {
 		 */
 		public void set_Animation(string name, Direction direction)
 		requires (spritelayers != null)
+		ensures (current_animation != null)
 		{
-			current_animation = null;
 			foreach (Animation ani in animations) {
 				if (ani.name == name && ani.direction == direction)
 					current_animation = ani;
