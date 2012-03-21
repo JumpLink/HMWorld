@@ -94,5 +94,8 @@ namespace HMP {
 		public virtual void age () {
 			//default: nichts passiert.
 		}
+		public void draw(double x, double y, double zoff) {
+			spriteset.draw(x,y,zoff);
+		}
 	}
 }

@@ -59,6 +59,9 @@ namespace HMP {
 		 * Die Animationen sind unabhaenig von den derzeit aktiven Layern. 
 		 */
 		public Gee.List<Animation> animations;
+		/**
+		 * Aktuelle Animation die gerade verwendet wird.
+		 */
 		public Animation current_animation;
 		/**
 		 * Konstruktor
@@ -66,6 +69,10 @@ namespace HMP {
 		public SpriteSet() {
 
 		}
+		/**
+		 * Setzt eine Animation anhand ihres Namens und ihrer Richtung,
+		 * dadurch wird dann durch draw das entsprechende Sprite verwendet.
+		 */
 		public void set_Animation(string name, Direction direction)
 		requires (spritelayers != null)
 		{
