@@ -69,5 +69,9 @@ namespace HMP {
 			/* map zeichen */
 			CURRENT_MAP.draw();
 		}
+
+		public void timer() {
+			
+		}
 	}
 }

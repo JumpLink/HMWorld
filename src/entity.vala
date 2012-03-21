@@ -23,7 +23,7 @@ namespace HMP {
 		/**
 		 * Position des Entities
 		 */
-		public Vector pos;
+		public Coord pos = new Coord();
 
 		/**
 		 * Karte, auf der sich die Entitaet befindet.
@@ -39,8 +39,11 @@ namespace HMP {
 		 * Konstruktor
 		 */
 		public Entity() {
-			pos = new Vector(2);
+
 		}
+		/**
+		 * SpriteSet der Entity, beinhaltet Animationen und deren Grafiken.
+		 */
 		public SpriteSet spriteset;
 		/**
 		 * Bewegt die Entitaet zeitabhaengig.
@@ -55,22 +58,22 @@ namespace HMP {
 			else {
 				switch (d) {
 					case Direction.NORTH:
-						pos.vec[1] -= interval;
+						pos.x -= interval;
 						break;
 					case Direction.EAST:
-						pos.vec[0] += interval;
+						pos.y += interval;
 						break;
 					case Direction.SOUTH:
-						pos.vec[1] += interval;
+						pos.x += interval;
 						break;
 					case Direction.WEST:
-						pos.vec[0] -= interval;
+						pos.y -= interval;
 						break;
 				}
-				Vector min 	= new Vector (2),
-						max = new Vector (2);
-				max.vec[0] = map.width;
-				max.vec[1] = map.height;
+				Coord min = new Coord();
+				Coord max = new Coord();
+				max.y = map.width;
+				max.x = map.height;
 				pos.crop (min, max);
 			}
 		}

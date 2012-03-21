@@ -134,15 +134,17 @@ namespace HMP {
 		 */
 		ITEM
 	}
-	public class Coord {
-		public Vector coord = new Vector(2);
+	public class Coord:Vector {
+		public Coord() {
+			base(2);
+		}
 		public double x {
-			get { return coord.vec[1]; }
-			set { coord.vec[1] = value; }
+			get { return vec[1]; }
+			set { vec[1] = value; }
 		}
 		public double y {
-			get { return coord.vec[0]; }
-			set { coord.vec[0] = value; }
+			get { return vec[0]; }
+			set { vec[0] = value; }
 		}
 	}	
 	public class AnimationData {
