@@ -19,7 +19,7 @@ namespace HMP {
 	 * Allgemeine Entityklasse.
 	 * hiervon erben Spieler, NPCs und andere Dynamische Objekte.
 	 */
-	public class Entity {
+	public abstract class Entity {
 		/**
 		 * Position des Entities
 		 */
@@ -74,5 +74,11 @@ namespace HMP {
 				pos.crop (min, max);
 			}
 		}
+
+		/**
+		 * Interaktion mit Spieler.
+		 * @param p Der Spieler.
+		 */
+		public abstract void interactWith (Player p);
 	}
 }

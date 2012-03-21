@@ -41,7 +41,7 @@ namespace HMP {
 		 */
 		public GameState STATE;
 		/**
-		 * Spieler in der Welt
+		 * Entitaeten in der Welt
 		 */
 		public Gee.List<Player> players = new Gee.ArrayList<Player>();
 		/* TODO Datum, Zeit, Wetter, ... */

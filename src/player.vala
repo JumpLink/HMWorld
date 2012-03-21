@@ -32,7 +32,7 @@ namespace HMP {
 		/**
 		 * Aufgehobener Gegenstand.
 		 */
-		public Entity item;
+		public Carryable item;
 
 		/**
 		 * Lager.
@@ -44,11 +44,35 @@ namespace HMP {
 		 * Konstruktor
 		 */
 		public Player(string name, SpriteSet spriteset) {
+			base ();
 			this.name = name;
 			this.spriteset = spriteset;
 			tools = new Inventory ();
 			storage = new Storage ();
 		}
+
+		/**
+		 * Gibt an, ob sich eine Entitaet in Reichweite des Spilers befindet.
+		 * @param e Die Entitaet.
+		 * @return Entitaet in Reichweite.
+		 */
+		private bool inRange(Entity e) {
+			switch (direction) {
+				case Direction.NORTH:
+					return ((uint)(pos.vec[0] + 0.5) == (uint)(e.pos.vec[0] + 0.5)) && 
+					((uint)(pos.vec[1] + 0.5) - (uint)(e.pos.vec[1] + 0.5) == 1);
+				case Direction.EAST:
+					return ((uint)(pos.vec[1] + 0.5) == (uint)(e.pos.vec[1] + 0.5)) && 
+					((uint)(pos.vec[0] + 0.5) - (uint)(e.pos.vec[0] + 0.5) == -1);
+				case Direction.SOUTH:
+					return ((uint)(pos.vec[0] + 0.5) == (uint)(e.pos.vec[0] + 0.5)) && 
+					((uint)(pos.vec[1] + 0.5) - (uint)(e.pos.vec[1] + 0.5) == -1);
+				default:
+					return ((uint)(pos.vec[1] + 0.5) == (uint)(e.pos.vec[1] + 0.5)) && 
+					((uint)(pos.vec[0] + 0.5) - (uint)(e.pos.vec[0] + 0.5) == 1);
+			}
+		}
+
 		public void printTools() {
 			
 		}
@@ -70,8 +94,22 @@ namespace HMP {
 		/**
 	 	 * Benutzt ausgeruestetes Werkzeug mit Spielerumgebung.
 	 	 */
-		void use () {
+		public void use () {
 			tools.use (map, ((uint) pos.vec[0]), ((uint) pos.vec[1]), direction, storage);
+		}
+
+		/**
+		 * Interagiert mit Spielerumgebung (Sachen aufheben, NPCs ansprechen)
+		 */
+		public void interact () {
+			foreach (Entity e in WORLD.CURRENT_MAP.entities) {
+				if (inRange(e))
+					e.interactWith(this);
+			}
+		}
+
+		public override void interactWith (Player p) {
+			//TODO Interaktion zwischen zwei Spielern.
 		}
 	}
 }
