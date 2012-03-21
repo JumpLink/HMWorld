@@ -64,6 +64,9 @@ namespace HMP {
 			PLAYERS[0].printAll();
 			/* Globle Startmap auswaehlen */
 			this.CURRENT_MAP = MAPMANAGER.getFromFilename("testmap.tmx");
+			foreach (Player p in PLAYERS) {
+				CURRENT_MAP.entities.add(p);
+			}
 		}
 		public void draw()
 		requires (CURRENT_MAP != null)
