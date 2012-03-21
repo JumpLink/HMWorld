@@ -84,6 +84,15 @@ namespace HMP {
 		 */
 		public abstract void interactWith (Player p);
 
-		public abstract void timer (double interval);
+		public void timer (double interval) {
+			//TODO
+		}
+
+		/**
+		 * Altert eine Entitaet um einen Tag.
+		 */
+		public virtual void age () {
+			//default: nichts passiert.
+		}
 	}
 }

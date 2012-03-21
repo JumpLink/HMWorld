@@ -111,8 +111,5 @@ namespace HMP {
 			//TODO Interaktion zwischen zwei Spielern.
 		}
 
-		public override void timer (double interval) {
-			//TODO
-		}
 	}
 }
