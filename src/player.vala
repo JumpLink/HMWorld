@@ -38,7 +38,6 @@ namespace HMP {
 		 * Lager.
 		 */
 		public Storage storage;
-		SpriteSet spriteset;
 
 		/**
 		 * Konstruktor

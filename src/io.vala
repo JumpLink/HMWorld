@@ -88,8 +88,8 @@ namespace HMP {
 			/* Nachfolgende Operationen beeinflussen Modelviewmatrix */
 			glMatrixMode (GL_MODELVIEW);
 
-			/* map zeichen */
-			WORLD.CURRENT_MAP.draw();
+			/* Welt zeichen */
+			WORLD.draw();
 
 			/* Szene anzeigen / Buffer tauschen */
 			glutSwapBuffers ();

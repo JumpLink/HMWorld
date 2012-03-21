@@ -65,5 +65,9 @@ namespace HMP {
 			/* Globle Startmap auswaehlen */
 			this.CURRENT_MAP = MAPMANAGER.getFromFilename("testmap.tmx");
 		}
+		public void draw() {
+			/* map zeichen */
+			CURRENT_MAP.draw();
+		}
 	}
 }

@@ -41,7 +41,7 @@ namespace HMP {
 		public Entity() {
 			pos = new Vector(2);
 		}
-
+		public SpriteSet spriteset;
 		/**
 		 * Bewegt die Entitaet zeitabhaengig.
 		 * @param interval Zeitraum
