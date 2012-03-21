@@ -55,24 +55,21 @@ namespace HMP {
 		/**
 		 * Tilesets die für auf der Map verwendet werden
 		 */
-		public Gee.List<HMP.TileSetReference> tileset;
+		public Gee.List<HMP.TileSetReference> tileset = new Gee.ArrayList<TileSetReference>();
 		/**
 		 * Layer der Map.
 		 */
-		public Gee.List<Layer> layers;
+		public Gee.List<Layer> layers = new Gee.ArrayList<Layer>();
 		/** 
 		 * Entities auf der Map
 		 */
-		public Gee.List<Entity> entities;
+		public Gee.List<Entity> entities = new Gee.ArrayList<Entity>();
 
 		/**
 		 * Konstruktor fuer eine leere Map
 		 */
 		public Map() {
 			print("Erstelle leeres Map Objekt\n");
-			layers = new Gee.ArrayList<Layer>();
-			entities = new Gee.ArrayList<Entity>();
-			tileset = new Gee.ArrayList<TileSetReference>();
 		}
 		/**
 		 * Konstrukter, ladet Map mit Daten einer Mapdatei
