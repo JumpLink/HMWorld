@@ -78,9 +78,10 @@ namespace HMP {
 		ensures (current_animation != null)
 		{
 			foreach (Animation ani in animations) {
-				if (ani.name == name && ani.direction == direction)
+				if (ani.name == name && ani.direction == direction) {
 					current_animation = ani;
 					break;
+				}
 			}
 		}
 		/**
