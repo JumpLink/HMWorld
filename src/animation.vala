@@ -24,14 +24,25 @@ namespace HMP {
 		string name;
 		Direction direction;
 		bool repeat;
-
 		Gee.List<AnimationData> animationdata = new Gee.ArrayList<AnimationData>();
+
 		public Animation(string name, bool repeat, Direction direction, Gee.List<AnimationData> animationdata) {
 			this.name = name;
 			this.animationdata = animationdata;
 			this.repeat = repeat;
 			this.direction = direction;
 
+		}
+		/**
+		 * Gibt alle Werte des SpriteSets auf der Konsole aus
+		 */
+		public void printAnimationData() {
+			print("SpriteSetAnimationData\n");
+			int count = 0;
+			foreach (AnimationData ad in animationdata) {
+				print("# %i y: %i x: %i mirror: %s\n", count, ad.x, ad.y, Value.MirrorTo_string(ad.mirror));
+				count++;
+			}
 		}
 		/**
 		 * Gibt alle Werte des SpriteSets auf der Konsole aus
@@ -47,6 +58,7 @@ namespace HMP {
 		 */
 		public void printAll() {
 			printValues();
+			printAnimationData();
 		}
 	}
 }

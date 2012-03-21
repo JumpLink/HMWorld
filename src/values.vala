@@ -187,6 +187,17 @@ namespace HMP {
 					return HMP.Mirror.NONE;
 			}
 		}
+		public static string MirrorTo_string (Mirror m) {
+			switch (m) {
+				case HMP.Mirror.VERTICAL:
+					return "HMP.Mirror.VERTICAL";
+				case  HMP.Mirror.HORIZONTAL:
+					return "HMP.Mirror.HORIZONTAL";
+				case HMP.Mirror.NONE:
+				default:
+					return "HMP.Mirror.NONE";
+			}
+		}
 		public static SpriteLayerType SpriteLayerTypeParse (string str) {
 			switch (str) {
 				case "item":

@@ -571,20 +571,20 @@ namespace HMP {
 			string mirror = null;
 			Gee.List<AnimationData> res = new Gee.ArrayList<AnimationData>();
 			AnimationData tmp_ani_data = new AnimationData();
-			tmp_ani_data.x = 0;
-			tmp_ani_data.y = 0;
-			tmp_ani_data.mirror = HMP.Mirror.NONE;
+			//tmp_ani_data.x = 0;
+			//tmp_ani_data.y = 0;
+			//tmp_ani_data.mirror = HMP.Mirror.NONE;
 			string eval_expression = "/spriteset/animation["+(animation_number+1).to_string()+"]/data/sprite";
 			Gee.List<Gee.HashMap<string, string>> properties = loadPropertiesOfSameNodes (eval_expression);
 			int[,] ids = new int[height,width];
 			int count = 0;
 			foreach (Gee.HashMap<string, string> propertie in properties) {
-
+				tmp_ani_data = new AnimationData();
 				id = int.parse(propertie.get ("gid")) - 1;
 				mirror = (string) propertie.get ("mirror");
 				tmp_ani_data.mirror = HMP.Value.MirrorParse(mirror);
 
-				if (id > 0) {
+				if (id >= 0) {
 					tmp_ani_data.x = (int)(id/width);
 					tmp_ani_data.y = (int)(id%width);
 
