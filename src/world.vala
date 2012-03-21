@@ -65,12 +65,16 @@ namespace HMP {
 			/* Globle Startmap auswaehlen */
 			this.CURRENT_MAP = MAPMANAGER.getFromFilename("testmap.tmx");
 		}
-		public void draw() {
+		public void draw()
+		requires (CURRENT_MAP != null)
+		{
 			/* map zeichen */
 			CURRENT_MAP.draw();
 		}
 
-		public void timer (double interval) {
+		public void timer (double interval)
+		requires (PLAYERS != null)
+		{
 			foreach (Player p in PLAYERS)
 				p.timer(interval);
 		}

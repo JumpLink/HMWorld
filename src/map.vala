@@ -109,7 +109,7 @@ namespace HMP {
 		 * @param name Gesichter Layername
 		 * @return Index aus der Layerliste
 		 */
-		public int getIndexOfLayerName(string name) {
+		public int getIndexOfLayerName(string name){
 			foreach (Layer i in layers) {
 				if (name == i.name) {
 					return layers.index_of(i);
@@ -123,7 +123,10 @@ namespace HMP {
 		 * @see HMP.Layer.draw
 		 * @see HMP.Tile.draw
 		 */
-		public void draw() {
+		public void draw()
+		requires (layers != null)
+		requires (entities != null)
+		{
 			//print("==DrawMap==\n");
 			int shift_x = (int) (WORLD.STATE.VIEWPORT[2] - width * tilewidth)/2;
 			int shift_y = (int) (WORLD.STATE.VIEWPORT[3] - height * tileheight)/2;
@@ -138,7 +141,9 @@ namespace HMP {
 		/**
 		 * Gibt alle Werte (bis auf die Layer) der Map auf der Konsole aus
 		 */
-		public void printValues() {
+		public void printValues()
+		requires (filename != null)
+		{
 			print("==MAP==\n");
 			print("filename: %s\n", filename);
 			print("orientation: %s\n", orientation);
@@ -151,7 +156,9 @@ namespace HMP {
 		/**
 		 * Gibt die Werte aller Layer der Map auf der Konsole aus
 		 */
-		public void printLayers() {
+		public void printLayers()
+		requires (layers != null)
+		{
 			print("====ALL LAYERS FROM MAP %s====\n", filename);
 			foreach (HMP.Layer l in layers) {
 				l.printValues();
@@ -161,7 +168,9 @@ namespace HMP {
 		/**
 		 * Gibt die Werte aller TileSets der Map auf der Konsole aus
 		 */
-		public void printTileSets() {
+		public void printTileSets()
+		requires (tileset != null)
+		{
 			print("====ALL TILESETS FROM MAP %s====\n", filename);
 			foreach (HMP.TileSetReference tsr in tileset) {
 				tsr.printValues();
