@@ -115,7 +115,9 @@ namespace HMP {
 			}
 			return null;
 		}
-		public void draw(double x, double y, double zoff) {
+		public void draw(double x, double y, double zoff)
+		requires (current_animation != null)
+		{
 			AnimationData ani = current_animation.get_AnimationData();
 			double layer_zoff;
 			foreach (SpriteLayer sl in spritelayers) {
