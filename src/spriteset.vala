@@ -66,14 +66,15 @@ namespace HMP {
 		public SpriteSet() {
 
 		}
-		public Animation? set_Animation(string name, Direction direction)
+		public void set_Animation(string name, Direction direction)
 		requires (spritelayers != null)
 		{
+			current_animation = null;
 			foreach (Animation ani in animations) {
 				if (ani.name == name && ani.direction == direction)
-					return ani;
+					current_animation = ani;
+					break;
 			}
-			return null;
 		}
 		/**
 		 * Konstrukter, ladet SpriteSet mit Daten einer SpriteSetDatei

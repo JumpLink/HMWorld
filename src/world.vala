@@ -39,12 +39,11 @@ namespace HMP {
 		/**
 		 * Globales SPRITESET fuer den aktuellen Helden / Spieler
 		 */
-		public SpriteSet HERO;
 		public GameState STATE;
 		/**
 		 * Spieler in der Welt
 		 */
-		public Gee.List<Player> players;
+		public Gee.List<Player> players = new Gee.ArrayList<Player>();
 		/* TODO Datum, Zeit, Wetter, ... */
 
 		/**
@@ -54,7 +53,6 @@ namespace HMP {
 			STATE = new GameState ();
 		}
 		public void init() {
-			//players = new List<Player>();
 			/* Globalen TileSetManager erzeugen */
 			this.TILESETMANAGER = new HMP.TileSetManager();
 			/* Globalen Mapmanager erzeugen */
@@ -62,8 +60,8 @@ namespace HMP {
 			/* Globalen SpriteSetManager erzeugen */
 			this.SPRITESETMANAGER = new HMP.SpriteSetManager();
 			//this.SPRITESETMANAGER.printAll();
-			this.HERO = SPRITESETMANAGER.getFromName("Hero");
-			this.HERO.printAll();
+			players.add (new Player("Hero", SPRITESETMANAGER.getFromName("Hero")));
+			players[0].printAll();
 			/* Globle Startmap auswaehlen */
 			this.CURRENT_MAP = MAPMANAGER.getFromFilename("testmap.tmx");
 		}

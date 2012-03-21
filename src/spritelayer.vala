@@ -55,46 +55,6 @@ namespace HMP {
 			this.loadSprites(count_y, count_x, spritewidth, spriteheight);
 
 		}
-		public void set_typeFromString(string type) {
-
-			
-		}
-		/**
-		 * Gibt den Pixelbufer der Textur zurueck
-		 * @return Die vom tile verwendete Textur als Pixbuf
-		 */
-		public Pixbuf? get_Pixbuf () {
-			if (sprites[0,0] != null)
-				return tex.get_Pixbuf();
-			else {
-				GLib.error("Objekt wurde mittels loadSprites noch nicht initialisiert!\n");
-				return null;
-			}
-		}
-		/**
-		 * Gibt die Breite eines Sprites zurueck.
-		 * @return Brteite des Sprites 
-		 */
-		public double get_spriteWidth() {
-			if (sprites[0,0] != null)
-				return tex.get_width();
-			else {
-				GLib.error("Objekt wurde mittels loadSprites noch nicht initialisiert!\n");
-				return 0;
-			}
-		}
-		/**
-		 * Gibt die Hoehe eines SpriteLayers zurueck.
-		 * @return Hoehe des Sprites 
-		 */
-		public double get_spriteHeight() {
-			if (sprites[0,0] != null)
-				return tex.get_height();
-			else {
-				GLib.error("Objekt wurde mittels loadSprites noch nicht initialisiert!\n");
-				return 0;
-			}
-		}
 		/**
 		 * Ladet die Pixel fuer die Sprites.
 		 */

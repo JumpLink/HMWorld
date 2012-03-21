@@ -38,16 +38,35 @@ namespace HMP {
 		 * Lager.
 		 */
 		public Storage storage;
+		SpriteSet spriteset;
 
 		/**
 		 * Konstruktor
 		 */
-		public Player() {
-			this.name = "foobert";
+		public Player(string name, SpriteSet spriteset) {
+			this.name = name;
+			this.spriteset = spriteset;
 			tools = new Inventory ();
 			storage = new Storage ();
 		}
-
+		public void printTools() {
+			
+		}
+		public void printItems() {
+			
+		}
+		public void printSpriteSet() {
+			spriteset.printAll();
+		}
+		public void printValues() {
+			print("Name: "+this.name+"\n");
+		}
+		public void printAll() {
+			printValues();
+			printSpriteSet();
+			printItems();
+			printTools();
+		}
 		/**
 	 	 * Benutzt ausgeruestetes Werkzeug mit Spielerumgebung.
 	 	 */

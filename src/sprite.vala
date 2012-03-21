@@ -18,11 +18,11 @@ using Gdk;
 using GL;	
 using HMP;
 namespace HMP {
-	public Texture tex;
 	/**
 	 * Allgemeine Klasse fuer Sprites
 	 */
 	public class Sprite {
+		public Texture tex;
 		/**
 		 * Konstruktor mit uebergabe eines bereits existierenden und zu verwendenen Pixbuf.
 		 * @param pixbuf Pixelbufer der in das Tile uebernommen werden soll.

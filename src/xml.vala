@@ -89,7 +89,6 @@ namespace HMP {
 		 * @return Array mit den geparsten Tiles
 		 */
 		protected Gee.List loadPropertiesOfSameNodes (string eval_expression) {
-			HMP.Tile tmp_tile;
 			Gee.List<Gee.HashMap<string, string>> properties = new Gee.ArrayList<Gee.HashMap<string, string>>();
 			Gee.HashMap<string, string> propertie;
 
@@ -567,7 +566,6 @@ namespace HMP {
 		 */
 		public Gee.List<AnimationData> loadAnimationData (uint animation_number, uint width, uint height) {
 			int id = 0;
-			string direction = null;
 			string mirror = null;
 			Gee.List<AnimationData> res = new Gee.ArrayList<AnimationData>();
 			AnimationData tmp_ani_data = new AnimationData();
@@ -576,7 +574,6 @@ namespace HMP {
 			//tmp_ani_data.mirror = HMP.Mirror.NONE;
 			string eval_expression = "/spriteset/animation["+(animation_number+1).to_string()+"]/data/sprite";
 			Gee.List<Gee.HashMap<string, string>> properties = loadPropertiesOfSameNodes (eval_expression);
-			int[,] ids = new int[height,width];
 			int count = 0;
 			foreach (Gee.HashMap<string, string> propertie in properties) {
 				tmp_ani_data = new AnimationData();
