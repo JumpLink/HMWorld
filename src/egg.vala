@@ -19,6 +19,10 @@ namespace HMP {
 	 * Klasse fuer ein Ei.
 	 */
 	public class Egg : Carryable {
-
+		public Egg (double x, double y) {
+			base();
+			pos.x = x;
+			pos.y = y;
+		}
 	}
 }

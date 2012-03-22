@@ -20,15 +20,29 @@ namespace HMP {
 	 */
 	public class Chicken : Carryable {
 
-		//private static final uint FOOD_REQUIREMENT = 3;
+		private static uint FOOD_REQUIREMENT = 3;
 
-		//public uint daysWithoutFood = FOOD_REQUIREMENT;
+		public uint daysWithoutFood = FOOD_REQUIREMENT;
 
 		public override void age () {
+			bool food = false;
+			//Essen suchen
 			foreach (Entity e in WORLD.CURRENT_MAP.entities) {
-				
+				HayBale hb = e as HayBale;
+				if (!food && daysWithoutFood > 0 && hb != null && !hb.reserved) {
+					hb.reserved = true;
+					food = true;
+				}
 			}
-			//TODO Ei legen, wenn Huhn bereit ist.
+			if (!food)
+				daysWithoutFood = FOOD_REQUIREMENT;
+			//Ei legen
+			if (daysWithoutFood == 0) {
+				int x = (direction == Direction.NORTH) ? -1 : (direction == Direction.SOUTH) ? 1 : 0;
+				int y = (direction == Direction.WEST) ? -1 : (direction == Direction.EAST) ? 1 : 0;
+				Egg e = new Egg (pos.x + x, pos.y + y);
+				map.entities.add(e);
+			}
 		}
 	}
 }
