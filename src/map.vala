@@ -77,7 +77,8 @@ namespace HMP {
 		 * @param folder Das Verzeichnis aus dem gelesen werden soll
 		 * @param fn Der Dateiname der gelesen werden soll
 		 */
-		public Map.fromPath (string folder = "./data/map/", string fn) {
+		public Map.fromPath (string folder = "./data/map/", string fn)
+		{
 			print("Lade Mapdateien von %s + %s\n", folder, fn);
 
 			this.filename = fn;

@@ -19,7 +19,7 @@ using GLU;
 using GLUT;
 using SDL;
 using SDLImage;
-
+using GLib;
 using HMP;
 namespace HMP {
 	/**
@@ -136,20 +136,21 @@ namespace HMP {
 						case 'Q':
 						case ESC:
 							//cleanupLogic();
-							//exit (0);
-							//TODO Callback für beenden einrichten
-							print("Jetzt sollte egtl. das Programm beendet werden..");
-							break;
+							GLib.Process.exit(0);
 						case 'w':
+						case 'W':
 							p.setMotion (Direction.NORTH, true);
 							break;
 						case 'a':
+						case 'A':
 							p.setMotion (Direction.WEST, true);
 							break;
 						case 's':
+						case 'S':
 							p.setMotion (Direction.SOUTH, true);
 							break;
 						case 'd':
+						case 'D':
 							p.setMotion (Direction.EAST, true);
 							break;
 					}
@@ -157,17 +158,21 @@ namespace HMP {
 			} else {
 				switch (key) {
 					case 'w':
-							p.setMotion (Direction.NORTH, false);
-							break;
-						case 'a':
-							p.setMotion (Direction.WEST, false);
-							break;
-						case 's':
-							p.setMotion (Direction.SOUTH, false);
-							break;
-						case 'd':
-							p.setMotion (Direction.EAST, false);
-							break;
+					case 'W':
+						p.setMotion (Direction.NORTH, false);
+						break;
+					case 'a':
+					case 'A':
+						p.setMotion (Direction.WEST, false);
+						break;
+					case 's':
+					case 'S':
+						p.setMotion (Direction.SOUTH, false);
+						break;
+					case 'd':
+					case 'D':
+						p.setMotion (Direction.EAST, false);
+						break;
 				}
 			}
 		}

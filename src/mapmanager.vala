@@ -27,7 +27,9 @@ namespace HMP {
 		 * Konstruktor mit uebergebenem Ordner fuer das Map-Verzeichnis.
 		 * @param folder Verzeichnis der Maps, default ist: "./data/map/".
 		 */
-		public MapManager(string folder = "./data/map/") {
+		public MapManager(string folder = "./data/map/")
+		requires (WORLD.TILESETMANAGER != null)
+		{
 			print("Erstelle MapManager\n");
 			map = new Gee.ArrayList<HMP.Map>();
 			loadAllFromFolder(folder);
