@@ -18,7 +18,7 @@ namespace HMP {
 	/**
 	 * Klasse fuer einen Sprenger.
 	 */
-	public class Sprinkler : SingleTool {
+	public class Sprinkler : SingleTool, CircleTool, Tool, Object {
 
 		private uint water;
 
@@ -26,19 +26,18 @@ namespace HMP {
 			water = 0;
 		}
 
-		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
+		protected void applyToTile (Tile t, Storage s) {
+			if (water > 0 && t.type == TileType.PLANT && t.plant != null) {
+						t.plant.water ();
+						--water;
+			}
+		}
+
+		public void use (Map m, uint x, uint y, Direction d, Storage s) {
 			Tile t = Target (m, x, y, d, "ground");
 			if (t.type == TileType.WATER)
 				water = WATER_CAPACITY;
-			Layer l = m.layers.get (m.getIndexOfLayerName ("player"));
-			for (uint ix = x - 1; ix < (x + 1); ++ix)
-				for (uint iy = y - 1; iy < (y + 1); ++iy) {
-					t = l.tiles[ix, iy];
-					if (water > 0 && t.type == TileType.PLANT && t.plant != null) {
-						t.plant.water ();
-						--water;
-					}
-				}
+			applyToLayer (m, x, y, "player", s);
 		}
 	}
 }

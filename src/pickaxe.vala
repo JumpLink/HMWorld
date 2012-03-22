@@ -18,9 +18,9 @@ namespace HMP {
 	/**
 	 * Klasse fuer eine Spitzhacke.
 	 */
-	public class PickAxe : SingleTool {
+	public class PickAxe : SingleTool, Tool, Object {
 
-		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
+		public void use (Map m, uint x, uint y, Direction d, Storage s) {
 			Tile t = Target (m, x, y, d, "player");
 			if (t.type == TileType.ROCK)
 				t.type = TileType.EMPTY_TILE;

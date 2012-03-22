@@ -18,7 +18,7 @@ namespace HMP {
 	/**
 	 * Klasse fuer ein Werkzeug, das nur auf ein Tile wirkt.
 	 */
-	public abstract class SingleTool : Tool {
+	public interface SingleTool : Tool {
 
 		protected Tile Target (Map m, uint x, uint y, Direction d, string layerName) {
 			Layer l = m.layers.get (m.getIndexOfLayerName (layerName));

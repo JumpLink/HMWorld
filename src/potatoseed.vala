@@ -18,13 +18,17 @@ namespace HMP {
 	/**
 	 * Klasse fuer Kartoffeln zum sähen.
 	 */
-	public class PotatoSeed : Seed {
+	public class PotatoSeed : Seed, Tool, CircleTool {
 
 		public PotatoSeed () {
 			seed = SEED_PER_BAG;
 		}
 
-		protected override void applyToTile (Tile t, Storage s) {
+		public void use (Map m, uint x, uint y, Direction d, Storage s) {
+			applyToLayer (m, x, y, "player", s);
+		}
+
+		protected void applyToTile (Tile t, Storage s) {
 			if (t.type == TileType.PLANTABLE && seed > 0) {
 				t.type = TileType.PLANT;
 				t.plant = new Potato ();

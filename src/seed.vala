@@ -18,7 +18,7 @@ namespace HMP {
 	/**
 	 * Klasse fuer Sack zum Sähen.
 	 */
-	public abstract class Seed : CircleTool {
+	public abstract class Seed : Object {
 		protected uint seed;
 
 		public Seed () {

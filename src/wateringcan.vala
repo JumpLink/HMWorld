@@ -18,7 +18,7 @@ namespace HMP {
 	/**
 	 * Klasse fuer eine Giesskanne.
 	 */
-	public class WateringCan : SingleTool {
+	public class WateringCan : SingleTool, Tool, Object {
 
 		private uint water;
 
@@ -26,7 +26,7 @@ namespace HMP {
 			water = 0;
 		}
 
-		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
+		public void use (Map m, uint x, uint y, Direction d, Storage s) {
 			Tile t = Target (m, x, y, d, "player");
 			if (water > 0 && t.type == TileType.PLANT && t.plant != null) {
 				t.plant.water ();

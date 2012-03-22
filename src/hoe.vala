@@ -18,9 +18,9 @@ namespace HMP {
 	/**
 	 * Klasse fuer eine Hacke.
 	 */
-	public class Hoe : SingleTool {
+	public class Hoe : SingleTool, Tool, Object {
 
-		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
+		public void use (Map m, uint x, uint y, Direction d, Storage s) {
 			Tile t = Target (m, x, y, d, "ground");
 			if (t.type == TileType.EMPTY_TILE || t.type == TileType.GRASS)
 				t.type = TileType.PLANTABLE;

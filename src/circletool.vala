@@ -18,7 +18,7 @@ namespace HMP {
 	/**
 	 * Klasse fuer ein Werkzeug, das auf alle Tiles im unmittelbaren Umkreis des Spielers wirkt.
 	 */
-	public abstract class CircleTool : Tool {
+	public interface CircleTool : Tool {
 
 		/**
 		 * Wendet das Werkzeug auf ein Tile an.
@@ -42,8 +42,5 @@ namespace HMP {
 					applyToTile (l.tiles[ix, iy], s);
 		}
 
-		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
-			applyToLayer (m, x, y, "player", s);
-		}
 	}
 }

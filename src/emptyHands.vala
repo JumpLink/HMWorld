@@ -18,9 +18,9 @@ namespace HMP {
 	/**
 	 * Klasse fuer leere Haende als Werkzeug.
 	 */
-	 public class EmptyHands : Tool {
+	 public class EmptyHands : Tool, Object {
 	 	
-	 	public override void use (Map m, uint x, uint y, Direction d, Storage s) {
+	 	public void use (Map m, uint x, uint y, Direction d, Storage s) {
 	 		/* nichts */
 	 	}
 	 	

@@ -56,7 +56,6 @@ namespace HMP {
 		/**
 		 * Bewegt die Entitaet zeitabhaengig.
 		 * @param interval Zeitraum
-		 * @param d Bewewgungsrichtung
 		 */
 		public void move (double interval) {
 			if (motion) {

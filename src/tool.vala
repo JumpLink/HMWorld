@@ -18,7 +18,7 @@ namespace HMP {
 	/**
 	 * Klasse fuer ein Werkzeug.
 	 */
-	 public abstract class Tool {
+	 public interface Tool : Object {
 	 	
 	 	/**
 	 	 * Benutzt das Werkzeug mit seiner Umgebung an einer Position in eine Richtung.

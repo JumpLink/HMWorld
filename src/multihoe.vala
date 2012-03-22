@@ -18,12 +18,12 @@ namespace HMP {
 	/**
 	 * Klasse fuer eine Mehrfachhacke.
 	 */
-	public class MultiHoe : CircleTool {
-		public override void use (Map m, uint x, uint y, Direction d, Storage s) {
+	public class MultiHoe : CircleTool, Tool, Object {
+		public void use (Map m, uint x, uint y, Direction d, Storage s) {
 			applyToLayer (m, x, y, "ground", s);
 		}
 
-		protected override void applyToTile (Tile t, Storage s) {
+		protected void applyToTile (Tile t, Storage s) {
 			if (t.type == TileType.EMPTY_TILE || t.type == TileType.GRASS)
 				t.type = TileType.PLANTABLE;
 		}
