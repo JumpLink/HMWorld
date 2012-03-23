@@ -66,7 +66,7 @@ namespace HMP {
 			print("SpriteSetAnimationData\n");
 			int count = 0;
 			foreach (AnimationData ad in animationdata) {
-				print("# "+count.to_string()+" y: "+ad.y.to_string()+" x: "+ad.x.to_string()+" mirror: "+Value.MirrorTo_string(ad.mirror)+"\n");
+				print(@"# $count AniData: $ad \n");
 				count++;
 			}
 		}
@@ -76,7 +76,7 @@ namespace HMP {
 		public void printValues() {
 			print("SpriteSetAnimationValues\n");
 			print("name: %s\n", name);
-			print("direction: %s\n", HMP.Value.DirectionTo_string(direction));
+			print("direction: %s\n", direction.to_string());
 			print("repeat: %s\n", repeat.to_string());
 		}
 		/**

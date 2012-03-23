@@ -553,7 +553,7 @@ namespace HMP {
 
 				ani_datas = loadAnimationData(i, width, height);
 
-				animation.add( new Animation(name, bool.parse(repeat), HMP.Value.DirectionParse(direction), ani_datas) );
+				animation.add( new Animation(name, bool.parse(repeat), HMP.Direction.parse(direction), ani_datas) );
 			}
 			return animation;
 		}
@@ -579,7 +579,7 @@ namespace HMP {
 				tmp_ani_data = new AnimationData();
 				id = int.parse(propertie.get ("gid")) - 1;
 				mirror = (string) propertie.get ("mirror");
-				tmp_ani_data.mirror = HMP.Value.MirrorParse(mirror);
+				tmp_ani_data.mirror = HMP.Mirror.parse(mirror);
 
 				if (id >= 0) {
 					tmp_ani_data.x = (int)(id%width);
@@ -629,7 +629,7 @@ namespace HMP {
 				spritewidth = int.parse(properties.get ("spritewidth"));
 				spriteheight = int.parse(properties.get ("spriteheight"));
 				loadLayerImage(i, out image_filename, out trans);
-				tmp_spritelayer = new SpriteLayer(i, name, image_filename, HMP.Value.SpriteLayerTypeParse(type), trans, width, height, spritewidth, spriteheight);
+				tmp_spritelayer = new SpriteLayer(i, name, image_filename, HMP.SpriteLayerType.parse(type), trans, width, height, spritewidth, spriteheight);
 				res.add(tmp_spritelayer);
 			}
 			return res;

@@ -106,7 +106,7 @@ namespace HMP {
 					if(tiles[y,x].type != TileType.NO_TILE) {
 						//print("x: %i y: %i\n", x,y);
 						//tiles[x,y].printValues();
-						tiles[y,x].draw(shift_x + x * tiles[y,x].get_width(), shift_y + y * tiles[y,x].get_height(), zoff);
+						tiles[y,x].draw(shift_x + x * tiles[y,x].width, shift_y + y * tiles[y,x].height, zoff);
 					}
 				}
 			}

@@ -28,7 +28,47 @@ namespace HMP {
 		GLuint* texID = new GLuint[1];
 		GLenum texture_format;
 		GL.GLint read_channel = 3;
-		private Gdk.Pixbuf pixbuf;
+		/**
+		 * Liefert den Pixbuf der Textur, Pixbuf wird fuer die Verwalltung der Pixel verwendet.<<BR>>
+		 * * Weitere Informationen: [[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Pixbuf.html]]
+		 * @see Gdk.Pixbuf
+		 */
+		public Pixbuf pixbuf { get; private set; }
+		public double width {
+			get { return pixbuf.get_width(); }
+		}
+		public double height {
+			get { return pixbuf.get_height(); }
+		}
+		/**
+		 * Liefert ein Zeiger auf ein Array uint8[] mit den Pixelwerten,
+		 * der hier vorgegebene Rueckgabetyp ist hier void* damit dieser mit OpenGL
+		 * kompatibel ist.
+		 */
+		public void* pixels {
+			get { return pixbuf.get_pixels(); }
+		}
+		/**
+		 * Liefert Information darueber ob die Textur einen Alphakanal enthaelt.
+		 * @see Gdk.Pixbuf.get_has_alpha
+		 */
+		public bool has_alpha {
+			get { return this.pixbuf.get_has_alpha(); }
+		}
+		/**
+		 * Liefert den Farbraum der Textur, zur Zeit wird nur RGB unterstuetzt,
+		 * Weitere Informationen dazu gibt es hier:<<BR>>
+		 * *[[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Colorspace.html]]<<BR>>
+		 * *[[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Pixbuf.colorspace.html]]
+		 * @see Gdk.Pixbuf.colorspace
+		 */
+		public Colorspace colorspace {
+			get { return this.pixbuf.get_colorspace(); }
+		}
+
+		/**
+		 * Konstruktor.
+		 */
 		public Texture() {
 			/*nicht in der bindTexture aufrufen, wir brauchen nur einmal einen neuen Namen*/
 			glGenTextures(1, texID);
@@ -67,7 +107,7 @@ namespace HMP {
 		{
 			this.pixbuf = pixbuf;
 			if(pixbuf.colorspace == Colorspace.RGB)
-				if (pixbuf.get_has_alpha()) {
+				if (has_alpha) {
 					texture_format = GL_RGBA;
 					read_channel = 4;
 					/**/
@@ -90,86 +130,68 @@ namespace HMP {
 		 */
 		public void bindTexture () {
 			//print("binde textur \n");
-			if (get_width() > 1 && get_height() > 1)
+			if (width > 1 && height > 1)
 			{
 				glBindTexture(GL_TEXTURE_2D, texID[0]);
 				//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-				glTexImage2D(GL_TEXTURE_2D, 0, read_channel, (GL.GLsizei) get_width(), (GL.GLsizei) get_height(), 0, texture_format, GL_UNSIGNED_INT_8_8_8_8_REV, get_pixels());
+				glTexImage2D(GL_TEXTURE_2D, 0, read_channel, (GL.GLsizei) width, (GL.GLsizei) height, 0, texture_format, GL_UNSIGNED_INT_8_8_8_8_REV, pixels);
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			}
 		}
-		/**
-		 * Gibt die Breite der Textur zurueck.
-		 * @return Breite der Textur
-		 */
-		public uint get_width() {
-			return this.pixbuf.get_width();
-		}
-		/**
-		 * Gibt die Hoehe der Textur zurueck.
-		 */
-		public uint get_height() {
-			return this.pixbuf.get_height();
-		}
-		/**
-		 * Liefert ein Zeiger auf ein Array uint8[] mit den Pixelwerten,
-		 * der hier vorgegebene Rueckgabetyp ist hier void* damit dieser mit OpenGL
-		 * kompatibel ist.
-		 */
-		public void* get_pixels() {
-			return this.pixbuf.get_pixels();
-		}
-		/**
-		 * Liefert Information darueber ob die Textur einen Alphakanal enthaelt.
-		 * @return  True wenn die Textur einen Alphakanal, sonst false.
-		 * @see Gdk.Pixbuf.get_has_alpha
-		 */
-		public bool has_alpha() {
-			return this.pixbuf.get_has_alpha();
-		}
-		/**
-		 * Liefert den Farbraum der Textur, zur Zeit wird nur RGB unterstuetzt,
-		 * Weitere Informationen dazu gibt es hier:<<BR>>
-		 * *[[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Colorspace.html]]<<BR>>
-		 * *[[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Pixbuf.colorspace.html]]
-		 * @return Den Farbraum, wird zur Zeit immer RGB sein.
-		 * @see Gdk.Pixbuf.colorspace
-		 */
-		public Colorspace get_colorspace() {
-			return this.pixbuf.get_colorspace();
-		}
-		/**
-		 * Liefert den Pixbuf der Textur, Pixbuf wird fuer die Verwalltung der Pixel verwendet.<<BR>>
-		 * * Weitere Informationen: [[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Pixbuf.html]]
-		 * @return Der Pixbuf aus gdk-pixbuf.
-		 * @see Gdk.Pixbuf
-		 */
-		public Pixbuf get_Pixbuf() {
-			return this.pixbuf;
+		public void draw( double x, double y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
+			switch (mirror) {
+				case HMP.Mirror.NONE:
+					bindTexture();
+					glBegin (GL_QUADS);
+						glTexCoord2d(0,0);
+							glVertex3d ( x, y, zoff);
+						glTexCoord2d(0,1);
+							glVertex3d ( x, y + height, zoff);
+						glTexCoord2d(1,1);
+							glVertex3d ( x + width, y + height, zoff);
+						glTexCoord2d(1,0);
+							glVertex3d ( x + width, y, zoff);
+					glEnd ();
+				break;
+				case HMP.Mirror.VERTICAL:
+					bindTexture();
+					glBegin (GL_QUADS);
+						glTexCoord2d(1,0);
+							glVertex3d ( x, y, zoff);
+						glTexCoord2d(1,1);
+							glVertex3d ( x, y + height, zoff);
+						glTexCoord2d(0,1);
+							glVertex3d ( x + width, y + height, zoff);
+						glTexCoord2d(0,0);
+							glVertex3d ( x + width, y, zoff);
+					glEnd ();
+				break;
+				case HMP.Mirror.HORIZONTAL:
+					bindTexture();
+					glBegin (GL_QUADS);
+						glTexCoord2d(0,1);
+							glVertex3d ( x, y, zoff);
+						glTexCoord2d(0,0);
+							glVertex3d ( x, y + height, zoff);
+						glTexCoord2d(1,0);
+							glVertex3d ( x + width, y + height, zoff);
+						glTexCoord2d(1,1);
+							glVertex3d ( x + width, y, zoff);
+					glEnd ();
+				break;
+			}
 		}
 		/**
 		 * Gibt die Werte der Textur auf der Konsole aus.
 		 */
 		public void printValues() {
 			print("=Tex=\n");
-			print("width: %u\n", get_width());
-			print("height: %u\n", get_height());
-			if (has_alpha()) print("has alpha: yes\n");
+			print(@"width: $width \n");
+			print(@"height: $height \n");
+			print(@"has alpha: $has_alpha \n");
 		}
-		/*
-		 * TODO
-		 */
-		/*public Pixbuf[,] createSplits(int split_width, int split_height, int count_y, int count_x) {
-			Pixbuf[,] splits = new Pixbuf[count_y,count_x];
-			for(int y = 0; y < count_y; y++) {
-				for(int x = 0; x < count_x; x++) {
-					pixbuf.copy_area(split_width*count_y, split_height*count_x, split_width, split_height, splits[y,x], 0, 0);
-				}
-			}
-			return splits;
-		}*/
 	}
 }

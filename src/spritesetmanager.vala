@@ -42,10 +42,9 @@ namespace HMP {
 		 * Ladet alle SpriteSets aus dem Verzeichniss "folder"
 		 *
 		 * Dabei werden alle Dateien mit der Endung .ssx berücksichtigt.
-		 * Das Parsen der XML wird von der Klasse SpriteSet übernommen.
 		 * Anschließend wird jedes SpriteSet in eine ArrayList gespeichert.
 		 *
-		 * @param folder der Ordnername aus dem gelesen werden soll.
+		 * @param folder Ordnername aus dem gelesen werden soll.
 		 */
 		private void loadAllFromFolder(string folder = "./data/spriteset/") {
 			Gee.List<string> files = HMP.File.loadAllFromFolder(folder, ".ssx");

@@ -66,7 +66,7 @@ namespace HMP {
 				tex.loadFromFile("./data/spriteset/"+image_filename);
 				sprites = new Sprite[count_y,count_x];
 				//int count = 0;
-				Pixbuf pxb = tex.get_Pixbuf();
+				Pixbuf pxb = tex.pixbuf;
 				tex.printValues();
 				print("=====LOADSPRITES=====\n");
 				for(int y = 0; y < count_y; y++) {

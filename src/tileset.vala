@@ -59,8 +59,14 @@ namespace HMP {
 		 * Die Tiles in Form eines 2D-Array des TileSets
 		 */
 		public Tile[,] tile;
-		/** Array fuer die einzelnen Tiles */	
-		//private Tile[,]	 tiles;
+
+		public uint count_y {
+			get { return (uint) (height / tileheight); }
+		}
+
+		public uint count_x {
+			get { return (uint) (width / tilewidth); }
+		}
 
 		/**
 		 * Konstruktor
@@ -87,50 +93,6 @@ namespace HMP {
 			xml.getDataFromFile(folder, filename, out name, out tilewidth, out tileheight, out source, out trans, out width, out height);
 			loadTiles();
 		}
-
-		public uint getTotalWidth() {
-			return width;
-		}
-
-		public uint getTotalHeight() {
-			return height;
-		}
-
-		public uint getTileWidth() {
-			return tilewidth;
-		}
-
-		public uint getTileHeight() {
-			return tileheight;
-		}
-		public uint getCountY() {
-			return (int) (getTotalHeight() / getTileHeight());
-		}
-
-		public uint getCountX() {
-			return (int) (getTotalWidth() / getTileWidth());
-		}
-		/**
-		 * Gibt den Namen des TileSets zurück
-		 * @return Name des TileSets
-		 */
-		public string getName() {
-			return name;
-		}
-		/**
-		 * Gibt den Dateinamen des TileSets zurück
-		 * @return Dateiname des TileSets
-		 */
-		public string getFilename() {
-			return filename;
-		}
-		/**
-		 * Gibt den Sourcenamen des TileSets zurück
-		 * @return source des TileSets
-		 */
-		public string getSource() {
-			return source;
-		}
 		/**
 		 * Gibt ein gesuchtes Tile anhand seines Index zurueck.
 		 *
@@ -143,8 +105,8 @@ namespace HMP {
 			bool found = false;
 			HMP.Tile result = null;
 			//print(" index: %u \n", index);
-			for (int y=0;(y<getCountY()&&!found);y++) {
-				for (int x=0;(x<getCountX()&&!found);x++) {
+			for (int y=0;(y<count_y&&!found);y++) {
+				for (int x=0;(x<count_x&&!found);x++) {
 					//print("- ");
 					if (count == index) {
 						//print("X ");
@@ -164,14 +126,12 @@ namespace HMP {
 		 */
 		private void loadTiles() {
 			Texture tex = new Texture();
-			tex.loadFromFile("./data/tileset/"+getSource());
-			int count_y = (int) getCountY();
-			int count_x = (int) getCountX();
-			int split_width = (int) getTileWidth();
-			int split_height = (int) getTileHeight();
-			tile = new Tile[getCountY(),getCountX()];
+			tex.loadFromFile("./data/tileset/"+source);
+			int split_width = (int) tilewidth;
+			int split_height = (int) tileheight;
+			tile = new Tile[count_y,count_x];
 			//int count = 0;
-			Pixbuf pxb = tex.get_Pixbuf();
+			Pixbuf pxb = tex.pixbuf;
 			print("=====LOADTILES=====\n");
 			for(int y = 0; y < count_y; y++) {
 				for(int x = 0; x < count_x; x++) {
@@ -190,8 +150,8 @@ namespace HMP {
 		 * @param folder Ordner in dem die Bilder gespeichert werden sollen.
 		 */
 		public void save(string folder = "./tmp/") {
-			for (uint y=0;y<getCountY();y++) {
-				for (uint x=0;x<getCountX();x++) {
+			for (uint y=0;y<count_y;y++) {
+				for (uint x=0;x<count_x;x++) {
 					tile[y,x].save(folder+name+"_y"+y.to_string()+"_x"+x.to_string()+".png");
 				}
 			}
@@ -201,8 +161,8 @@ namespace HMP {
 		 */
 		public void printTiles() {
 			print("==Tiles==\n");
-			for (uint y=0;y<getCountY();y++) {
-				for (uint x=0;x<getCountX();x++) {
+			for (uint y=0;y<count_y;y++) {
+				for (uint x=0;x<count_x;x++) {
 					//print("%u ", tile[y,x].type);
 					tile[y,x].printValues();
 				}

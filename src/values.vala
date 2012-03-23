@@ -84,7 +84,36 @@ namespace HMP {
 		/**
 		 * Westliche (links) Richtung.
 		 */
-		WEST=3
+		WEST=3;
+
+		public string to_string () {
+			switch (this) {
+				case HMP.Direction.NORTH:
+					return "north";
+				case HMP.Direction.EAST:
+					return "east";
+				case HMP.Direction.WEST:
+					return "west";
+				case HMP.Direction.SOUTH:
+					return "south";
+				default:
+					assert_not_reached();
+			}
+		}
+		public static Direction parse (string str) {
+			switch (str) {
+				case "north":
+					return HMP.Direction.NORTH;
+				case "east":
+					return HMP.Direction.EAST;
+				case "west":
+					return HMP.Direction.WEST;
+				case "south":
+					return HMP.Direction.SOUTH;
+				default:
+					assert_not_reached();
+			}
+		}
 	}
 	/**
 	 * TODO Ole
@@ -128,11 +157,21 @@ namespace HMP {
 		/**
 		 * Basistyp, die Grundlage eines Sprites
 		 */
-		BASE,
+		BASE=0,
 		/**
 		 * Itemtyp, Erweiterungen des Sprites, z.B. Klamotten.
 		 */
-		ITEM
+		ITEM=1;
+
+		public static SpriteLayerType parse (string str) {
+			switch (str) {
+				case "item":
+					return HMP.SpriteLayerType.ITEM;
+				case "base":
+				default:
+					return HMP.SpriteLayerType.BASE;
+			}
+		}
 	}
 	public class Coord:Vector {
 		public Coord() {
@@ -161,73 +200,39 @@ namespace HMP {
 			get { return coord.y; }
 			set { coord.y = value; }
 		}
+
+		public string to_string () {
+			return @"x: $x y: $y mirror: $mirror";
+		}
 	}
 	public enum Mirror {
 		NONE,
 		VERTICAL,
-		HORIZONTAL
-	}
-	class Value{
-		public Value() {
+		HORIZONTAL;
 
-		}
-		public static Direction DirectionParse (string str) {
-			switch (str) {
-				case "north":
-					return HMP.Direction.NORTH;
-				case "east":
-					return HMP.Direction.EAST;
-				case "west":
-					return HMP.Direction.WEST;
-				case "south":
-					return HMP.Direction.SOUTH;
+		public string to_string () {
+			switch (this) {
+				case HMP.Mirror.VERTICAL:
+					return "vertical";
+				case  HMP.Mirror.HORIZONTAL:
+					return "horizontal";
+				case HMP.Mirror.NONE:
+					return "none";
 				default:
-					return HMP.Direction.NORTH;
+					assert_not_reached();
 			}
 		}
-		public static string DirectionTo_string (HMP.Direction d) {
-			switch (d) {
-				case HMP.Direction.NORTH:
-					return "NORTH";
-				case HMP.Direction.EAST:
-					return "EAST";
-				case HMP.Direction.WEST:
-					return "WEST";
-				case HMP.Direction.SOUTH:
-					return "SOUTH";
-				default:
-					return "Unbekannt";
-			}
-		}
-		public static Mirror MirrorParse (string str) {
+
+		public static Mirror parse (string str) {
 			switch (str) {
 				case "vertical":
 					return HMP.Mirror.VERTICAL;
 				case "horizontal":
 					return HMP.Mirror.HORIZONTAL;
 				case "none":
-				default:
 					return HMP.Mirror.NONE;
-			}
-		}
-		public static string MirrorTo_string (Mirror m) {
-			switch (m) {
-				case HMP.Mirror.VERTICAL:
-					return "HMP.Mirror.VERTICAL";
-				case  HMP.Mirror.HORIZONTAL:
-					return "HMP.Mirror.HORIZONTAL";
-				case HMP.Mirror.NONE:
 				default:
-					return "HMP.Mirror.NONE";
-			}
-		}
-		public static SpriteLayerType SpriteLayerTypeParse (string str) {
-			switch (str) {
-				case "item":
-					return HMP.SpriteLayerType.ITEM;
-				case "base":
-				default:
-					return HMP.SpriteLayerType.BASE;
+					assert_not_reached();
 			}
 		}
 	}

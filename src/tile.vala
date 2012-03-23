@@ -14,6 +14,7 @@
  *	Patrick König <knuffi@gmail.com>
  */
 using HMP;
+using Gdk;
 namespace HMP {
 	/**
 	 * Allgemeine Klasse fuer Tiles
@@ -22,7 +23,25 @@ namespace HMP {
 		/**
 		 * Tiletextur, die Pixel des Tiles
 		 */
-		public Texture tex;
+		public Texture tex { get; protected set; }
+		/**
+		 * Gibt die Breite eines Tiles zurueck.
+		 */
+		public double width {
+			get { if (type != TileType.NO_TILE) return tex.width; else return 0; }
+		}
+		/**
+		 * Gibt die Hoehe eines Tiles zurueck.
+		 */
+		public double height {
+			get { if (type != TileType.NO_TILE) return tex.height; else return 0; }
+		}
+		/**
+		 * Gibt den Pixelbufer der Textur zurueck
+		 */
+		public Pixbuf pixbuf {
+			get { return tex.pixbuf; }
+		}
 		/**
 		 * Tiletyp
 		 */
@@ -37,26 +56,6 @@ namespace HMP {
 		 */
 		public Tile() {
 			type = TileType.NO_TILE;
-		}
-		/**
-		 * Gibt die Breite eines Tiles zurueck.
-		 * @return Brteite des Tiles 
-		 */
-		public double get_width() {
-			if (type != TileType.NO_TILE)
-				return tex.get_width();
-			else
-				return 0;
-		}
-		/**
-		 * Gibt die Hoehe eines Tiles zurueck.
-		 * @return Hoehe des Tiles 
-		 */
-		public double get_height() {
-			if (type != TileType.NO_TILE)
-				return tex.get_height();
-			else
-				return 0;
 		}
 		/**
 		 * Speichert das Tile mit dem Dateiname filename als Datei

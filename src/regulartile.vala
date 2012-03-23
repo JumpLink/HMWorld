@@ -14,7 +14,6 @@
  *	Patrick König <knuffi@gmail.com>
  */
 using Gdk;
-using GL;
 using HMP;
 namespace HMP {
 	/**
@@ -40,13 +39,6 @@ namespace HMP {
 				type = HMP.TileType.EMPTY_TILE;
 			}
 			/**
-			 * Gibt den Pixelbufer der Textur zurueck
-			 * @return Die vom tile verwendete Textur als Pixbuf
-			 */
-			public Pixbuf get_Pixbuf () {
-				return tex.get_Pixbuf();
-			}
-			/**
 			 * {@inheritDoc}
 			 * @see HMP.Tile.printValues
 			 */
@@ -65,7 +57,7 @@ namespace HMP {
 			public override void save (string filename) {
 				if(type != TileType.NO_TILE) {
 					try {
-						get_Pixbuf().save(filename, "png");
+						pixbuf.save(filename, "png");
 					} catch (GLib.Error e) {
 						error ("Error! Konnte Tile nicht Speichern: %s\n", e.message);
 					}
@@ -76,23 +68,8 @@ namespace HMP {
 			 * @see HMP.Tile.draw
 			 */
 			public override void draw( double x, double y, double zoff) {
-				double width = get_width();
-				double height = get_height();
 				if(type != TileType.NO_TILE) {
-					//print("draw aus RefTile!\n");
-					tex.bindTexture();
-					glBegin (GL_QUADS);
-						/*Farbe fuers Blending*/
-						//glBlendColor(0,0,0,0);
-						glTexCoord2d(0,0);
-							glVertex3d ( x, y, zoff);
-						glTexCoord2d(0,1);
-							glVertex3d ( x, y + height, zoff);
-						glTexCoord2d(1,1);
-							glVertex3d ( x + width, y + height, zoff);
-						glTexCoord2d(1,0);
-							glVertex3d ( x + width, y, zoff);
-				    glEnd ();
+					tex.draw(x,y,zoff);
 				} else {
 					//print("Tile ist kein Tile zum zeichnen\n");
 				}

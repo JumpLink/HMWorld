@@ -63,7 +63,7 @@ namespace HMP {
 		 */
 		public TileSet getFromName(string name) {
 			foreach (TileSet ts in tileset)
-					if (ts.getName() == name) {
+					if (ts.name == name) {
 						print("TileSet gefunden!\n");
 						return ts;
 					}
@@ -81,7 +81,7 @@ namespace HMP {
 		{
 			TileSet result = null;
 			foreach (TileSet ts in tileset)
-					if (ts.getFilename() == filename) {
+					if (ts.filename == filename) {
 						print("TileSet mit gleichem Namen %s gefunden!\n", filename);
 						result = ts;
 						break;
@@ -96,7 +96,7 @@ namespace HMP {
 		 */
 		public TileSet getFromSource(string source) {
 			foreach (TileSet ts in tileset)
-					if (ts.getSource() == source) {
+					if (ts.source == source) {
 						print("TileSet gefunden!\n");
 						return ts;
 					}
