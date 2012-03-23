@@ -50,7 +50,7 @@ namespace HMP {
 		 * Konstruktor
 		 */
 		public World() {
-			
+
 		}
 		public void init() {
 			/* Globalen TileSetManager erzeugen */
@@ -75,11 +75,11 @@ namespace HMP {
 			CURRENT_MAP.draw();
 		}
 
-		public void timer (double interval)
+		public void timer ()
 		requires (PLAYERS != null)
-		{
+		{	
 			foreach (Player p in PLAYERS)
-				p.timer(interval);
+				p.timer();
 		}
 	}
 }

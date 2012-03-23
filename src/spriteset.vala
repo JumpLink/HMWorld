@@ -89,11 +89,19 @@ namespace HMP {
 		requires (spritelayers != null)
 		ensures (current_animation != null)
 		{
-			foreach (Animation ani in animations) {
-				if (ani.name == name && ani.direction == direction) {
-					current_animation = ani;
-					break;
+			/*Wenn es sich um eine neue Bewegung handelt*/
+			if (current_animation == null || name != current_animation.name || current_animation.direction != direction) {
+				foreach (Animation ani in animations) {
+					if (ani.name == name && ani.direction == direction) {
+						current_animation = ani;
+						break;
+					}
 				}
+			} else { /* Wenn es sich um die gleiche Bewegung handelt*/
+				//Gehe zum nächsten Frame
+				//current_animation.current_frame_index += WORLD.STATE.interval;
+				print("alter ani ");
+				current_animation.current_frame_index++;
 			}
 		}
 		/**
@@ -129,7 +137,7 @@ namespace HMP {
 			foreach (SpriteLayer sl in spritelayers) {
 				if (sl.active) {
 					/* zoff des Layers wird als Kommawert zum zoff dazu addiert*/
-					layer_zoff = zoff + (sl.number / 10);
+					layer_zoff = zoff - (sl.number / 100);
 					sl.sprites[(uint) ani.coord.y, (uint) ani.coord.x].draw(x, y, zoff, ani.mirror);
 				}
 				

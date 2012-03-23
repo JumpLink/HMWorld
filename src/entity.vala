@@ -21,10 +21,14 @@ namespace HMP {
 	 */
 	public abstract class Entity {
 		/**
+		 * Geschwindigkeit (Schritte in X-Richtung pro Sekunde)
+		 */
+		public double steps_ps = 35;
+		//private double interval_sum;
+		/**
 		 * Position des Entities
 		 */
-		public Coord pos = new Coord();
-
+		public Coord pos {get; protected set;}
 		/**
 		 * Karte, auf der sich die Entitaet befindet.
 		 */
@@ -41,7 +45,7 @@ namespace HMP {
 		 * Konstruktor
 		 */
 		public Entity() {
-
+			pos = new Coord();
 		}
 		/**
 		 * SpriteSet der Entity, beinhaltet Animationen und deren Grafiken.
@@ -57,20 +61,20 @@ namespace HMP {
 		 * Bewegt die Entitaet zeitabhaengig.
 		 * @param interval Zeitraum
 		 */
-		public void move (double interval) {
+		public void move () {
 			if (motion) {
 				switch (direction) {
 					case Direction.NORTH:
-						pos.y -= interval;
+						pos.y-=WORLD.STATE.interval*steps_ps;
 						break;
 					case Direction.EAST:
-						pos.x += interval;
+						pos.x+=WORLD.STATE.interval*steps_ps;
 						break;
 					case Direction.SOUTH:
-						pos.y += interval;
+						pos.y+=WORLD.STATE.interval*steps_ps;
 						break;
 					case Direction.WEST:
-						pos.x -= interval;
+						pos.x-=WORLD.STATE.interval*steps_ps;
 						break;
 				}
 				//Coord min = new Coord();
@@ -87,9 +91,9 @@ namespace HMP {
 		 */
 		public abstract void interactWith (Player p);
 
-		public void timer (double interval) {
+		public void timer () {
 			//print(@"\tinterval $interval");
-			move(interval);
+			move();
 		}
 
 		/**

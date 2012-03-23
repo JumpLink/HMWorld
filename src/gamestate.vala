@@ -41,6 +41,8 @@ namespace HMP {
 		 * Pause an oder aus
 		 */
 		public bool paused = false;
+
+		public double interval;
 		/**
 		 * Konstruktor.
 		 */
