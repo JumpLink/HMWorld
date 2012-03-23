@@ -17,8 +17,8 @@
 using GL;
 using GLU;
 using GLUT;
-using SDL;
-using SDLImage;
+/*using SDL;
+using SDLImage;*/
 using GLib;
 using HMP;
 namespace HMP {
@@ -44,8 +44,8 @@ namespace HMP {
 			glMatrixMode (GL_PROJECTION);
 			/* Matrix zuruecksetzen - Einheitsmatrix laden */
 			glLoadIdentity ();
-			glOrtho (	0, WORLD.STATE.VIEWPORT[2],						/* links, rechts */
-					 	WORLD.STATE.VIEWPORT[3], 0,						/* unten, oben */
+			glOrtho (	0, WORLD.STATE.window_width,						/* links, rechts */
+					 	WORLD.STATE.window_height, 0,						/* unten, oben */
 						-128, 128);								/* tiefe */
 		}
 		/**
@@ -61,13 +61,13 @@ namespace HMP {
 			/* Seit dem Programmstart vergangene Zeit in Millisekunden */
 			int thisCallTime = glutGet (GLUT_ELAPSED_TIME);
 			/* Seit dem letzten Funktionsaufruf vergangene Zeit in Sekunden */
-			double interval = (double) (thisCallTime - lastCallTime) / 1000.0f;
+			double interval = (double) (thisCallTime - lastCallTime) /*/ 10.0f*/;
 
 			/* neue Position berechnen (zeitgesteuert) */
 			WORLD.timer (interval);
 
 			/* Wieder als Timer-Funktion registrieren, falls nicht pausiert */
-			//if(!getStatus()->paused)
+			if(!WORLD.STATE.paused)
 				glutTimerFunc (1000 / TIMER_CALLS_PS, cbTimer, thisCallTime);
 
 			/* Neuzeichnen anstossen */
@@ -153,26 +153,33 @@ namespace HMP {
 						case 'D':
 							p.setMotion (Direction.EAST, true);
 							break;
+						case 'p': /*pause*/
+						case 'P':
+							WORLD.STATE.toggle_paused();
+							print(@"Pause: $(WORLD.STATE.paused)");
+							break;
 					}
 				}
 			} else {
-				switch (key) {
-					case 'w':
-					case 'W':
-						p.setMotion (Direction.NORTH, false);
-						break;
-					case 'a':
-					case 'A':
-						p.setMotion (Direction.WEST, false);
-						break;
-					case 's':
-					case 'S':
-						p.setMotion (Direction.SOUTH, false);
-						break;
-					case 'd':
-					case 'D':
-						p.setMotion (Direction.EAST, false);
-						break;
+				if (!isSpecialKey) {
+					switch (key) {
+						case 'w':
+						case 'W':
+							p.setMotion (Direction.NORTH, false);
+							break;
+						case 'a':
+						case 'A':
+							p.setMotion (Direction.WEST, false);
+							break;
+						case 's':
+						case 'S':
+							p.setMotion (Direction.SOUTH, false);
+							break;
+						case 'd':
+						case 'D':
+							p.setMotion (Direction.EAST, false);
+							break;
+					}
 				}
 			}
 		}
@@ -189,7 +196,18 @@ namespace HMP {
 		{
 			handleKeyboardEvent (key, GLUT_DOWN, false, x, y);
 		}
-		
+		/**
+		 * Callback fuer Taste loslassen
+		 * Ruft Ereignisbehandlung fuer Tastaturereignis auf sobald die Taste losgelassen wurde.
+		 *
+		 * @param key betroffene Taste (In).
+		 * @param x x-Position der Maus zur Zeit des Tastendrucks (In).
+		 * @param y y-Position der Maus zur Zeit des Tastendrucks (In).
+		 */
+		static void cbUpKeyboard ( uchar key, int x, int y)
+		{
+			handleKeyboardEvent (key, GLUT_UP, false, x, y);
+		}
 		/**
 		 * Callback fuer Druck auf Spezialtasten.
 		 * Ruft Ereignisbehandlung fuer Tastaturereignis auf.
@@ -210,6 +228,8 @@ namespace HMP {
 		{
 			/* Tasten-Druck-Callback - wird ausgefuehrt, wenn eine Taste gedrueckt wird */
 			glutKeyboardFunc (cbKeyboard);
+			/* Tasten-Druck-Callback - wird ausgefuehrt, wenn eine Taste losgelassen wird */
+			glutKeyboardUpFunc (cbUpKeyboard);
 
 			/* Spezialtasten-Druck-Callback - wird ausgefuehrt, wenn Spezialtaste
 			 * (F1 - F12, Links, Rechts, Oben, Unten, Bild-Auf, Bild-Ab, Pos1, Ende oder
@@ -264,7 +284,7 @@ namespace HMP {
 			glutInitWindowSize (width, height);
 			glutInitWindowPosition (0, 0);
 			
-			/* SDL initialisieren */
+			/* SDL initialisieren *
 			if (SDL.init(SDL.InitFlag.EVERYTHING) != 0) {
 				print("Unable to initialize SDL: %s\n", SDL.get_error());
 				return true;
@@ -272,7 +292,7 @@ namespace HMP {
 			if (SDLImage.init(0) != 0) {
 				print("Unable to initialize SDL-Image: %s\n", SDLImage.get_error());
 				return true;
-			}
+			}*/
 			WORLD.init();
 
 			/* Fenster erzeugen */

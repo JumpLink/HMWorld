@@ -126,6 +126,16 @@ namespace HMP {
 			}
 		}
 		/**
+		 *
+		 */
+		public void save (string filename) {
+			try {
+				pixbuf.save(filename, "png");
+			} catch (GLib.Error e) {
+				error ("Error! Konnte Sprite nicht Speichern: %s\n", e.message);
+			}
+		}
+		/**
 		 * Bindet die Textur an OpenGL.
 		 */
 		public void bindTexture () {
@@ -141,6 +151,9 @@ namespace HMP {
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			}
 		}
+		/**
+		 *
+		 */
 		public void draw( double x, double y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
 			switch (mirror) {
 				case HMP.Mirror.NONE:

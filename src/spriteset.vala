@@ -38,13 +38,25 @@ namespace HMP {
 		 */
 		public uint spriteheight;
 		/**
-		 * Gesamtbreite des SpriteSets
+		 * Gesamtbreite des SpriteSets in Sprites
 		 */
 		public uint width;
 		/**
-		 * Gesamthoehe des SpriteSets
+		 * Gesamthoehe des SpriteSets in Sprites
 		 */
 		public uint height;
+		/**
+		 * Gesamtbreite des SpriteSets in Pixel
+		 */
+		public uint pixelwidth {
+			get {return (uint) (width * spritewidth);}
+		}
+		/**
+		 * Gesamthoehe des SpriteSets in Pixel
+		 */
+		public uint pixelheight {
+			get {return (uint) (height * spriteheight);}
+		}
 		/**
 		 * Die Version des SpriteSets-XML-Formates
 		 */
@@ -98,13 +110,6 @@ namespace HMP {
 			xml.loadGlobalProperties(out name, out version, out width, out height, out spritewidth, out spriteheight);
 			spritelayers = xml.loadLayers();
 			animations = xml.loadAnimations(width, height);
-		}
-		public uint get_totalHeight() {
-			return (int) (height * spriteheight);
-		}
-
-		public uint get_totalWidth() {
-			return (int) (width * spritewidth);
 		}
 		public SpriteLayer? get_baseLayer()
 		requires (spritelayers != null)

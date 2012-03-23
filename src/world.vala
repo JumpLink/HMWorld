@@ -39,7 +39,7 @@ namespace HMP {
 		/**
 		 * Globales SPRITESET fuer den aktuellen Helden / Spieler
 		 */
-		public GameState STATE;
+		public GameState STATE = new GameState ();
 		/**
 		 * Entitaeten in der Welt
 		 */
@@ -50,7 +50,7 @@ namespace HMP {
 		 * Konstruktor
 		 */
 		public World() {
-			STATE = new GameState ();
+			
 		}
 		public void init() {
 			/* Globalen TileSetManager erzeugen */

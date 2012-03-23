@@ -22,13 +22,33 @@ namespace HMP {
 		/**
 		 * Viewport.
 		 */
-		public int[] VIEWPORT;
-
+		public int[] VIEWPORT = new int[4];
+		/**
+		 * Fensterbreite.
+		 */
+		public int window_width {
+			get { return VIEWPORT[2]; }
+			set { VIEWPORT[2] = value;}
+		}
+		/**
+		 * Fensterhoehe.
+		 */
+		public int window_height {
+			get { return VIEWPORT[3]; }
+			set { VIEWPORT[3] = value;}
+		}
+		/**
+		 * Pause an oder aus
+		 */
+		public bool paused = false;
 		/**
 		 * Konstruktor.
 		 */
 		public GameState () {
-			VIEWPORT = new int[4];
+
+		}
+		public void toggle_paused() {
+			paused = paused ? false : true;
 		}
 	}
 }

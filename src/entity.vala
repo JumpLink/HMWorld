@@ -61,16 +61,16 @@ namespace HMP {
 			if (motion) {
 				switch (direction) {
 					case Direction.NORTH:
-						pos.x -= interval;
+						pos.y -= interval;
 						break;
 					case Direction.EAST:
-						pos.y += interval;
-						break;
-					case Direction.SOUTH:
 						pos.x += interval;
 						break;
+					case Direction.SOUTH:
+						pos.y += interval;
+						break;
 					case Direction.WEST:
-						pos.y -= interval;
+						pos.x -= interval;
 						break;
 				}
 				//Coord min = new Coord();
@@ -88,6 +88,7 @@ namespace HMP {
 		public abstract void interactWith (Player p);
 
 		public void timer (double interval) {
+			//print(@"\tinterval $interval");
 			move(interval);
 		}
 

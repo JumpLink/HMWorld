@@ -56,11 +56,7 @@ namespace HMP {
 			 */
 			public override void save (string filename) {
 				if(type != TileType.NO_TILE) {
-					try {
-						pixbuf.save(filename, "png");
-					} catch (GLib.Error e) {
-						error ("Error! Konnte Tile nicht Speichern: %s\n", e.message);
-					}
+					tex.save(filename);
 				}
 			}
 			/**

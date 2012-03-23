@@ -25,7 +25,17 @@ namespace HMP {
 		public Direction direction;
 		public bool repeat;
 		public Gee.List<AnimationData> animationdata = new Gee.ArrayList<AnimationData>();
-		public int current_frame_index = 0;
+
+		private int _current_frame_index = 0;
+		public int current_frame_index {
+			get { return _current_frame_index; }
+			set {
+				if(animationdata == null || value >= animationdata.size)
+					_current_frame_index = 0;
+				if (value < 0)
+					_current_frame_index = animationdata.size -1;
+			}
+		}
 
 		public Animation(string name, bool repeat, Direction direction, Gee.List<AnimationData> animationdata) {
 			this.name = name;
@@ -33,31 +43,11 @@ namespace HMP {
 			this.repeat = repeat;
 			this.direction = direction;
 		}
-		public AnimationData get_frame() {
-			return animationdata[current_frame_index];
-		}
-		public void incFrame() {
-			current_frame_index++;
-			if(current_frame_index < animationdata.size) {
-				//all right
-			}
-			else {
-				current_frame_index = 0;
-			}
-		}
 		public AnimationData get_AnimationData ()
 		requires (animationdata != null)
 		requires (animationdata[current_frame_index] != null)
 		{
 			return animationdata[current_frame_index];
-		}
-		public void decFrame() {
-			if(current_frame_index <= 0) {
-				current_frame_index = animationdata.size -1;
-			}
-			else {
-				current_frame_index--;
-			}
 		}
 		/**
 		 * Gibt alle Werte des SpriteSets auf der Konsole aus
