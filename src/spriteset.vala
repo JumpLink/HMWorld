@@ -91,17 +91,17 @@ namespace HMP {
 		{
 			/*Wenn es sich um eine neue Bewegung handelt*/
 			if (current_animation == null || name != current_animation.name || current_animation.direction != direction) {
+				if (current_animation != null) print(@"neue Bewegung!\n	$name $(current_animation.name) $direction  $(current_animation.direction)\n");
 				foreach (Animation ani in animations) {
 					if (ani.name == name && ani.direction == direction) {
 						current_animation = ani;
+						//setzt das Animationsframe an den Anfangsframe
+						current_animation.current_frame_index = 0;
 						break;
 					}
 				}
 			} else { /* Wenn es sich um die gleiche Bewegung handelt*/
-				//Gehe zum nächsten Frame
-				//current_animation.current_frame_index += WORLD.STATE.interval;
-				print("alter ani ");
-				current_animation.current_frame_index++;
+				//kein wechsel
 			}
 		}
 		/**
@@ -143,6 +143,9 @@ namespace HMP {
 				
 				
 			}
+		}
+		public void time() {
+			current_animation.time();
 		}
 		/**
 		 * Gibt alle Werte SpriteLayer auf der Konsole aus.

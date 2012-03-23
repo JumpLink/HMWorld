@@ -53,9 +53,12 @@ namespace HMP {
 		public SpriteSet spriteset;
 
 		public void setMotion (Direction d, bool motion) {
-			this.motion = motion;
-			direction = d;
-			spriteset.set_Animation(motion ? "go" : "stay", d);
+			//Pruefen ob dies eine veraenderung bewirkt, wenn ja..
+			if(direction != d || this.motion != motion) {
+				this.motion = motion;
+				direction = d;
+				spriteset.set_Animation(motion ? "go" : "stay", d);
+			}
 		}
 		/**
 		 * Bewegt die Entitaet zeitabhaengig.
@@ -94,6 +97,7 @@ namespace HMP {
 		public void timer () {
 			//print(@"\tinterval $interval");
 			move();
+			spriteset.time();
 		}
 
 		/**

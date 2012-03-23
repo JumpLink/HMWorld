@@ -25,21 +25,22 @@ namespace HMP {
 		public Direction direction;
 		public bool repeat;
 		/**
-		 * Geschwindigkeit (Schritte in X-Richtung pro Sekunde
+		 * Animationsframes pro Sekunde
 		 */
-		public double steps_ps = 1;
+		public double frame_ps = 4;
+		private double timer = 0;
 		public Gee.List<AnimationData> animationdata = new Gee.ArrayList<AnimationData>();
 
-		private double _current_frame_index = 0;
-		public double current_frame_index {
+		private int _current_frame_index = 0;
+		public int current_frame_index {
 			get { return _current_frame_index; }
 			set {
-				value *= steps_ps;
-				print(@"value: $value\n");
-				if(animationdata == null || value >= animationdata.size)
+				if(animationdata == null || value >= animationdata.size) {
 					_current_frame_index = 0;
-				else if (value < 0)
+				}
+				else if ( value < 0) {
 					_current_frame_index = animationdata.size -1;
+				}
 				else {
 					_current_frame_index = value;
 				}
@@ -54,9 +55,16 @@ namespace HMP {
 		}
 		public AnimationData get_AnimationData ()
 		requires (animationdata != null)
-		requires (animationdata[(int)current_frame_index] != null)
+		requires (animationdata[current_frame_index] != null)
 		{
-			return animationdata[(int)current_frame_index];
+			return animationdata[current_frame_index];
+		}
+		public void time() {
+			timer += WORLD.STATE.interval;
+			if (timer * frame_ps >= 1) {
+				current_frame_index++;
+				timer = 0;
+			}
 		}
 		/**
 		 * Gibt alle Werte des SpriteSets auf der Konsole aus
