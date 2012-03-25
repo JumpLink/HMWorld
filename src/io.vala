@@ -50,7 +50,7 @@ namespace HMP {
 							-128, 128);											/* tiefe */
 			} else {
 				gluPerspective (100.0f, (float) WORLD.STATE.window_width/WORLD.STATE.window_height, 1, 255 );
-				gluLookAt(WORLD.STATE.window_width/2, WORLD.STATE.window_height/2, -128, 0, WORLD.STATE.window_height/2, WORLD.STATE.window_width/2, 0,0,1);
+				gluLookAt(WORLD.STATE.window_width/2, WORLD.STATE.window_height/2, -128, 0, WORLD.STATE.window_height/2, WORLD.STATE.window_width/2, 0,-1,0);
 			}
 		}
 		/**
