@@ -67,6 +67,8 @@ namespace HMP {
 			foreach (Player p in PLAYERS) {
 				CURRENT_MAP.entities.add(p);
 			}
+			/*Spielstatus initialisieren*/
+			STATE.init();
 		}
 		public void draw()
 		requires (CURRENT_MAP != null)

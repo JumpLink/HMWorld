@@ -61,6 +61,9 @@ namespace HMP {
 		public GameState () {
 
 		}
+		public void init() {
+			controler.init();
+		}
 		public void timer() {
 			controler.timer();
 		}

@@ -226,7 +226,7 @@ namespace HMP {
 				print("Unable to initialize SDL-Image: %s\n", SDLImage.get_error());
 				return true;
 			}*/
-			WORLD.init();
+			
 
 			/* Fenster erzeugen */
 			windowID = glutCreateWindow (title);
@@ -235,12 +235,12 @@ namespace HMP {
 			glGetIntegerv( GL_VIEWPORT, WORLD.STATE.VIEWPORT );
 
 			if (windowID != 0) {
+				/* Welt initialisieren */
+				WORLD.init();
 				/* Logik initialisieren */
 				//initLogic ();
 				/* Szene initialisieren */
 				if (Scene.init ()) {
-					/* Tastenwiederholungen ignorieren */
-					glutIgnoreKeyRepeat(1);
 					/* Callbacks registrieren */
 					registerCallbacks ();
 					/* Eintritt in die Ereignisschleife */
