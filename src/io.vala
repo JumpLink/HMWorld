@@ -44,9 +44,13 @@ namespace HMP {
 			glMatrixMode (GL_PROJECTION);
 			/* Matrix zuruecksetzen - Einheitsmatrix laden */
 			glLoadIdentity ();
-			glOrtho (	0, WORLD.STATE.window_width,						/* links, rechts */
-					 	WORLD.STATE.window_height, 0,						/* unten, oben */
-						-128, 128);								/* tiefe */
+			if (!WORLD.STATE.perspective) {
+				glOrtho (	0, WORLD.STATE.window_width,						/* links, rechts */
+						 	WORLD.STATE.window_height, 0,						/* unten, oben */
+							-128, 128);											/* tiefe */
+			} else {
+				gluPerspective (80.0f, (float) WORLD.STATE.window_width/WORLD.STATE.window_height, 1, 128 );
+			}
 		}
 		/**
 		 * Timer-Callback.
@@ -56,7 +60,7 @@ namespace HMP {
 		 * @param lastCallTime Zeitpunkt, zu dem die Funktion als Timer-Funktion
 		 *   registriert wurde (In).
 		 */
-		static void cbTimer (int lastCallTime)
+		public static void cbTimer (int lastCallTime)
 		{
 			/* Seit dem Programmstart vergangene Zeit in Millisekunden */
 			int thisCallTime = glutGet (GLUT_ELAPSED_TIME);
@@ -101,7 +105,7 @@ namespace HMP {
 		 * @param w Fensterbreite (In).
 		 * @param h Fensterhoehe (In).
 		 */
-		static void cbReshape (int w, int h)
+		public static void cbReshape (int w, int h)
 		{
 			/* Das ganze Fenster ist GL-Anzeigebereich */
 			glViewport (0, 0, (GLsizei) w, (GLsizei) h);
@@ -153,10 +157,19 @@ namespace HMP {
 						case 'D':
 							p.setMotion (Direction.EAST, true);
 							break;
-						case 'p': /*pause*/
+						case 'p': /*Paused-Mode On/Off*/
 						case 'P':
 							WORLD.STATE.toggle_paused();
 							print(@"Pause: $(WORLD.STATE.paused)");
+							break;
+						case 'b': /*Debug-Mode On/Off*/
+						case 'B':
+							WORLD.STATE.toggle_debug();
+							print(@"Debug: $(WORLD.STATE.debug)");
+							break;
+						case 'v': /*Debug-Mode On/Off*/
+						case 'V':
+							WORLD.STATE.toggle_perspective();
 							break;
 					}
 				}

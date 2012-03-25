@@ -41,16 +41,38 @@ namespace HMP {
 		 * Pause an oder aus
 		 */
 		public bool paused = false;
-
+		/**
+		 * Debug-Mode on or off
+		 */
+		public bool debug = false;
+		/**
+		 * Seit dem letzten Intervall vergangene Zeit in Sekunden
+		 */
 		public double interval;
+		/**
+		 * Perspektivischer Modus, an oder aus
+		 */
+		public bool perspective = false;
 		/**
 		 * Konstruktor.
 		 */
 		public GameState () {
 
 		}
+		public static bool toggle(bool b) {
+			return b ? false : true;
+		}
 		public void toggle_paused() {
-			paused = paused ? false : true;
+			paused = toggle (paused);
+			HMP.IO.cbTimer(0);
+		}
+		public void toggle_debug() {
+			debug = toggle (debug);
+		}
+		public void toggle_perspective() {
+			perspective = toggle (perspective);
+			print(@"Perspektive: $(WORLD.STATE.perspective)");
+			HMP.IO.cbReshape(WORLD.STATE.window_width, WORLD.STATE.window_height);
 		}
 	}
 }
