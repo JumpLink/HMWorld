@@ -53,11 +53,16 @@ namespace HMP {
 		 * Perspektivischer Modus, an oder aus
 		 */
 		public bool perspective = false;
+
+		public Control controler = new Control ();
 		/**
 		 * Konstruktor.
 		 */
 		public GameState () {
 
+		}
+		public void timer() {
+			controler.timer();
 		}
 		public static bool toggle(bool b) {
 			return b ? false : true;

@@ -39,7 +39,7 @@ namespace HMP {
 		 */
 		public Direction direction = Direction.SOUTH;
 
-		private bool motion = false;
+		public bool motion { get; protected set; default = false;}
 
 		/**
 		 * Konstruktor

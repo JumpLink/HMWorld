@@ -205,6 +205,7 @@ namespace HMP {
 			return @"x: $x y: $y mirror: $mirror";
 		}
 	}
+
 	public enum Mirror {
 		NONE,
 		VERTICAL,

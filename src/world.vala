@@ -78,6 +78,7 @@ namespace HMP {
 		public void timer ()
 		requires (PLAYERS != null)
 		{	
+			STATE.timer();
 			foreach (Player p in PLAYERS)
 				p.timer();
 		}

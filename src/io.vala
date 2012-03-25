@@ -118,87 +118,6 @@ namespace HMP {
 		}
 
 		/**
-		 * Verarbeitung eines Tasturereignisses.
-		 * q,ESC: Beenden
-		 *
-		 * @param key Taste, die das Ereignis ausgeloest hat. (ASCII-Wert oder WERT des
-		 *        GLUT_KEY_<SPECIAL>.
-		 * @param status Status der Taste, true=gedrueckt, false=losgelassen.
-		 * @param isSpecialKey ist die Taste eine Spezialtaste?
-		 * @param x x-Position des Mauszeigers zum Zeitpunkt der Ereignisausloesung.
-		 * @param y y-Position des Mauszeigers zum Zeitpunkt der Ereignisausloesung.
-		 */
-		static void handleKeyboardEvent (int key, GL.GLenum status, bool isSpecialKey, int x, int y)
-		{
-			Player p = WORLD.PLAYERS.first ();
-			/* Taste gedrueckt */
-			if (status == GLUT_DOWN) {
-				/* nicht-Spezialtasten */
-				if (!isSpecialKey) {
-					switch (key) {
-						/* Programm beenden */
-						case 'q':
-						case 'Q':
-						case ESC:
-							//cleanupLogic();
-							GLib.Process.exit(0);
-						case 'w':
-						case 'W':
-							p.setMotion (Direction.NORTH, true);
-							break;
-						case 'a':
-						case 'A':
-							p.setMotion (Direction.WEST, true);
-							break;
-						case 's':
-						case 'S':
-							p.setMotion (Direction.SOUTH, true);
-							break;
-						case 'd':
-						case 'D':
-							p.setMotion (Direction.EAST, true);
-							break;
-						case 'p': /*Paused-Mode On/Off*/
-						case 'P':
-							WORLD.STATE.toggle_paused();
-							print(@"Pause: $(WORLD.STATE.paused)");
-							break;
-						case 'b': /*Debug-Mode On/Off*/
-						case 'B':
-							WORLD.STATE.toggle_debug();
-							print(@"Debug: $(WORLD.STATE.debug)");
-							break;
-						case 'v': /*Debug-Mode On/Off*/
-						case 'V':
-							WORLD.STATE.toggle_perspective();
-							break;
-					}
-				}
-			} else {
-				if (!isSpecialKey) {
-					switch (key) {
-						case 'w':
-						case 'W':
-							p.setMotion (Direction.NORTH, false);
-							break;
-						case 'a':
-						case 'A':
-							p.setMotion (Direction.WEST, false);
-							break;
-						case 's':
-						case 'S':
-							p.setMotion (Direction.SOUTH, false);
-							break;
-						case 'd':
-						case 'D':
-							p.setMotion (Direction.EAST, false);
-							break;
-					}
-				}
-			}
-		}
-
-		/**
 		 * Callback fuer Tastendruck.
 		 * Ruft Ereignisbehandlung fuer Tastaturereignis auf.
 		 *
@@ -208,7 +127,7 @@ namespace HMP {
 		 */
 		static void cbKeyboard ( uchar key, int x, int y)
 		{
-			handleKeyboardEvent (key, GLUT_DOWN, false, x, y);
+			WORLD.STATE.controler.handleKeyboardEvent (key, (bool) GLUT_DOWN, false, x, y);
 		}
 		/**
 		 * Callback fuer Taste loslassen
@@ -220,7 +139,7 @@ namespace HMP {
 		 */
 		static void cbUpKeyboard ( uchar key, int x, int y)
 		{
-			handleKeyboardEvent (key, GLUT_UP, false, x, y);
+			WORLD.STATE.controler.handleKeyboardEvent (key, (bool) GLUT_UP, false, x, y);
 		}
 		/**
 		 * Callback fuer Druck auf Spezialtasten.
@@ -232,7 +151,7 @@ namespace HMP {
 		 */
 		static void cbSpecial (int key, int x, int y)
 		{
-			handleKeyboardEvent (key, GLUT_DOWN, true, x, y);
+			WORLD.STATE.controler.handleKeyboardEvent (key, (bool) GLUT_DOWN, true, x, y);
 		}
 
 		/**
@@ -320,6 +239,8 @@ namespace HMP {
 				//initLogic ();
 				/* Szene initialisieren */
 				if (Scene.init ()) {
+					/* Tastenwiederholungen ignorieren */
+					glutIgnoreKeyRepeat(1);
 					/* Callbacks registrieren */
 					registerCallbacks ();
 					/* Eintritt in die Ereignisschleife */
