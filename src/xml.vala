@@ -236,28 +236,39 @@ namespace HMP {
 		 */
 		public Gee.List<Layer> loadLayers (Gee.List<HMP.TileSetReference> tilesetrefs) {
 			Gee.List<Layer> layer = new Gee.ArrayList<Layer>(); //Speichert die Layers
+			Xml.Node* node;
+			Gee.HashMap<string, string> properties;
+			//Speichert die geparsten properties
+			string name;
+			int width;
+			int height;
+			//print("Lade Tiles\n");
+			//Holt sich auch gleich den Tile-Tag
+			Tile[,] tiles;
+			//print("Fuege Layer mit Namen %s hinzu\n", properties.get ("name"));
+			double z = 0; //Zu speichernder Z-Wert
+			bool collision = false;
 			//XPath-Expression ausfuehren
 			unowned Xml.XPath.Object obj = ctx.eval_expression("/map/layer");
 			if(obj==null) print("failed to evaluate xpath\n");
 			//Durchläuft alle Nodes, also alle resultierten Layer-Tags
 			for (int i=0;(obj.nodesetval != null && obj.nodesetval->item(i) != null);i++) {
 				//Holt entsprechenden Layer
-				Xml.Node* node = obj.nodesetval->item(i);
+				node = obj.nodesetval->item(i);
 				//Parst dessen properties
-				Gee.HashMap<string, string> properties = loadProperties(node);
+				properties = loadProperties(node);
 				//Speichert die geparsten properties
-				string name = (string) properties.get ("name");
-				int width = int.parse(properties.get ("width"));
-				int height = int.parse(properties.get ("height"));
+				name = (string) properties.get ("name");
+				width = int.parse(properties.get ("width"));
+				height = int.parse(properties.get ("height"));
 				//print("Lade Tiles\n");
 				//Holt sich auch gleich den Tile-Tag
-				Tile[,] tiles = loadTiles(i, width, height, tilesetrefs);
+				tiles = loadTiles(i, width, height, tilesetrefs);
 				//print("Fuege Layer mit Namen %s hinzu\n", properties.get ("name"));
-				double z = 0; //Zu speichernder Z-Wert
 				//Holt sich auch gleich den Z-Wert
-				loadLayerZ(i, out z);
+				loadLayerProps(i, out z, out collision);
 				//Den zusammengestellten Layer in die Liste einfuegen
-				layer.add( new Layer.all( name, z, width, height, tiles));
+				layer.add( new Layer.all( name, z, collision, width, height, tiles));
 			}
 			return layer;
 		}
@@ -270,12 +281,13 @@ namespace HMP {
 		 * @param z Z-Wert der ausgelesen werden und gespeichert werden soll.
 		 * @return false bei Fehler sonst true
 		 */
-		private bool loadLayerZ (uint layer_number, out double z) {
+		private bool loadLayerProps (uint layer_number, out double z, out bool collision) {
 			Xml.Node* node = evalExpression("/map/layer["+(layer_number+1).to_string()+"]/properties/property");
 			Xml.Attr* attr = node->properties;
 			string name;
 			string content;
 			z = 0;
+			collision = false;
 			while ( attr != null) {
 				name = (string) attr->name;
 				content = (string) attr->children->content;
@@ -290,8 +302,20 @@ namespace HMP {
 							//print("Attribute: \tname: %s\tvalue: %s\n", name, content);
 							z = double.parse(content);
 							return true;
+						}
 					}
-				}
+				} else if (name == "name" && content == "collision") {
+					//print("collision-Wert folgt\n");
+					attr = attr->next;
+					if (attr != null) {
+						name = (string) attr->name;
+						content = (string) attr->children->content;
+						if (name == "value" ) {
+							//print("Attribute: \tname: %s\tvalue: %s\n", name, content);
+							collision = bool.parse(content);
+							return true;
+						}
+					}
 				} else {
 					attr = attr->next;
 				}

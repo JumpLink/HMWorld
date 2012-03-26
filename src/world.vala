@@ -57,6 +57,7 @@ namespace HMP {
 			this.TILESETMANAGER = new HMP.TileSetManager();
 			/* Globalen Mapmanager erzeugen */
 			this.MAPMANAGER = new HMP.MapManager();
+			this.MAPMANAGER.printAll();
 			/* Globalen SpriteSetManager erzeugen */
 			this.SPRITESETMANAGER = new HMP.SpriteSetManager();
 			//this.SPRITESETMANAGER.printAll();

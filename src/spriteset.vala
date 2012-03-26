@@ -137,7 +137,7 @@ namespace HMP {
 			foreach (SpriteLayer sl in spritelayers) {
 				if (sl.active) {
 					/* zoff des Layers wird als Kommawert zum zoff dazu addiert*/
-					layer_zoff = zoff - (sl.number / 100);
+					layer_zoff = zoff; // - (sl.number / 100);
 					sl.sprites[(uint) ani.coord.y, (uint) ani.coord.x].draw(x, y, zoff, ani.mirror);
 				}
 				

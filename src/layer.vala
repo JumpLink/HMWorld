@@ -39,6 +39,10 @@ namespace HMP {
 		 * Tiles des Layers
 		 */
 		public Tile[,] tiles;
+		/**
+		 * Zur ueberpruefung ob dieser Layer Kollision erzeugt.
+		 */
+		public bool collision = false;
 
 		/**
 		 * Konstruktor
@@ -65,12 +69,13 @@ namespace HMP {
 		/**
 		 * Konstruktor mit allen Werten non-default
 		 */
-		public Layer.all(string name, double zoff, int width, int height, Tile[,] tiles) {
+		public Layer.all(string name, double zoff, bool collision, int width, int height, Tile[,] tiles) {
 			this.name = name;
 			this.zoff = zoff;
 			this.width = width;
 			this.height = height;
 			this.tiles = tiles;
+			this.collision = collision;
 		}
 		/*
 		 * TODO OLE
@@ -120,6 +125,7 @@ namespace HMP {
 			print("zoff: %f\n", zoff);
 			print("width: %u\n", width);
 			print("height: %u\n", height);
+			print("collision: %s\n", collision.to_string());
 		}
 		/**
 		 * Gibt die Tiles des Layers auf der Konsole aus
