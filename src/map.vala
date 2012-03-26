@@ -118,6 +118,25 @@ namespace HMP {
 			}
 			return -1;
 		}
+
+		/**
+		 * Gibt an, ob eine Position begehbar ist.
+		 * @param x X-Koordinate.
+		 * @param y Y-Koordinate.
+		 */
+		public bool walkable (uint x, uint y) {
+			if (x >= width - 1 || y >= height - 1)
+				return false;
+			print ("Zielposition: %u, %u\n", x, y);
+			bool obstacle = false;
+			foreach (Layer l in layers) {
+				Tile t = l.tiles[x, y];
+				obstacle = obstacle || ((l.zoff <= 0.0 && l.zoff > -1.0) && l.tiles[x, y].type != TileType.NO_TILE);
+				if (obstacle)
+					print ("name: %s, typ: %u\n", l.name, l.tiles[x, y].type);
+			}
+			return !obstacle;
+		}
 		/**
 		 * Die draw-Methode der Layer-Klasse durchlaeuft seine enthaltenen Layers und ruft jeweils ihre eigene draw-Methode
 		 * mit ihrer entsprechenden Verschiebung auf und Zeichnet somit die komplette Map.
