@@ -306,7 +306,7 @@ namespace HMP {
 		 * @return Array mit den geparsten Tiles
 		 */
 		public Tile[,] loadTiles (uint layer_number, uint width, uint height, Gee.List<HMP.TileSetReference> tilesetrefs) {
-			//TODO: height und width vertauscht?
+			//TODO: height und width vertauscht? Nein ist gewollt, erst y dann x.
 			HMP.Tile[,] tiles = new Tile[height,width]; // Zur Speicherung der Tiles
 			HMP.TileSetReference tmp_tilesetref;
 			HMP.Tile tmp_tile;

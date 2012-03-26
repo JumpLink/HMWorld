@@ -127,7 +127,7 @@ namespace HMP {
 		public bool walkable (uint x, uint y) {
 			if (x >= width - 1 || y >= height - 1)
 				return false;
-			print ("Zielposition: %u, %u\n", x, y);
+			print ("Zielposition: %u, %u\n", y, x);
 			bool obstacle = false;
 			foreach (Layer l in layers) {
 				Tile t = l.tiles[y, x];
