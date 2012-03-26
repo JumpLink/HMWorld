@@ -130,10 +130,10 @@ namespace HMP {
 			print ("Zielposition: %u, %u\n", x, y);
 			bool obstacle = false;
 			foreach (Layer l in layers) {
-				Tile t = l.tiles[x, y];
-				obstacle = obstacle || ((l.zoff <= 0.0 && l.zoff > -1.0) && l.tiles[x, y].type != TileType.NO_TILE);
+				Tile t = l.tiles[y, x];
+				obstacle = obstacle || ((l.zoff <= 0.0 && l.zoff > -1.0) && l.tiles[y, x].type != TileType.NO_TILE);
 				if (obstacle)
-					print ("name: %s, typ: %u\n", l.name, l.tiles[x, y].type);
+					print ("name: %s, typ: %u\n", l.name, l.tiles[y, x].type);
 			}
 			return !obstacle;
 		}
