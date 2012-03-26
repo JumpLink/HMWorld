@@ -27,7 +27,7 @@ namespace HMP {
 		/**
 		 * Animationsframes pro Sekunde
 		 */
-		public double frame_ps = 4;
+		public double frame_ps = 6;
 		private double timer = 0;
 		public Gee.List<AnimationData> animationdata = new Gee.ArrayList<AnimationData>();
 

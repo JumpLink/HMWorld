@@ -48,6 +48,8 @@ namespace HMP {
 				glOrtho (	0, WORLD.STATE.window_width,						/* links, rechts */
 						 	WORLD.STATE.window_height, 0,						/* unten, oben */
 							-128, 128);											/* tiefe */
+				/* verschiebt die Welt in die Mitte	 */
+				glTranslatef((GL.GLfloat)WORLD.CURRENT_MAP.shift_x,(GL.GLfloat)WORLD.CURRENT_MAP.shift_y,0);
 			} else {
 				gluPerspective (100.0f, (float) WORLD.STATE.window_width/WORLD.STATE.window_height, -128, 128 );
 				gluLookAt(WORLD.STATE.window_width/2, WORLD.STATE.window_height, -128, WORLD.STATE.window_width/2, 0, 128, 0,-1,0);
@@ -227,7 +229,6 @@ namespace HMP {
 				return true;
 			}*/
 			
-
 			/* Fenster erzeugen */
 			windowID = glutCreateWindow (title);
 

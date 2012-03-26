@@ -61,6 +61,10 @@ namespace HMP {
 			/* Rueckseiten nicht zeichnen*/
 			glEnable(GL_CULL_FACE);
 			glCullFace(GL_BACK);
+			/* Tiefentest aktivieren */
+			glEnable(GL_DEPTH_TEST);
+			/* Fragmente werden gezeichnet, wenn sie einen größeren Tiefenwert haben.  */
+			glDepthFunc(GL_GEQUAL);
 
 			/**
 			 * Alles in Ordnung?

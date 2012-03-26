@@ -91,7 +91,7 @@ namespace HMP {
 		{
 			/*Wenn es sich um eine neue Bewegung handelt*/
 			if (current_animation == null || name != current_animation.name || current_animation.direction != direction) {
-				if (current_animation != null) print(@"neue Bewegung!\n	$name $(current_animation.name) $direction  $(current_animation.direction)\n");
+				//if (current_animation != null) print(@"neue Bewegung!\n	$name $(current_animation.name) $direction  $(current_animation.direction)\n");
 				foreach (Animation ani in animations) {
 					if (ani.name == name && ani.direction == direction) {
 						current_animation = ani;

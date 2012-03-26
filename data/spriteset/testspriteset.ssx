@@ -25,34 +25,34 @@
  </animation>
  <animation name="go" direction="south" repeat="true">
   <data>
-   <sprite gid="1" mirror="none"/>
    <sprite gid="12" mirror="none"/>
    <sprite gid="1" mirror="none"/>
    <sprite gid="23" mirror="none"/>
+   <sprite gid="1" mirror="none"/>
   </data>
  </animation>
  <animation name="go" direction="west" repeat="true">
   <data>
-   <sprite gid="2" mirror="none"/>
    <sprite gid="13" mirror="none"/>
    <sprite gid="2" mirror="none"/>
    <sprite gid="24" mirror="none"/>
+   <sprite gid="2" mirror="none"/>
   </data>
  </animation>
  <animation name="go" direction="east" repeat="true">
   <data>
-   <sprite gid="2" mirror="vertical"/>
    <sprite gid="13" mirror="vertical"/>
    <sprite gid="2" mirror="vertical"/>
    <sprite gid="24" mirror="vertical"/>
+   <sprite gid="2" mirror="vertical"/>
   </data>
  </animation>
  <animation name="go" direction="north" repeat="true">
   <data>
-   <sprite gid="3" mirror="none"/>
    <sprite gid="14" mirror="none"/>
    <sprite gid="3" mirror="none"/>
    <sprite gid="25" mirror="none"/>
+   <sprite gid="3" mirror="none"/>
   </data>
  </animation>
 </spriteset>

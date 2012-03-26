@@ -16,7 +16,7 @@
 using Xml;
 using Xml.XPath;
 using Gee;
-
+using GL;
 namespace HMP {
 	/**
 	 * Klasse fuer Maps.
@@ -64,6 +64,13 @@ namespace HMP {
 		 * Entities auf der Map
 		 */
 		public Gee.List<Entity> entities = new Gee.ArrayList<Entity>();
+
+		public double shift_x {
+			get { return (WORLD.STATE.VIEWPORT[2] - width * tilewidth)/2;}
+		}
+		public double shift_y {
+			get { return (WORLD.STATE.VIEWPORT[3] - height * tileheight)/2;}
+		}
 
 		/**
 		 * Konstruktor fuer eine leere Map
@@ -150,15 +157,13 @@ namespace HMP {
 		requires (entities[0] != null)
 		{
 			//print("==DrawMap==\n");
-			int shift_x = (int) (WORLD.STATE.VIEWPORT[2] - width * tilewidth)/2;
-			int shift_y = (int) (WORLD.STATE.VIEWPORT[3] - height * tileheight)/2;
 			foreach (Layer l in layers) {
-				l.draw(shift_x, shift_y);
+				l.draw(0, 0);
 			}
+			//TODO gehoehrt das nicht eher zur Welt als zur Map?
 			foreach (Entity e in entities) {
-				e.draw (shift_x, shift_y, 0.0);
+				e.draw (0, 0, -2);
 			}
-			//layers[0].draw();
 		}
 		/**
 		 * Gibt alle Werte (bis auf die Layer) der Map auf der Konsole aus
