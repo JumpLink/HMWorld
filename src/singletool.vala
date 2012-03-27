@@ -21,7 +21,7 @@ namespace HMP {
 	public interface SingleTool : Tool {
 
 		protected Tile Target (Map m, uint x, uint y, Direction d, string layerName) {
-			Layer l = m.layers.get (m.getIndexOfLayerName (layerName));
+			Layer l = m.getLayerFromName(layerName);
 			uint tx = x, ty = y;
 			switch (d) {
 				case Direction.NORTH:

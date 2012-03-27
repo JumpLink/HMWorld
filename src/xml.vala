@@ -234,20 +234,23 @@ namespace HMP {
 		 * @see HMP.Layer
 		 * @see Gee.ArrayList
 		 */
-		public Gee.List<Layer> loadLayers (Gee.List<HMP.TileSetReference> tilesetrefs) {
-			Gee.List<Layer> layer = new Gee.ArrayList<Layer>(); //Speichert die Layers
+		public void loadLayers (Gee.List<HMP.TileSetReference> tilesetrefs, out Gee.List<Layer> layer_under, out Gee.List<Layer> layer_same, out Gee.List<Layer> layer_over) {
+			//Gee.List<Layer> layer = new Gee.ArrayList<Layer>(); //Speichert die Layers
 			Xml.Node* node;
 			Gee.HashMap<string, string> properties;
 			//Speichert die geparsten properties
 			string name;
 			int width;
 			int height;
+			layer_under =  new Gee.ArrayList<Layer>();
+			layer_same =  new Gee.ArrayList<Layer>();
+			layer_over =  new Gee.ArrayList<Layer>();
 			//print("Lade Tiles\n");
 			//Holt sich auch gleich den Tile-Tag
 			Tile[,] tiles;
 			//print("Fuege Layer mit Namen %s hinzu\n", properties.get ("name"));
-			double z = 0; //Zu speichernder Z-Wert
 			bool collision = false;
+			DrawLayer drawlayer;
 			//XPath-Expression ausfuehren
 			unowned Xml.XPath.Object obj = ctx.eval_expression("/map/layer");
 			if(obj==null) print("failed to evaluate xpath\n");
@@ -266,11 +269,20 @@ namespace HMP {
 				tiles = loadTiles(i, width, height, tilesetrefs);
 				//print("Fuege Layer mit Namen %s hinzu\n", properties.get ("name"));
 				//Holt sich auch gleich den Z-Wert
-				loadLayerProps(i, out z, out collision);
-				//Den zusammengestellten Layer in die Liste einfuegen
-				layer.add( new Layer.all( name, z, collision, width, height, tiles));
+				loadLayerProps(i, out collision, out drawlayer);
+				switch (drawlayer) {
+					case DrawLayer.UNDER:
+						layer_under.add( new Layer.all( name, i+1, collision, width, height, tiles) );
+					break;
+					case DrawLayer.SAME:
+						layer_same.add( new Layer.all( name, i+1, collision, width, height, tiles) );
+					break;
+					case DrawLayer.OVER:
+						layer_over.add( new Layer.all( name, i+1, collision, width, height, tiles) );
+					break;
+
+				}
 			}
-			return layer;
 		}
 		/**
 		 * In dieser Methode wird der Z-Wert aus der XML gelesen
@@ -281,18 +293,18 @@ namespace HMP {
 		 * @param z Z-Wert der ausgelesen werden und gespeichert werden soll.
 		 * @return false bei Fehler sonst true
 		 */
-		private bool loadLayerProps (uint layer_number, out double z, out bool collision) {
+		private bool loadLayerProps (uint layer_number, out bool collision, out DrawLayer drawlayer) {
 			Xml.Node* node = evalExpression("/map/layer["+(layer_number+1).to_string()+"]/properties/property");
 			Xml.Attr* attr = node->properties;
 			string name;
 			string content;
-			z = 0;
+			drawlayer = 0;
 			collision = false;
 			while ( attr != null) {
 				name = (string) attr->name;
 				content = (string) attr->children->content;
 				//print("Attribute: \tname: %s\tvalue: %s\n", name, content);
-				if (name == "name" && content == "z") {
+				if (name == "name" && content == "drawlayer") {
 					//print("Z-Wert folgt\n");
 					attr = attr->next;
 					if (attr != null) {
@@ -300,7 +312,7 @@ namespace HMP {
 						content = (string) attr->children->content;
 						if (name == "value" ) {
 							//print("Attribute: \tname: %s\tvalue: %s\n", name, content);
-							z = double.parse(content);
+							drawlayer = DrawLayer.parse(content);
 							return true;
 						}
 					}
@@ -317,7 +329,8 @@ namespace HMP {
 						}
 					}
 				} else {
-					attr = attr->next;
+					if (attr != null && attr->next != null)
+						attr = attr->next;
 				}
 			}
 			return false;
@@ -626,7 +639,7 @@ namespace HMP {
 		 * @see HMP.Layer
 		 * @see Gee.ArrayList
 		 */
-		public Gee.List<SpriteLayer> loadLayers () {
+		public Gee.List<SpriteLayer> loadLayers ( ) {
 			Gee.List<SpriteLayer> res = new Gee.ArrayList<SpriteLayer>();
 			SpriteLayer tmp_spritelayer;
 			Xml.Node* node;

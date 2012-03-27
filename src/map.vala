@@ -57,9 +57,17 @@ namespace HMP {
 		 */
 		public Gee.List<HMP.TileSetReference> tileset = new Gee.ArrayList<TileSetReference>();
 		/**
-		 * Layer der Map.
+		 * Layer der Map ueber dem Helden
 		 */
-		public Gee.List<Layer> layers = new Gee.ArrayList<Layer>();
+		public Gee.List<Layer> layers_over = new Gee.ArrayList<Layer>();
+		/**
+		 * Layer der Map gleich dem Helden
+		 */
+		public Gee.List<Layer> layers_same = new Gee.ArrayList<Layer>();
+		/**
+		 * Layer der Map unter dem Helden
+		 */
+		public Gee.List<Layer> layers_under = new Gee.ArrayList<Layer>();
 		/** 
 		 * Entities auf der Map
 		 */
@@ -92,7 +100,7 @@ namespace HMP {
 			TMX xml = new TMX(folder+filename);
 			xml.loadGlobalMapProperties(out orientation, out version, out width, out height, out tilewidth, out tileheight);
 			tileset = xml.loadTileSets();
-			layers = xml.loadLayers(tileset);
+			xml.loadLayers(tileset, out layers_over, out layers_same, out layers_under);
 		}
 		/**
 		 * Gibt das zur gid passende TileSetReference zurueck.
@@ -112,15 +120,49 @@ namespace HMP {
 			return found;
 		}
 		/**
+		 * Gibt den Layer eines gesuchten Layers mit dem Namen name zurueck.
+		 *
+		 * @param name Gesichter Layername
+		 * @return Layer aus der Layerliste
+		 */
+		public Layer? getLayerFromName(string name){
+			foreach (Layer i in layers_same) {
+				if (name == i.name) {
+					return i;
+				}
+			}
+			foreach (Layer i in layers_under) {
+				if (name == i.name) {
+					return i;
+				}
+			}
+			foreach (Layer i in layers_over) {
+				if (name == i.name) {
+					return i;
+				}
+			}
+			return null;
+		}
+		/**
 		 * Gibt den Index eines gesuchten Layers mit dem Namen name zurueck.
 		 *
 		 * @param name Gesichter Layername
 		 * @return Index aus der Layerliste
 		 */
 		public int getIndexOfLayerName(string name){
-			foreach (Layer i in layers) {
+			foreach (Layer i in layers_same) {
 				if (name == i.name) {
-					return layers.index_of(i);
+					return layers_same.index_of(i);
+				}
+			}
+			foreach (Layer i in layers_under) {
+				if (name == i.name) {
+					return layers_under.index_of(i);
+				}
+			}
+			foreach (Layer i in layers_over) {
+				if (name == i.name) {
+					return layers_over.index_of(i);
 				}
 			}
 			return -1;
@@ -136,7 +178,7 @@ namespace HMP {
 				return false;
 			//print ("Zielposition: %u, %u\n", y, x);
 			bool obstacle = false;
-			foreach (Layer l in layers) {
+			foreach (Layer l in layers_same) {
 				obstacle = obstacle || (l.collision && l.tiles[y, x].type != TileType.NO_TILE);
 			}
 			return !obstacle;
@@ -148,18 +190,27 @@ namespace HMP {
 		 * @see HMP.Tile.draw
 		 */
 		public void draw()
-		requires (layers != null)
+		requires (layers_same != null)
+		requires (layers_under != null)
+		requires (layers_over != null)
+		requires (layers_same[0] != null)
+		requires (layers_under[0] != null)
+		requires (layers_over[0] != null)
 		requires (entities != null)
-		requires (layers[0] != null)
 		requires (entities[0] != null)
 		{
 			//print("==DrawMap==\n");
-			foreach (Layer l in layers) {
+			foreach (Layer l in layers_over) {
 				l.draw(0, 0);
 			}
-			//TODO gehoehrt das nicht eher zur Welt als zur Map?
+			foreach (Layer l in layers_same) {
+				l.draw(0, 0);
+			}
 			foreach (Entity e in entities) {
 				e.draw (0, 0, 0);
+			}
+			foreach (Layer l in layers_under) {
+				l.draw(0, 0);
 			}
 		}
 		/**
@@ -181,10 +232,26 @@ namespace HMP {
 		 * Gibt die Werte aller Layer der Map auf der Konsole aus
 		 */
 		public void printLayers()
-		requires (layers != null)
+		requires (layers_same != null)
+		requires (layers_under != null)
+		requires (layers_over != null)
+		requires (layers_same[0] != null)
+		requires (layers_under[0] != null)
+		requires (layers_over[0] != null)
 		{
 			print("====ALL LAYERS FROM MAP %s====\n", filename);
-			foreach (HMP.Layer l in layers) {
+			print("under ");
+			foreach (HMP.Layer l in layers_under) {
+				l.printValues();
+				l.printTiles();
+			}
+			print("same ");
+			foreach (HMP.Layer l in layers_same) {
+				l.printValues();
+				l.printTiles();
+			}
+			print("over ");
+			foreach (HMP.Layer l in layers_over) {
 				l.printValues();
 				l.printTiles();
 			}

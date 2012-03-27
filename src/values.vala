@@ -237,4 +237,22 @@ namespace HMP {
 			}
 		}
 	}
+	public enum DrawLayer {
+		UNDER = 1,
+		SAME = 0,
+		OVER = -1;
+
+		public static DrawLayer parse (string str) {
+			switch (str) {
+				case "same":
+					return HMP.DrawLayer.SAME;
+				case "over":
+					return HMP.DrawLayer.OVER;
+				case "under":
+					return HMP.DrawLayer.UNDER;
+				default:
+					assert_not_reached();
+			}
+		}
+	}
 }

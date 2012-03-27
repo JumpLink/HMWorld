@@ -53,19 +53,21 @@ namespace HMP {
 			glEnable(GL_ALPHA_TEST);
 			/* Wertebereich fuer Transparenz*/
 			glAlphaFunc(GL_GREATER, (GL.GLclampf) 0.1);
-			/* Tiefentest damit Tiles keine anderen Tiles verdecken */
-			glDepthFunc(GL_ALWAYS);
 			/*Blending gegen Verdeckung*/
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			/* Rueckseiten nicht zeichnen*/
 			glEnable(GL_CULL_FACE);
 			glCullFace(GL_BACK);
+			/*---Tiefentest---*/
 			/* Tiefentest aktivieren */
-			glEnable(GL_DEPTH_TEST);
+			//glEnable(GL_DEPTH_TEST);
 			/* Fragmente werden gezeichnet, wenn sie einen größeren oder gleichen Tiefenwert haben.  */
-			glDepthFunc(GL_ALWAYS);
+			//glDepthFunc(GL_GEQUAL);
 
+			/* VORERST DEAKTIVIERT */
+			glDisable(GL_DEPTH_TEST);
+			glDepthFunc(GL_ALWAYS);
 			/**
 			 * Alles in Ordnung?
 			 */

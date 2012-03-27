@@ -36,7 +36,7 @@ namespace HMP {
 		 * @param layerName Name der Ebene.
 		 */
 		protected void applyToLayer (Map m, uint x, uint y, string layerName, Storage s) {
-			Layer l = m.layers.get (m.getIndexOfLayerName (layerName));
+			Layer l = m.getLayerFromName(layerName);
 			for (uint ix = x - 1; ix < (x + 1); ++ix)
 				for (uint iy = y - 1; iy < (y + 1); ++iy)
 					applyToTile (l.tiles[ix, iy], s);
