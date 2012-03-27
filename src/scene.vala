@@ -63,8 +63,8 @@ namespace HMP {
 			glCullFace(GL_BACK);
 			/* Tiefentest aktivieren */
 			glEnable(GL_DEPTH_TEST);
-			/* Fragmente werden gezeichnet, wenn sie einen größeren Tiefenwert haben.  */
-			glDepthFunc(GL_GEQUAL);
+			/* Fragmente werden gezeichnet, wenn sie einen größeren oder gleichen Tiefenwert haben.  */
+			glDepthFunc(GL_ALWAYS);
 
 			/**
 			 * Alles in Ordnung?
