@@ -66,9 +66,9 @@ namespace HMP {
 		private bool motionPossible () {
 			int y = (direction == Direction.NORTH) ? -1 : (direction == Direction.SOUTH) ? 1 : 0;
 			int x = (direction == Direction.WEST) ? -1 : (direction == Direction.EAST) ? 1 : 0;
-			print ("Spielerposition: %f, %f\n", (pos.x + spriteset.spritewidth/2)/WORLD.CURRENT_MAP.tilewidth, (pos.y + spriteset.spriteheight/2)/WORLD.CURRENT_MAP.tileheight);
-			return WORLD.CURRENT_MAP.walkable ((uint) ((pos.x + spriteset.spritewidth/2)/WORLD.CURRENT_MAP.tilewidth  + 0.5 + x), 
-				(uint) ((pos.y + spriteset.spriteheight/2) /WORLD.CURRENT_MAP.tileheight + 0.5 + y));
+			//print ("Spielerposition: %f, %f\n", (pos.x + spriteset.spritewidth/2)/WORLD.CURRENT_MAP.tilewidth, (pos.y + spriteset.spriteheight/2)/WORLD.CURRENT_MAP.tileheight);
+			return WORLD.CURRENT_MAP.walkable ((uint) ((pos.x + spriteset.spritewidth/2)/WORLD.CURRENT_MAP.tilewidth + x), 
+				(uint) ((pos.y + spriteset.spriteheight/2) /WORLD.CURRENT_MAP.tileheight + y));
 		}
 		/**
 		 * Bewegt die Entitaet zeitabhaengig.

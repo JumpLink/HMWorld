@@ -132,15 +132,12 @@ namespace HMP {
 		 * @param y Y-Koordinate.
 		 */
 		public bool walkable (uint x, uint y) {
-			if (x >= width - 1 || y >= height - 1)
+			if (x >= width || y >= height)
 				return false;
-			print ("Zielposition: %u, %u\n", y, x);
+			//print ("Zielposition: %u, %u\n", y, x);
 			bool obstacle = false;
 			foreach (Layer l in layers) {
-				Tile t = l.tiles[y, x];
 				obstacle = obstacle || (l.collision && l.tiles[y, x].type != TileType.NO_TILE);
-				if (obstacle)
-					print ("name: %s, typ: %u\n", l.name, l.tiles[y, x].type);
 			}
 			return !obstacle;
 		}
