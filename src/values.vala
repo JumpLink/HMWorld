@@ -15,7 +15,7 @@
  */
 using HMP;
 namespace HMP {
-	const int TIMER_CALLS_PS = 60;
+	const int TIMER_CALLS_PS = 30;
 	/**
 	 * Keycode der ESC-Taste
 	 */
