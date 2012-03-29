@@ -260,4 +260,8 @@ namespace HMP {
 			}
 		}
 	}
+	public static int Round(double num) {
+		(num > 0) ? (num+= 0.5) : (num+= (-0.5));
+		return (int)num;
+	}
 }

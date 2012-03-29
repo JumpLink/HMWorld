@@ -62,7 +62,9 @@ namespace HMP {
 		 * 
 		 */
 		public void draw( double x, double y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
-			tex.draw ((int)x,(int)y,zoff,mirror);
+			//print("x: %f",x);
+			//print(" = x: %i\n",Round(x));
+			tex.draw (Round(x),Round(y),zoff,mirror);
 		}
 	}
 }
