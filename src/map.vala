@@ -179,7 +179,7 @@ namespace HMP {
 			//print ("Zielposition: %u, %u\n", y, x);
 			bool obstacle = false;
 			foreach (Layer l in layers_same) {
-				obstacle = obstacle || (l.collision && l.tiles[y, x].type != TileType.NO_TILE);
+				obstacle = obstacle || (l.collision && l.tiles[x, y].type != TileType.NO_TILE);
 			}
 			return !obstacle;
 		}

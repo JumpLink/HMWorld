@@ -108,10 +108,10 @@ namespace HMP {
 			//print("draw layer\n");
 			for (int y=0;y<height;y++) {
 				for (int x=0;x<width;x++) {
-					if(tiles[y,x].type != TileType.NO_TILE) {
+					if(tiles[x,y].type != TileType.NO_TILE) {
 						//print("x: %i y: %i\n", x,y);
 						//tiles[x,y].printValues();
-						tiles[y,x].draw(shift_x + x * tiles[y,x].width, shift_y + y * tiles[y,x].height, zoff);
+						tiles[x,y].draw(shift_x + x * tiles[x,y].width, shift_y + y * tiles[x,y].height, zoff);
 					}
 				}
 			}
@@ -134,7 +134,7 @@ namespace HMP {
 			print("==Tiles==\n");
 			for (int y=0;y<height;y++) {
 				for (int x=0;x<width;x++) {
-					print("%u ", tiles[y,x].type);
+					print("%u ", tiles[x,y].type);
 				}
 				print("\n");
 			}

@@ -344,33 +344,33 @@ namespace HMP {
 		 */
 		public Tile[,] loadTiles (uint layer_number, uint width, uint height, Gee.List<HMP.TileSetReference> tilesetrefs) {
 			//TODO: height und width vertauscht? -> Nein ist gewollt, erst y dann x.
-			HMP.Tile[,] tiles = new Tile[height,width]; // Zur Speicherung der Tiles
+			HMP.Tile[,] tiles = new Tile[width,height]; // Zur Speicherung der Tiles
 			HMP.TileSetReference tmp_tilesetref;
 			HMP.Tile tmp_tile;
 			int[,] ids = loadIDs("/map/layer["+(layer_number+1).to_string()+"]/data/tile", width, height);
 			for(int y = 0; y < height; y++) {
 				for(int x = 0; x < width; x++) {
-					if(ids[y,x] > 0) {
+					if(ids[x,y] > 0) {
 						// Sucht das passende TileSetRef fuer die ids[y,x]
-						tmp_tilesetref = HMP.Map.getTileSetRefFromGid(tilesetrefs, ids[y,x]);
+						tmp_tilesetref = HMP.Map.getTileSetRefFromGid(tilesetrefs, ids[x,y]);
 						// Berechnet den Index des Tiles anhand der Gid und der firstgid und gibt das entsprechende Tile mit dem Index zurueck.
-						tmp_tile = tmp_tilesetref.source.getTileFromIndex(ids[y,x] - tmp_tilesetref.firstgid);
+						tmp_tile = tmp_tilesetref.source.getTileFromIndex(ids[x,y] - tmp_tilesetref.firstgid);
 					}
 					else {
 						tmp_tile = new RegularTile();
 						tmp_tile.type = TileType.NO_TILE;
 					}
-					tiles[y,x] = tmp_tile;
+					tiles[x,y] = tmp_tile;
 				}
 			}
 			return tiles;
 		}
 		private int[,] loadIDs (string eval_expression, uint width, uint height) {
 			Gee.List<Gee.HashMap<string, string>> properties = loadPropertiesOfSameNodes (eval_expression);
-			int[,] ids = new int[height,width];
+			int[,] ids = new int[width,height];
 			int count = 0;
 			foreach (Gee.HashMap<string, string> propertie in properties) {
-				ids[(uint)(count/width),(uint)(count%width)] = int.parse(propertie.get ("gid"));
+				ids[(uint)(count%width),(uint)(count/width)] = int.parse(propertie.get ("gid"));
 				count++;
 			}
 			return ids;

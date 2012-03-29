@@ -21,7 +21,7 @@ TARGET        = hmp
 # Pakete
 PACKAGES      = gl glu glut sdl sdl-image cairo gdk-x11-2.0 libxml-2.0 gee-1.0 gio-2.0 posix
 # C-Compileranweisungen
-CFLAGS        = -lglut -lSDL_image
+CFLAGS        = -lglut -lSDL_image -lm
 
 # Quellverzeichnis
 SRC_DIR       = src/

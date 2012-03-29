@@ -111,7 +111,7 @@ namespace HMP {
 					if (count == index) {
 						//print("X ");
 						found = true;
-						result = tile[y,x];
+						result = tile[x,y];
 					}
 					count++;
 				}
@@ -129,7 +129,7 @@ namespace HMP {
 			tex.loadFromFile("./data/tileset/"+source);
 			int split_width = (int) tilewidth;
 			int split_height = (int) tileheight;
-			tile = new Tile[count_y,count_x];
+			tile = new Tile[count_x,count_y];
 			//int count = 0;
 			Pixbuf pxb = tex.pixbuf;
 			print("=====LOADTILES=====\n");
@@ -138,7 +138,7 @@ namespace HMP {
 					Pixbuf split = new Pixbuf(Gdk.Colorspace.RGB, pxb.get_has_alpha(), pxb.get_bits_per_sample(), split_width, split_height);
 					//print("y: %i x:%i split_width:%i split_height:%i count %i", y, x, split_width, split_height, count);
 					pxb.copy_area((int) split_width*x, (int) split_height*y, (int) split_width, (int) split_height, split, 0, 0);
-					tile[y,x] = new RegularTile.FromPixbuf(split);
+					tile[x,y] = new RegularTile.FromPixbuf(split);
 					//count++;
 					//tile[y,x].printValues();
 				}
@@ -152,7 +152,7 @@ namespace HMP {
 		public void save(string folder = "./tmp/") {
 			for (uint y=0;y<count_y;y++) {
 				for (uint x=0;x<count_x;x++) {
-					tile[y,x].save(folder+name+"_y"+y.to_string()+"_x"+x.to_string()+".png");
+					tile[x,y].save(folder+name+"_y"+y.to_string()+"_x"+x.to_string()+".png");
 				}
 			}
 		}
@@ -164,7 +164,7 @@ namespace HMP {
 			for (uint y=0;y<count_y;y++) {
 				for (uint x=0;x<count_x;x++) {
 					//print("%u ", tile[y,x].type);
-					tile[y,x].printValues();
+					tile[x,y].printValues();
 				}
 				print("\n");
 			}
