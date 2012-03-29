@@ -20,6 +20,12 @@ namespace HMP {
 	 */
 	public class NPC : Entity {
 
+		public NPC (Coord pos, SpriteSet s) {
+			this.pos = pos;
+			spriteset = s;
+			spriteset.set_Animation("stay", Direction.SOUTH	);
+		}
+
 		public override void interactWith (Player p) {
 			//TODO Dialog.
 		}

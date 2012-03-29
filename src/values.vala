@@ -177,6 +177,11 @@ namespace HMP {
 		public Coord() {
 			base(2);
 		}
+		public Coord.nondefault (double x, double y) {
+			this();
+			this.x = x;
+			this.y = y;
+		}
 		public double x {
 			get { return vec[1]; }
 			set { vec[1] = value; }

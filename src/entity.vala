@@ -41,6 +41,8 @@ namespace HMP {
 
 		public bool motion { get; protected set; default = false;}
 
+		public double collisionRadius = 7.0;
+
 		/**
 		 * Konstruktor
 		 */
@@ -64,6 +66,14 @@ namespace HMP {
 		 * Gibt an, ob sich eine Entitaet auf der aktuellen Map kollisonsfrei bewegen kann.
 		 */
 		private bool motionPossible () {
+			foreach (Entity e in WORLD.CURRENT_MAP.entities) {
+				Vector v = new Vector.fromDifference (e.pos, pos);
+				if (e != this && v.VectorNorm() < (collisionRadius + e.collisionRadius)) {
+					print ("Kollision mit Entity\n");
+					pos.addVector (v.divideByScalar(2.0));
+					return false;
+				}
+			}
 			int y = (direction == Direction.NORTH) ? -1 : (direction == Direction.SOUTH) ? 1 : 0;
 			int x = (direction == Direction.WEST) ? -1 : (direction == Direction.EAST) ? 1 : 0;
 			//print ("Spielerposition: %f, %f\n", (pos.x + spriteset.spritewidth/2)/WORLD.CURRENT_MAP.tilewidth, (pos.y + spriteset.spriteheight/2)/WORLD.CURRENT_MAP.tileheight);

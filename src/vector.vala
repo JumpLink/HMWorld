@@ -38,6 +38,23 @@ public class Vector {
 		this.dim = dim;
 		this.vec = new double[dim];
 	}
+
+	/**
+	 * Konstruktor.
+	 * 
+	 * Erzeugt einen Vektor zwischen zwei Punkten.
+	 * 
+	 * @param v1 Erster Punkt.
+	 * @param v2 Zweiter Punkt.
+	 */
+	public Vector.fromDifference (Vector v1, Vector v2)
+	requires (v1.dim == v2.dim)
+	{
+		dim = v1.dim;
+		vec = new double[dim];
+		for (int i = 0; i < dim; ++i)
+				vec[i] = v2.vec[i] - v1.vec[i];
+	}
 	 
 	public Vector addVector (Vector v) {
 		if (dim == v.dim)
