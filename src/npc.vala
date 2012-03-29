@@ -27,6 +27,7 @@ namespace HMP {
 		}
 
 		public override void interactWith (Player p) {
+			print ("Spieler %s redet mit NPC\n", p.name);
 			//TODO Dialog.
 		}
 

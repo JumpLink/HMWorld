@@ -41,7 +41,7 @@ namespace HMP {
 
 		public bool motion { get; protected set; default = false;}
 
-		public double collisionRadius = 7.0;
+		public double collisionRadius = 5.0;
 
 		/**
 		 * Konstruktor
@@ -70,7 +70,7 @@ namespace HMP {
 				Vector v = new Vector.fromDifference (e.pos, pos);
 				if (e != this && v.VectorNorm() < (collisionRadius + e.collisionRadius)) {
 					print ("Kollision mit Entity\n");
-					pos.addVector (v.divideByScalar(2.0));
+					pos.addVector (v.divideByScalar(4.0));
 					return false;
 				}
 			}

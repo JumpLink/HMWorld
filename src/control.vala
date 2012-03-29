@@ -21,7 +21,7 @@ namespace HMP {
 		public char RIGHT='d';
 		public char DOWN='s';
 		public char LEFT='a';
-
+		public char ACTION = 'f';
 		public Control() {
 
 		} 
@@ -64,6 +64,9 @@ namespace HMP {
 					}
 					if (key == RIGHT) {
 						p.setMotion (Direction.EAST, true);
+					}
+					if (key == ACTION) {
+						p.interact();
 					}
 					switch (key) {
 						/* Programm beenden */
