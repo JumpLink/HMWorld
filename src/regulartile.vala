@@ -65,7 +65,7 @@ namespace HMP {
 			 */
 			public override void draw( double x, double y, double zoff) {
 				if(type != TileType.NO_TILE) {
-					tex.draw(x,y,zoff);
+					tex.draw((int)x,(int)y,zoff);
 				} else {
 					//print("Tile ist kein Tile zum zeichnen\n");
 				}

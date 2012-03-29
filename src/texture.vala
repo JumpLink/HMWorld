@@ -154,7 +154,7 @@ namespace HMP {
 		/**
 		 *
 		 */
-		public void draw( double x, double y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
+		public void draw( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
 			switch (mirror) {
 				case HMP.Mirror.NONE:
 					bindTexture();
