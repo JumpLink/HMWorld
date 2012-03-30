@@ -143,6 +143,18 @@ namespace HMP {
 	    }
 	}
 	/**
+	 * Unterklasse zum Spiechern von Dialogbaeumen.
+	 */
+	class DTX : HMP.XML {
+		public DTX (string path) {
+			base (path);
+		}
+
+		//public DialogTree loadDialogTree () {
+
+		//}
+	}
+	/**
 	 * Unterklasse von Maps als Hilfe fuer das Laden einer XML-basierten Map-Datei.
 	 * Wir verwenden dafuer das Dateiformat von "Tiled", einem Mapeditor
 	 * der hier zu finden ist: [[http://www.mapeditor.org/|mapeditor.org]]<<BR>>
