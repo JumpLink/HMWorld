@@ -155,46 +155,49 @@ namespace HMP {
 		 *
 		 */
 		public void draw( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
-			switch (mirror) {
-				case HMP.Mirror.NONE:
-					bindTexture();
-					glBegin (GL_QUADS);
-						glTexCoord2d(0,0);
-							glVertex3d ( x, y, zoff);
-						glTexCoord2d(0,1);
-							glVertex3d ( x, y + height, zoff);
-						glTexCoord2d(1,1);
-							glVertex3d ( x + width, y + height, zoff);
-						glTexCoord2d(1,0);
-							glVertex3d ( x + width, y, zoff);
-					glEnd ();
-				break;
-				case HMP.Mirror.VERTICAL:
-					bindTexture();
-					glBegin (GL_QUADS);
-						glTexCoord2d(1,0);
-							glVertex3d ( x, y, zoff);
-						glTexCoord2d(1,1);
-							glVertex3d ( x, y + height, zoff);
-						glTexCoord2d(0,1);
-							glVertex3d ( x + width, y + height, zoff);
-						glTexCoord2d(0,0);
-							glVertex3d ( x + width, y, zoff);
-					glEnd ();
-				break;
-				case HMP.Mirror.HORIZONTAL:
-					bindTexture();
-					glBegin (GL_QUADS);
-						glTexCoord2d(0,1);
-							glVertex3d ( x, y, zoff);
-						glTexCoord2d(0,0);
-							glVertex3d ( x, y + height, zoff);
-						glTexCoord2d(1,0);
-							glVertex3d ( x + width, y + height, zoff);
-						glTexCoord2d(1,1);
-							glVertex3d ( x + width, y, zoff);
-					glEnd ();
-				break;
+			/* Ueberpruefung ob zu zeichnender Bereich innerhalb des Fensters liegt */
+			if (y < WORLD.STATE.window_height && x < WORLD.STATE.window_width) {
+				switch (mirror) {
+					case HMP.Mirror.NONE:
+						bindTexture();
+						glBegin (GL_QUADS);
+							glTexCoord2d(0,0);
+								glVertex3d ( x, y, zoff);
+							glTexCoord2d(0,1);
+								glVertex3d ( x, y + height, zoff);
+							glTexCoord2d(1,1);
+								glVertex3d ( x + width, y + height, zoff);
+							glTexCoord2d(1,0);
+								glVertex3d ( x + width, y, zoff);
+						glEnd ();
+					break;
+					case HMP.Mirror.VERTICAL:
+						bindTexture();
+						glBegin (GL_QUADS);
+							glTexCoord2d(1,0);
+								glVertex3d ( x, y, zoff);
+							glTexCoord2d(1,1);
+								glVertex3d ( x, y + height, zoff);
+							glTexCoord2d(0,1);
+								glVertex3d ( x + width, y + height, zoff);
+							glTexCoord2d(0,0);
+								glVertex3d ( x + width, y, zoff);
+						glEnd ();
+					break;
+					case HMP.Mirror.HORIZONTAL:
+						bindTexture();
+						glBegin (GL_QUADS);
+							glTexCoord2d(0,1);
+								glVertex3d ( x, y, zoff);
+							glTexCoord2d(0,0);
+								glVertex3d ( x, y + height, zoff);
+							glTexCoord2d(1,0);
+								glVertex3d ( x + width, y + height, zoff);
+							glTexCoord2d(1,1);
+								glVertex3d ( x + width, y, zoff);
+						glEnd ();
+					break;
+				}
 			}
 		}
 		/**
