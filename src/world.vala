@@ -68,7 +68,7 @@ namespace HMP {
 			foreach (Player p in PLAYERS) {
 				CURRENT_MAP.entities.add(p);
 			}
-			CURRENT_MAP.entities.add (new NPC(new Coord.nondefault (27.0, 27.0), SPRITESETMANAGER.getFromName("Hero")));
+			CURRENT_MAP.entities.add (new NPC(new Coord.nondefault (27.0, 27.0), SPRITESETMANAGER.getFromName("hase")));
 			/*Spielstatus initialisieren*/
 			STATE.init();
 		}

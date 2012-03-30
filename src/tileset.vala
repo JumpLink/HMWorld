@@ -99,7 +99,8 @@ namespace HMP {
 		 * @param index Index des gesuchten Tiles
 		 */
 		public HMP.Tile getTileFromIndex(uint index)
-		requires (index >= 0) {
+		requires (index >= 0)
+		{
 			//print("==GETTILEFROMINDEX==\n");
 			uint count = 0;
 			bool found = false;

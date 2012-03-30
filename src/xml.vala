@@ -250,7 +250,7 @@ namespace HMP {
 			Tile[,] tiles;
 			//print("Fuege Layer mit Namen %s hinzu\n", properties.get ("name"));
 			bool collision = false;
-			DrawLayer drawlayer;
+			DrawLevel drawlayer;
 			//XPath-Expression ausfuehren
 			unowned Xml.XPath.Object obj = ctx.eval_expression("/map/layer");
 			if(obj==null) print("failed to evaluate xpath\n");
@@ -271,13 +271,13 @@ namespace HMP {
 				//Holt sich auch gleich den Z-Wert
 				loadLayerProps(i, out collision, out drawlayer);
 				switch (drawlayer) {
-					case DrawLayer.UNDER:
+					case DrawLevel.UNDER:
 						layer_under.add( new Layer.all( name, i+1, collision, width, height, tiles) );
 					break;
-					case DrawLayer.SAME:
+					case DrawLevel.SAME:
 						layer_same.add( new Layer.all( name, i+1, collision, width, height, tiles) );
 					break;
-					case DrawLayer.OVER:
+					case DrawLevel.OVER:
 						layer_over.add( new Layer.all( name, i+1, collision, width, height, tiles) );
 					break;
 
@@ -293,7 +293,7 @@ namespace HMP {
 		 * @param z Z-Wert der ausgelesen werden und gespeichert werden soll.
 		 * @return false bei Fehler sonst true
 		 */
-		private bool loadLayerProps (uint layer_number, out bool collision, out DrawLayer drawlayer) {
+		private bool loadLayerProps (uint layer_number, out bool collision, out DrawLevel drawlayer) {
 			Xml.Node* node = evalExpression("/map/layer["+(layer_number+1).to_string()+"]/properties/property");
 			Xml.Attr* attr = node->properties;
 			string name;
@@ -312,7 +312,7 @@ namespace HMP {
 						content = (string) attr->children->content;
 						if (name == "value" ) {
 							//print("Attribute: \tname: %s\tvalue: %s\n", name, content);
-							drawlayer = DrawLayer.parse(content);
+							drawlayer = DrawLevel.parse(content);
 							return true;
 						}
 					}

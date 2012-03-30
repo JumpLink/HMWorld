@@ -232,29 +232,49 @@ namespace HMP {
 		public static Mirror parse (string str) {
 			switch (str) {
 				case "vertical":
+				case "VERTICAL":
 					return HMP.Mirror.VERTICAL;
 				case "horizontal":
+				case "HORIZONTAL":
 					return HMP.Mirror.HORIZONTAL;
 				case "none":
+				case "NONE":
 					return HMP.Mirror.NONE;
 				default:
 					assert_not_reached();
 			}
 		}
 	}
-	public enum DrawLayer {
+	public enum DrawLevel {
+		/**
+		 * Objekt wird unter einem anderen gezeichnet.
+		 */
 		UNDER = 1,
+		/**
+		 * Keine genaue Angabe darueber ob das Objekt unter oder ueber einem anderen gezeichnet werden soll.
+		 */
 		SAME = 0,
+		/**
+		 * Objekt wird ueber einem anderen gezeichnet.
+		 */
 		OVER = -1;
-
-		public static DrawLayer parse (string str) {
+		/**
+		 * parst einen String zu DrawLevel
+		 */
+		public static DrawLevel parse (string str) {
 			switch (str) {
 				case "same":
-					return HMP.DrawLayer.SAME;
+				case "Same":
+				case "SAME":
+					return HMP.DrawLevel.SAME;
 				case "over":
-					return HMP.DrawLayer.OVER;
+				case "Over":
+				case "OVER":
+					return HMP.DrawLevel.OVER;
 				case "under":
-					return HMP.DrawLayer.UNDER;
+				case "Under":
+				case "UNDER":
+					return HMP.DrawLevel.UNDER;
 				default:
 					assert_not_reached();
 			}

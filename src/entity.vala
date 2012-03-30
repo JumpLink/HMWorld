@@ -24,7 +24,6 @@ namespace HMP {
 		 * Geschwindigkeit (Schritte in X-Richtung pro Sekunde)
 		 */
 		public double steps_ps = 35;
-		//private double interval_sum;
 		/**
 		 * Position des Entities
 		 */
