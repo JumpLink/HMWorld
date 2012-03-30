@@ -53,6 +53,10 @@ namespace HMP {
 		 */
 		public SpriteSet spriteset;
 
+		public static int compare (Entity a, Entity b) {
+			return (int) (a.pos.x - b.pos.x);
+		}
+
 		public void setMotion (Direction d, bool motion) {
 			//Pruefen ob dies eine veraenderung bewirkt, wenn ja..
 			if(direction != d || this.motion != motion) {
@@ -99,6 +103,7 @@ namespace HMP {
 						pos.x-=WORLD.STATE.interval*steps_ps;
 						break;
 				}
+				WORLD.CURRENT_MAP.entities.sort ((CompareFunc) compare);
 				//Coord min = new Coord();
 				//Coord max = new Coord();
 				//max.y = map.width;
