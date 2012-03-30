@@ -20,15 +20,21 @@ namespace HMP {
 	 */
 	public class NPC : Entity {
 
+		private DialogTree dialog;
+
 		public NPC (Coord pos, SpriteSet s) {
 			this.pos = pos;
 			spriteset = s;
 			spriteset.set_Animation("stay", Direction.SOUTH	);
+			DialogTree[] c = new DialogTree[2];
+			c[0] = new DialogTree ("", "Gut.", new DialogTree[0]);
+			c[1] = new DialogTree ("", "Nicht gut.", new DialogTree[0]);
+			dialog = new DialogTree ("Wie gehts?", "", c);
 		}
 
 		public override void interactWith (Player p) {
 			print ("Spieler %s redet mit NPC\n", p.name);
-			//TODO Dialog.
+			print (dialog.getText());
 		}
 
 	}
