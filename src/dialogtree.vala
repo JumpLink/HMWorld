@@ -19,29 +19,60 @@ namespace HMP {
 	 * Klasse fuer einen Dialogbaum.
 	 */
 	public class DialogTree {
+		/**
+		 * Antwort auf vorhergehende Frage.
+		 */
 		private string answer;
+		/**
+		 * Aktuelle Frage.
+		 */
 		private string question;
+		/**
+		 * Ausgewaehlte Antwort.
+		 */
 		private int choice = 0;
+		/**
+		 * Antwortmoeglichkeiten.
+		 */
 		private DialogTree[] children;
 
+		/**
+		 * Konstruktor.
+		 * @param q Frage.
+		 * @param a Antwort.
+		 * @param c Nachfolger.	
+		 */
 		public DialogTree (string q, string a, DialogTree[] c) {
 			question = q;
 			answer = a;
 			children = c;
 		}
-
+		/**
+		 * Aendert ausgewaehlte Antwort.
+		 * @param next Naechste Antwort ? sonst vorherige
+		 */
 		public void chooseAnswer (bool next) {
 			choice = (choice + (next ? 1 : -1)) % children.length;
 		}
-
+		/**
+		 * Gibt aktuelle Frage und moegliche Antworten aus.
+		 * @return Frage und Antworten als string.
+		 */
 		public string getText () {
+			if (children.length == 0) {
+				WORLD.STATE.dialog = false;
+				return "Dialog beendet!";
+			}
 			string text = question + "\n";
 			for (uint i = 0; i < children.length; ++i) {
 				text += i.to_string() + " : " + children[i].answer + ((i == choice) ? "!" : "") + "\n";			
 			}
 			return text;
 		}
-
+		/**
+		 * Gibt ausgewaehlte Antwort aus.
+		 * @return Die Antwort.
+		 */
 		public DialogTree getAnswer () {
 			return children[choice];
 		}

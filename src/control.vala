@@ -53,17 +53,18 @@ namespace HMP {
 			if (status == false) {
 				/* nicht-Spezialtasten */
 				if (!isSpecialKey) {
-					if (key == UP) {
-						p.setMotion (Direction.NORTH, true);
-					}
-					if (key == LEFT) {
-						p.setMotion (Direction.WEST, true);
-					}
-					if (key == DOWN) {
-						p.setMotion (Direction.SOUTH, true);
-					}
-					if (key == RIGHT) {
-						p.setMotion (Direction.EAST, true);
+					if (WORLD.STATE.dialog) {
+						if (key == UP || key == DOWN)
+							p.chooseAnswer (key == DOWN);
+					} else {
+						if (key == UP)
+							p.setMotion (Direction.NORTH, true);
+						if (key == LEFT)
+							p.setMotion (Direction.WEST, true);
+						if (key == DOWN)
+							p.setMotion (Direction.SOUTH, true);
+						if (key == RIGHT)
+							p.setMotion (Direction.EAST, true);
 					}
 					if (key == ACTION) {
 						p.interact();

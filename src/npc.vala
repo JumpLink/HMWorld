@@ -20,8 +20,16 @@ namespace HMP {
 	 */
 	public class NPC : Entity {
 
+		/**
+		 * Dialogbaum.
+		 */
 		private DialogTree dialog;
 
+		/**
+		 * Konstruktor.
+		 * @param pos Position.
+		 * @param s Spriteset.
+		 */
 		public NPC (Coord pos, SpriteSet s) {
 			this.pos = pos;
 			spriteset = s;
@@ -31,9 +39,21 @@ namespace HMP {
 			c[1] = new DialogTree ("", "Nicht gut.", new DialogTree[0]);
 			dialog = new DialogTree ("Wie gehts?", "", c);
 		}
+		/**
+		 * Aendert ausgewaehlte Antwort.
+		 * @param next Naechste Antwort ? sonst vorherige
+		 */
+		public void chooseAnswer (bool next) {
+			dialog.chooseAnswer(next);
+			print (dialog.getText());
+		}
 
 		public override void interactWith (Player p) {
-			print ("Spieler %s redet mit NPC\n", p.name);
+			if (!WORLD.STATE.dialog) {
+				print ("Spieler %s redet mit NPC\n", p.name);
+				WORLD.STATE.dialog = true;
+			} else
+				dialog = dialog.getAnswer ();
 			print (dialog.getText());
 		}
 

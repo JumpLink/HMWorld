@@ -46,6 +46,10 @@ namespace HMP {
 		 */
 		public bool debug = false;
 		/**
+		 * Dialog-Modus ist aktiv.
+		 */
+		public bool dialog = false;
+		/**
 		 * Seit dem letzten Intervall vergangene Zeit in Sekunden
 		 */
 		public double interval;

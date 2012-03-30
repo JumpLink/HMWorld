@@ -105,6 +105,18 @@ namespace HMP {
 					e.interactWith(this);
 			}
 		}
+		/**
+		 * Aendert ausgewaehlte Antwort.
+		 * @param next Naechste Antwort ? sonst vorherige
+		 */
+		public void chooseAnswer (bool next) {
+			if (WORLD.STATE.dialog) {
+				foreach (Entity e in WORLD.CURRENT_MAP.entities) {
+					if (item == null && inRange(e) && e is NPC)
+						(e as NPC).chooseAnswer (next);
+				}
+			}
+		}
 
 		public override void interactWith (Player p) {
 			//TODO Interaktion zwischen zwei Spielern.
