@@ -54,7 +54,7 @@ namespace HMP {
 		public SpriteSet spriteset;
 
 		public static int compare (Entity a, Entity b) {
-			return (int) (a.pos.x - b.pos.x);
+			return (int) (a.pos.y - b.pos.y);
 		}
 
 		public void setMotion (Direction d, bool motion) {
