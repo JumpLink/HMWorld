@@ -26,6 +26,7 @@ namespace HMP {
 	 */
 	public class Texture {
 		GLuint* texID = new GLuint[1];
+		GL.GLuint displaylistID;
 		GLenum texture_format;
 		GL.GLint read_channel = 3;
 		/**
@@ -70,8 +71,11 @@ namespace HMP {
 		 * Konstruktor.
 		 */
 		public Texture() {
-			/*nicht in der bindTexture aufrufen, wir brauchen nur einmal einen neuen Namen*/
 			glGenTextures(1, texID);
+			displaylistID = glGenLists(1);
+		}
+		~Texture() {
+			glDeleteLists(displaylistID,1);
 		}
 		/**
 		 * Ladet eine Textur aus einer Datei.
@@ -79,6 +83,8 @@ namespace HMP {
 		 */
 		public void loadFromFile(string path) {
 			loadFromFileWithGdk(path);
+			
+			createDisplayList();
 		}
 		/**
 		 * Ladet eine Textur aus einer Datei mittels Gdk.
@@ -97,7 +103,21 @@ namespace HMP {
 			
 			loadFromPixbuf(pixbuf);
 		}
-
+		private void createDisplayList() {
+			glNewList(displaylistID, GL_COMPILE);
+				bindTexture();
+				glBegin (GL_QUADS);
+					glTexCoord2d(0,0);
+						glVertex3d ( 0, 0, 0);
+					glTexCoord2d(0,1);
+						glVertex3d ( 0, height, 0);
+					glTexCoord2d(1,1);
+						glVertex3d ( width, height, 0);
+					glTexCoord2d(1,0);
+						glVertex3d ( width, 0, 0);
+				glEnd ();
+			glEndList();
+		}
 		/**
 		 * Ladet eine Textur aus einem Pixbuf in die Klasse.
 		 * @param pixbuf Der pixbuf aus dem die Textur erstellt werden soll.
@@ -155,6 +175,36 @@ namespace HMP {
 		 *
 		 */
 		public void draw( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
+			draw_direct(x,y,zoff,mirror);
+		}
+		/**
+		 *
+		 */
+		public void draw_list( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
+			/* Ueberpruefung ob zu zeichnender Bereich innerhalb des Fensters liegt */
+			if (y < WORLD.STATE.window_height && x < WORLD.STATE.window_width) {
+				glPushMatrix();
+					glTranslatef((GL.GLfloat)x,(GL.GLfloat)y,(GL.GLfloat)zoff);
+					switch (mirror) {
+						case HMP.Mirror.NONE:
+							glCallList(displaylistID);
+						break;
+						case HMP.Mirror.VERTICAL:
+							glCallList(displaylistID);
+						break;
+						case HMP.Mirror.HORIZONTAL:
+							glCallList(displaylistID);
+						break;
+					}
+				glPopMatrix();
+			}
+			//print ("%i, ",(int)displaylistID);
+		}
+
+		/**
+		 *
+		 */
+		public void draw_direct( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
 			/* Ueberpruefung ob zu zeichnender Bereich innerhalb des Fensters liegt */
 			if (y < WORLD.STATE.window_height && x < WORLD.STATE.window_width) {
 				switch (mirror) {
