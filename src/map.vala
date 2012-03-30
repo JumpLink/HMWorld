@@ -33,13 +33,25 @@ namespace HMP {
 		 */
 		public string version;
 		/**
-		 * Gesamtbreite der map
+		 * Gesamtbreite der Map in Tiles
 		 */
 		public uint width;
 		/**
-		 * Gesamthoehe der Map
+		 * Gesamthoehe der Map in Tiles
 		 */
 		public uint height;
+		/**
+		 * Gesamtbreite der Map in Pixel
+		 */
+		public uint pxl_width {
+			get {return width*tilewidth;}
+		}
+		/**
+		 * Gesamthoehe der Map in Pixel
+		 */
+		public uint pxl_height {
+			get {return height*tileheight;}
+		}
 		/**
 		 * Breite eines Tiles
 		 */

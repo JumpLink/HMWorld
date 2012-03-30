@@ -49,7 +49,10 @@ namespace HMP {
 						 	WORLD.STATE.window_height, 0,						/* unten, oben */
 							-128, 128);											/* tiefe */
 				/* verschiebt die Welt in die Mitte	 */
-				glTranslatef((GL.GLfloat)WORLD.CURRENT_MAP.shift_x,(GL.GLfloat)WORLD.CURRENT_MAP.shift_y,0);
+				if (WORLD.STATE.window_width > WORLD.CURRENT_MAP.pxl_width)
+					glTranslatef((GL.GLfloat)WORLD.CURRENT_MAP.shift_x,0,0);
+				if (WORLD.STATE.window_height > WORLD.CURRENT_MAP.pxl_height)
+					glTranslatef(0,(GL.GLfloat)WORLD.CURRENT_MAP.shift_y,0);
 			} else {
 				gluPerspective (100.0f, (float) WORLD.STATE.window_width/WORLD.STATE.window_height, -128, 128 );
 				gluLookAt(WORLD.STATE.window_width/2, WORLD.STATE.window_height, -128, WORLD.STATE.window_width/2, 0, 128, 0,-1,0);
