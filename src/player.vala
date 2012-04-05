@@ -27,7 +27,7 @@ namespace HMP {
 		/**
 		 * Inventar
 		 */
-		public Inventory tools;
+		public Inventory tools = new Inventory ();
 
 		/**
 		 * Aufgehobener Gegenstand.
@@ -37,7 +37,7 @@ namespace HMP {
 		/**
 		 * Lager.
 		 */
-		public Storage storage;
+		public Storage storage = new Storage ();
 
 		private double interactionRadius = 15.0;
 
@@ -48,8 +48,6 @@ namespace HMP {
 			base ();
 			this.name = name;
 			this.spriteset = spriteset;
-			tools = new Inventory ();
-			storage = new Storage ();
 			spriteset.set_Animation("stay", Direction.SOUTH	);
 		}
 
@@ -92,7 +90,30 @@ namespace HMP {
 	 	 * Benutzt ausgeruestetes Werkzeug mit Spielerumgebung.
 	 	 */
 		public void use () {
-			tools.use (map, ((uint) pos.vec[0]), ((uint) pos.vec[1]), direction, storage);
+			tools.use (WORLD.CURRENT_MAP, (uint) ((pos.x)/WORLD.CURRENT_MAP.tilewidth), 
+				(uint) ((pos.y) /WORLD.CURRENT_MAP.tileheight), direction, storage);
+			foreach (Layer l in WORLD.CURRENT_MAP.layers_over) {
+				foreach (Tile t in l.tiles)
+					if (t.plant != null)
+						print ("aaaaaaaaaaarrrgh!!!\n");
+			}
+			foreach (Layer l in WORLD.CURRENT_MAP.layers_same) {
+				foreach (Tile t in l.tiles)
+					if (t.plant != null)
+						print ("aaaaaaaaaaarrrgh!!!\n");
+			}
+			foreach (Layer l in WORLD.CURRENT_MAP.layers_under) {
+				foreach (Tile t in l.tiles)
+					if (t.plant != null)
+						print ("aaaaaaaaaaarrrgh!!!\n");
+			}
+		}
+
+		/**
+		 * Wechselt zwischen ausgeruesteten Werkzeugen.
+		 */
+		public void swap () {
+			tools.swapTools ();
 		}
 
 		/**

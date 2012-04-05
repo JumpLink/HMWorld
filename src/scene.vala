@@ -73,5 +73,82 @@ namespace HMP {
 			 */
 			return (glGetError() == GL_NO_ERROR);
 		}
+
+		/**
+		 * Zeichnen einer Zeichfolge in den Vordergrund. Gezeichnet wird mit Hilfe von
+		 * <code>glutBitmapCharacter(...)</code>. Kann wie <code>printf genutzt werden.</code>
+		 * @param x x-Position des ersten Zeichens 0 bis 1 (In).
+		 * @param y y-Position des ersten Zeichens 0 bis 1 (In).
+		 * @param color Textfarbe (In).
+		 * @param str Formatstring fuer die weiteren Parameter (In).
+		 */
+		static void drawString (GLfloat x, GLfloat y, GLfloat[] color, string str)
+		{
+			GLint matrixMode = 0;             /* Zwischenspeicher akt. Matrixmode */
+
+			/* aktuelle Zeichenfarbe (u.a. Werte) sichern */
+			glPushAttrib (GL_COLOR_BUFFER_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT);
+
+			/* aktuellen Matrixmode speichern */
+			glGetIntegerv (GL_MATRIX_MODE, &matrixMode);
+			glMatrixMode (GL_PROJECTION);
+
+			/* aktuelle Projektionsmatrix sichern */
+			glPushMatrix ();
+
+			/* neue orthogonale 2D-Projektionsmatrix erzeugen */
+			glLoadIdentity ();
+			gluOrtho2D (0.0, 1.0, 1.0, 0.0);
+
+			glMatrixMode (GL_MODELVIEW);
+
+			/* aktuelle ModelView-Matrix sichern */
+			glPushMatrix ();
+
+			/* neue ModelView-Matrix zuruecksetzen */
+			glLoadIdentity ();
+
+			/* Tiefentest ausschalten */
+			glDisable (GL_DEPTH_TEST);
+
+			/* Licht ausschalten */
+			glDisable (GL_LIGHTING);
+
+			/* Nebel ausschalten */
+			glDisable (GL_FOG);
+
+			/* Blending ausschalten */
+			glDisable (GL_BLEND);
+
+			/* Texturierung ausschalten */
+			glDisable (GL_TEXTURE_1D);
+			glDisable (GL_TEXTURE_2D);
+			/* glDisable (GL_TEXTURE_3D); */
+
+			/* neue Zeichenfarbe einstellen */
+			glColor4fv (color);
+
+			/* an uebergebenene Stelle springen */
+			glRasterPos2f (x, y);
+
+			/* Zeichenfolge zeichenweise zeichnen */
+			//for (uint i = 0; i < str.length; i++)
+			{
+				//glutBitmapCharacter (GLUT_BITMAP_HELVETICA_18, str[i]);
+			}
+
+			/* alte ModelView-Matrix laden */
+			glPopMatrix ();
+			glMatrixMode (GL_PROJECTION);
+
+			/* alte Projektionsmatrix laden */
+			glPopMatrix ();
+
+			/* alten Matrixmode laden */
+			glMatrixMode (matrixMode);
+
+			/* alte Zeichenfarbe und Co. laden */
+			glPopAttrib ();
+		}
 	}
 }

@@ -69,6 +69,10 @@ namespace HMP {
 				} else {
 					//print("Tile ist kein Tile zum zeichnen\n");
 				}
+				if (plant != null) {
+					print ("Pflanze zeichnen???\n");
+					plant.draw (x, y, zoff + 0.001);
+				}
 			}
 			/**
 			 * {@inheritDoc}

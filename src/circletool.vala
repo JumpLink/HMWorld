@@ -37,9 +37,13 @@ namespace HMP {
 		 */
 		protected void applyToLayer (Map m, uint x, uint y, string layerName, Storage s) {
 			Layer l = m.getLayerFromName(layerName);
-			for (uint ix = x - 1; ix < (x + 1); ++ix)
-				for (uint iy = y - 1; iy < (y + 1); ++iy)
-					applyToTile (l.tiles[ix, iy], s);
+			for (uint ix = x - 1; ix <= (x + 1); ++ix)
+				for (uint iy = y - 1; iy <= (y + 1); ++iy) {
+						print ("Bearbeite Tile %u, %u\n", ix, iy);
+						applyToTile (l.tiles[ix, iy], s);
+						if (l.tiles[ix, iy].plant == null)
+							print ("Keine Pflanze!\n");
+					}
 		}
 
 	}

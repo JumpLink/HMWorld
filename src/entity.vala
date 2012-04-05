@@ -29,11 +29,6 @@ namespace HMP {
 		 */
 		public Coord pos {get; protected set;}
 		/**
-		 * Karte, auf der sich die Entitaet befindet.
-		 */
-		public Map map = WORLD.CURRENT_MAP;
-
-		/**
 		 * Ausrichtung der Entitaet.
 		 */
 		public Direction direction = Direction.SOUTH;

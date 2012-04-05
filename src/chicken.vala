@@ -41,7 +41,7 @@ namespace HMP {
 				int x = (direction == Direction.NORTH) ? -1 : (direction == Direction.SOUTH) ? 1 : 0;
 				int y = (direction == Direction.WEST) ? -1 : (direction == Direction.EAST) ? 1 : 0;
 				Egg e = new Egg (pos.x + x, pos.y + y);
-				map.entities.add(e);
+				WORLD.CURRENT_MAP.entities.add(e);
 			}
 		}
 	}

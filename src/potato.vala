@@ -24,6 +24,9 @@ namespace HMP {
 	 	 */
 	 	public Potato () {
 	 		base ();
+	 		//Platzhalter
+	 		spriteset = WORLD.SPRITESETMANAGER.getFromName("hase");
+	 		spriteset.set_Animation("stay", Direction.SOUTH	);
 	 		timeBetweenCrops = 7;
 	 		maxCrops = 3;
 	 		crop = CropType.POTATO;

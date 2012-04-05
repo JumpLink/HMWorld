@@ -34,7 +34,7 @@ namespace HMP {
 		 */
 	 	public Inventory () {
 	 		primary = new EmptyHands ();
-	 		secondary = new EmptyHands ();
+	 		secondary = new PotatoSeed ();
 	 	}
 
 	 	/**
@@ -44,6 +44,7 @@ namespace HMP {
 	 		Tool tmp = primary;
 	 		primary = secondary;
 	 		secondary = tmp;
+	 		print ("Werkzeug gewechselt!\n");
 	 	}
 
 	 	/**

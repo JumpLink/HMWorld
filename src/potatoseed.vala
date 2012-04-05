@@ -25,14 +25,16 @@ namespace HMP {
 		}
 
 		public void use (Map m, uint x, uint y, Direction d, Storage s) {
-			applyToLayer (m, x, y, "player", s);
+			print ("Pflanze Kartoffeln an %u, %u!\n", x, y);
+			applyToLayer (m, x, y, "same as hero 2", s);
 		}
 
 		protected void applyToTile (Tile t, Storage s) {
-			if (t.type == TileType.PLANTABLE && seed > 0) {
-				t.type = TileType.PLANT;
+			if (/*t.type == TileType.PLANTABLE && */t.plant == null && seed > 0) {
+				//t.type = TileType.PLANT;
 				t.plant = new Potato ();
 				--seed;
+				print ("Kartoffel gepflanzt!\n");
 			}
 		}
 	}

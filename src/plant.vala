@@ -47,6 +47,10 @@ namespace HMP {
 	 	 * Art der Ernte.
 	 	 */
 	 	protected static CropType crop;
+	 	/**
+	 	 * Spriteset der Pflanze.
+	 	 */
+	 	public SpriteSet spriteset;
 
 	 	/**
 	 	 * Konstruktor.
@@ -86,5 +90,10 @@ namespace HMP {
 	 		}
 	 		return CropType.EMPTY_CROP;
 	 	}
+
+	 	public void draw(double x, double y, double zoff) {
+	 		print ("Zeichne Pflanze bei %f, %f\n", x, y);
+			spriteset.draw(x, y, zoff);
+		}
 	 }
 }
