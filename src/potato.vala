@@ -23,6 +23,7 @@ namespace HMP {
 	 	 * Konstruktor.
 	 	 */
 	 	public Potato () {
+	 		print("Pflanze erzeugt!!\n");
 	 		base ();
 	 		//Platzhalter
 	 		spriteset = WORLD.SPRITESETMANAGER.getFromName("hase");
@@ -30,6 +31,9 @@ namespace HMP {
 	 		timeBetweenCrops = 7;
 	 		maxCrops = 3;
 	 		crop = CropType.POTATO;
+	 	}
+	 	~ Potato () {
+	 		print("Pflanze geloescht!!\n");
 	 	}
 	 }
 }

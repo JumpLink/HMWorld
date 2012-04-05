@@ -367,6 +367,7 @@ namespace HMP {
 						tmp_tilesetref = HMP.Map.getTileSetRefFromGid(tilesetrefs, ids[x,y]);
 						// Berechnet den Index des Tiles anhand der Gid und der firstgid und gibt das entsprechende Tile mit dem Index zurueck.
 						tmp_tile = tmp_tilesetref.source.getTileFromIndex(ids[x,y] - tmp_tilesetref.firstgid);
+						tmp_tile.type = TileType.REGULAR_TILE;
 					}
 					else {
 						tmp_tile = new RegularTile();

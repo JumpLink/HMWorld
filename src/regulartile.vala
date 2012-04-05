@@ -64,15 +64,15 @@ namespace HMP {
 			 * @see HMP.Tile.draw
 			 */
 			public override void draw( double x, double y, double zoff) {
-				if(type != TileType.NO_TILE) {
+				if(type == TileType.REGULAR_TILE) {
 					tex.draw((int)x,(int)y,zoff);
-				} else {
+				}else if (type == TileType.PLANT && plant != null) {
+					print ("Pflanze zeichnen??1?\n");
+					//plant.draw (x, y, zoff + 0.001); FIXME
+				}else {
 					//print("Tile ist kein Tile zum zeichnen\n");
 				}
-				if (plant != null) {
-					print ("Pflanze zeichnen???\n");
-					plant.draw (x, y, zoff + 0.001);
-				}
+
 			}
 			/**
 			 * {@inheritDoc}

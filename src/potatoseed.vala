@@ -33,6 +33,8 @@ namespace HMP {
 			if (/*t.type == TileType.PLANTABLE && */t.plant == null && seed > 0) {
 				//t.type = TileType.PLANT;
 				t.plant = new Potato ();
+				t.type = TileType.PLANT;
+				//FIXME keine NO_TILE manipulieren, sonst gdk_pixbuf_get_height: assertion
 				--seed;
 				print ("Kartoffel gepflanzt!\n");
 			}

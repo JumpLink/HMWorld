@@ -141,6 +141,7 @@ namespace HMP {
 		 */
 		NO_TILE,
 		EMPTY_TILE,
+		REGULAR_TILE,
 		PLANTABLE,
 		PLANT,
 		GRASS,

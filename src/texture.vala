@@ -81,9 +81,11 @@ namespace HMP {
 		 * Ladet eine Textur aus einer Datei.
 		 * @param path Pfadangabe der zu ladenden Grafikdatei.
 		 */
-		public void loadFromFile(string path) {
+		public void loadFromFile(string path)
+		requires (displaylistID != 0)
+		ensures((bool)glIsList(displaylistID))
+		{
 			loadFromFileWithGdk(path);
-			
 			createDisplayList();
 		}
 		/**
@@ -105,7 +107,7 @@ namespace HMP {
 		}
 		private void createDisplayList() {
 			glNewList(displaylistID, GL_COMPILE);
-				bindTexture();
+				//bindTexture();
 				glBegin (GL_QUADS);
 					glTexCoord2d(0,0);
 						glVertex3d ( 0, 0, 0);
@@ -164,11 +166,10 @@ namespace HMP {
 			{
 				glBindTexture(GL_TEXTURE_2D, texID[0]);
 				//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
 				glTexImage2D(GL_TEXTURE_2D, 0, read_channel, (GL.GLsizei) width, (GL.GLsizei) height, 0, texture_format, GL_UNSIGNED_INT_8_8_8_8_REV, pixels);
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			}
 		}
 		/**
@@ -185,6 +186,7 @@ namespace HMP {
 			if (y < WORLD.STATE.window_height && x < WORLD.STATE.window_width) {
 				glPushMatrix();
 					glTranslatef((GL.GLfloat)x,(GL.GLfloat)y,(GL.GLfloat)zoff);
+					bindTexture();
 					switch (mirror) {
 						case HMP.Mirror.NONE:
 							glCallList(displaylistID);
