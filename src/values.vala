@@ -14,6 +14,7 @@
  *	Patrick König <knuffi@gmail.com>
  */
 using HMP;
+using GL;
 namespace HMP {
 	const int TIMER_CALLS_PS = 30;
 	/**
@@ -241,6 +242,41 @@ namespace HMP {
 				case "none":
 				case "NONE":
 					return HMP.Mirror.NONE;
+				default:
+					assert_not_reached();
+			}
+		}
+	}
+	public enum Colorspace {
+		RGB,
+		RGBA;
+		public GLenum to_opengl () {
+			switch (this) {
+				case HMP.Colorspace.RGB:
+					return GL.GL_RGB;
+				case  HMP.Colorspace.RGBA:
+					return GL.GL_RGBA;
+				default:
+					assert_not_reached();
+			}
+		}
+		public static HMP.Colorspace fromGdkPixbuf (Gdk.Pixbuf pixbuf) {
+			if(pixbuf.colorspace == Gdk.Colorspace.RGB) {
+				if (pixbuf.has_alpha) {
+					return HMP.Colorspace.RGBA;
+				} else {
+					return HMP.Colorspace.RGB;
+				}
+			} else {
+				assert_not_reached();
+			}
+		}
+		public GL.GLint to_opengl_channel () {
+			switch (this) {
+				case HMP.Colorspace.RGB:
+					return 3;
+				case  HMP.Colorspace.RGBA:
+					return 4;
 				default:
 					assert_not_reached();
 			}

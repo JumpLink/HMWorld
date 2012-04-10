@@ -36,9 +36,7 @@ namespace HMP {
 		 * @param pixbuf Pixelbufer der in das Tile uebernommen werden soll.
 		 */
 		public Sprite (Pixbuf pixbuf) {
-			tex = new Texture();
-			tex.loadFromPixbuf(pixbuf);
-			//type = HMP.TileType.EMPTY_TILE;
+			tex = new HMP.OpenGLTexture.FromPixbuf(pixbuf);
 		}
 		/**
 		 * 

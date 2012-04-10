@@ -24,11 +24,7 @@ namespace HMP {
 	/**
 	 * Klasse zur Speicherung einer Textur und um diese an OpenGL zu binden.
 	 */
-	public class Texture {
-		GLuint* texID = new GLuint[1];
-		GL.GLuint displaylistID;
-		GLenum texture_format;
-		GL.GLint read_channel = 3;
+	public abstract class Texture {
 		/**
 		 * Liefert den Pixbuf der Textur, Pixbuf wird fuer die Verwalltung der Pixel verwendet.<<BR>>
 		 * * Weitere Informationen: [[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Pixbuf.html]]
@@ -40,6 +36,9 @@ namespace HMP {
 		}
 		public double height {
 			get { return pixbuf.get_height(); }
+		}
+		public HMP.Colorspace colorspace {
+			get { return HMP.Colorspace.fromGdkPixbuf(pixbuf); }
 		}
 		/**
 		 * Liefert ein Zeiger auf ein Array uint8[] mit den Pixelwerten,
@@ -57,42 +56,18 @@ namespace HMP {
 			get { return this.pixbuf.get_has_alpha(); }
 		}
 		/**
-		 * Liefert den Farbraum der Textur, zur Zeit wird nur RGB unterstuetzt,
-		 * Weitere Informationen dazu gibt es hier:<<BR>>
-		 * *[[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Colorspace.html]]<<BR>>
-		 * *[[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Pixbuf.colorspace.html]]
-		 * @see Gdk.Pixbuf.colorspace
-		 */
-		public Colorspace colorspace {
-			get { return this.pixbuf.get_colorspace(); }
-		}
-
-		/**
-		 * Konstruktor.
-		 */
-		public Texture() {
-			glGenTextures(1, texID);
-			displaylistID = glGenLists(1);
-		}
-		~Texture() {
-			glDeleteLists(displaylistID,1);
-		}
-		/**
 		 * Ladet eine Textur aus einer Datei.
 		 * @param path Pfadangabe der zu ladenden Grafikdatei.
 		 */
-		public void loadFromFile(string path)
-		requires (displaylistID != 0)
-		ensures((bool)glIsList(displaylistID))
+		protected void loadFromFile(string path)
 		{
 			loadFromFileWithGdk(path);
-			createDisplayList();
 		}
 		/**
 		 * Ladet eine Textur aus einer Datei mittels Gdk.
 		 * @param path Pfadangabe der zu ladenden Grafikdatei.
 		 */
-		public void loadFromFileWithGdk(string path)
+		protected void loadFromFileWithGdk(string path)
 		requires (path != null)
 		{
 	 		try {
@@ -105,21 +80,6 @@ namespace HMP {
 			
 			loadFromPixbuf(pixbuf);
 		}
-		private void createDisplayList() {
-			glNewList(displaylistID, GL_COMPILE);
-				//bindTexture();
-				glBegin (GL_QUADS);
-					glTexCoord2d(0,0);
-						glVertex3d ( 0, 0, 0);
-					glTexCoord2d(0,1);
-						glVertex3d ( 0, height, 0);
-					glTexCoord2d(1,1);
-						glVertex3d ( width, height, 0);
-					glTexCoord2d(1,0);
-						glVertex3d ( width, 0, 0);
-				glEnd ();
-			glEndList();
-		}
 		/**
 		 * Ladet eine Textur aus einem Pixbuf in die Klasse.
 		 * @param pixbuf Der pixbuf aus dem die Textur erstellt werden soll.
@@ -128,24 +88,6 @@ namespace HMP {
 		requires (pixbuf != null)
 		{
 			this.pixbuf = pixbuf;
-			if(pixbuf.colorspace == Colorspace.RGB)
-				if (has_alpha) {
-					texture_format = GL_RGBA;
-					read_channel = 4;
-					/**/
-					//texture_format = GL_BGRA;
-					//print("RGBA\n");
-				}
-				else {
-					texture_format = GL_RGB;
-					read_channel = 3;
-					//texture_format = GL_BGR;
-					//print("RGB\n");
-				}
-			else {
-				texture_format = 0;
-				print("warning: the image is not truecolor..  this will probably break\n");
-			}
 		}
 		/**
 		 *
@@ -158,100 +100,10 @@ namespace HMP {
 			}
 		}
 		/**
-		 * Bindet die Textur an OpenGL.
+		 *
 		 */
-		public void bindTexture () {
-			//print("binde textur \n");
-			if (width > 1 && height > 1)
-			{
-				glBindTexture(GL_TEXTURE_2D, texID[0]);
-				//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-				glTexImage2D(GL_TEXTURE_2D, 0, read_channel, (GL.GLsizei) width, (GL.GLsizei) height, 0, texture_format, GL_UNSIGNED_INT_8_8_8_8_REV, pixels);
+		public abstract void draw( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE);
 
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			}
-		}
-		/**
-		 *
-		 */
-		public void draw( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
-			draw_direct(x,y,zoff,mirror);
-		}
-		/**
-		 *
-		 */
-		public void draw_list( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
-			/* Ueberpruefung ob zu zeichnender Bereich innerhalb des Fensters liegt */
-			if (y < WORLD.STATE.window_height && x < WORLD.STATE.window_width) {
-				glPushMatrix();
-					glTranslatef((GL.GLfloat)x,(GL.GLfloat)y,(GL.GLfloat)zoff);
-					bindTexture();
-					switch (mirror) {
-						case HMP.Mirror.NONE:
-							glCallList(displaylistID);
-						break;
-						case HMP.Mirror.VERTICAL:
-							glCallList(displaylistID);
-						break;
-						case HMP.Mirror.HORIZONTAL:
-							glCallList(displaylistID);
-						break;
-					}
-				glPopMatrix();
-			}
-			//print ("%i, ",(int)displaylistID);
-		}
-
-		/**
-		 *
-		 */
-		public void draw_direct( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
-			/* Ueberpruefung ob zu zeichnender Bereich innerhalb des Fensters liegt */
-			if (y < WORLD.STATE.window_height && x < WORLD.STATE.window_width) {
-				switch (mirror) {
-					case HMP.Mirror.NONE:
-						bindTexture();
-						glBegin (GL_QUADS);
-							glTexCoord2d(0,0);
-								glVertex3d ( x, y, zoff);
-							glTexCoord2d(0,1);
-								glVertex3d ( x, y + height, zoff);
-							glTexCoord2d(1,1);
-								glVertex3d ( x + width, y + height, zoff);
-							glTexCoord2d(1,0);
-								glVertex3d ( x + width, y, zoff);
-						glEnd ();
-					break;
-					case HMP.Mirror.VERTICAL:
-						bindTexture();
-						glBegin (GL_QUADS);
-							glTexCoord2d(1,0);
-								glVertex3d ( x, y, zoff);
-							glTexCoord2d(1,1);
-								glVertex3d ( x, y + height, zoff);
-							glTexCoord2d(0,1);
-								glVertex3d ( x + width, y + height, zoff);
-							glTexCoord2d(0,0);
-								glVertex3d ( x + width, y, zoff);
-						glEnd ();
-					break;
-					case HMP.Mirror.HORIZONTAL:
-						bindTexture();
-						glBegin (GL_QUADS);
-							glTexCoord2d(0,1);
-								glVertex3d ( x, y, zoff);
-							glTexCoord2d(0,0);
-								glVertex3d ( x, y + height, zoff);
-							glTexCoord2d(1,0);
-								glVertex3d ( x + width, y + height, zoff);
-							glTexCoord2d(1,1);
-								glVertex3d ( x + width, y, zoff);
-						glEnd ();
-					break;
-				}
-			}
-		}
 		/**
 		 * Gibt die Werte der Textur auf der Konsole aus.
 		 */

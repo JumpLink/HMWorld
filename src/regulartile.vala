@@ -26,7 +26,7 @@ namespace HMP {
 			 * @see HMP.TileType.EMPTY_TILE
 			 */
 			public RegularTile () {
-				tex = new Texture();
+				tex = new OpenGLTexture();
 				type = HMP.TileType.NO_TILE;
 			}
 			/**
@@ -34,8 +34,7 @@ namespace HMP {
 			 * @param pixbuf Pixelbufer der in das Tile uebernommen werden soll.
 			 */
 			public RegularTile.FromPixbuf (Pixbuf pixbuf) {
-				tex = new Texture();
-				tex.loadFromPixbuf(pixbuf);
+				tex = new OpenGLTexture.FromPixbuf(pixbuf);
 				type = HMP.TileType.EMPTY_TILE;
 			}
 			/**
@@ -55,7 +54,7 @@ namespace HMP {
 			 * @see HMP.Tile.save
 			 */
 			public override void save (string filename) {
-				if(type != TileType.NO_TILE) {
+				if(type != TileType.NO_TILE && type != TileType.EMPTY_TILE) {
 					tex.save(filename);
 				}
 			}
