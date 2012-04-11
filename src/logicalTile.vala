@@ -31,7 +31,7 @@ namespace HMP {
 		public Plant plant;
 
 		public LogicalTile () {
-			print("Logisches Tile erstellt\n");
+			//print("Logisches Tile erstellt\n");
 		}
 	}
 }
