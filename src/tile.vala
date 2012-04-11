@@ -58,7 +58,7 @@ namespace HMP {
 		 * @param y untere y-Koordinate
 		 * @param zoff Angabe der hoehe des Tiles Z.B unter, ueber, gleich, .. dem Held.
 		 */
-		public abstract void draw (double x, double y, double zoff);
+		//public abstract void draw (double x, double y, double zoff);
 		/**
 		 * Gibt alle Werte eines Tiles auf der Konsole aus.
 		 */

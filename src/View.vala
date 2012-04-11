@@ -1,6 +1,4 @@
 /* Copyright (C) 2012  Pascal Garber
- * Copyright (C) 2012  Ole Lorenzen
- * Copyright (C) 2012  Patrick König
  *
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the Creative Commons licenses CC BY-SA 3.0.
@@ -10,22 +8,10 @@
  *
  * Author:
  *	Pascal Garber <pascal.garber@gmail.com>
- *	Ole Lorenzen <ole.lorenzen@gmx.net>
- *	Patrick König <knuffi@gmail.com>
  */
 using HMP;
 namespace HMP {
-	HMP.World WORLD;
-	class Game {
-		public Game() {
-			
-		}
-		public static int main (string[] args) {
-			WORLD = new World ();
-			var view = new OpenGLView();
-			view.initAndStart ("Titel", 640, 480);
-			var keyboard = new OpenGLKeyboard();
-			return 1;
-		}
+	public abstract class View {
+		public abstract void show();
 	}
 }

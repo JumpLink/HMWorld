@@ -56,7 +56,7 @@ namespace HMP {
 		 * Ladet eine Textur aus einer Datei.
 		 * @param path Pfadangabe der zu ladenden Grafikdatei.
 		 */
-		protected void loadFromFile(string path)
+		protected virtual void loadFromFile(string path)
 		requires (path != null)
 		{
 	 		try {
@@ -74,7 +74,7 @@ namespace HMP {
 		 * Ladet eine Textur aus einem Pixbuf in die Klasse.
 		 * @param pixbuf Der pixbuf aus dem die Textur erstellt werden soll.
 		 */
-		public void loadFromPixbuf(Gdk.Pixbuf pixbuf)
+		public virtual void loadFromPixbuf(Gdk.Pixbuf pixbuf)
 		requires (pixbuf != null)
 		{
 			this.pixbuf = pixbuf;

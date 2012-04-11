@@ -75,12 +75,6 @@ namespace HMP {
 			/*Spielstatus initialisieren*/
 			STATE.init();
 		}
-		public void draw()
-		requires (CURRENT_MAP != null)
-		{
-			/* map zeichen */
-			CURRENT_MAP.draw();
-		}
 
 		public void timer ()
 		requires (PLAYERS != null)

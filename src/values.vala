@@ -21,7 +21,7 @@ namespace HMP {
 	/**
 	 * Keycode der ESC-Taste
 	 */
-	const int ESC = 27;
+	const uchar ESC = 27;
 
 	/**
 	 * Kapazitaet der Giesskanne.

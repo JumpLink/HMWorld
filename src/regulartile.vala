@@ -60,14 +60,6 @@ namespace HMP {
 			}
 			/**
 			 * {@inheritDoc}
-			 * @see HMP.Tile.draw
-			 */
-			public override void draw( double x, double y, double zoff) {
-				if (type != TileType.NO_TILE)
-					tex.draw((int)x,(int)y,zoff);
-			}
-			/**
-			 * {@inheritDoc}
 			 * @see HMP.Tile.calcEdges
 			 */
 			public override void calcEdges (TileType[] neighbours) {

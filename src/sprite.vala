@@ -53,13 +53,5 @@ namespace HMP {
 		public void save (string filename) {
 			tex.save(filename);
 		}
-		/**
-		 * 
-		 */
-		public void draw( double x, double y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
-			//print("x: %f",x);
-			//print(" = x: %i\n",Round(x));
-			tex.draw (Round(x-width/2),Round(y-height/2),zoff,mirror);
-		}
 	}
 }

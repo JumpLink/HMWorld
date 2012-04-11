@@ -13,10 +13,7 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-using Xml;
-using Xml.XPath;
 using Gee;
-using GL;
 namespace HMP {
 	/**
 	 * Klasse fuer Maps.
@@ -100,14 +97,16 @@ namespace HMP {
 		public Map() {
 			print("Erstelle leeres Map Objekt\n");
 		}
+		public Map.fromPath (string folder = "./data/map/", string fn) {
+			setFromPath (folder, fn);
+		}
 		/**
 		 * Konstrukter, ladet Map mit Daten einer Mapdatei
 		 *
 		 * @param folder Das Verzeichnis aus dem gelesen werden soll
 		 * @param fn Der Dateiname der gelesen werden soll
 		 */
-		public Map.fromPath (string folder = "./data/map/", string fn)
-		{
+		public void setFromPath (string folder = "./data/map/", string fn) {
 			print("Lade Mapdateien von %s + %s\n", folder, fn);
 
 			this.filename = fn;
@@ -201,42 +200,6 @@ namespace HMP {
 				obstacle = obstacle || (l.collision && l.tiles[x, y].type != TileType.NO_TILE);
 			}
 			return !obstacle;
-		}
-		/**
-		 * Die draw-Methode der Layer-Klasse durchlaeuft seine enthaltenen Layers und ruft jeweils ihre eigene draw-Methode
-		 * mit ihrer entsprechenden Verschiebung auf und Zeichnet somit die komplette Map.
-		 * @see HMP.Layer.draw
-		 * @see HMP.Tile.draw
-		 */
-		public void draw()
-		requires (layers_same != null)
-		requires (layers_under != null)
-		requires (layers_over != null)
-		requires (layers_same[0] != null)
-		requires (layers_under[0] != null)
-		requires (layers_over[0] != null)
-		requires (entities != null)
-		requires (entities[0] != null)
-		{
-			//print("==DrawMap==\n");
-			foreach (Layer l in layers_over) {
-				l.draw(0, 0);
-			}
-			foreach (Layer l in layers_same) {
-				l.draw(0, 0);
-			}
-			foreach (Entity e in entities) {
-				e.draw (0, 0, 0);
-			}
-			foreach (Layer l in layers_under) {
-				l.draw(0, 0);
-			}
-			for (uint x = 0; x < width; ++x)
-				for (uint y = 0; y < height; ++y) {
-					LogicalTile t = tiles[x,y];
-					if (t != null && t.type == TileType.PLANT && t.plant != null)
-						t.plant.draw (x, y, 0.0);
-				}
 		}
 		/**
 		 * Gibt alle Werte (bis auf die Layer) der Map auf der Konsole aus

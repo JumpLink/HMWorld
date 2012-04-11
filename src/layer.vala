@@ -96,27 +96,6 @@ namespace HMP {
 				}
 		}
 		/**
-		 * Die draw-Methode der Layer-Klasse durchlaeuft seine enthaltenen Tiles und ruft jeweils ihre eigene draw-Methode
-		 * mit ihren entsprechenden Koordinaten auf und Zeichnet somit das komplette Layer.
-		 * @param shift_x Verschiebung in X-Richtung. wird verwendet um die Layerposition im Bildschirm zu bestimmen,
-		 * sie wird meistens dazu verwendet den Layer innerhalb des Fensters mittig zu verschieben.
-		 * @param shift_y wie shift_x nur in y-Richtung.
-		 * @see HMP.Map.draw
-		 * @see HMP.Tile.draw
-		 */
-		public void draw(int shift_x, int shift_y) {
-			//print("draw layer\n");
-			for (int y=0;y<height;y++) {
-				for (int x=0;x<width;x++) {
-					if(tiles[x,y].type != TileType.NO_TILE) {
-						//print("x: %i y: %i\n", x,y);
-						//tiles[x,y].printValues();
-						tiles[x,y].draw(shift_x + x * tiles[x,y].width, shift_y + y * tiles[x,y].height, zoff);
-					}
-				}
-			}
-		}
-		/**
 		 * Gibt alle Werte des Layers (bis auf die Tiles) auf der Konsole aus
 		 */
 		public void printValues() {

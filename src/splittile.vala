@@ -34,13 +34,6 @@ namespace HMP {
 			}
 			/**
 			 * {@inheritDoc}
-			 * @see HMP.Tile.draw
-			 */
-			public override void draw (double x, double y, double zoff) {
-				//Einzelteile zeichnen
-			}
-			/**
-			 * {@inheritDoc}
 			 * @see HMP.Tile.save
 			 */
 			public override void save (string filename) {

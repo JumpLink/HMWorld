@@ -90,10 +90,5 @@ namespace HMP {
 	 		}
 	 		return CropType.EMPTY_CROP;
 	 	}
-
-	 	public void draw(uint x, uint y, double zoff) {
-	 		//print ("Zeichne Pflanze bei %f, %f\n", x, y);
-			spriteset.draw(x * WORLD.CURRENT_MAP.tilewidth, y * WORLD.CURRENT_MAP.tileheight, zoff);
-		}
 	 }
 }

@@ -22,53 +22,38 @@ namespace HMP {
 	/**
 	 * Klasse zur Speicherung einer Textur und um diese an OpenGL zu binden.
 	 */
-	public abstract class GtkClutterTexture : GdkTexture {
-		public GtkClutter.Texture clutter_tex { get; private set; }
+	public class GtkClutterTexture : GdkTexture {
+		public GtkClutter.Texture clutter_tex { get; protected set; }
 
 		public GtkClutterTexture() {
 			clutter_tex = new GtkClutter.Texture();
+		}
+		public GtkClutterTexture.fromFile(string path) {
+			this();
+			loadFromFile (path);
 		}
 		/**
 		 * Ladet eine Textur aus einer Datei.
 		 * @param path Pfadangabe der zu ladenden Grafikdatei.
 		 */
 		protected new void loadFromFile(string path) {
-			((GdkTexture)this).loadFromFile (path);
+			base.loadFromFile(path);
 			clutter_tex.set_from_pixbuf(pixbuf);
 		}
 		/**
 		 * Ladet eine Textur aus einem Pixbuf in die Klasse.
 		 * @param pixbuf Der pixbuf aus dem die Textur erstellt werden soll.
 		 */
-		public new void loadFromPixbuf(Gdk.Pixbuf pixbuf)
-		requires (pixbuf != null)
-		{
-			this.pixbuf = pixbuf;
+		public new void loadFromPixbuf(Gdk.Pixbuf pixbuf) {
+			base.loadFromPixbuf(pixbuf);
 			clutter_tex.set_from_pixbuf(pixbuf);
 		}
 		/**
 		 *
 		 */
-		public void save (string filename) {
-			try {
-				pixbuf.save(filename, "png");
-			} catch (GLib.Error e) {
-				error ("Error! Konnte Sprite nicht Speichern: %s\n", e.message);
-			}
-		}
-		/**
-		 *
-		 */
-		public abstract void draw( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE);
-
-		/**
-		 * Gibt die Werte der Textur auf der Konsole aus.
-		 */
-		public void printValues() {
-			print("=Tex=\n");
-			print(@"width: $width \n");
-			print(@"height: $height \n");
-			print(@"has alpha: $has_alpha \n");
+		public override void draw( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
+			//TODO
+			print("TODO");
 		}
 	}
 }

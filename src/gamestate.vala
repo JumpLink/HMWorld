@@ -58,7 +58,6 @@ namespace HMP {
 		 */
 		public bool perspective = false;
 
-		public Control controler = new Control ();
 		/**
 		 * Konstruktor.
 		 */
@@ -66,17 +65,17 @@ namespace HMP {
 
 		}
 		public void init() {
-			controler.init();
+			
 		}
 		public void timer() {
-			controler.timer();
+			
 		}
 		public static bool toggle(bool b) {
 			return b ? false : true;
 		}
 		public void toggle_paused() {
 			paused = toggle (paused);
-			HMP.IO.cbTimer(0);
+			HMP.OpenGLView.cbTimer(0);
 		}
 		public void toggle_debug() {
 			debug = toggle (debug);
@@ -84,7 +83,7 @@ namespace HMP {
 		public void toggle_perspective() {
 			perspective = toggle (perspective);
 			print(@"Perspektive: $(WORLD.STATE.perspective)");
-			HMP.IO.cbReshape(WORLD.STATE.window_width, WORLD.STATE.window_height);
+			HMP.OpenGLView.cbReshape(WORLD.STATE.window_width, WORLD.STATE.window_height);
 		}
 	}
 }

@@ -13,27 +13,34 @@
  *	Ole Lorenzen <ole.lorenzen@gmx.net>
  *	Patrick König <knuffi@gmail.com>
  */
-using HMP;
+
+using GL;
+using GLU;
 using GLUT;
+using GLib;
+using HMP;
 namespace HMP {
-	public class Control {
-		public char UP='w';
-		public char RIGHT='d';
-		public char DOWN='s';
-		public char LEFT='a';
-		public char ACTION = 'f';
-		public char USE = 'e';
-		public char SWAP = 'r';
-		public Control() {
-
-		} 
-
-		public void timer() {
-
+	/**
+	 * Klasse fuer Ein-/Ausgabe-Verarbeitung.
+	 */
+	class OpenGLKeyboard {
+		public static uchar UP='w';
+		public static uchar RIGHT='d';
+		public static uchar DOWN='s';
+		public static uchar LEFT='a';
+		public static uchar ACTION = 'f';
+		public static uchar USE = 'e';
+		public static uchar SWAP = 'r';
+		/**
+		 * Konstruktor.
+		 */
+		public OpenGLKeyboard() {
+			init();
 		}
 		public void init() {
 			/* Tastenwiederholungen ignorieren */
 			glutIgnoreKeyRepeat(1);
+			registerCallbacks();
 		}
 		/**
 		 * Verarbeitung eines Tasturereignisses.
@@ -46,7 +53,7 @@ namespace HMP {
 		 * @param x x-Position des Mauszeigers zum Zeitpunkt der Ereignisausloesung.
 		 * @param y y-Position des Mauszeigers zum Zeitpunkt der Ereignisausloesung.
 		 */
-		public void handleKeyboardEvent (int key, bool status, bool isSpecialKey, int x, int y)
+		public static void handleKeyboardEvent (int key, bool status, bool isSpecialKey, int x, int y)
 		requires (WORLD.PLAYERS != null)
 		requires (WORLD.PLAYERS.size >= 1)
 		{
@@ -115,6 +122,66 @@ namespace HMP {
 					}
 				}
 			}
+		}
+
+		/**
+		 * Callback fuer Tastendruck.
+		 * Ruft Ereignisbehandlung fuer Tastaturereignis auf.
+		 *
+		 * @param key betroffene Taste (In).
+		 * @param x x-Position der Maus zur Zeit des Tastendrucks (In).
+		 * @param y y-Position der Maus zur Zeit des Tastendrucks (In).
+		 */
+		public static void cbKeyboard ( uchar key, int x, int y)
+		{
+			handleKeyboardEvent (key, (bool) GLUT_DOWN, false, x, y);
+		}
+		/**
+		 * Callback fuer Taste loslassen
+		 * Ruft Ereignisbehandlung fuer Tastaturereignis auf sobald die Taste losgelassen wurde.
+		 *
+		 * @param key betroffene Taste (In).
+		 * @param x x-Position der Maus zur Zeit des Tastendrucks (In).
+		 * @param y y-Position der Maus zur Zeit des Tastendrucks (In).
+		 */
+		public static void cbUpKeyboard ( uchar key, int x, int y)
+		{
+			handleKeyboardEvent (key, (bool) GLUT_UP, false, x, y);
+		}
+		/**
+		 * Callback fuer Druck auf Spezialtasten.
+		 * Ruft Ereignisbehandlung fuer Tastaturereignis auf.
+		 *
+		 * @param key betroffene Taste (In).
+		 * @param x x-Position der Maus zur Zeit des Tastendrucks (In).
+		 * @param y y-Position der Maus zur Zeit des Tastendrucks (In).
+		 */
+		public static void cbSpecial (int key, int x, int y)
+		{
+			handleKeyboardEvent (key, (bool) GLUT_DOWN, true, x, y);
+		}
+
+		/**
+		 * Registrierung der GLUT-Callback-Routinen.
+		 */
+		public static void registerCallbacks ()
+		{
+			/* Tasten-Druck-Callback - wird ausgefuehrt, wenn eine Taste gedrueckt wird */
+			glutKeyboardFunc (cbKeyboard);
+			/* Tasten-Druck-Callback - wird ausgefuehrt, wenn eine Taste losgelassen wird */
+			glutKeyboardUpFunc (cbUpKeyboard);
+
+			/* Spezialtasten-Druck-Callback - wird ausgefuehrt, wenn Spezialtaste
+			 * (F1 - F12, Links, Rechts, Oben, Unten, Bild-Auf, Bild-Ab, Pos1, Ende oder
+			 * Einfuegen) gedrueckt wird */
+			glutSpecialFunc (cbSpecial);
+
+			/* Mouse-Button-Callback (wird ausgefuehrt, wenn eine Maustaste
+			 * gedrueckt oder losgelassen wird) */
+			//glutMouseFunc (cbMouseButton);
+
+			/* Mausbewegungs-Callback bei gedrueckter Taste */
+			//glutMotionFunc (cbMouseMotion);
 		}
 	}
 }
