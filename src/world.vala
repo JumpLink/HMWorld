@@ -69,6 +69,9 @@ namespace HMP {
 				CURRENT_MAP.entities.add(p);
 			}
 			CURRENT_MAP.entities.add (new NPC(new Coord.nondefault (27.0, 27.0), SPRITESETMANAGER.getFromName("hase")));
+			CURRENT_MAP.entities.add (new ToolEntity(new Coord.nondefault (100.0, 50.0), 
+				SPRITESETMANAGER.getFromName("hase"), 
+				new MultiHoe()));
 			/*Spielstatus initialisieren*/
 			STATE.init();
 		}

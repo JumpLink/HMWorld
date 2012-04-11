@@ -29,5 +29,9 @@ namespace HMP {
 				s.hay++;
 			}
 		}
+
+		public string toString () {
+			return "Mehrfachsense";
+		}
 	}
 }

@@ -53,6 +53,7 @@ namespace HMP {
 	 	 * @return Das alte Primaerwerkzeug.
 	 	 */
 	 	public Tool equip (Tool t) {
+	 		print ("Neues Werkzeug gefunden: %s\n", t.toString());
 	 		Tool tmp = primary;
 	 		primary = t;
 	 		return tmp;

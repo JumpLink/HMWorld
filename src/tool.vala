@@ -29,6 +29,8 @@ namespace HMP {
 	 	 * @param s Das Lager, dem evtl. Material hinzugefuegt wird.
 	 	 */
 	 	public abstract void use (Map m, uint x, uint y, Direction d, Storage s);
+
+	 	public abstract string toString ();
 	 	
 	}
 }

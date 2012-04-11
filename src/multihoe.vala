@@ -27,5 +27,9 @@ namespace HMP {
 			if (l.type == TileType.EMPTY_TILE || l.type == TileType.GRASS)
 				l.type = TileType.PLANTABLE;
 		}
+
+		public string toString () {
+			return "Mehrfachhacke";
+		}
 	}
 }

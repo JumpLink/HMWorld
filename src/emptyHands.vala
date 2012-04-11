@@ -19,6 +19,10 @@ namespace HMP {
 	 * Klasse fuer leere Haende als Werkzeug.
 	 */
 	 public class EmptyHands : Tool, Object {
+
+	 	public string toString () {
+			return "nichts";
+		}
 	 	
 	 	public void use (Map m, uint x, uint y, Direction d, Storage s) {
 	 		/* nichts */

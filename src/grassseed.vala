@@ -27,6 +27,10 @@ namespace HMP {
 			}
 		}
 
+		public string toString () {
+			return "Grasssamen";
+		}
+
 		public void use (Map m, uint x, uint y, Direction d, Storage s) {
 			applyToLayer (m, x, y, "ground", s);
 		}

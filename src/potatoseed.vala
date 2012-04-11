@@ -24,6 +24,10 @@ namespace HMP {
 			seed = SEED_PER_BAG;
 		}
 
+		public string toString () {
+			return "Kartoffelsack";
+		}
+
 		public void use (Map m, uint x, uint y, Direction d, Storage s) {
 			print ("Pflanze Kartoffeln an %u, %u!\n", x, y);
 			applyToLayer (m, x, y, "same as hero 2", s);

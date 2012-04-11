@@ -32,5 +32,9 @@ namespace HMP {
 				print ("Boden konnte nicht umgegraben werden!\n");
 			}
 		}
+
+		public string toString () {
+			return "Hacke";
+		}
 	}
 }

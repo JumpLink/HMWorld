@@ -36,5 +36,9 @@ namespace HMP {
 			if (t.type == TileType.WATER)
 				water = WATER_CAPACITY;
 		}
+
+		public string toString () {
+			return "Giesskanne";
+		}
 	}
 }

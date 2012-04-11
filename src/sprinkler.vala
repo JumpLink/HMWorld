@@ -39,5 +39,9 @@ namespace HMP {
 				water = WATER_CAPACITY;
 			applyToLayer (m, x, y, "player", s);
 		}
+
+		public string toString () {
+			return "Sprenger";
+		}
 	}
 }

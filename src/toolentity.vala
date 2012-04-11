@@ -16,20 +16,27 @@
 using HMP;
 namespace HMP {
 	/**
-	 * Klasse fuer eine Sense.
+	 * Klasse fuer ein Werkzeug, das sich nicht im Inventar befindet..
 	 */
-	public class Scythe : SingleTool, Tool, Object {
+	public class ToolEntity : Entity {
 
-		public void use (Map m, uint x, uint y, Direction d, Storage s) {
-			LogicalTile t = logicalTarget (m, x, y, d);
-			if (t.type == TileType.GRASS && t.plant != null) {
-				t.plant.harvest();
-				s.hay++;
-			}
+		public Tool tool;
+
+		/**
+		 * Konstruktor.
+		 * @param pos Position.
+		 * @param s Spriteset.
+		 * @param t Werkzeug.
+		 */
+		public ToolEntity (Coord pos, SpriteSet s, Tool t) {
+			this.pos = pos;
+			spriteset = s;
+			spriteset.set_Animation("stay", Direction.SOUTH	);
+			tool = t;
+		}
+		public override void interactWith (Player p) {
+			tool = p.tools.equip(tool);
 		}
 
-		public string toString () {
-			return "Sense";
-		}
 	}
 }

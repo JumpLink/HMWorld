@@ -20,6 +20,10 @@ namespace HMP {
 	 */
 	public class Axe : SingleTool, Tool, Object {
 
+		public string toString () {
+			return "Axt";
+		}
+
 		public void use (Map m, uint x, uint y, Direction d, Storage s) {
 			LogicalTile t = logicalTarget (m, x, y, d);
 			if (t.type == TileType.WOOD) {

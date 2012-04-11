@@ -25,5 +25,9 @@ namespace HMP {
 			if (t.type == TileType.ROCK)
 				t.type = TileType.EMPTY_TILE;
 		}
+
+		public string toString () {
+			return "Spitzhacke";
+		}
 	}
 }
