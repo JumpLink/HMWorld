@@ -21,15 +21,12 @@ namespace HMP {
 	 * Allgemeine Klasse fuer Sprites
 	 */
 	public class Sprite {
-		public Texture tex { get; private set; }
+		public GdkTexture tex { get; private set; }
 		public double width {
 			get { return tex.width; }
 		}
 		public double height {
 			get { return tex.height; }
-		}
-		public Pixbuf pixbuf {
-			get { return tex.pixbuf; }
 		}
 		/**
 		 * Konstruktor mit uebergabe eines bereits existierenden und zu verwendenen Pixbuf.

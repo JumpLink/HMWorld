@@ -23,7 +23,7 @@ namespace HMP {
 		/**
 		 * Tiletextur, die Pixel des Tiles
 		 */
-		public Texture tex { get; protected set; }
+		public GdkTexture tex { get; protected set; }
 		/**
 		 * Gibt die Breite eines Tiles zurueck.
 		 */
@@ -35,12 +35,6 @@ namespace HMP {
 		 */
 		public double height {
 			get { if (type != TileType.NO_TILE) return tex.height; else return 0; }
-		}
-		/**
-		 * Gibt den Pixelbufer der Textur zurueck
-		 */
-		public Pixbuf pixbuf {
-			get { return tex.pixbuf; }
 		}
 		/**
 		 * Tiletyp

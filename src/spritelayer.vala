@@ -62,7 +62,7 @@ namespace HMP {
 		requires (image_filename != null)
 		{
 			if (image_filename != "") {
-				Texture tex = new OpenGLTexture.FromFile("./data/spriteset/"+image_filename);
+				GdkTexture tex = new OpenGLTexture.FromFile("./data/spriteset/"+image_filename);
 				sprites = new Sprite[count_y,count_x];
 				//int count = 0;
 				Pixbuf pxb = tex.pixbuf;

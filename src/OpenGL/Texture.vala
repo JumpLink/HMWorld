@@ -14,17 +14,14 @@
  *	Patrick König <knuffi@gmail.com>
  */
 
-//using SDL;
-//using SDLImage;
 using GL;
-using Gdk;
 using GLib;
 using HMP;
 namespace HMP {
 	/**
 	 * Klasse zur Speicherung einer Textur und um diese an OpenGL zu binden.
 	 */
-	public class OpenGLTexture : HMP.Texture {
+	public class OpenGLTexture : GdkTexture, HMP.Texture {
 		GLuint* texID = new GLuint[1];
 		GL.GLuint displaylistID;
 		/**

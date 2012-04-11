@@ -14,91 +14,27 @@
  *	Patrick König <knuffi@gmail.com>
  */
 
-//using SDL;
-//using SDLImage;
-using GL;
-using Gdk;
 using GLib;
 using HMP;
 namespace HMP {
 	/**
 	 * Klasse zur Speicherung einer Textur und um diese an OpenGL zu binden.
 	 */
-	public abstract class Texture {
-		/**
-		 * Liefert den Pixbuf der Textur, Pixbuf wird fuer die Verwalltung der Pixel verwendet.<<BR>>
-		 * * Weitere Informationen: [[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Pixbuf.html]]
-		 * @see Gdk.Pixbuf
-		 */
-		public Pixbuf pixbuf { get; private set; }
-		public double width {
-			get { return pixbuf.get_width(); }
-		}
-		public double height {
-			get { return pixbuf.get_height(); }
-		}
-		public HMP.Colorspace colorspace {
-			get { return HMP.Colorspace.fromGdkPixbuf(pixbuf); }
-		}
-		/**
-		 * Liefert ein Zeiger auf ein Array uint8[] mit den Pixelwerten,
-		 * der hier vorgegebene Rueckgabetyp ist hier void* damit dieser mit OpenGL
-		 * kompatibel ist.
-		 */
-		public void* pixels {
-			get { return pixbuf.get_pixels(); }
-		}
-		/**
-		 * Liefert Information darueber ob die Textur einen Alphakanal enthaelt.
-		 * @see Gdk.Pixbuf.get_has_alpha
-		 */
-		public bool has_alpha {
-			get { return this.pixbuf.get_has_alpha(); }
-		}
+	public interface Texture {
+		public abstract double width {get;}
+		public abstract double height {get;}
+		public abstract HMP.Colorspace colorspace {get;}
+		public abstract void* pixels {get;}
+		public abstract bool has_alpha {get;}
 		/**
 		 * Ladet eine Textur aus einer Datei.
 		 * @param path Pfadangabe der zu ladenden Grafikdatei.
 		 */
-		protected void loadFromFile(string path)
-		{
-			loadFromFileWithGdk(path);
-		}
-		/**
-		 * Ladet eine Textur aus einer Datei mittels Gdk.
-		 * @param path Pfadangabe der zu ladenden Grafikdatei.
-		 */
-		protected void loadFromFileWithGdk(string path)
-		requires (path != null)
-		{
-	 		try {
-				pixbuf = new Pixbuf.from_file (path);
-			}
-			catch (GLib.Error e) {
-				//GLib.error("", e.message);
-				GLib.error("%s konnte nicht geladen werden", path);
-			}
-			
-			loadFromPixbuf(pixbuf);
-		}
-		/**
-		 * Ladet eine Textur aus einem Pixbuf in die Klasse.
-		 * @param pixbuf Der pixbuf aus dem die Textur erstellt werden soll.
-		 */
-		public void loadFromPixbuf(Gdk.Pixbuf pixbuf)
-		requires (pixbuf != null)
-		{
-			this.pixbuf = pixbuf;
-		}
+		protected abstract void loadFromFile(string path);
 		/**
 		 *
 		 */
-		public void save (string filename) {
-			try {
-				pixbuf.save(filename, "png");
-			} catch (GLib.Error e) {
-				error ("Error! Konnte Sprite nicht Speichern: %s\n", e.message);
-			}
-		}
+		public abstract void save (string filename);
 		/**
 		 *
 		 */

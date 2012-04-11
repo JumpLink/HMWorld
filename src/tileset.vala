@@ -126,7 +126,7 @@ namespace HMP {
 		 * Zur Zeit alle noch als RegularTile.
 		 */
 		private void loadTiles() {
-			Texture tex = new OpenGLTexture.FromFile("./data/tileset/"+source);
+			GdkTexture tex = new OpenGLTexture.FromFile("./data/tileset/"+source);
 			int split_width = (int) tilewidth;
 			int split_height = (int) tileheight;
 			tile = new Tile[count_x,count_y];
