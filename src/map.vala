@@ -114,8 +114,9 @@ namespace HMP {
 			TMX xml = new TMX(folder+filename);
 			xml.loadGlobalMapProperties(out orientation, out version, out width, out height, out tilewidth, out tileheight);
 			tiles = new LogicalTile [width, height];
-			foreach (LogicalTile t in tiles) {
-				t = new LogicalTile ();
+			for (uint x = 0; x < width; ++x)
+				for (uint y = 0; y < height; ++y) {
+					tiles[x,y] = new LogicalTile ();
 			}
 			tileset = xml.loadTileSets();
 			xml.loadLayers(tileset, out layers_over, out layers_same, out layers_under);

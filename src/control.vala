@@ -76,8 +76,6 @@ namespace HMP {
 						p.swap ();
 					switch (key) {
 						/* Programm beenden */
-						case 'q':
-						case 'Q':
 						case ESC:
 							//cleanupLogic();
 							GLib.Process.exit(0);
