@@ -20,7 +20,7 @@ namespace HMP {
 	 */
 	public class MultiHoe : CircleTool, Tool, Object {
 		public void use (Map m, uint x, uint y, Direction d, Storage s) {
-			applyToLayer (m, x, y, "ground", s);
+			applyToLayer (m, x, y, "same as hero 2", s);
 		}
 
 		protected void applyToTile (LogicalTile l, Tile t, Storage s) {
