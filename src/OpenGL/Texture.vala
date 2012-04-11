@@ -21,7 +21,7 @@ namespace HMP {
 	/**
 	 * Klasse zur Speicherung einer Textur und um diese an OpenGL zu binden.
 	 */
-	public class OpenGLTexture : GdkTexture, HMP.Texture {
+	public class OpenGLTexture : GdkTexture {
 		GLuint* texID = new GLuint[1];
 		GL.GLuint displaylistID;
 		/**

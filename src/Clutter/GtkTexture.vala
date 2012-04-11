@@ -14,70 +14,37 @@
  *	Patrick König <knuffi@gmail.com>
  */
 
-using Gdk;
 using GLib;
 using HMP;
+using GtkClutter;
+using Gdk;
 namespace HMP {
 	/**
 	 * Klasse zur Speicherung einer Textur und um diese an OpenGL zu binden.
 	 */
-	public abstract class GdkTexture : Texture {
-		/**
-		 * Liefert den Pixbuf der Textur, Pixbuf wird fuer die Verwalltung der Pixel verwendet.<<BR>>
-		 * * Weitere Informationen: [[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Pixbuf.html]]
-		 * @see Gdk.Pixbuf
-		 */
-		public Pixbuf pixbuf { get; protected set; }
-		public double width {
-			get { return pixbuf.get_width(); }
-		}
-		public double height {
-			get { return pixbuf.get_height(); }
-		}
-		public HMP.Colorspace colorspace {
-			get { return HMP.Colorspace.fromGdkPixbuf(pixbuf); }
-		}
-		/**
-		 * Liefert ein Zeiger auf ein Array uint8[] mit den Pixelwerten,
-		 * der hier vorgegebene Rueckgabetyp ist hier void* damit dieser mit OpenGL
-		 * kompatibel ist.
-		 */
-		public void* pixels {
-			get { return pixbuf.get_pixels(); }
-		}
-		/**
-		 * Liefert Information darueber ob die Textur einen Alphakanal enthaelt.
-		 * @see Gdk.Pixbuf.get_has_alpha
-		 */
-		public bool has_alpha {
-			get { return this.pixbuf.get_has_alpha(); }
+	public abstract class GtkClutterTexture : GdkTexture {
+		public GtkClutter.Texture clutter_tex { get; private set; }
+
+		public GtkClutterTexture() {
+			clutter_tex = new GtkClutter.Texture();
 		}
 		/**
 		 * Ladet eine Textur aus einer Datei.
 		 * @param path Pfadangabe der zu ladenden Grafikdatei.
 		 */
-		protected void loadFromFile(string path)
-		requires (path != null)
-		{
-	 		try {
-				pixbuf = new Pixbuf.from_file (path);
-			}
-			catch (GLib.Error e) {
-				//GLib.error("", e.message);
-				GLib.error("%s konnte nicht geladen werden", path);
-			}
-			
-			loadFromPixbuf(pixbuf);
+		protected new void loadFromFile(string path) {
+			((GdkTexture)this).loadFromFile (path);
+			clutter_tex.set_from_pixbuf(pixbuf);
 		}
-
 		/**
 		 * Ladet eine Textur aus einem Pixbuf in die Klasse.
 		 * @param pixbuf Der pixbuf aus dem die Textur erstellt werden soll.
 		 */
-		public void loadFromPixbuf(Gdk.Pixbuf pixbuf)
+		public new void loadFromPixbuf(Gdk.Pixbuf pixbuf)
 		requires (pixbuf != null)
 		{
 			this.pixbuf = pixbuf;
+			clutter_tex.set_from_pixbuf(pixbuf);
 		}
 		/**
 		 *

@@ -15,6 +15,7 @@
  */
 using HMP;
 using GL;
+using Cogl;
 namespace HMP {
 	const int TIMER_CALLS_PS = 30;
 	/**
@@ -297,12 +298,32 @@ namespace HMP {
 				assert_not_reached();
 			}
 		}
+		public static HMP.Colorspace fromCogl (Cogl.PixelFormat format) {
+			switch (format) {
+				case Cogl.PixelFormat.RGB_888:
+					return HMP.Colorspace.RGB;
+				case Cogl.PixelFormat.RGBA_8888:
+					return HMP.Colorspace.RGBA;
+				default:
+					assert_not_reached();
+			}
+		}
 		public GL.GLint to_opengl_channel () {
 			switch (this) {
 				case HMP.Colorspace.RGB:
 					return 3;
 				case  HMP.Colorspace.RGBA:
 					return 4;
+				default:
+					assert_not_reached();
+			}
+		}
+		public bool has_alpha () {
+			switch (this) {
+				case HMP.Colorspace.RGB:
+					return false;
+				case  HMP.Colorspace.RGBA:
+					return true;
 				default:
 					assert_not_reached();
 			}

@@ -11,7 +11,7 @@ PKG_NAME      = HMP-ALL
 SRCS          = main.vala
 
 # Allgemeine Quelldateien fuer Tests und das Spiel
-ASRCS          = scene.vala values.vala io.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala mapmanager.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala inventory.vala tool.vala emptyHands.vala spriteset.vala sprite.vala spritelayer.vala spritesetmanager.vala tilesetreference.vala plant.vala hoe.vala axe.vala pickaxe.vala singletool.vala wateringcan.vala sprinkler.vala circletool.vala file.vala potato.vala potatoseed.vala storage.vala scythe.vala multiscythe.vala seed.vala grass.vala grassseed.vala multihoe.vala gamestate.vala animation.vala carryable.vala npc.vala chicken.vala haybale.vala egg.vala control.vala dialogtree.vala OpenGL/Texture.vala Gdk/Texture.vala logicalTile.vala
+ASRCS          = scene.vala values.vala io.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala mapmanager.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala inventory.vala tool.vala emptyHands.vala spriteset.vala sprite.vala spritelayer.vala spritesetmanager.vala tilesetreference.vala plant.vala hoe.vala axe.vala pickaxe.vala singletool.vala wateringcan.vala sprinkler.vala circletool.vala file.vala potato.vala potatoseed.vala storage.vala scythe.vala multiscythe.vala seed.vala grass.vala grassseed.vala multihoe.vala gamestate.vala animation.vala carryable.vala npc.vala chicken.vala haybale.vala egg.vala control.vala dialogtree.vala OpenGL/Texture.vala Gdk/Texture.vala logicalTile.vala Clutter/GtkTexture.vala
 
 # Quelltestdateien nur fuer Tests
 TSRCS         = main.vala tileset.vala
@@ -19,7 +19,7 @@ TSRCS         = main.vala tileset.vala
 # ausfuehrbares Ziel
 TARGET        = hmp
 # Pakete
-PACKAGES      = gl glu glut sdl sdl-image cairo gdk-x11-2.0 libxml-2.0 gee-1.0 gio-2.0 posix
+PACKAGES      = gl glu glut sdl sdl-image cairo libxml-2.0 gee-1.0 gio-2.0 posix clutter-1.0 clutter-gtk-1.0
 # C-Compileranweisungen
 CFLAGS        = -lglut -lSDL_image -lm
 

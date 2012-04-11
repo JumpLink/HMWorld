@@ -14,28 +14,32 @@
  *	Patrick König <knuffi@gmail.com>
  */
 
-using Gdk;
 using GLib;
 using HMP;
+using Clutter;
 namespace HMP {
 	/**
 	 * Klasse zur Speicherung einer Textur und um diese an OpenGL zu binden.
 	 */
-	public abstract class GdkTexture : Texture {
+	public abstract class ClutterTexture : Texture {
 		/**
 		 * Liefert den Pixbuf der Textur, Pixbuf wird fuer die Verwalltung der Pixel verwendet.<<BR>>
 		 * * Weitere Informationen: [[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Pixbuf.html]]
 		 * @see Gdk.Pixbuf
 		 */
-		public Pixbuf pixbuf { get; protected set; }
+		public Clutter.Texture clutter_tex { get; private set; }
 		public double width {
-			get { return pixbuf.get_width(); }
+			get {return clutter_tex.cogl_texture.get_width ();}
 		}
 		public double height {
-			get { return pixbuf.get_height(); }
+			get {return clutter_tex.cogl_texture.get_height ();}
 		}
 		public HMP.Colorspace colorspace {
-			get { return HMP.Colorspace.fromGdkPixbuf(pixbuf); }
+			get { return HMP.Colorspace.fromCogl(clutter_tex.pixel_format); }
+		}
+
+		public ClutterTexture() {
+			clutter_tex = new Clutter.Texture();
 		}
 		/**
 		 * Liefert ein Zeiger auf ein Array uint8[] mit den Pixelwerten,
@@ -43,14 +47,19 @@ namespace HMP {
 		 * kompatibel ist.
 		 */
 		public void* pixels {
-			get { return pixbuf.get_pixels(); }
+			get {
+				uchar[] data;
+				int data_size_in_bytes; //the size of the texture data in bytes
+				data_size_in_bytes = clutter_tex.cogl_texture.get_data(Cogl.PixelFormat.RGBA_8888, 0, uchar[] data);
+				return data;
+			}
 		}
 		/**
 		 * Liefert Information darueber ob die Textur einen Alphakanal enthaelt.
 		 * @see Gdk.Pixbuf.get_has_alpha
 		 */
 		public bool has_alpha {
-			get { return this.pixbuf.get_has_alpha(); }
+			get { return colorspace.has_alpha();}
 		}
 		/**
 		 * Ladet eine Textur aus einer Datei.
@@ -59,35 +68,7 @@ namespace HMP {
 		protected void loadFromFile(string path)
 		requires (path != null)
 		{
-	 		try {
-				pixbuf = new Pixbuf.from_file (path);
-			}
-			catch (GLib.Error e) {
-				//GLib.error("", e.message);
-				GLib.error("%s konnte nicht geladen werden", path);
-			}
-			
-			loadFromPixbuf(pixbuf);
-		}
-
-		/**
-		 * Ladet eine Textur aus einem Pixbuf in die Klasse.
-		 * @param pixbuf Der pixbuf aus dem die Textur erstellt werden soll.
-		 */
-		public void loadFromPixbuf(Gdk.Pixbuf pixbuf)
-		requires (pixbuf != null)
-		{
-			this.pixbuf = pixbuf;
-		}
-		/**
-		 *
-		 */
-		public void save (string filename) {
-			try {
-				pixbuf.save(filename, "png");
-			} catch (GLib.Error e) {
-				error ("Error! Konnte Sprite nicht Speichern: %s\n", e.message);
-			}
+			clutter_tex.from_file(string path);
 		}
 		/**
 		 *
