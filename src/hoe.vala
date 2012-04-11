@@ -21,9 +21,16 @@ namespace HMP {
 	public class Hoe : SingleTool, Tool, Object {
 
 		public void use (Map m, uint x, uint y, Direction d, Storage s) {
-			Tile t = Target (m, x, y, d, "ground");
-			if (t.type == TileType.EMPTY_TILE || t.type == TileType.GRASS)
+			print ("Grabe Boden um an Position (%u, %u)\n", x, y);
+			LogicalTile t = logicalTarget (m, x, y, d);
+			if (t == null)
+				print ("Kein Tile gefunden: %u, %u!\n", x, y);
+			else if (t.type == TileType.EMPTY_TILE || t.type == TileType.GRASS){
 				t.type = TileType.PLANTABLE;
+				print ("Boden umgegraben!\n");
+			} else {
+				print ("Boden konnte nicht umgegraben werden!\n");
+			}
 		}
 	}
 }

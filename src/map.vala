@@ -85,6 +85,8 @@ namespace HMP {
 		 */
 		public Gee.List<Entity> entities = new Gee.ArrayList<Entity>();
 
+		public LogicalTile [,] tiles;
+
 		public double shift_x {
 			get { return (WORLD.STATE.VIEWPORT[2] - width * tilewidth)/2;}
 		}
@@ -111,6 +113,10 @@ namespace HMP {
 			this.filename = fn;
 			TMX xml = new TMX(folder+filename);
 			xml.loadGlobalMapProperties(out orientation, out version, out width, out height, out tilewidth, out tileheight);
+			tiles = new LogicalTile [width, height];
+			foreach (LogicalTile t in tiles) {
+				t = new LogicalTile ();
+			}
 			tileset = xml.loadTileSets();
 			xml.loadLayers(tileset, out layers_over, out layers_same, out layers_under);
 		}
@@ -224,6 +230,12 @@ namespace HMP {
 			foreach (Layer l in layers_under) {
 				l.draw(0, 0);
 			}
+			for (uint x = 0; x < width; ++x)
+				for (uint y = 0; y < height; ++y) {
+					LogicalTile t = tiles[x,y];
+					if (t != null && t.type == TileType.PLANT && t.plant != null)
+						t.plant.draw (x, y, 0.0);
+				}
 		}
 		/**
 		 * Gibt alle Werte (bis auf die Layer) der Map auf der Konsole aus

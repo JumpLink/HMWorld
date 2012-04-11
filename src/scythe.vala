@@ -21,7 +21,7 @@ namespace HMP {
 	public class Scythe : SingleTool, Tool, Object {
 
 		public void use (Map m, uint x, uint y, Direction d, Storage s) {
-			Tile t = Target (m, x, y, d, "ground");
+			LogicalTile t = logicalTarget (m, x, y, d);
 			if (t.type == TileType.GRASS && t.plant != null) {
 				t.plant.harvest();
 				s.hay++;

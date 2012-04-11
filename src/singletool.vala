@@ -37,7 +37,27 @@ namespace HMP {
 					tx = x - 1;
 					break;
 			}
+			print ("Spieler: (%u, %u); Ziel: (%u, %u)\n", x, y, tx, ty);
 			return l.tiles[tx,ty];
+		}
+
+		protected LogicalTile logicalTarget (Map m, uint x, uint y, Direction d) {
+			uint tx = x, ty = y;
+			switch (d) {
+				case Direction.NORTH:
+					ty = y - 1;
+					break;
+				case Direction.EAST:
+					tx = x + 1;
+					break;
+				case Direction.SOUTH:
+					ty = y + 1;
+					break;
+				case Direction.WEST:
+					tx = x - 1;
+					break;
+			}
+			return m.tiles[tx,ty];
 		}
 	}
 }

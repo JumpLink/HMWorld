@@ -134,22 +134,48 @@ namespace HMP {
 		POTATO
 	}
 	/**
-	 * TODO Ole
+	 * Typ fuer Tiles, beschreibt logische Eigenschaften.
 	 */
 	public enum TileType {
 		/**
-		 * TileTyp fuer Tiles die nicht gezeichnet werden, bzw. gar nicht existieren.
+		 * Typ fuer Tiles die, nicht gezeichnet werden, bzw. gar nicht existieren.
 		 */
 		NO_TILE,
+		/**
+		 * Typ fuer Tiles ohne besondere Eigenschaften.
+		 */
 		EMPTY_TILE,
-		REGULAR_TILE,
+		/**
+		 * Typ fuer Tiles, die bepflanzt werden koennen.
+		 */
 		PLANTABLE,
+		/**
+		 * Typ fuer Tiles, die bepflanzt sind.
+		 */
 		PLANT,
+		/**
+		 * Typ fuer Tiles, die mit grass bewachsen sind.
+		 */
 		GRASS,
+		/**
+		 * Typ fuer Tiles, die von NPCs begehbar sind.
+		 */
 		PATH,
+		/**
+		 * Typ fuer Tiles, die von einem Gebaeude besetzt sind.
+		 */
 		BUILDING,
+		/**
+		 * Typ fuer Tiles, die von einem Felsstein besetzt sind.
+		 */
 		ROCK,
+		/**
+		 * Typ fuer Tiles, die von einem Baumstumpf besetzt sind.
+		 */
 		WOOD,
+		/**
+		 * Typ fuer Tiles, die von einem Gewaesser besetzt sind.
+		 */
 		WATER
 	}
 		/**

@@ -111,8 +111,6 @@ namespace HMP {
 					if(tiles[x,y].type != TileType.NO_TILE) {
 						//print("x: %i y: %i\n", x,y);
 						//tiles[x,y].printValues();
-						if (tiles[x,y].plant != null)
-							print ("Hier muss ne Pflanze gezeichnet werden!\n");
 						tiles[x,y].draw(shift_x + x * tiles[x,y].width, shift_y + y * tiles[x,y].height, zoff);
 					}
 				}

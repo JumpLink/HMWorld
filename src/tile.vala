@@ -41,10 +41,6 @@ namespace HMP {
 		 */
 		public TileType type;
 		/**
-		 * Pflanze.
-		 */
-		public Plant plant;
-		/**
 		 * Konstruktor erzeugt ein leeres Tile vom Typ TileType.NO_TILE
 		 * @see TileType.NO_TILE
 		 */

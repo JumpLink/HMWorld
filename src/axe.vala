@@ -21,7 +21,7 @@ namespace HMP {
 	public class Axe : SingleTool, Tool, Object {
 
 		public void use (Map m, uint x, uint y, Direction d, Storage s) {
-			Tile t = Target (m, x, y, d, "player");
+			LogicalTile t = logicalTarget (m, x, y, d);
 			if (t.type == TileType.WOOD) {
 				t.type = TileType.EMPTY_TILE;
 				s.wood++;

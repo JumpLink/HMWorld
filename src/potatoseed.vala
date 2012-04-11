@@ -29,14 +29,14 @@ namespace HMP {
 			applyToLayer (m, x, y, "same as hero 2", s);
 		}
 
-		protected void applyToTile (Tile t, Storage s) {
-			if (/*t.type == TileType.PLANTABLE && */t.plant == null && seed > 0) {
-				//t.type = TileType.PLANT;
-				t.plant = new Potato ();
-				t.type = TileType.PLANT;
-				//FIXME keine NO_TILE manipulieren, sonst gdk_pixbuf_get_height: assertion
+		protected void applyToTile (LogicalTile l, Tile t, Storage s) {
+			if (l.type == TileType.PLANTABLE && l.plant == null && seed > 0) {
+				l.plant = new Potato ();
+				l.type = TileType.PLANT;
 				--seed;
 				print ("Kartoffel gepflanzt!\n");
+			} else {
+				print ("Keine Kartoffel gepflanzt!\n");
 			}
 		}
 	}

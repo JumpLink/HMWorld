@@ -33,7 +33,7 @@ namespace HMP {
 		 * Konstruktor
 		 */
 	 	public Inventory () {
-	 		primary = new EmptyHands ();
+	 		primary = new Hoe ();
 	 		secondary = new PotatoSeed ();
 	 	}
 

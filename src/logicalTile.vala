@@ -16,28 +16,22 @@
 using HMP;
 namespace HMP {
 	/**
-	 * Klasse fuer einen Sprenger.
+	 * Klasse fuer logische Eigenschaften eines Tiles.
 	 */
-	public class Sprinkler : SingleTool, CircleTool, Tool, Object {
+	public class LogicalTile {
 
-		private uint water;
+		/**
+		 * Eigenschaften.
+		 */
+		public TileType type = TileType.EMPTY_TILE;
 
-		public Sprinkler () {
-			water = 0;
-		}
+		/**
+		 * Pflanze.
+		 */
+		public Plant plant;
 
-		protected void applyToTile (LogicalTile l, Tile t, Storage s) {
-			if (water > 0 && l.type == TileType.PLANT && l.plant != null) {
-						l.plant.water ();
-						--water;
-			}
-		}
-
-		public void use (Map m, uint x, uint y, Direction d, Storage s) {
-			LogicalTile t = logicalTarget (m, x, y, d);
-			if (t.type == TileType.WATER)
-				water = WATER_CAPACITY;
-			applyToLayer (m, x, y, "player", s);
+		public LogicalTile () {
+			print("Logisches Tile erstellt\n");
 		}
 	}
 }

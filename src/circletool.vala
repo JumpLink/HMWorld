@@ -22,10 +22,11 @@ namespace HMP {
 
 		/**
 		 * Wendet das Werkzeug auf ein Tile an.
-		 * @param t Das Tile.
+		 * @param l Das Tile (Logik).
+		 * @param t Das Tile (Textur).
 		 * @param s Das Lager.
 		 */
-		protected abstract void applyToTile (Tile t, Storage s);
+		protected abstract void applyToTile (LogicalTile l, Tile t, Storage s);
 
 		/**
 		 * Wendet das Werkzeug auf alle Tiles im unmittelbaren Umkreis des Spielers 
@@ -40,9 +41,7 @@ namespace HMP {
 			for (uint ix = x - 1; ix <= (x + 1); ++ix)
 				for (uint iy = y - 1; iy <= (y + 1); ++iy) {
 						print ("Bearbeite Tile %u, %u\n", ix, iy);
-						applyToTile (l.tiles[ix, iy], s);
-						if (l.tiles[ix, iy].plant == null)
-							print ("Keine Pflanze!\n");
+						applyToTile (m.tiles[ix,iy], l.tiles[ix, iy], s);
 					}
 		}
 

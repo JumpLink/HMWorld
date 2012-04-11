@@ -92,21 +92,6 @@ namespace HMP {
 		public void use () {
 			tools.use (WORLD.CURRENT_MAP, (uint) ((pos.x)/WORLD.CURRENT_MAP.tilewidth), 
 				(uint) ((pos.y) /WORLD.CURRENT_MAP.tileheight), direction, storage);
-			foreach (Layer l in WORLD.CURRENT_MAP.layers_over) {
-				foreach (Tile t in l.tiles)
-					if (t.plant != null)
-						print ("aaaaaaaaaaarrrgh!!!\n");
-			}
-			foreach (Layer l in WORLD.CURRENT_MAP.layers_same) {
-				foreach (Tile t in l.tiles)
-					if (t.plant != null)
-						print ("aaaaaaaaaaarrrgh!!!\n");
-			}
-			foreach (Layer l in WORLD.CURRENT_MAP.layers_under) {
-				foreach (Tile t in l.tiles)
-					if (t.plant != null)
-						print ("aaaaaaaaaaarrrgh!!!\n");
-			}
 		}
 
 		/**

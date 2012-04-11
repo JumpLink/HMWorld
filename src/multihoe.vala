@@ -23,9 +23,9 @@ namespace HMP {
 			applyToLayer (m, x, y, "ground", s);
 		}
 
-		protected void applyToTile (Tile t, Storage s) {
-			if (t.type == TileType.EMPTY_TILE || t.type == TileType.GRASS)
-				t.type = TileType.PLANTABLE;
+		protected void applyToTile (LogicalTile l, Tile t, Storage s) {
+			if (l.type == TileType.EMPTY_TILE || l.type == TileType.GRASS)
+				l.type = TileType.PLANTABLE;
 		}
 	}
 }

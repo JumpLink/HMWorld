@@ -27,12 +27,12 @@ namespace HMP {
 		}
 
 		public void use (Map m, uint x, uint y, Direction d, Storage s) {
-			Tile t = Target (m, x, y, d, "player");
+			LogicalTile t = logicalTarget (m, x, y, d);
 			if (water > 0 && t.type == TileType.PLANT && t.plant != null) {
 				t.plant.water ();
 				--water;
 			}
-			t = Target (m, x, y, d, "ground");
+			t = logicalTarget (m, x, y, d);
 			if (t.type == TileType.WATER)
 				water = WATER_CAPACITY;
 		}
