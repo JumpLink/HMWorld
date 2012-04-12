@@ -23,24 +23,17 @@ namespace HMP {
 	/**
 	 * Klasse fuer Ein-/Ausgabe-Verarbeitung.
 	 */
-	class OpenGLKeyboard {
-		public static uchar UP='w';
-		public static uchar RIGHT='d';
-		public static uchar DOWN='s';
-		public static uchar LEFT='a';
-		public static uchar ACTION = 'f';
-		public static uchar USE = 'e';
-		public static uchar SWAP = 'r';
+	class OpenGLInput : Input {
 		/**
 		 * Konstruktor.
 		 */
-		public OpenGLKeyboard() {
+		public OpenGLInput() {
 			init();
 		}
 		public void init() {
 			/* Tastenwiederholungen ignorieren */
 			glutIgnoreKeyRepeat(1);
-			registerCallbacks();
+			//registerCallbacks();
 		}
 		/**
 		 * Verarbeitung eines Tasturereignisses.
@@ -62,7 +55,7 @@ namespace HMP {
 			if (status == false) {
 				/* nicht-Spezialtasten */
 				if (!isSpecialKey) {
-					if (WORLD.STATE.dialog) {
+					if (STATE.dialog) {
 						if (key == UP || key == DOWN)
 							p.chooseAnswer (key == DOWN);
 					} else {
@@ -88,17 +81,18 @@ namespace HMP {
 							GLib.Process.exit(0);
 						case 'p': /*Paused-Mode On/Off*/
 						case 'P':
-							WORLD.STATE.toggle_paused();
-							print(@"Pause: $(WORLD.STATE.paused)");
+							STATE.toggle_paused();
+							HMP.OpenGLView.cbTimer(0);
+							print(@"Pause: $(STATE.paused)");
 							break;
 						case 'b': /*Debug-Mode On/Off*/
 						case 'B':
-							WORLD.STATE.toggle_debug();
-							print(@"Debug: $(WORLD.STATE.debug)");
+							STATE.toggle_debug();
+							print(@"Debug: $(STATE.debug)");
 							break;
 						case 'v': /*Debug-Mode On/Off*/
 						case 'V':
-							WORLD.STATE.toggle_perspective();
+							VIEW.toggle_perspective();
 							break;
 					}
 				}

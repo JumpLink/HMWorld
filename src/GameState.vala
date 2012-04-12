@@ -10,8 +10,6 @@
  *
  * Author:
  *	Pascal Garber <pascal.garber@gmail.com>
- *	Ole Lorenzen <ole.lorenzen@gmx.net>
- *	Patrick König <knuffi@gmail.com>
  */
 using HMP;
 namespace HMP {
@@ -19,24 +17,6 @@ namespace HMP {
 	 * Klasse fuer Spielzustand.
 	 */
 	public class GameState {
-		/**
-		 * Viewport.
-		 */
-		public int[] VIEWPORT = new int[4];
-		/**
-		 * Fensterbreite.
-		 */
-		public int window_width {
-			get { return VIEWPORT[2]; }
-			set { VIEWPORT[2] = value;}
-		}
-		/**
-		 * Fensterhoehe.
-		 */
-		public int window_height {
-			get { return VIEWPORT[3]; }
-			set { VIEWPORT[3] = value;}
-		}
 		/**
 		 * Pause an oder aus
 		 */
@@ -46,44 +26,19 @@ namespace HMP {
 		 */
 		public bool debug = false;
 		/**
-		 * Dialog-Modus ist aktiv.
-		 */
-		public bool dialog = false;
-		/**
 		 * Seit dem letzten Intervall vergangene Zeit in Sekunden
 		 */
 		public double interval;
 		/**
-		 * Perspektivischer Modus, an oder aus
+		 * Dialog-Modus ist aktiv.
 		 */
-		public bool perspective = false;
+		public bool dialog = false;
 
-		/**
-		 * Konstruktor.
-		 */
-		public GameState () {
-
-		}
-		public void init() {
-			
-		}
-		public void timer() {
-			
-		}
-		public static bool toggle(bool b) {
-			return b ? false : true;
-		}
 		public void toggle_paused() {
 			paused = toggle (paused);
-			HMP.OpenGLView.cbTimer(0);
 		}
 		public void toggle_debug() {
 			debug = toggle (debug);
-		}
-		public void toggle_perspective() {
-			perspective = toggle (perspective);
-			print(@"Perspektive: $(WORLD.STATE.perspective)");
-			HMP.OpenGLView.cbReshape(WORLD.STATE.window_width, WORLD.STATE.window_height);
 		}
 	}
 }

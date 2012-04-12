@@ -27,7 +27,7 @@ namespace HMP {
 		/**
 		 * Konstruktor
 		 */
-		public TileSetManager(string folder = "./data/tileset/") {
+		public TileSetManager(string folder) {
 			print("Erstelle TileSetManager\n");
 			tileset = new Gee.ArrayList<TileSet>();
 			loadAllFromFolder(folder);

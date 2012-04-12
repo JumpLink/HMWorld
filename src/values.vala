@@ -368,4 +368,7 @@ namespace HMP {
 		(num > 0) ? (num+= 0.5) : (num+= (-0.5));
 		return (int)num;
 	}
+	public static bool toggle(bool b) {
+		return b ? false : true;
+	}
 }

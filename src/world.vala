@@ -33,13 +33,9 @@ namespace HMP {
 		 */
 		public Map CURRENT_MAP;
 		/**
-		 * Globale Map fuer die gerade aktive Map
+		 * 
 		 */
 		public SpriteSetManager SPRITESETMANAGER;
-		/**
-		 * Globales SPRITESET fuer den aktuellen Helden / Spieler
-		 */
-		public GameState STATE = new GameState ();
 		/**
 		 * Entitaeten in der Welt
 		 */
@@ -50,13 +46,13 @@ namespace HMP {
 		 * Konstruktor
 		 */
 		public World() {
-
 		}
+
 		public void init() {
 			/* Globalen TileSetManager erzeugen */
-			this.TILESETMANAGER = new HMP.TileSetManager();
+			this.TILESETMANAGER = new HMP.TileSetManager("./data/tileset/");
 			/* Globalen Mapmanager erzeugen */
-			this.MAPMANAGER = new HMP.MapManager();
+			this.MAPMANAGER = new HMP.MapManager("./data/map/");
 			this.MAPMANAGER.printAll();
 			/* Globalen SpriteSetManager erzeugen */
 			this.SPRITESETMANAGER = new HMP.SpriteSetManager();
@@ -72,14 +68,11 @@ namespace HMP {
 			CURRENT_MAP.entities.add (new ToolEntity(new Coord.nondefault (100.0, 50.0), 
 				SPRITESETMANAGER.getFromName("hase"), 
 				new MultiHoe()));
-			/*Spielstatus initialisieren*/
-			STATE.init();
 		}
 
 		public void timer ()
 		requires (PLAYERS != null)
 		{	
-			STATE.timer();
 			foreach (Player p in PLAYERS)
 				p.timer();
 		}

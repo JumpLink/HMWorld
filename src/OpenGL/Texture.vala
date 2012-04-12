@@ -90,7 +90,7 @@ namespace HMP {
 		 */
 		private void draw_list( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
 			/* Ueberpruefung ob zu zeichnender Bereich innerhalb des Fensters liegt */
-			if (y < WORLD.STATE.window_height && x < WORLD.STATE.window_width) {
+			if (y < VIEW.window_height && x < VIEW.window_width) {
 				glPushMatrix();
 					glTranslatef((GL.GLfloat)x,(GL.GLfloat)y,(GL.GLfloat)zoff);
 					bindTexture();
@@ -114,7 +114,7 @@ namespace HMP {
 		 */
 		private void draw_direct( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
 			/* Ueberpruefung ob zu zeichnender Bereich innerhalb des Fensters liegt */
-			if (y < WORLD.STATE.window_height && x < WORLD.STATE.window_width) {
+			if (y < VIEW.window_height && x < VIEW.window_width) {
 				switch (mirror) {
 					case HMP.Mirror.NONE:
 						bindTexture();

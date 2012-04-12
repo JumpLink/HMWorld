@@ -16,15 +16,21 @@
 using HMP;
 namespace HMP {
 	HMP.World WORLD;
+	HMP.View VIEW;
+	HMP.Input INPUT;
+	HMP.GameState STATE;
 	class Game {
 		public Game() {
 			
 		}
 		public static int main (string[] args) {
 			WORLD = new World ();
-			var view = new OpenGLView();
-			view.initAndStart ("Titel", 640, 480);
-			var keyboard = new OpenGLKeyboard();
+			WORLD.init();
+			STATE = new GameState();
+			VIEW = new OpenGLView();
+			VIEW.init("Titel", 640, 480);
+			INPUT = new OpenGLInput();
+			VIEW.show();
 			return 1;
 		}
 	}

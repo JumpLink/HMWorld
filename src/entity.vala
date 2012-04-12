@@ -86,16 +86,16 @@ namespace HMP {
 			if (motion && motionPossible()) {
 				switch (direction) {
 					case Direction.NORTH:
-						pos.y-=WORLD.STATE.interval*steps_ps;
+						pos.y-=STATE.interval*steps_ps;
 						break;
 					case Direction.EAST:
-						pos.x+=WORLD.STATE.interval*steps_ps;
+						pos.x+=STATE.interval*steps_ps;
 						break;
 					case Direction.SOUTH:
-						pos.y+=WORLD.STATE.interval*steps_ps;
+						pos.y+=STATE.interval*steps_ps;
 						break;
 					case Direction.WEST:
-						pos.x-=WORLD.STATE.interval*steps_ps;
+						pos.x-=STATE.interval*steps_ps;
 						break;
 				}
 				WORLD.CURRENT_MAP.entities.sort ((CompareFunc) compare);

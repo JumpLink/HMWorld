@@ -12,6 +12,23 @@
 using HMP;
 namespace HMP {
 	public abstract class View {
+		/**
+		 * Perspektivischer Modus, an oder aus
+		 */
+		public static bool perspective = false;
+		/**
+		 * Fensterbreite.
+		 */
+		public virtual int window_width { get; protected set; }
+		/**
+		 * Fensterhoehe.
+		 */
+		public virtual int window_height { get; protected set; }
+		public abstract bool init (string title, int width, int height);
 		public abstract void show();
+		public virtual void toggle_perspective() {
+			perspective = toggle (perspective);
+			print(@"Perspektive: $(perspective)");
+		}
 	}
 }

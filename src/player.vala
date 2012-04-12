@@ -116,7 +116,7 @@ namespace HMP {
 		 * @param next Naechste Antwort ? sonst vorherige
 		 */
 		public void chooseAnswer (bool next) {
-			if (WORLD.STATE.dialog) {
+			if (STATE.dialog) {
 				foreach (Entity e in WORLD.CURRENT_MAP.entities) {
 					if (item == null && inRange(e) && e is NPC)
 						(e as NPC).chooseAnswer (next);

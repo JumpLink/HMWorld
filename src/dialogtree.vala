@@ -60,7 +60,7 @@ namespace HMP {
 		 */
 		public string getText () {
 			if (children.length == 0) {
-				WORLD.STATE.dialog = false;
+				STATE.dialog = false;
 				return "Dialog beendet!";
 			}
 			string text = question + "\n";

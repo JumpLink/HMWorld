@@ -60,7 +60,7 @@ namespace HMP {
 			return animationdata[current_frame_index];
 		}
 		public void time() {
-			timer += WORLD.STATE.interval;
+			timer += STATE.interval;
 			if (timer * frame_ps >= 1) {
 				current_frame_index++;
 				timer = 0;

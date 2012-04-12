@@ -49,9 +49,9 @@ namespace HMP {
 		}
 
 		public override void interactWith (Player p) {
-			if (!WORLD.STATE.dialog) {
+			if (!STATE.dialog) {
 				print ("Spieler %s redet mit NPC\n", p.name);
-				WORLD.STATE.dialog = true;
+				STATE.dialog = true;
 			} else
 				dialog = dialog.getAnswer ();
 			print (dialog.getText());

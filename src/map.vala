@@ -85,10 +85,10 @@ namespace HMP {
 		public LogicalTile [,] tiles;
 
 		public double shift_x {
-			get { return (WORLD.STATE.VIEWPORT[2] - width * tilewidth)/2;}
+			get { return (VIEW.window_width - width * tilewidth)/2;}
 		}
 		public double shift_y {
-			get { return (WORLD.STATE.VIEWPORT[3] - height * tileheight)/2;}
+			get { return (VIEW.window_height - height * tileheight)/2;}
 		}
 
 		/**
