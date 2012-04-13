@@ -23,9 +23,11 @@ namespace HMP {
 		/**
 		 * Fensterhoehe.
 		 */
-		public virtual int window_height { get; protected set; }
-		//public abstract bool init (string title, int width, int height);
+		public abstract int window_height { get; protected set; }
+		public abstract bool init (string title, int width, int height);
 		public abstract void show();
+		public abstract void timer(int lastCallTime);
+		public abstract void reshape (int w, int h);
 		public virtual void toggle_perspective() {
 			perspective = toggle (perspective);
 			print(@"Perspektive: $(perspective)");

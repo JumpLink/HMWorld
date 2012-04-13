@@ -15,21 +15,22 @@ using GLU;
 using GLUT;
 namespace HMP {
 	public class OpenGLView:View {
+		static int windowID = 0;
 		/**
 		 * viewport.
 		 */
-		public static int[] viewport = new int[4];
+		static int[] viewport = new int[4];
 		/**
 		 * Fensterbreite.
 		 */
-		public static new int window_width {
+		public override int window_width {
 			get { return viewport[2]; }
 			set { viewport[2] = value;}
 		}
 		/**
 		 * Fensterhoehe.
 		 */
-		public static new int window_height {
+		public override int window_height {
 			get { return viewport[3]; }
 			set { viewport[3] = value;}
 		}
@@ -39,14 +40,15 @@ namespace HMP {
 		 * und Backbuffer.
 		 */
 		public override void show () {
-			draw ();
+			/* Eintritt in die Ereignisschleife */
+			glutMainLoop ();
 		}
 		/**
 		 * Zeichen-Callback.
 		 * Loescht die Buffer, ruft das Zeichnen der Szene auf und tauscht den Front-
 		 * und Backbuffer.
 		 */
-		public static void draw () {
+		static void draw () {
 
 			/* Colorbuffer leeren */
 			glClear (GL_COLOR_BUFFER_BIT);
@@ -60,13 +62,13 @@ namespace HMP {
 			/* Szene anzeigen / Buffer tauschen */
 			glutSwapBuffers ();
 		}
-		public static void drawWorld(HMP.World world)
+		static void drawWorld(HMP.World world)
 		requires (WORLD.CURRENT_MAP != null)
 		{
 			/* map zeichen */
 			drawMap(WORLD.CURRENT_MAP);
 		}
-		public static void drawMap(HMP.Map map)
+		static void drawMap(HMP.Map map)
 		requires (map != null)
 		requires (map.layers_same != null)
 		requires (map.layers_under != null)
@@ -106,7 +108,7 @@ namespace HMP {
 		 * @see HMP.Map.draw
 		 * @see HMP.Tile.draw
 		 */
-		public static void drawLayer(HMP.Layer layer, int shift_x, int shift_y) {
+		static void drawLayer(HMP.Layer layer, int shift_x, int shift_y) {
 			//print("draw layer\n");
 			for (int y=0;y<layer.height;y++) {
 				for (int x=0;x<layer.width;x++) {
@@ -124,14 +126,14 @@ namespace HMP {
 		 * @param y untere y-Koordinate
 		 * @param zoff Angabe der hoehe des Tiles Z.B unter, ueber, gleich, .. dem Held.
 		 */
-		public static void drawTile(HMP.Tile tile, double x, double y, double zoff) {
+		static void drawTile(HMP.Tile tile, double x, double y, double zoff) {
 			if (tile.type != TileType.NO_TILE)
 				tile.tex.draw((int)x,(int)y,zoff);
 		}
-		public static void drawEntity(HMP.Entity e, double x, double y, double zoff) {
+		static void drawEntity(HMP.Entity e, double x, double y, double zoff) {
 			drawSpriteSet(e.spriteset, e.pos.x + x, e.pos.y + y, zoff);
 		}
-		public static void drawSpriteSet(HMP.SpriteSet ss, double x, double y, double zoff)
+		static void drawSpriteSet(HMP.SpriteSet ss, double x, double y, double zoff)
 		requires (ss.current_animation != null)
 		{
 			AnimationData ani = ss.current_animation.get_AnimationData();
@@ -149,7 +151,7 @@ namespace HMP {
 		/**
 		 * 
 		 */
-		public static void drawSprite(HMP.Sprite s, double x, double y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
+		static void drawSprite(HMP.Sprite s, double x, double y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
 			s.tex.draw (Round(x-s.width/2),Round(y-s.height/2),zoff,mirror);
 		}
 		/**
@@ -163,18 +165,21 @@ namespace HMP {
 			/* Matrix zuruecksetzen - Einheitsmatrix laden */
 			glLoadIdentity ();
 			if (!perspective) {
-				glOrtho (	0, window_width,						/* links, rechts */
-						 	window_height, 0,						/* unten, oben */
+				glOrtho (	0, viewport[2],						/* links, rechts */
+						 	viewport[3], 0,						/* unten, oben */
 							-128, 128);											/* tiefe */
 				/* verschiebt die Welt in die Mitte	 */
-				if (window_width > WORLD.CURRENT_MAP.pxl_width)
+				if (viewport[2] > WORLD.CURRENT_MAP.pxl_width)
 					glTranslatef((GL.GLfloat)WORLD.CURRENT_MAP.shift_x,0,0);
-				if (window_height > WORLD.CURRENT_MAP.pxl_height)
+				if (viewport[3] > WORLD.CURRENT_MAP.pxl_height)
 					glTranslatef(0,(GL.GLfloat)WORLD.CURRENT_MAP.shift_y,0);
 			} else {
-				gluPerspective (100.0f, (float) window_width/window_height, -128, 128 );
-				gluLookAt(window_width/2, window_height, -128, window_width/2, 0, 128, 0,-1,0);
+				gluPerspective (100.0f, (float) viewport[2]/viewport[3], -128, 128 );
+				gluLookAt(viewport[2]/2, viewport[3], -128, viewport[2]/2, 0, 128, 0,-1,0);
 			}
+		}
+		public override void timer (int lastCallTime) {
+			cbTimer(lastCallTime);
 		}
 		/**
 		 * Timer-Callback.
@@ -184,7 +189,7 @@ namespace HMP {
 		 * @param lastCallTime Zeitpunkt, zu dem die Funktion als Timer-Funktion
 		 *   registriert wurde (In).
 		 */
-		public static void cbTimer (int lastCallTime)
+		static void cbTimer (int lastCallTime)
 		{
 			/* Seit dem Programmstart vergangene Zeit in Millisekunden */
 			int thisCallTime = glutGet (GLUT_ELAPSED_TIME);
@@ -201,14 +206,16 @@ namespace HMP {
 			/* Neuzeichnen anstossen */
 			glutPostRedisplay ();
 		}
-
+		public override void reshape (int w, int h) {
+			cbReshape(w,h);
+		}
 		/**
 		 * Callback fuer Aenderungen der Fenstergroesse.
 		 * Initiiert Anpassung der Projektionsmatrix an veränderte Fenstergroesse.
 		 * @param w Fensterbreite (In).
 		 * @param h Fensterhoehe (In).
 		 */
-		public static void cbReshape (int w, int h)
+		static void cbReshape (int w, int h)
 		{
 			/* Das ganze Fenster ist GL-Anzeigebereich */
 			glViewport (0, 0, (GLsizei) w, (GLsizei) h);
@@ -251,9 +258,8 @@ namespace HMP {
 		 * @param height Hoehe des Fensters
 		 * @return ID des erzeugten Fensters, false im Fehlerfall
 		 */
-		public bool initAndStart (string title, int width, int height)
+		public override bool init(string title, int width, int height)
 		{
-			int windowID = 0;
 			/* Kommandozeile immitieren */
 			int argc = 1;
 			string[] argv = {"cmd"};
@@ -284,16 +290,12 @@ namespace HMP {
 			glGetIntegerv( GL_VIEWPORT, viewport );
 
 			if (windowID != 0) {
-				/* Welt initialisieren */
-				WORLD.init();
 				/* Logik initialisieren */
 				//initLogic ();
 				/* Szene initialisieren */
-				if (Scene.init ()) {
+				if (initScene()) {
 					/* Callbacks registrieren */
 					registerCallbacks ();
-					/* Eintritt in die Ereignisschleife */
-					glutMainLoop ();
 				} else {
 					/* Szene konnte nicht initialisiert werden */
 					glutDestroyWindow (windowID);
@@ -304,6 +306,135 @@ namespace HMP {
 			}
 
 			return windowID != 0;
+		}
+		/**
+		 * Zeichnen einer Zeichfolge in den Vordergrund. Gezeichnet wird mit Hilfe von
+		 * <code>glutBitmapCharacter(...)</code>. Kann wie <code>printf genutzt werden.</code>
+		 * @param x x-Position des ersten Zeichens 0 bis 1 (In).
+		 * @param y y-Position des ersten Zeichens 0 bis 1 (In).
+		 * @param color Textfarbe (In).
+		 * @param str Formatstring fuer die weiteren Parameter (In).
+		 */
+		static void drawString (GLfloat x, GLfloat y, GLfloat[] color, string str)
+		{
+			GLint matrixMode = 0;             /* Zwischenspeicher akt. Matrixmode */
+
+			/* aktuelle Zeichenfarbe (u.a. Werte) sichern */
+			glPushAttrib (GL_COLOR_BUFFER_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT);
+
+			/* aktuellen Matrixmode speichern */
+			glGetIntegerv (GL_MATRIX_MODE, &matrixMode);
+			glMatrixMode (GL_PROJECTION);
+
+			/* aktuelle Projektionsmatrix sichern */
+			glPushMatrix ();
+
+			/* neue orthogonale 2D-Projektionsmatrix erzeugen */
+			glLoadIdentity ();
+			gluOrtho2D (0.0, 1.0, 1.0, 0.0);
+
+			glMatrixMode (GL_MODELVIEW);
+
+			/* aktuelle ModelView-Matrix sichern */
+			glPushMatrix ();
+
+			/* neue ModelView-Matrix zuruecksetzen */
+			glLoadIdentity ();
+
+			/* Tiefentest ausschalten */
+			glDisable (GL_DEPTH_TEST);
+
+			/* Licht ausschalten */
+			glDisable (GL_LIGHTING);
+
+			/* Nebel ausschalten */
+			glDisable (GL_FOG);
+
+			/* Blending ausschalten */
+			glDisable (GL_BLEND);
+
+			/* Texturierung ausschalten */
+			glDisable (GL_TEXTURE_1D);
+			glDisable (GL_TEXTURE_2D);
+			/* glDisable (GL_TEXTURE_3D); */
+
+			/* neue Zeichenfarbe einstellen */
+			glColor4fv (color);
+
+			/* an uebergebenene Stelle springen */
+			glRasterPos2f (x, y);
+
+			/* Zeichenfolge zeichenweise zeichnen */
+			//for (uint i = 0; i < str.length; i++)
+			{
+				//glutBitmapCharacter (GLUT_BITMAP_HELVETICA_18, str[i]);
+			}
+
+			/* alte ModelView-Matrix laden */
+			glPopMatrix ();
+			glMatrixMode (GL_PROJECTION);
+
+			/* alte Projektionsmatrix laden */
+			glPopMatrix ();
+
+			/* alten Matrixmode laden */
+			glMatrixMode (matrixMode);
+
+			/* alte Zeichenfarbe und Co. laden */
+			glPopAttrib ();
+		}
+		/**
+		 * Initialisierung der Szene (inbesondere der OpenGL-Statusmaschine).
+		 * Setzt Hintergrund, Zeichenfarbe und sonstige Attribute fuer die
+		 * OpenGL-Statusmaschine.
+		 * @return Rueckgabewert: im Fehlerfall 0, sonst 1, glaube ich..
+		 */
+		protected bool initScene ()
+		{
+			/* Setzen der Farbattribute */
+			/**
+			 * Hintergrundfarbe
+			 */
+			glClearColor (colBG[ColorIndex.R], colBG[ColorIndex.G], colBG[ColorIndex.B], colBG[ColorIndex.A]);
+			/**
+			 * Zeichenfarbe
+			 */
+			glColor3f (1.0f, 1.0f, 1.0f);
+
+			/**
+			 * Vertexarrays erlauben
+			 */
+			glEnableClientState (GL_VERTEX_ARRAY);
+
+			/* Polygonrueckseiten nicht anzeigen */
+			/*glCullFace (GL_BACK);
+			glEnable (GL_CULL_FACE);*/
+			
+			glEnable(GL_TEXTURE_2D);
+
+			/* Alphakanal fuer Texturen aktivieren */
+			glEnable(GL_ALPHA_TEST);
+			/* Wertebereich fuer Transparenz*/
+			glAlphaFunc(GL_GREATER, (GL.GLclampf) 0.1);
+			/*Blending gegen Verdeckung*/
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			/* Rueckseiten nicht zeichnen*/
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_BACK);
+			/*---Tiefentest---*/
+			/* Tiefentest aktivieren */
+			//glEnable(GL_DEPTH_TEST);
+			/* Fragmente werden gezeichnet, wenn sie einen größeren oder gleichen Tiefenwert haben.  */
+			//glDepthFunc(GL_GEQUAL);
+
+			/* VORERST DEAKTIVIERT */
+			glDisable(GL_DEPTH_TEST);
+			glDepthFunc(GL_ALWAYS);
+			/**
+			 * Alles in Ordnung?
+			 */
+			return (glGetError() == GL_NO_ERROR);
 		}
 	}
 }

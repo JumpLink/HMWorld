@@ -81,7 +81,7 @@ namespace HMP {
 						case 'p': /*Paused-Mode On/Off*/
 						case 'P':
 							STATE.toggle_paused();
-							HMP.OpenGLView.cbTimer(0);
+							VIEW.timer(0);
 							print(@"Pause: $(STATE.paused)");
 							break;
 						case 'b': /*Debug-Mode On/Off*/
