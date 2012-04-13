@@ -28,9 +28,8 @@ namespace HMP {
 		 * Konstruktor.
 		 */
 		public OpenGLInput() {
-			init();
 		}
-		public void init() {
+		public override void init() {
 			/* Tastenwiederholungen ignorieren */
 			glutIgnoreKeyRepeat(1);
 			//registerCallbacks();

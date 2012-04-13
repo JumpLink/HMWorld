@@ -51,7 +51,12 @@ namespace HMP {
 		 * Speichert das Tile mit dem Dateiname filename als Datei
 		 * @param filename Zu verwendender Dateiname
 		 */
-		public abstract void save (string filename);
+		public virtual void save (string filename) {
+			//if(type != TileType.NO_TILE && type != TileType.EMPTY_TILE) {
+				print("Tile save\n");
+				tex.save(filename);
+			//}
+		}
 		/**
 		 * Zeichnet das Tile an einer Bildschirmposition.
 		 * @param x linke x-Koordinate

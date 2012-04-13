@@ -66,7 +66,7 @@ namespace HMP {
 				//GLib.error("", e.message);
 				GLib.error("%s konnte nicht geladen werden", path);
 			}
-			
+			print("GdkTexture: loadFromFile\n");
 			loadFromPixbuf(pixbuf);
 		}
 
@@ -77,14 +77,16 @@ namespace HMP {
 		public virtual void loadFromPixbuf(Gdk.Pixbuf pixbuf)
 		requires (pixbuf != null)
 		{
+			print("GdkTexture: loadFromPixbuf\n");
 			this.pixbuf = pixbuf;
 		}
 		/**
 		 *
 		 */
-		public void save (string filename) {
+		public virtual void save (string filename) {
 			try {
 				pixbuf.save(filename, "png");
+				print("GdkTexture: save\n");
 			} catch (GLib.Error e) {
 				error ("Error! Konnte Sprite nicht Speichern: %s\n", e.message);
 			}

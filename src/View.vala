@@ -24,7 +24,7 @@ namespace HMP {
 		 * Fensterhoehe.
 		 */
 		public virtual int window_height { get; protected set; }
-		public abstract bool init (string title, int width, int height);
+		//public abstract bool init (string title, int width, int height);
 		public abstract void show();
 		public virtual void toggle_perspective() {
 			perspective = toggle (perspective);

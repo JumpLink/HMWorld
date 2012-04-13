@@ -42,7 +42,7 @@ namespace HMP {
 			tile_a.printValues();
 		}
 		public void test_c() {
-			print("test_b:\n");
+			print("test_c:\n");
 			var tileset = new HMP.TileSet();
 			tileset.loadFromPath("./test/data/tileset/", "Stadt - Sommer.tsx");
 			tileset.save();

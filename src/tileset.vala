@@ -153,6 +153,7 @@ namespace HMP {
 			for (uint y=0;y<count_y;y++) {
 				for (uint x=0;x<count_x;x++) {
 					tile[x,y].save(folder+name+"_y"+y.to_string()+"_x"+x.to_string()+".png");
+					print("speichere "+folder+name+"_y"+y.to_string()+"_x"+x.to_string()+".png\n");
 				}
 			}
 		}

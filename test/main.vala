@@ -20,6 +20,10 @@ using SDL;
 using SDLImage;
 using HMP;
 namespace HMP {
+	HMP.World WORLD;
+	HMP.View VIEW;
+	HMP.Input INPUT;
+	HMP.GameState STATE;
 namespace Test {
 	class Tester {
 		/**
@@ -70,7 +74,11 @@ namespace Test {
 
 		public static int main (string[] args) {
 			print("Beginne mit Testprogramm\n");
-
+			WORLD = new World ();
+			WORLD.init();
+			STATE = new GameState();
+			VIEW = new OpenGLView();
+			INPUT = new OpenGLInput();
 			Tester tester = new Tester();
 			print("Tester erstellt\n");
 			return (int) tester.run();

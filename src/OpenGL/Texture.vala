@@ -158,5 +158,13 @@ namespace HMP {
 				}
 			}
 		}
+		protected override void loadFromFile(string path) {
+			print("OpenGLTexture: loadFromFile\n");
+			base.loadFromFile(path);
+		}
+		public override void loadFromPixbuf(Gdk.Pixbuf pixbuf) {
+			print("OpenGLTexture: loadFromPixbuf\n");
+			base.loadFromPixbuf(pixbuf);
+		}
 	}
 }

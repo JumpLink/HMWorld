@@ -24,5 +24,6 @@ namespace HMP {
 		public static uchar ACTION = 'f';
 		public static uchar USE = 'e';
 		public static uchar SWAP = 'r';
+		public abstract void init();
 	}
 }

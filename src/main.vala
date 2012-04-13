@@ -16,8 +16,8 @@
 using HMP;
 namespace HMP {
 	HMP.World WORLD;
-	HMP.View VIEW;
-	HMP.Input INPUT;
+	HMP.OpenGLView VIEW;
+	//HMP.Input INPUT;
 	HMP.GameState STATE;
 	class Game {
 		public Game() {
@@ -25,12 +25,11 @@ namespace HMP {
 		}
 		public static int main (string[] args) {
 			WORLD = new World ();
-			WORLD.init();
 			STATE = new GameState();
 			VIEW = new OpenGLView();
-			VIEW.init("Titel", 640, 480);
-			INPUT = new OpenGLInput();
-			VIEW.show();
+
+			VIEW.initAndStart ("Titel", 640, 480);
+			
 			return 1;
 		}
 	}

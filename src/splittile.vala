@@ -34,15 +34,6 @@ namespace HMP {
 			}
 			/**
 			 * {@inheritDoc}
-			 * @see HMP.Tile.save
-			 */
-			public override void save (string filename) {
-				if(type != TileType.NO_TILE) {
-					//Einzelteile speichern
-				}
-			}
-			/**
-			 * {@inheritDoc}
 			 * @see HMP.Tile.printValues
 			 */
 			public override void printValues (){

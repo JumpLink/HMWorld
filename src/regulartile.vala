@@ -51,15 +51,6 @@ namespace HMP {
 			}
 			/**
 			 * {@inheritDoc}
-			 * @see HMP.Tile.save
-			 */
-			public override void save (string filename) {
-				if(type != TileType.NO_TILE && type != TileType.EMPTY_TILE) {
-					tex.save(filename);
-				}
-			}
-			/**
-			 * {@inheritDoc}
 			 * @see HMP.Tile.calcEdges
 			 */
 			public override void calcEdges (TileType[] neighbours) {
