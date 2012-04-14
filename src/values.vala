@@ -371,4 +371,10 @@ namespace HMP {
 	public static bool toggle(bool b) {
 		return b ? false : true;
 	}
+	public enum ViewEngine {
+		SDL,
+		OPENGL,
+		CLUTTER,
+		GTK_CLUTTER;
+	}
 }

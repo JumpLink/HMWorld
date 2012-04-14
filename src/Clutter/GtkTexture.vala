@@ -32,6 +32,9 @@ namespace HMP {
 			this();
 			loadFromFile (path);
 		}
+		public GtkClutterTexture.fromPixbuf(Gdk.Pixbuf pixbuf) {
+			loadFromPixbuf(pixbuf);
+		}
 		/**
 		 * Ladet eine Textur aus einer Datei.
 		 * @param path Pfadangabe der zu ladenden Grafikdatei.

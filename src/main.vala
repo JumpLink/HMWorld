@@ -17,18 +17,32 @@ using HMP;
 namespace HMP {
 	HMP.World WORLD;
 	HMP.View VIEW;
-	//HMP.Input INPUT;
+	HMP.Input INPUT;
 	HMP.GameState STATE;
+	HMP.ViewEngine VIEWENGINE = HMP.ViewEngine.OPENGL;
+	HMP.GdkTextureFactory TEXTUREFACTORY;
 	class Game {
 		public Game() {
 			
 		}
 		public static int main (string[] args) {
+			TEXTUREFACTORY = new GdkTextureFactory(VIEWENGINE);
 			WORLD = new World ();
 			WORLD.init();
 			STATE = new GameState();
-			VIEW = new OpenGLView();
+			switch (VIEWENGINE) {
+				case HMP.ViewEngine.OPENGL:
+					VIEW = new OpenGLView();
+					INPUT = new OpenGLInput();
+					break;
+				case HMP.ViewEngine.SDL:
+					break;
+				case HMP.ViewEngine.CLUTTER:
+					VIEW = new ClutterView();
+					break;
+			}
 			VIEW.init ("Titel", 640, 480);
+			INPUT.init();
 			VIEW.show();
 			
 			return 1;

@@ -26,7 +26,7 @@ namespace HMP {
 			 * @see HMP.TileType.EMPTY_TILE
 			 */
 			public RegularTile () {
-				tex = new OpenGLTexture();
+				tex = TEXTUREFACTORY.empty();
 				type = HMP.TileType.NO_TILE;
 			}
 			/**
@@ -34,7 +34,7 @@ namespace HMP {
 			 * @param pixbuf Pixelbufer der in das Tile uebernommen werden soll.
 			 */
 			public RegularTile.FromPixbuf (Pixbuf pixbuf) {
-				tex = new OpenGLTexture.FromPixbuf(pixbuf);
+				tex = TEXTUREFACTORY.fromPixbuf(pixbuf);
 				type = HMP.TileType.EMPTY_TILE;
 			}
 			/**

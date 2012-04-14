@@ -16,6 +16,15 @@ using GLUT;
 namespace HMP {
 	public class OpenGLView:View {
 		static int windowID = 0;
+		static bool _perspective = false;
+		public override bool perspective {
+			get {
+				return _perspective;
+			}
+			protected set {
+				_perspective = value;
+			}
+		}
 		/**
 		 * viewport.
 		 */
@@ -33,6 +42,10 @@ namespace HMP {
 		public override int window_height {
 			get { return viewport[3]; }
 			set { viewport[3] = value;}
+		}
+		public override void toggle_perspective() {
+			perspective = toggle (perspective);
+			print(@"Perspektive: $(perspective)");
 		}
 		/**
 		 * Zeichen-Callback.
@@ -164,7 +177,7 @@ namespace HMP {
 			glMatrixMode (GL_PROJECTION);
 			/* Matrix zuruecksetzen - Einheitsmatrix laden */
 			glLoadIdentity ();
-			if (!perspective) {
+			if (!_perspective) {
 				glOrtho (	0, viewport[2],						/* links, rechts */
 						 	viewport[3], 0,						/* unten, oben */
 							-128, 128);											/* tiefe */

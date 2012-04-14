@@ -21,7 +21,7 @@ namespace HMP {
 	/**
 	 * Klasse zur Speicherung einer Textur und um diese an OpenGL zu binden.
 	 */
-	public abstract class ClutterTexture : Texture {
+	public class ClutterTexture : Texture {
 		public Clutter.Texture clutter_tex { get; private set; }
 		public double width {
 			get {return clutter_tex.cogl_texture.get_width ();}
@@ -43,10 +43,12 @@ namespace HMP {
 		 */
 		public void* pixels {
 			get {
-				uchar[] data;
-				int data_size_in_bytes; //the size of the texture data in bytes
-				data_size_in_bytes = clutter_tex.cogl_texture.get_data(Cogl.PixelFormat.RGBA_8888, 0, uchar[] data);
-				return data;
+				// uint8[] data;
+				// int data_size_in_bytes; //the size of the texture data in bytes
+				// data_size_in_bytes = clutter_tex.cogl_texture.get_data(Cogl.PixelFormat.RGBA_8888, 0, data);
+				// return data;
+				print("TODO");
+				return null;
 			}
 		}
 		/**
@@ -63,13 +65,17 @@ namespace HMP {
 		protected void loadFromFile(string path)
 		requires (path != null)
 		{
-			clutter_tex.from_file(string path);
+			clutter_tex = new Clutter.Texture.from_file(path);
 		}
 		/**
 		 *
 		 */
-		public abstract void draw( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE);
-
+		public void draw( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
+			print("TODO");
+		}
+		public void save (string filename) {
+			print("TODO");
+		}
 		/**
 		 * Gibt die Werte der Textur auf der Konsole aus.
 		 */

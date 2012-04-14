@@ -11,23 +11,34 @@
  */
 using HMP;
 namespace HMP {
-	public abstract class View {
+	public class ClutterView : View {
 		/**
 		 * Perspektivischer Modus, an oder aus
 		 */
-		public virtual bool perspective { get; protected set; }
+		public override bool perspective { get; protected set; }
 		/**
 		 * Fensterbreite.
 		 */
-		public virtual int window_width { get; protected set; }
+		public override int window_width { get; protected set; }
 		/**
 		 * Fensterhoehe.
 		 */
-		public virtual int window_height { get; protected set; }
-		public abstract bool init (string title, int width, int height);
-		public abstract void show();
-		public abstract void timer(int lastCallTime);
-		public abstract void reshape (int w, int h);
-		public abstract void toggle_perspective ();
+		public override int window_height { get; protected set; }
+		public override bool init (string title, int width, int height) {
+			print("TODO");
+			return true;
+		}
+		public override void show() {
+			print("TODO");
+		}
+		public override void timer(int lastCallTime) {
+			print("TODO");
+		}
+		public override void reshape (int w, int h) {
+			print("TODO");
+		}
+		public override void toggle_perspective () {
+			print("TODO");
+		}
 	}
 }
