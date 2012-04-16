@@ -308,7 +308,7 @@ namespace HMP {
 					assert_not_reached();
 			}
 		}
-		public GL.GLint to_opengl_channel () {
+		public int to_channel () {
 			switch (this) {
 				case HMP.Colorspace.RGB:
 					return 3;

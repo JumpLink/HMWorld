@@ -21,8 +21,8 @@ namespace HMP {
 	 * Klasse zur Speicherung einer Textur und um diese an OpenGL zu binden.
 	 */
 	public interface Texture {
-		public abstract double width {get;}
-		public abstract double height {get;}
+		public abstract double width {get;set;}
+		public abstract double height {get;set;}
 		public abstract HMP.Colorspace colorspace {get;}
 		public abstract void* pixels {get;}
 		public abstract bool has_alpha {get;}

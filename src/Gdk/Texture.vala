@@ -23,14 +23,16 @@ namespace HMP {
 		 * * Weitere Informationen: [[http://valadoc.org/gdk-pixbuf-2.0/Gdk.Pixbuf.html]]
 		 * @see Gdk.Pixbuf
 		 */
-		public Pixbuf pixbuf { get; protected set; }
-		public double width {
+		public virtual Pixbuf pixbuf { get; protected set; }
+		public virtual double width {
 			get { return pixbuf.get_width(); }
+			set { width = value;}
 		}
-		public double height {
+		public virtual double height {
 			get { return pixbuf.get_height(); }
+			set { height = value;}
 		}
-		public HMP.Colorspace colorspace {
+		public virtual HMP.Colorspace colorspace {
 			get { return HMP.Colorspace.fromGdkPixbuf(pixbuf); }
 		}
 		/**
@@ -38,14 +40,14 @@ namespace HMP {
 		 * der hier vorgegebene Rueckgabetyp ist hier void* damit dieser mit OpenGL
 		 * kompatibel ist.
 		 */
-		public void* pixels {
+		public virtual void* pixels {
 			get { return pixbuf.get_pixels(); }
 		}
 		/**
 		 * Liefert Information darueber ob die Textur einen Alphakanal enthaelt.
 		 * @see Gdk.Pixbuf.get_has_alpha
 		 */
-		public bool has_alpha {
+		public virtual bool has_alpha {
 			get { return this.pixbuf.get_has_alpha(); }
 		}
 		/**

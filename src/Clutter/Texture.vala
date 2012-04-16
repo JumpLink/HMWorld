@@ -21,42 +21,23 @@ namespace HMP {
 	/**
 	 * Klasse zur Speicherung einer Textur und um diese an OpenGL zu binden.
 	 */
-	public class ClutterTexture : Texture {
+	public class ClutterTexture : GdkTexture {
 		public Clutter.Texture clutter_tex { get; private set; }
-		public double width {
-			get {return clutter_tex.cogl_texture.get_width ();}
+		public  double width {
+			get {return clutter_tex.get_width ();}
+			set {clutter_tex.set_width ((float)value);}
 		}
-		public double height {
-			get {return clutter_tex.cogl_texture.get_height ();}
+		public  double height {
+			get {return clutter_tex.get_height ();}
+			set {clutter_tex.set_height ((float)value);}
 		}
-		public HMP.Colorspace colorspace {
+		public  HMP.Colorspace colorspace {
 			get { return HMP.Colorspace.fromCogl(clutter_tex.pixel_format); }
 		}
 
 		public ClutterTexture() {
 			clutter_tex = new Clutter.Texture();
-		}
-		/**
-		 * Liefert ein Zeiger auf ein Array uint8[] mit den Pixelwerten,
-		 * der hier vorgegebene Rueckgabetyp ist hier void* damit dieser mit OpenGL
-		 * kompatibel ist.
-		 */
-		public void* pixels {
-			get {
-				// uint8[] data;
-				// int data_size_in_bytes; //the size of the texture data in bytes
-				// data_size_in_bytes = clutter_tex.cogl_texture.get_data(Cogl.PixelFormat.RGBA_8888, 0, data);
-				// return data;
-				print("TODO");
-				return null;
-			}
-		}
-		/**
-		 * Liefert Information darueber ob die Textur einen Alphakanal enthaelt.
-		 * @see Gdk.Pixbuf.get_has_alpha
-		 */
-		public bool has_alpha {
-			get { return colorspace.has_alpha();}
+
 		}
 		/**
 		 * Ladet eine Textur aus einer Datei.
@@ -65,25 +46,27 @@ namespace HMP {
 		protected void loadFromFile(string path)
 		requires (path != null)
 		{
-			clutter_tex = new Clutter.Texture.from_file(path);
+			//clutter_tex = new Clutter.Texture.from_file(path);
+			base.loadFromFile(path);
+			loadFromPixbuf(pixbuf);
+		}
+		public new void loadFromPixbuf(Gdk.Pixbuf pixbuf) {
+			base.loadFromPixbuf(pixbuf);
+			clutter_tex.set_from_rgb_data (
+											(uint8[])pixels,
+											has_alpha,
+											(int)base.width,
+											(int)base.height,
+											pixbuf.get_rowstride(),
+											HMP.Colorspace.fromGdkPixbuf(pixbuf).to_channel(),
+											Clutter.TextureFlags.NONE
+										   );
 		}
 		/**
 		 *
 		 */
-		public void draw( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
+		public override void draw( int x, int y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
 			print("TODO");
-		}
-		public void save (string filename) {
-			print("TODO");
-		}
-		/**
-		 * Gibt die Werte der Textur auf der Konsole aus.
-		 */
-		public void printValues() {
-			print("=Tex=\n");
-			print(@"width: $width \n");
-			print(@"height: $height \n");
-			print(@"has alpha: $has_alpha \n");
 		}
 	}
 }

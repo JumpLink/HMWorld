@@ -69,7 +69,7 @@ namespace HMP {
 			{
 				glBindTexture(GL_TEXTURE_2D, texID[0]);
 				//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-				glTexImage2D(GL_TEXTURE_2D, 0, colorspace.to_opengl_channel(), (GL.GLsizei) width, (GL.GLsizei) height, 0, colorspace.to_opengl(), GL_UNSIGNED_INT_8_8_8_8_REV, pixels);
+				glTexImage2D(GL_TEXTURE_2D, 0, colorspace.to_channel(), (GL.GLsizei) width, (GL.GLsizei) height, 0, colorspace.to_opengl(), GL_UNSIGNED_INT_8_8_8_8_REV, pixels);
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
