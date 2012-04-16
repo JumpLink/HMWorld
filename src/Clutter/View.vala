@@ -13,7 +13,7 @@ using HMP;
 using Clutter;
 namespace HMP {
 	public class ClutterView : View {
-		Clutter.Stage stage = new Clutter.Stage();
+		Clutter.Stage stage;
 		/**
 		 * Perspektivischer Modus, an oder aus
 		 */
@@ -43,13 +43,14 @@ namespace HMP {
 		public override bool init (string[] args, string title, int width, int height) {
 			/* Kommandozeile immitieren */
 			Clutter.init(ref args);
+			stage = Clutter.Stage.get_default ();
 			stage.set_title(title);
 			stage.set_color(Clutter.Color.from_string("black"));
 			stage.set_size(width,height);
-			draw();
 			return true;
 		}
 		public override void show() {
+			draw();
 			stage.show();
 			Clutter.main();
 		}
@@ -134,8 +135,9 @@ namespace HMP {
 		protected new void drawTile(HMP.Tile tile, double x, double y, double zoff) {
 			if (tile.type != TileType.NO_TILE) {
 				//tile.tex.draw((int)x,(int)y,zoff);
-				((GtkClutterTexture)tile).clutter_tex.set_position((float)x,(float)y);
-				stage.add_actor(((GtkClutterTexture)tile).clutter_tex);
+				((GtkClutterTexture)tile.tex).clutter_tex.set_position((float)x,(float)y);
+				stage.add_actor(((GtkClutterTexture)tile.tex).clutter_tex);
+				((GtkClutterTexture)tile.tex).clutter_tex.show();
 			}
 		}
 		protected new void drawEntity(HMP.Entity e, double x, double y, double zoff) {
@@ -159,8 +161,9 @@ namespace HMP {
 		 */
 		protected new void drawSprite(HMP.Sprite s, double x, double y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
 			//TODO mirror zoff
-			((GtkClutterTexture)s).clutter_tex.set_position((float)Round(x-s.width/2) , (float)Round(y-s.height/2));
-			stage.add_actor(((GtkClutterTexture)s).clutter_tex);
+			((GtkClutterTexture)s.tex).clutter_tex.set_position((float)Round(x-s.width/2) , (float)Round(y-s.height/2));
+			stage.add_actor(((GtkClutterTexture)s.tex).clutter_tex);
+			((GtkClutterTexture)s.tex).clutter_tex.show();
 		}
 	}
 }

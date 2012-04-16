@@ -19,7 +19,7 @@ namespace HMP {
 	HMP.View VIEW;
 	HMP.Input INPUT;
 	HMP.GameState STATE;
-	HMP.ViewEngine VIEWENGINE = HMP.ViewEngine.OPENGL; //change this to test other ViewEngine
+	HMP.ViewEngine VIEWENGINE = HMP.ViewEngine.OPENGL; //Díes kann bisher nur in HMP.ViewEngine.GTK_CLUTTER oder HMP.ViewEngine.OPENGL geändert werden.
 	HMP.GdkTextureFactory TEXTUREFACTORY;
 	class Game {
 		public Game() {
@@ -28,7 +28,6 @@ namespace HMP {
 		public static int main (string[] args) {
 			TEXTUREFACTORY = new GdkTextureFactory(VIEWENGINE);
 			WORLD = new World ();
-			WORLD.init();
 			STATE = new GameState();
 			switch (VIEWENGINE) {
 				case HMP.ViewEngine.OPENGL:
@@ -43,7 +42,8 @@ namespace HMP {
 					break;
 			}
 			VIEW.init (args, "Titel", 640, 480);
-			INPUT.init();
+			WORLD.init();
+			//INPUT.init();
 			VIEW.show();
 			
 			return 1;
