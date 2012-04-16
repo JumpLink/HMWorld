@@ -19,7 +19,7 @@ namespace HMP {
 	HMP.View VIEW;
 	HMP.Input INPUT;
 	HMP.GameState STATE;
-	HMP.ViewEngine VIEWENGINE = HMP.ViewEngine.OPENGL;
+	HMP.ViewEngine VIEWENGINE = HMP.ViewEngine.OPENGL; //change this to test other ViewEngine
 	HMP.GdkTextureFactory TEXTUREFACTORY;
 	class Game {
 		public Game() {
@@ -37,11 +37,12 @@ namespace HMP {
 					break;
 				case HMP.ViewEngine.SDL:
 					break;
+				case HMP.ViewEngine.GTK_CLUTTER:
 				case HMP.ViewEngine.CLUTTER:
 					VIEW = new ClutterView();
 					break;
 			}
-			VIEW.init ("Titel", 640, 480);
+			VIEW.init (args, "Titel", 640, 480);
 			INPUT.init();
 			VIEW.show();
 			

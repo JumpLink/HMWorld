@@ -138,7 +138,7 @@ namespace HMP {
 					Pixbuf split = new Pixbuf(Gdk.Colorspace.RGB, pxb.get_has_alpha(), pxb.get_bits_per_sample(), split_width, split_height);
 					//print("y: %i x:%i split_width:%i split_height:%i count %i", y, x, split_width, split_height, count);
 					pxb.copy_area((int) split_width*x, (int) split_height*y, (int) split_width, (int) split_height, split, 0, 0);
-					tile[x,y] = new RegularTile.FromPixbuf(split);
+					tile[x,y] = new RegularTile.fromPixbuf(split);
 					//count++;
 					//tile[y,x].printValues();
 				}

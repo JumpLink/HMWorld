@@ -33,7 +33,7 @@ namespace HMP {
 			 * Konstruktor mit uebergabe eines bereits existierenden und zu verwendenen Pixbuf.
 			 * @param pixbuf Pixelbufer der in das Tile uebernommen werden soll.
 			 */
-			public RegularTile.FromPixbuf (Pixbuf pixbuf) {
+			public RegularTile.fromPixbuf (Pixbuf pixbuf) {
 				tex = TEXTUREFACTORY.fromPixbuf(pixbuf);
 				type = HMP.TileType.EMPTY_TILE;
 			}
