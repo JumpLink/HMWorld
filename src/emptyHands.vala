@@ -24,9 +24,10 @@ namespace HMP {
 			return "nichts";
 		}
 	 	
-	 	public void use (Map m, uint x, uint y, Direction d, Storage s) {
+	 	public uint use (Map m, uint x, uint y, Direction d, Storage s) {
 	 		/* nichts */
 	 		print ("Nichts passiert!\n");
+	 		return 0;
 	 	}
 	 	
 	}

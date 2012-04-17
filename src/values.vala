@@ -34,6 +34,36 @@ namespace HMP {
 	const uint SEED_PER_BAG = 10;
 
 	/**
+	 * Standardausdauer des Spielers.
+	 */
+	const int DEFAULT_STAMINA = 25;
+
+	/**
+	 * Multiplikator fuer Stufenabhaengige Zusatzausdauer.
+	 */
+	const int STAMINA_MULTIPLIER = 10;
+
+	/**
+	 * Erfahrungsfaktor, benoetigt zum Erreichen hoeherer Spielerstufen.
+	 */
+	const int EXPERIENCE = 100;
+
+	/**
+	 * Sonnenaufgang/Tagesbeginn (6 Uhr).
+	 */
+	const uint DAWN = 6;
+
+	/**
+	 * Sonnenuntergang/Tagesende (18 Uhr).
+	 */
+	const uint DUSK = 18;
+
+	/**
+	 * Tage pro Jahreszeit.
+	 */
+	const uint DAYS_PER_SEASON = 30;
+
+	/**
 	 * Szenenhintergrundfarbe
 	 */
 	const GL.GLclampf colBG[] = {0.0f, 0.0f, 0.0f, 0.0f};
@@ -58,7 +88,7 @@ namespace HMP {
 		 */
 		A=3 }
 	/**
-	 * TODO Ole
+	 * Kantenform eines unterteilten Tiles.
 	 */
 	enum EdgeShape {
 		FULL,
@@ -68,7 +98,7 @@ namespace HMP {
 		H_LINE
 	}
 	/**
-	 * TODO Ole
+	 * Ausrichtung einer Entitaet.
 	 */
 	public enum Direction {
 		/**
@@ -118,19 +148,19 @@ namespace HMP {
 		}
 	}
 	/**
-	 * TODO Ole
+	 * Art einer Ernte.
 	 */
 	public enum CropType {
 		/**
-		 * TODO Ole
+		 * nichts
 		 */
 		EMPTY_CROP,
 		/**
-		 * TODO Ole
+		 * Grass
 		 */
 		GRASS,
 		/**
-		 * TODO Ole
+		 * Kartoffel
 		 */
 		POTATO
 	}
@@ -376,5 +406,14 @@ namespace HMP {
 		OPENGL,
 		CLUTTER,
 		GTK_CLUTTER;
+	}
+	/**
+	 * Jahreszeit.
+	 */
+	public enum Season {
+		SPRING = 0,
+		SUMMER = 1,
+		FALL = 2,
+		WINTER = 3;
 	}
 }

@@ -20,12 +20,14 @@ namespace HMP {
 	 */
 	public class Scythe : SingleTool, Tool, Object {
 
-		public void use (Map m, uint x, uint y, Direction d, Storage s) {
+		public uint use (Map m, uint x, uint y, Direction d, Storage s) {
 			LogicalTile t = logicalTarget (m, x, y, d);
 			if (t.type == TileType.GRASS && t.plant != null) {
 				t.plant.harvest();
 				s.hay++;
+				return 1;
 			}
+			return 0;
 		}
 
 		public string toString () {

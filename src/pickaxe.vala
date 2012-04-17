@@ -20,10 +20,13 @@ namespace HMP {
 	 */
 	public class PickAxe : SingleTool, Tool, Object {
 
-		public void use (Map m, uint x, uint y, Direction d, Storage s) {
+		public uint use (Map m, uint x, uint y, Direction d, Storage s) {
 			Tile t = Target (m, x, y, d, "player");
-			if (t.type == TileType.ROCK)
+			if (t.type == TileType.ROCK) {
 				t.type = TileType.EMPTY_TILE;
+				return 1;
+			}
+			return 0;
 		}
 
 		public string toString () {

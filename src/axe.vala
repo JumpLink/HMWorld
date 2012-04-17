@@ -24,12 +24,14 @@ namespace HMP {
 			return "Axt";
 		}
 
-		public void use (Map m, uint x, uint y, Direction d, Storage s) {
+		public uint use (Map m, uint x, uint y, Direction d, Storage s) {
 			LogicalTile t = logicalTarget (m, x, y, d);
 			if (t.type == TileType.WOOD) {
 				t.type = TileType.EMPTY_TILE;
 				s.wood++;
+				return 1;
 			}
+			return 0;
 		}
 	}
 }

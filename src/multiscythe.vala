@@ -19,15 +19,17 @@ namespace HMP {
 	 * Klasse fuer eine Mehrfachsense.
 	 */
 	public class MultiScythe : CircleTool, Tool, Object {
-		public void use (Map m, uint x, uint y, Direction d, Storage s) {
-			applyToLayer (m, x, y, "ground", s);
+		public uint use (Map m, uint x, uint y, Direction d, Storage s) {
+			return applyToLayer (m, x, y, "ground", s);
 		}
 
-		protected void applyToTile (LogicalTile l, Tile t, Storage s) {
+		protected uint applyToTile (LogicalTile l, Tile t, Storage s) {
 			if (l.type == TileType.GRASS && l.plant != null) {
 				l.plant.harvest();
 				s.hay++;
+				return 1;
 			}
+			return 0;
 		}
 
 		public string toString () {

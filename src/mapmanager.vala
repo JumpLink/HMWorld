@@ -82,5 +82,13 @@ namespace HMP {
 					m.printAll();
 	   		}
 		}
+
+		/**
+		 * Altert alle Maps um einen Tag.
+		 */
+		public void age () {
+			foreach (HMP.Map m in map)
+				m.age();
+		}
 	}
 }

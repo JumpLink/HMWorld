@@ -19,13 +19,16 @@ namespace HMP {
 	 * Klasse fuer eine Mehrfachhacke.
 	 */
 	public class MultiHoe : CircleTool, Tool, Object {
-		public void use (Map m, uint x, uint y, Direction d, Storage s) {
-			applyToLayer (m, x, y, "same as hero 2", s);
+		public uint use (Map m, uint x, uint y, Direction d, Storage s) {
+			return applyToLayer (m, x, y, "same as hero 2", s);
 		}
 
-		protected void applyToTile (LogicalTile l, Tile t, Storage s) {
-			if (l.type == TileType.EMPTY_TILE || l.type == TileType.GRASS)
+		protected uint applyToTile (LogicalTile l, Tile t, Storage s) {
+			if (l.type == TileType.EMPTY_TILE || l.type == TileType.GRASS) {
 				l.type = TileType.PLANTABLE;
+				return 1;
+			}
+			return 0;
 		}
 
 		public string toString () {

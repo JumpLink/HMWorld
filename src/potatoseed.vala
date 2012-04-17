@@ -28,20 +28,22 @@ namespace HMP {
 			return "Kartoffelsack";
 		}
 
-		public void use (Map m, uint x, uint y, Direction d, Storage s) {
+		public uint use (Map m, uint x, uint y, Direction d, Storage s) {
 			print ("Pflanze Kartoffeln an %u, %u!\n", x, y);
-			applyToLayer (m, x, y, "same as hero 2", s);
+			return applyToLayer (m, x, y, "same as hero 2", s);
 		}
 
-		protected void applyToTile (LogicalTile l, Tile t, Storage s) {
+		protected uint applyToTile (LogicalTile l, Tile t, Storage s) {
 			if (l.type == TileType.PLANTABLE && l.plant == null && seed > 0) {
 				l.plant = new Potato ();
 				l.type = TileType.PLANT;
 				--seed;
 				print ("Kartoffel gepflanzt!\n");
+				return 1;
 			} else {
 				print ("Keine Kartoffel gepflanzt!\n");
 			}
+			return 0;
 		}
 	}
 }

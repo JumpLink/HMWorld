@@ -26,15 +26,19 @@ namespace HMP {
 			water = 0;
 		}
 
-		public void use (Map m, uint x, uint y, Direction d, Storage s) {
+		public uint use (Map m, uint x, uint y, Direction d, Storage s) {
 			LogicalTile t = logicalTarget (m, x, y, d);
 			if (water > 0 && t.type == TileType.PLANT && t.plant != null) {
 				t.plant.water ();
 				--water;
+				return 1;
 			}
 			t = logicalTarget (m, x, y, d);
-			if (t.type == TileType.WATER)
+			if (t.type == TileType.WATER) {
 				water = WATER_CAPACITY;
+				return 1;
+			}
+			return 0;
 		}
 
 		public string toString () {

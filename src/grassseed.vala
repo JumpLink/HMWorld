@@ -19,20 +19,22 @@ namespace HMP {
 	 * Klasse fuer Grasssamen.
 	 */
 	public class GrassSeed : Seed, CircleTool, Tool {
-		protected void applyToTile (LogicalTile l, Tile t, Storage s) {
-				if (l.type == TileType.PLANTABLE && seed > 0) {
+		protected uint applyToTile (LogicalTile l, Tile t, Storage s) {
+			if (l.type == TileType.PLANTABLE && seed > 0) {
 					l.type = TileType.PLANT;
 					l.plant = new Grass ();
 					--seed;
+					return 1;
 			}
+			return 0;
 		}
 
 		public string toString () {
 			return "Grasssamen";
 		}
 
-		public void use (Map m, uint x, uint y, Direction d, Storage s) {
-			applyToLayer (m, x, y, "ground", s);
+		public uint use (Map m, uint x, uint y, Direction d, Storage s) {
+			return applyToLayer (m, x, y, "ground", s);
 		}
 	}
 }

@@ -27,8 +27,9 @@ namespace HMP {
 	 	 * @param y Die Y-Position.
 	 	 * @param d Die Richtung.
 	 	 * @param s Das Lager, dem evtl. Material hinzugefuegt wird.
+	 	 * @return Anzahl durchgefuehrter Aktionen.
 	 	 */
-	 	public abstract void use (Map m, uint x, uint y, Direction d, Storage s);
+	 	public abstract uint use (Map m, uint x, uint y, Direction d, Storage s);
 
 	 	public abstract string toString ();
 	 	

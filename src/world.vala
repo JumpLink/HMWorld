@@ -40,7 +40,11 @@ namespace HMP {
 		 * Entitaeten in der Welt
 		 */
 		public Gee.List<Player> PLAYERS = new Gee.ArrayList<Player>();
-		/* TODO Datum, Zeit, Wetter, ... */
+		/**
+		 * Datum und Uhrzeit.
+		 */
+		public Date date = new Date();
+		/* TODO Wetter, ... */
 
 		/**
 		 * Konstruktor
@@ -75,6 +79,15 @@ namespace HMP {
 		{	
 			foreach (Player p in PLAYERS)
 				p.timer();
+			date.time ();
+		}
+
+		/**
+		 * Altert alles um einen Tag.
+		 */
+		public void age () {
+			MAPMANAGER.age();
+			date.age ();
 		}
 	}
 }

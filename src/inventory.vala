@@ -65,9 +65,10 @@ namespace HMP {
 	 	 * @param x Die X-Position.
 	 	 * @param y Die Y-Position.
 	 	 * @param d Die Richtung.
+	 	 * @return Anzahl durchgefuehrter Aktionen.
 	 	 */
-	 	public void use (Map m, uint x, uint y, Direction d, Storage s) {
-	 		primary.use (m, x, y, d, s);
+	 	public uint use (Map m, uint x, uint y, Direction d, Storage s) {
+	 		return primary.use (m, x, y, d, s);
 	 	}
 	 }
 }

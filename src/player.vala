@@ -39,7 +39,25 @@ namespace HMP {
 		 */
 		public Storage storage = new Storage ();
 
+		/**
+		 * Radius, in dem Spieler mit anderen Entitaeten interagieren kann.
+		 */
 		private double interactionRadius = 15.0;
+
+		/**
+		 * Aktuelle Ausdauer.
+		 */
+		private int stamina = DEFAULT_STAMINA;
+
+		/**
+		 * Stufe.
+		 */
+		private uint level = 1;
+
+		/**
+		 * Erfahrungspunkte, die zum Erreichen der naechsten Stufe benoetigt werden.
+		 */
+		public int requiredExperience = EXPERIENCE;
 
 		/**
 		 * Konstruktor
@@ -90,8 +108,14 @@ namespace HMP {
 	 	 * Benutzt ausgeruestetes Werkzeug mit Spielerumgebung.
 	 	 */
 		public void use () {
-			tools.use (WORLD.CURRENT_MAP, (uint) ((pos.x)/WORLD.CURRENT_MAP.tilewidth), 
-				(uint) ((pos.y) /WORLD.CURRENT_MAP.tileheight), direction, storage);
+			if (stamina > 0) {
+				int actions = (int) tools.use (WORLD.CURRENT_MAP, (uint) ((pos.x)/WORLD.CURRENT_MAP.tilewidth), 
+					(uint) ((pos.y) /WORLD.CURRENT_MAP.tileheight), direction, storage);
+				stamina -= actions;
+				requiredExperience -= actions;
+			} else {
+				print ("Du solltest dich erstmal ausruhen!\n");
+			}
 		}
 
 		/**
@@ -126,6 +150,15 @@ namespace HMP {
 
 		public override void interactWith (Player p) {
 			//TODO Interaktion zwischen zwei Spielern.
+		}
+
+		public new void age () {
+			if (requiredExperience <= 0) {
+				++level;
+				requiredExperience = (int) level * EXPERIENCE;
+				print ("Level %u erreicht!\n", level);
+			}
+			stamina = DEFAULT_STAMINA * STAMINA_MULTIPLIER * (int) level;
 		}
 
 	}

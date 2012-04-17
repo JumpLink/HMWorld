@@ -25,8 +25,9 @@ namespace HMP {
 		 * @param l Das Tile (Logik).
 		 * @param t Das Tile (Textur).
 		 * @param s Das Lager.
+		 * @return Anzahl durchgefuehrter Aktionen.
 		 */
-		protected abstract void applyToTile (LogicalTile l, Tile t, Storage s);
+		protected abstract uint applyToTile (LogicalTile l, Tile t, Storage s);
 
 		/**
 		 * Wendet das Werkzeug auf alle Tiles im unmittelbaren Umkreis des Spielers 
@@ -35,14 +36,17 @@ namespace HMP {
 		 * @param x x-Koordinate des Spielers.
 		 * @param m y y-Koordinate des Spielers.
 		 * @param layerName Name der Ebene.
+		 * @return Anzahl durchgefuehrter Aktionen.
 		 */
-		protected void applyToLayer (Map m, uint x, uint y, string layerName, Storage s) {
+		protected uint applyToLayer (Map m, uint x, uint y, string layerName, Storage s) {
 			Layer l = m.getLayerFromName(layerName);
+			uint actions = 0;
 			for (uint ix = x - 1; ix <= (x + 1); ++ix)
 				for (uint iy = y - 1; iy <= (y + 1); ++iy) {
 						print ("Bearbeite Tile %u, %u\n", ix, iy);
-						applyToTile (m.tiles[ix,iy], l.tiles[ix, iy], s);
+						actions += applyToTile (m.tiles[ix,iy], l.tiles[ix, iy], s);
 					}
+			return actions;
 		}
 
 	}

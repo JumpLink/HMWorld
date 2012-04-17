@@ -26,18 +26,22 @@ namespace HMP {
 			water = 0;
 		}
 
-		protected void applyToTile (LogicalTile l, Tile t, Storage s) {
+		protected uint applyToTile (LogicalTile l, Tile t, Storage s) {
 			if (water > 0 && l.type == TileType.PLANT && l.plant != null) {
 						l.plant.water ();
 						--water;
+						return 1;
 			}
+			return 0;
 		}
 
-		public void use (Map m, uint x, uint y, Direction d, Storage s) {
+		public uint use (Map m, uint x, uint y, Direction d, Storage s) {
 			LogicalTile t = logicalTarget (m, x, y, d);
-			if (t.type == TileType.WATER)
+			if (t.type == TileType.WATER) {
 				water = WATER_CAPACITY;
-			applyToLayer (m, x, y, "player", s);
+				return 1;
+			}
+			return applyToLayer (m, x, y, "player", s);
 		}
 
 		public string toString () {

@@ -263,5 +263,19 @@ namespace HMP {
 			printLayers();
 			printTileSets();
 		}
+
+		/**
+		 * Altert alle Entitaeten und Pflanzen um einen Tag.
+		 */
+		public void age () {
+			foreach (Entity e in entities) {
+				e.age();
+			}
+			for (uint x = 0; x < width; ++x)
+				for (uint y = 0; y < height; ++y) {
+					if (tiles[x, y].plant != null)
+						tiles[x, y].plant.grow ();
+			}
+		}
 	}
 }
