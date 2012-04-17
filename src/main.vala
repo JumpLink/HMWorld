@@ -19,13 +19,37 @@ namespace HMP {
 	HMP.View VIEW;
 	HMP.Input INPUT;
 	HMP.GameState STATE;
-	HMP.ViewEngine VIEWENGINE = HMP.ViewEngine.OPENGL; //Díes kann bisher nur in HMP.ViewEngine.GTK_CLUTTER oder HMP.ViewEngine.OPENGL geändert werden.
+	HMP.ViewEngine VIEWENGINE = HMP.ViewEngine.GTK_CLUTTER; //Díes kann bisher nur in HMP.ViewEngine.CLUTTER, HMP.ViewEngine.GTK_CLUTTER oder HMP.ViewEngine.OPENGL geändert werden.
 	HMP.GdkTextureFactory TEXTUREFACTORY;
 	class Game {
 		public Game() {
 			
 		}
 		public static int main (string[] args) {
+			string[] sim_args = new string[1];
+			sim_args[0] = args[0];
+			switch (args[1]){
+				case "-o":
+				case "--opengl":
+					VIEWENGINE = HMP.ViewEngine.OPENGL;
+				break;
+				case "-c":
+				case "--clutter":
+					VIEWENGINE = HMP.ViewEngine.CLUTTER;
+				break;
+				case "-g":
+				case "--gtkclutter":
+					VIEWENGINE = HMP.ViewEngine.GTK_CLUTTER;
+				break;
+				default:
+					print(@"$(args[0])\nYou must set a ViewEngine\n");
+					GLib.Process.exit(0);
+			}
+			if (args[0] == "--opengl") {
+				VIEWENGINE = HMP.ViewEngine.OPENGL;
+			}
+			else if (args[0] == "--opengl") {
+			}
 			TEXTUREFACTORY = new GdkTextureFactory(VIEWENGINE);
 			WORLD = new World ();
 			STATE = new GameState();
@@ -37,13 +61,15 @@ namespace HMP {
 				case HMP.ViewEngine.SDL:
 					break;
 				case HMP.ViewEngine.GTK_CLUTTER:
+					VIEW = new GtkClutterView();
+					break;
 				case HMP.ViewEngine.CLUTTER:
 					VIEW = new ClutterView();
 					break;
 			}
-			VIEW.init (args, "Titel", 640, 480);
+			VIEW.init (sim_args, "Titel", 640, 480);
 			WORLD.init();
-			//INPUT.init();
+			INPUT.init();
 			VIEW.show();
 			
 			return 1;

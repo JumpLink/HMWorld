@@ -12,10 +12,10 @@ SRCS          = main.vala
 
 # Allgemeine Quelldateien fuer Tests und das Spiel
 
-ASRCS          = values.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala mapmanager.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala inventory.vala tool.vala emptyHands.vala spriteset.vala sprite.vala spritelayer.vala spritesetmanager.vala tilesetreference.vala plant.vala hoe.vala axe.vala pickaxe.vala singletool.vala wateringcan.vala sprinkler.vala circletool.vala file.vala potato.vala potatoseed.vala storage.vala scythe.vala multiscythe.vala seed.vala grass.vala grassseed.vala multihoe.vala animation.vala carryable.vala npc.vala chicken.vala haybale.vala egg.vala dialogtree.vala OpenGL/Texture.vala OpenGL/View.vala OpenGL/Input.vala Input.vala GameState.vala View.vala Gdk/Texture.vala logicalTile.vala toolentity.vala Clutter/GtkTexture.vala Clutter/Texture.vala Clutter/View.vala GdkTextureFactory.vala date.vala
+ASRCS          = values.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala mapmanager.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala inventory.vala tool.vala emptyHands.vala spriteset.vala sprite.vala spritelayer.vala spritesetmanager.vala tilesetreference.vala plant.vala hoe.vala axe.vala pickaxe.vala singletool.vala wateringcan.vala sprinkler.vala circletool.vala file.vala potato.vala potatoseed.vala storage.vala scythe.vala multiscythe.vala seed.vala grass.vala grassseed.vala multihoe.vala animation.vala carryable.vala npc.vala chicken.vala haybale.vala egg.vala dialogtree.vala OpenGL/Texture.vala OpenGL/View.vala OpenGL/Input.vala Input.vala GameState.vala View.vala Gdk/Texture.vala logicalTile.vala toolentity.vala Clutter/GtkTexture.vala Clutter/Texture.vala Clutter/View.vala GdkTextureFactory.vala date.vala Clutter/GtkView.vala
 
 # Quelltestdateien nur fuer Tests
-TSRCS         = main.vala tileset.vala
+TSRCS         = main.vala tileset.vala ClutterTest.vala
 
 # ausfuehrbares Ziel
 TARGET        = hmp
@@ -79,9 +79,17 @@ COMP		  = $(-o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(S
 all: dirs $(TARGET_FILE)
 
 ## * make run: Programm compilieren und ausfuehren
-run: all
+run-with-opengl: all
 	@echo "Running $(TARGET_FILE)..."
-	@$(TARGET_FILE)
+	$(TARGET_FILE) --opengl
+
+run-with-gtkclutter: all
+	@echo "Running $(TARGET_FILE)..."
+	$(TARGET_FILE) --gtkclutter
+
+run-with-clutter: all
+	@echo "Running $(TARGET_FILE)..."
+	$(TARGET_FILE) --clutter
 
 ## * make dirs: Noetige Verzeichnisse erstellen
 dirs:

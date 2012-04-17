@@ -24,9 +24,11 @@ namespace HMP {
 				case HMP.ViewEngine.SDL:
 					assert_not_reached(); //TODO
 				case HMP.ViewEngine.CLUTTER:
-					assert_not_reached(); //TODO
+					//return new ClutterTexture();
+					return new OpenGLTexture();
 				case HMP.ViewEngine.GTK_CLUTTER:
-					return new GtkClutterTexture();
+					//return new GtkClutterTexture();
+					return new OpenGLTexture();
 				default:
 					assert_not_reached();
 			}
