@@ -48,6 +48,9 @@ namespace HMP {
 			stage.set_title(title);
 			stage.set_color(Clutter.Color.from_string("black"));
 			stage.set_size(width,height);
+			//temporaer input
+			INPUT = new ClutterInput();
+			((ClutterInput)INPUT).registerCallbacks(stage);
 			return true;
 		}
 		public override void show() {
@@ -162,10 +165,6 @@ namespace HMP {
 		 * 
 		 */
 		protected new void drawSprite(HMP.Sprite s, double x, double y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
-			//TODO mirror zoff
-			// ((GtkClutterTexture)s.tex).clutter_tex.set_position((float)Round(x-s.width/2) , );
-			// stage.add_actor(((GtkClutterTexture)s.tex).clutter_tex);
-			// ((GtkClutterTexture)s.tex).clutter_tex.show();
 			tmp_clutter_tex = new GtkClutter.Texture();
 			tmp_clutter_tex.set_from_pixbuf(s.tex.pixbuf);
 			stage.add_actor(tmp_clutter_tex);

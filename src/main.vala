@@ -62,6 +62,7 @@ namespace HMP {
 					break;
 				case HMP.ViewEngine.GTK_CLUTTER:
 					VIEW = new GtkClutterView();
+					
 					break;
 				case HMP.ViewEngine.CLUTTER:
 					VIEW = new ClutterView();

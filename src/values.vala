@@ -18,10 +18,6 @@ using GL;
 using Cogl;
 namespace HMP {
 	const int TIMER_CALLS_PS = 30;
-	/**
-	 * Keycode der ESC-Taste
-	 */
-	const uchar ESC = 27;
 
 	/**
 	 * Kapazitaet der Giesskanne.

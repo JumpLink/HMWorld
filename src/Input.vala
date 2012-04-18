@@ -17,13 +17,17 @@ namespace HMP {
 	 * Klasse fuer Ein-/Ausgabe-Verarbeitung.
 	 */
 	abstract class Input {
-		public static uchar UP='w';
-		public static uchar RIGHT='d';
-		public static uchar DOWN='s';
-		public static uchar LEFT='a';
-		public static uchar ACTION = 'f';
-		public static uchar USE = 'e';
-		public static uchar SWAP = 'r';
+		public const uchar UP='w';
+		public const uchar RIGHT='d';
+		public const uchar DOWN='s';
+		public const uchar LEFT='a';
+		public const uchar ACTION = 'f';
+		public const uchar USE = 'e';
+		public const uchar SWAP = 'r';
+		/**
+		 * Keycode der ESC-Taste
+		 */
+		public const uchar ESC = 27;
 		public abstract void init();
 	}
 }

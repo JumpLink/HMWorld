@@ -48,6 +48,7 @@ namespace HMP {
 			stage.set_color(Clutter.Color.from_string("black"));
 			stage.set_size(width,height);
 			stage.use_alpha = true;
+
 			return true;
 		}
 		public override void show() {
