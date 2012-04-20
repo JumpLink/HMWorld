@@ -14,6 +14,7 @@ using Clutter;
 namespace HMP {
 	public class ClutterView : View {
 		Clutter.Stage stage;
+		Clutter.Timeline timeline;
 		/**
 		 * Perspektivischer Modus, an oder aus
 		 */
@@ -43,6 +44,9 @@ namespace HMP {
 		public override bool init (string[] args, string title, int width, int height) {
 			/* Kommandozeile immitieren */
 			Clutter.init(ref args);
+			timeline = new Clutter.Timeline(1000/TIMER_CALLS_PS);
+			timeline.new_frame.connect(on_new_frame);
+			timeline.loop = true;
 			stage = Clutter.Stage.get_default ();
 			stage.set_title(title);
 			stage.set_color(Clutter.Color.from_string("black"));
@@ -58,7 +62,13 @@ namespace HMP {
 			//((ClutterTexture)ts.tile[0,0].tex).clutter_tex.show();
 			//((ClutterTexture)ts.tile[0,0].tex).clutter_tex.set_position(10,10);
 			stage.show();
+			timeline.start();
 			Clutter.main();
+		}
+		static void on_new_frame(Clutter.Timeline sender, int frame) {
+			STATE.interval = sender.get_delta();
+			print("neuer Frame\n");
+			WORLD.timer ();
 		}
 		public override void timer(int lastCallTime) {
 			WORLD.timer ();

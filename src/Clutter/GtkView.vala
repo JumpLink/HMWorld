@@ -15,6 +15,7 @@ namespace HMP {
 	public class GtkClutterView : View {
 		Clutter.Stage stage;
 		GtkClutter.Texture tmp_clutter_tex;
+		Clutter.Timeline timeline;
 		/**
 		 * Perspektivischer Modus, an oder aus
 		 */
@@ -51,12 +52,21 @@ namespace HMP {
 			//temporaer input
 			INPUT = new ClutterInput();
 			((ClutterInput)INPUT).registerCallbacks(stage);
+			timeline = new Clutter.Timeline(TIMER_CALLS_PS);
+			timeline.new_frame.connect(on_new_frame);
+			timeline.loop = true;
 			return true;
 		}
 		public override void show() {
 			draw();
 			stage.show();
+			timeline.start();
 			Clutter.main();
+		}
+		static void on_new_frame(Clutter.Timeline sender, int frame) {
+			STATE.interval = sender.get_delta() / 1000;
+			//print("neuer Frame: %f\n",STATE.interval);
+			WORLD.timer ();
 		}
 		public override void timer(int lastCallTime) {
 			WORLD.timer ();
