@@ -16,27 +16,12 @@
 using HMP;
 namespace HMP {
 	/**
-	 * Klasse fuer logische Eigenschaften eines Tiles.
+	 * Klasse fuer ein Bett.
 	 */
-	public class LogicalTile {
+	public class Bed : EventLocation {
 
-		/**
-		 * Eigenschaften.
-		 */
-		public TileType type = TileType.EMPTY_TILE;
-
-		/**
-		 * Pflanze.
-		 */
-		public Plant plant;
-
-		/**
-		 * Ereignis.
-		 */
-		public EventLocation event;
-
-		public LogicalTile () {
-			//print("Logisches Tile erstellt\n");
+		public override void trigger (Player p) {
+			WORLD.age ();
 		}
 	}
 }

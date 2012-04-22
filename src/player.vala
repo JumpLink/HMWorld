@@ -86,6 +86,30 @@ namespace HMP {
 			return false;
 		}
 
+		/**
+		 * Gibt logisches Teil aus, das sich vor dem Spieler befindet.
+		 * @return Das logische Teil.
+		 */
+		private LogicalTile Target() {
+			int 	tx = (int) pos.x, 
+					ty = (int) pos.y;
+			switch (direction) {
+				case Direction.NORTH:
+					ty -= 1;
+					break;
+				case Direction.EAST:
+					tx += 1;
+					break;
+				case Direction.SOUTH:
+					ty += 1;
+					break;
+				case Direction.WEST:
+					tx -= 1;
+					break;
+			}
+			return WORLD.CURRENT_MAP.tiles[tx,ty];
+		}
+
 		public void printTools() {
 			
 		}
@@ -130,10 +154,18 @@ namespace HMP {
 		 */
 		public void interact () {
 			print ("Spieler %s interagiert\n", name);
+			//Interaktion mit anderen Entitaeten.
 			foreach (Entity e in WORLD.CURRENT_MAP.entities) {
 				if (item == null && inRange(e))
 					e.interactWith(this);
 			}
+			LogicalTile t = Target ();
+			//Ernten von Pflanzen.
+			if (item == null && t.plant != null)
+				item = new CropEntity (t.plant.harvest ());
+			//Ausloesen von Ereignissen.
+			if (t.event != null)
+				t.event.trigger (this);
 		}
 		/**
 		 * Aendert ausgewaehlte Antwort.

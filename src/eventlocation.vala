@@ -16,27 +16,14 @@
 using HMP;
 namespace HMP {
 	/**
-	 * Klasse fuer logische Eigenschaften eines Tiles.
+	 * Abstrakte Klasse fuer einen Ort, an dem durch einen Spieler
+	 * ein Ereignis ausgeloest werden kann.
 	 */
-	public class LogicalTile {
-
+	public abstract class EventLocation {
 		/**
-		 * Eigenschaften.
+		 * Ausloesen des Ereignisses.
+		 * @param p Der Spieler.
 		 */
-		public TileType type = TileType.EMPTY_TILE;
-
-		/**
-		 * Pflanze.
-		 */
-		public Plant plant;
-
-		/**
-		 * Ereignis.
-		 */
-		public EventLocation event;
-
-		public LogicalTile () {
-			//print("Logisches Tile erstellt\n");
-		}
+		public abstract void trigger (Player p);
 	}
 }
