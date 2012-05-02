@@ -23,15 +23,15 @@ namespace HMP {
 	 */
 	public class ClutterTexture : GdkTexture {
 		public Clutter.Texture clutter_tex { get; private set; }
-		public  double width {
+		public new double width {
 			get {return clutter_tex.get_width ();}
 			set {clutter_tex.set_width ((float)value);}
 		}
-		public  double height {
+		public new double height {
 			get {return clutter_tex.get_height ();}
 			set {clutter_tex.set_height ((float)value);}
 		}
-		public  HMP.Colorspace colorspace {
+		public new HMP.Colorspace colorspace {
 			get { return HMP.Colorspace.fromCogl(clutter_tex.pixel_format); }
 		}
 
@@ -43,7 +43,7 @@ namespace HMP {
 		 * Ladet eine Textur aus einer Datei.
 		 * @param path Pfadangabe der zu ladenden Grafikdatei.
 		 */
-		protected void loadFromFile(string path)
+		protected new void loadFromFile(string path)
 		requires (path != null)
 		{
 			//clutter_tex = new Clutter.Texture.from_file(path);
@@ -52,7 +52,8 @@ namespace HMP {
 		}
 		public new void loadFromPixbuf(Gdk.Pixbuf pixbuf) {
 			base.loadFromPixbuf(pixbuf);
-			clutter_tex.set_from_rgb_data (
+			try {
+				clutter_tex.set_from_rgb_data (
 											(uint8[])pixels,
 											has_alpha,
 											(int)base.width,
@@ -60,7 +61,10 @@ namespace HMP {
 											pixbuf.get_rowstride(),
 											HMP.Colorspace.fromGdkPixbuf(pixbuf).to_channel(),
 											Clutter.TextureFlags.NONE
-										   );
+											);
+			} catch (GLib.Error e) {
+				print("Error: %s\n", e.message);
+			}
 		}
 		/**
 		 *

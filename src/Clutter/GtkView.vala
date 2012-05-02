@@ -45,7 +45,8 @@ namespace HMP {
 		public override bool init (string[] args, string title, int width, int height) {
 			/* Kommandozeile immitieren */
 			Clutter.init(ref args);
-			stage = Clutter.Stage.get_default ();
+			//stage = Clutter.Stage.get_default ();
+			stage = new Clutter.Stage();
 			stage.set_title(title);
 			stage.set_color(Clutter.Color.from_string("black"));
 			stage.set_size(width,height);
@@ -149,7 +150,11 @@ namespace HMP {
 		protected new void drawTile(HMP.Tile tile, double x, double y, double zoff) {
 			if (tile.type != TileType.NO_TILE) {
 				tmp_clutter_tex = new GtkClutter.Texture();
-				tmp_clutter_tex.set_from_pixbuf(tile.tex.pixbuf);
+				try {
+					tmp_clutter_tex.set_from_pixbuf(tile.tex.pixbuf);
+				} catch (GLib.Error e) {
+					stdout.printf("Error: %s\n", e.message);
+				}
 				stage.add_actor(tmp_clutter_tex);
 				tmp_clutter_tex.set_position((float)x,(float)y);
 				tmp_clutter_tex.show();
@@ -176,7 +181,11 @@ namespace HMP {
 		 */
 		protected new void drawSprite(HMP.Sprite s, double x, double y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
 			tmp_clutter_tex = new GtkClutter.Texture();
-			tmp_clutter_tex.set_from_pixbuf(s.tex.pixbuf);
+			try {
+				tmp_clutter_tex.set_from_pixbuf(s.tex.pixbuf);
+			} catch (GLib.Error e) {
+				stdout.printf("Error: %s\n", e.message);
+			}
 			stage.add_actor(tmp_clutter_tex);
 			tmp_clutter_tex.set_position((float)Round(x-s.width/2),(float)Round(y-s.height/2));
 			tmp_clutter_tex.show();

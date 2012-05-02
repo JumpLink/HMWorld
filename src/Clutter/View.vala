@@ -47,7 +47,8 @@ namespace HMP {
 			timeline = new Clutter.Timeline(1000/TIMER_CALLS_PS);
 			timeline.new_frame.connect(on_new_frame);
 			timeline.loop = true;
-			stage = Clutter.Stage.get_default ();
+			//stage = Clutter.Stage.get_default ();
+			stage = new Clutter.Stage ();
 			stage.set_title(title);
 			stage.set_color(Clutter.Color.from_string("black"));
 			stage.set_size(width,height);

@@ -41,7 +41,7 @@ namespace HMP {
 		 */
 		protected new void loadFromFile(string path) {
 			base.loadFromFile(path);
-			clutter_tex.set_from_pixbuf(pixbuf);
+			usePixbuf(pixbuf);
 		}
 		/**
 		 * Ladet eine Textur aus einem Pixbuf in die Klasse.
@@ -49,7 +49,14 @@ namespace HMP {
 		 */
 		public new void loadFromPixbuf(Gdk.Pixbuf pixbuf) {
 			base.loadFromPixbuf(pixbuf);
-			clutter_tex.set_from_pixbuf(pixbuf);
+			usePixbuf(pixbuf);
+		}
+		private void usePixbuf(Gdk.Pixbuf pixbuf) {
+			try {
+				clutter_tex.set_from_pixbuf(pixbuf);
+			} catch (GLib.Error e) {
+				print("Error: %s\n", e.message);
+			}
 		}
 		/**
 		 *

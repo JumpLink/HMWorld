@@ -16,27 +16,26 @@
 using HMP;
 namespace HMP {
 	/**
-	 * Klasse fuer logische Eigenschaften eines Tiles.
+	 * Klasse fuer einen Kartenuebergang.
 	 */
-	public class LogicalTile {
+	public class MapTransition : EventLocation {
+		/**
+		 * Karte, zu der gewechselt wird.
+		 */
+		private Map map;
 
 		/**
-		 * Eigenschaften.
+		 * Konstruktor.
+		 * @param m Die Karte.
 		 */
-		public TileType type = TileType.EMPTY_TILE;
+		public MapTransition (Map m) {
+			map = m;
+		}
 
-		/**
-		 * Pflanze.
-		 */
-		public Plant plant;
-
-		/**
-		 * Ereignis.
-		 */
-		public EventLocation event;
-
-		public LogicalTile () {
-			//print("Logisches Tile erstellt\n");
+		public override void trigger (Player p) {
+			map.entities.add (p);
+			WORLD.CURRENT_MAP.entities.remove_at (WORLD.CURRENT_MAP.entities.index_of(p));
+			WORLD.CURRENT_MAP = map;
 		}
 	}
 }

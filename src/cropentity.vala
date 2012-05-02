@@ -16,27 +16,16 @@
 using HMP;
 namespace HMP {
 	/**
-	 * Klasse fuer logische Eigenschaften eines Tiles.
+	 * Klasse fuer eine tragbare, geerntete Entitaet.
 	 */
-	public class LogicalTile {
-
+	public class CropEntity : Carryable {
 		/**
-		 * Eigenschaften.
+		 * Art der Ernte.
 		 */
-		public TileType type = TileType.EMPTY_TILE;
+		public CropType type;
 
-		/**
-		 * Pflanze.
-		 */
-		public Plant plant;
-
-		/**
-		 * Ereignis.
-		 */
-		public EventLocation event;
-
-		public LogicalTile () {
-			//print("Logisches Tile erstellt\n");
+		public CropEntity (CropType t) {
+			type = t;
 		}
 	}
 }
