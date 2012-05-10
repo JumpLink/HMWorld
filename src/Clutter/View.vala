@@ -10,10 +10,11 @@
  *	Pascal Garber <pascal.garber@gmail.com>
  */
 using HMP;
-using Clutter;
+using GtkClutter;
 namespace HMP {
 	public class ClutterView : View {
 		Clutter.Stage stage;
+		GtkClutter.Texture tmp_clutter_tex;
 		Clutter.Timeline timeline;
 		/**
 		 * Perspektivischer Modus, an oder aus
@@ -44,31 +45,28 @@ namespace HMP {
 		public override bool init (string[] args, string title, int width, int height) {
 			/* Kommandozeile immitieren */
 			Clutter.init(ref args);
-			timeline = new Clutter.Timeline(1000/TIMER_CALLS_PS);
-			timeline.new_frame.connect(on_new_frame);
-			timeline.loop = true;
 			//stage = Clutter.Stage.get_default ();
-			stage = new Clutter.Stage ();
+			stage = new Clutter.Stage();
 			stage.set_title(title);
 			stage.set_color(Clutter.Color.from_string("black"));
 			stage.set_size(width,height);
-			stage.use_alpha = true;
-
+			//temporaer input
+			INPUT = new ClutterInput();
+			((ClutterInput)INPUT).registerCallbacks(stage);
+			timeline = new Clutter.Timeline(TIMER_CALLS_PS);
+			timeline.new_frame.connect(on_new_frame);
+			timeline.loop = true;
 			return true;
 		}
 		public override void show() {
 			draw();
-			//TileSet ts = WORLD.TILESETMANAGER.getFromName("Stadt - Sommer");
-			//stage.add_actor(((ClutterTexture)ts.tile[0,0].tex).clutter_tex);
-			//((ClutterTexture)ts.tile[0,0].tex).clutter_tex.show();
-			//((ClutterTexture)ts.tile[0,0].tex).clutter_tex.set_position(10,10);
 			stage.show();
 			timeline.start();
 			Clutter.main();
 		}
 		static void on_new_frame(Clutter.Timeline sender, int frame) {
-			STATE.interval = sender.get_delta();
-			print("neuer Frame\n");
+			STATE.interval = sender.get_delta() / 1000;
+			//print("neuer Frame: %f\n",STATE.interval);
 			WORLD.timer ();
 		}
 		public override void timer(int lastCallTime) {
@@ -151,20 +149,15 @@ namespace HMP {
 		 */
 		protected new void drawTile(HMP.Tile tile, double x, double y, double zoff) {
 			if (tile.type != TileType.NO_TILE) {
-				//tile.tex.draw((int)x,(int)y,zoff);
-				//((ClutterTexture)tile.tex).clutter_tex.set_position((float)x,(float)y);
-				//stage.add_actor(((ClutterTexture)tile.tex).clutter_tex);
-				//stage.add_actor(new Clutter.Clone(((ClutterTexture)tile.tex).clutter_tex));
-				//stage.add_actor(new Clutter.Texture.from_actor(((ClutterTexture)tile.tex).clutter_tex));
-				//TODO siehe #clutter pidgin 16.4.12 ~22:40 Uhr
-				//((ClutterTexture)tile.tex).clutter_tex.show();
-				Clutter.Texture tmp_tex = new Clutter.Texture();
-				tmp_tex.cogl_texture = ((ClutterTexture)tile.tex).clutter_tex.cogl_texture;
-				tmp_tex.set_position((float)x,(float)y);
-				tmp_tex.show();
-				tmp_tex.width = (float) tile.width;
-				tmp_tex.height = (float) tile.height;
-				stage.add_actor(tmp_tex);
+				tmp_clutter_tex = new GtkClutter.Texture();	
+				try {
+					tmp_clutter_tex.set_from_pixbuf(tile.tex.pixbuf);
+				} catch (GLib.Error e) {
+					stdout.printf("Error: %s\n", e.message);
+				}
+				stage.add_actor(tmp_clutter_tex);
+				tmp_clutter_tex.set_position((float)x,(float)y);
+				tmp_clutter_tex.show();
 			}
 		}
 		protected new void drawEntity(HMP.Entity e, double x, double y, double zoff) {
@@ -187,18 +180,15 @@ namespace HMP {
 		 * 
 		 */
 		protected new void drawSprite(HMP.Sprite s, double x, double y, double zoff, Mirror mirror = HMP.Mirror.NONE) {
-			//TODO mirror zoff
-			((ClutterTexture)s.tex).clutter_tex.set_position((float)Round(x-s.width/2) , (float)Round(y-s.height/2));
-			//stage.add_actor(((ClutterTexture)s.tex).clutter_tex);
-			//stage.add_actor(new Clutter.Clone(((ClutterTexture)s.tex).clutter_tex));
-			//stage.add_actor(new Clutter.Texture.from_actor(((ClutterTexture)s.tex).clutter_tex));
-			//TODO siehe #clutter pidgin 16.4.12 ~22:40 Uhr
-			//((ClutterTexture)s.tex).clutter_tex.show();
-			Clutter.Texture tmp_tex = new Clutter.Texture();
-			tmp_tex.cogl_texture = ((ClutterTexture)s.tex).clutter_tex.cogl_texture;
-			tmp_tex.set_position((float)x,(float)y);
-			tmp_tex.show();
-			stage.add_actor(tmp_tex);
+			tmp_clutter_tex = new GtkClutter.Texture();
+			try {
+				tmp_clutter_tex.set_from_pixbuf(s.tex.pixbuf);
+			} catch (GLib.Error e) {
+				stdout.printf("Error: %s\n", e.message);
+			}
+			stage.add_actor(tmp_clutter_tex);
+			tmp_clutter_tex.set_position((float)Round(x-s.width/2),(float)Round(y-s.height/2));
+			tmp_clutter_tex.show();
 		}
 	}
 }

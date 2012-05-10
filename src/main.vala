@@ -37,19 +37,10 @@ namespace HMP {
 				case "--clutter":
 					VIEWENGINE = HMP.ViewEngine.CLUTTER;
 				break;
-				case "-g":
-				case "--gtkclutter":
-					VIEWENGINE = HMP.ViewEngine.GTK_CLUTTER;
-				break;
 				default:
 					print(@"$(args[0])\nYou must set a ViewEngine\n");
 					GLib.Process.exit(0);
-			}
-			if (args[0] == "--opengl") {
-				VIEWENGINE = HMP.ViewEngine.OPENGL;
-			}
-			else if (args[0] == "--opengl") {
-			}
+			}	
 			TEXTUREFACTORY = new GdkTextureFactory(VIEWENGINE);
 			WORLD = new World ();
 			STATE = new GameState();
@@ -59,13 +50,10 @@ namespace HMP {
 					INPUT = new OpenGLInput();
 					break;
 				case HMP.ViewEngine.SDL:
-					break;
-				case HMP.ViewEngine.GTK_CLUTTER:
-					VIEW = new GtkClutterView();
-					
-					break;
+					break;	
 				case HMP.ViewEngine.CLUTTER:
 					VIEW = new ClutterView();
+					//INPUT wird innerhalb der ClutterView gesetzt 
 					break;
 			}
 			VIEW.init (sim_args, "Titel", 640, 480);
