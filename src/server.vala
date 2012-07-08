@@ -21,6 +21,9 @@ public class OutgoingThread
 {
 	/* Map mit Warteschlange der zu sendenden Pakete */
 	public HashMap<uint32, Gee.Queue<string>> queues = new HashMap<uint32, Gee.Queue<string>>();
+	public Cond queuecond = new Cond();
+	public Mutex queuemutex = new Mutex();
+
 	/* Map mit den jeweiligen output-streams */
 	public HashMap<uint32, OutputStream> streams = new HashMap<uint32, OutputStream>();
 
@@ -30,32 +33,33 @@ public class OutgoingThread
 	{
 		/* Sendeschleife */
 		while (running) {
+			queuemutex.lock();
+			queuecond.wait(queuemutex);
 			MapIterator<uint32, OutputStream> it = streams.map_iterator();
 			while (it.next()) {
 				uint32 socketID = it.get_key();
-				/* Schreibe Paketqueue */
-				string toSend = queues.get(socketID).poll();
-				while (toSend != null) {
+				/* Schreibe Paketqueue auf den socket. */
+				
+				while (queues.get(socketID).size > 0) {
+					string toSend = queues.get(socketID).poll();
 					try {
 						it.get_value().write(toSend.data);
 					} catch (IOError e) {
 						stderr.printf("%s", e.message);
 					}
-					toSend = queues[socketID].poll();
 				}
 			}
+			queuemutex.unlock();
+			Thread.usleep(42);
 		}
 		return null;
 	}
 }
 
-
-// TODO: Problem beim disconnect (lauter messages mit laenge 0 werden gelesen)
 // TODO: irgendwie sauberer zugriff auf die gemeinsamen Serverdaten
 
 public class Server 
 {
-
 	/* Naechste zu vergebene ClientID */
 	public uint32 currentID = 0;
 	/* Sendethread */
@@ -65,7 +69,10 @@ public class Server
 	{
 		/* Bestimmung der SocketID */
 		uint32 socketID = ++currentID;
-		outThread.streams.set(socketID, connection.get_output_stream());
+		/* deeebuging */
+		if (connection.get_output_stream() == null)
+			print("criticalerror!!1\n");
+		outThread.streams.set(socketID, (OutputStream)connection.get_output_stream());
 		outThread.queues.set(socketID, new LinkedList<string>());
 
 		/* TODO: queues befuellen mit "connected"-message */
@@ -91,8 +98,12 @@ public class Server
 			try {
 				/* Input vom Client verfuegbar? */
 				/* Client noch da? */
-					/* Paket lesen .. */
-					ssize_t count = istream.read (message);
+				/* Paket lesen .. */
+				ssize_t count = istream.read (message);
+				/* Client trennt unerwartet, falls 0byte gelesen werden */
+				if (count == 0)
+					connected = false;
+				else {
 					stdout.printf ("Incoming message from %u:\n", socketID);
 					StringBuilder s = new StringBuilder ();
 					for (int i = 0; i < message.length; ++i)
@@ -104,6 +115,7 @@ public class Server
 						connected = false;
 						/* TODO: queues befuellen mit disc-message */
 					} else {
+						outThread.queuemutex.lock();
 						/* Chatnachricht: Ueber Clients iterieren und queues befuellen */
 						MapIterator<uint32, Gee.Queue<string>> it = outThread.queues.map_iterator();
 						while (it.next()) {
@@ -111,7 +123,10 @@ public class Server
 							if (curID != socketID)
 								it.get_value().offer(s.str);
 						}
+						outThread.queuecond.broadcast();
+						outThread.queuemutex.unlock();
 					}
+				}
 			} catch (IOError e) {
 				stdout.printf ("Error: %s, connection %u lost!\n", e.message, socketID);
 				connected = false;
