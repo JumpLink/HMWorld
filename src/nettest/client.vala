@@ -16,11 +16,35 @@
 
 using GLib;
 
-class Client {
+public class ClientReceiveThread {
 
+	public InputStream istream;
+	public bool running = true;
+	uint8[] buffer = new uint8[1024];
+
+	public void* thread_func () 
+	{
+		while (running) {
+			try {
+				ssize_t count = istream.read(buffer);
+				StringBuilder s = new StringBuilder ();
+				for (int i = 0; i < buffer.length; ++i)
+					s.append_c ((char) buffer[i]);
+				print("Someone said: \"%s\"\n", s.str);
+			} catch (IOError e) {
+				stdout.printf ("Error: %s", e.message);
+			}
+		}
+		return null;
+	}
+
+}
+
+public class Client 
+{
 	public static int main (string[] args)
 	{
-		/* create a new connection */
+		/* Verbindung herstellen */
 		SocketConnection connection = null;
 		SocketClient client = new SocketClient();
 
@@ -30,29 +54,34 @@ class Client {
 			print("Error: %s\n", e.message);
 		}
 
-		/* use the connection */
+		/* IO-Streams */
 		InputStream istream = connection.get_input_stream ();
 		OutputStream ostream = connection.get_output_stream ();
+
+		/* Input-Thread starten */
+		ClientReceiveThread t = new ClientReceiveThread();
+		t.istream = istream;
+		unowned Thread<void*> crThread = Thread.create<void*>(t.thread_func, true);
+
+		/* Output-Schleife */
 		bool running = true;
 		while (running) {
 			string message = stdin.read_line();
-			uint8[] answerbuffer = new uint8[1024];
-			if(message == "q")
+			/* beenden mit q */
+			if (message == "q") {
 				running = false;
+				t.running = false;
+			}
 			try {
 				ssize_t count = ostream.write (message.data);
-				print (count.to_string() + " bytes written\n");
-				print("Message was: \"%s\"\n", message);
-				count = istream.read (answerbuffer);
-				StringBuilder s = new StringBuilder ();
-				for (int i = 0; i < answerbuffer.length; ++i)
-					s.append_c ((char) answerbuffer[i]);
-				print("Answer was: \"%s\"\n", s.str);
+				stdout.printf ("I said: \"%s\"\n", message);
 			} catch (IOError e) {
 				print("Error: %s\n", e.message);
 				running = false;
 			}
 		}
+		t.running = false;
+		crThread.join();
 		return 0;
 	}
 }
