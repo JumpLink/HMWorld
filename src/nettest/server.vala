@@ -88,7 +88,7 @@ public class Server
 			stderr.printf ("Error: %s\n", e.message);
 		}
 
-		stdout.printf ("Incoming connection from client: %s, ID: %u\n", socketName, socketID);
+		print ("Incoming connection from client: %s, ID: %u\n", socketName, socketID);
 		InputStream istream = connection.get_input_stream ();
 
 		/* Input-Verbindungsschleife */

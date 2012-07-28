@@ -45,12 +45,15 @@ public class Client
 {
 	public static int main (string[] args)
 	{
+		const uint16 PORT = 8080;
+		const string HOST = "localhost";
 		/* Verbindung herstellen */
 		SocketConnection connection = null;
 		SocketClient client = new SocketClient();
 
 		try {
-			connection = client.connect_to_host ("localhost:8080", 8080, null);
+			connection = client.connect_to_host (HOST, PORT, null);
+			print("Connected to: %s:%u\n",HOST, PORT);
 		} catch (Error e) {
 			print("Error: %s\n", e.message);
 		}
