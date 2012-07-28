@@ -21,8 +21,8 @@ public class OutgoingThread
 {
 	/* Map mit Warteschlange der zu sendenden Pakete */
 	public HashMap<uint32, Gee.Queue<string>> queues = new HashMap<uint32, Gee.Queue<string>>();
-	public Cond queuecond = new Cond();
-	public Mutex queuemutex = new Mutex();
+	public Cond queuecond = Cond();
+	public Mutex queuemutex = Mutex();
 
 	/* Map mit den jeweiligen output-streams */
 	public HashMap<uint32, OutputStream> streams = new HashMap<uint32, OutputStream>();
@@ -109,7 +109,7 @@ public class Server
 					for (int i = 0; i < message.length; ++i)
 						s.append_c ((char) message[i]);
 					/* .. und entsprechend handeln */
-					stdout.printf ("\"%s (%u)\"\n", s.str, (uint32)count);
+					stdout.printf ("\"%s\" (%u)\n", s.str, (uint32)count);
 					if (s.str == "q") {
 						/* Client beendet */
 						connected = false;
@@ -143,13 +143,15 @@ public class Server
 
 	static int main (string[] args)
 	{
+		const uint16 PORT = 8080;
+		const string HOST = "localhost"; //TODO benutzen
 		Server server = new Server();
 		/* Socketservice erstellen (Parameter = maximale Threads) */
 		ThreadedSocketService service = new ThreadedSocketService (1337);
 
 		/* connect to the port */
 		try {
-			service.add_inet_port (8080, null);
+			service.add_inet_port (PORT, null);
 		} catch (Error e) {
 			stdout.printf ("Error: %s\n", e.message);
 		}
@@ -163,12 +165,14 @@ public class Server
 
 		/* Ausgehenden Thread starten */
 		// new Thread<void*>(string name, func*)
-		unowned Thread<void*> thread = Thread.create<void*> (outThread.thread_func, false);
+		Thread<void*> thread = new Thread<void*> ("thread", outThread.thread_func);
 
 		/* Mainloop betreten */
-		stdout.printf ("Server started, waiting for clients!\n");
+		print("Server listening on %s:%u waiting for clients!\n",HOST,PORT);
 		MainLoop loop = new MainLoop(null, false);
 		loop.run();
+		// Wait for threads to finish (this will never happen in our case, but anyway)
+        thread.join ();
 		return 0;
 	}
 }

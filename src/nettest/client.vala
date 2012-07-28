@@ -27,6 +27,7 @@ public class ClientReceiveThread {
 		while (running) {
 			try {
 				ssize_t count = istream.read(buffer);
+				if(count==0) {GLib.Process.exit(0);}
 				StringBuilder s = new StringBuilder ();
 				for (int i = 0; i < buffer.length; ++i)
 					s.append_c ((char) buffer[i]);
@@ -61,7 +62,7 @@ public class Client
 		/* Input-Thread starten */
 		ClientReceiveThread t = new ClientReceiveThread();
 		t.istream = istream;
-		unowned Thread<void*> crThread = Thread.create<void*>(t.thread_func, true);
+		Thread<void*> crThread = new Thread<void*>("crThread", t.thread_func);
 
 		/* Output-Schleife */
 		bool running = true;
@@ -74,6 +75,7 @@ public class Client
 			}
 			try {
 				ssize_t count = ostream.write (message.data);
+				if(count==0) {GLib.Process.exit(0);}
 				stdout.printf ("I said: \"%s\"\n", message);
 			} catch (IOError e) {
 				print("Error: %s\n", e.message);
