@@ -1,7 +1,7 @@
-hmproject
+HMWworld
 =========
 
-HMProject - A 2D orthogonal RPG Remake
+HMWworld - A 2D orthogonal RPG Remake
 
 Dokumentations
 
