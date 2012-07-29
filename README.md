@@ -1,4 +1,4 @@
-HMWworld
+HMWorld
 =========
 
 HMWworld - A 2D orthogonal RPG Remake
