@@ -72,7 +72,8 @@ License as published by the Creative Commons organisation; either
 version 3.0 of the License, or (at your option) any later version.
 More informations on: http://creativecommons.org/licenses/by-sa/3.0/ 
 
-### Authors and Copyright (C) 2012
+Authors / Copyright
+-------------
 * Pascal Garber <pascal.garber@gmail.com>
 * Ole Lorenzen <ole.lorenzen@gmx.net>
 * Patrick König <knuffi@gmail.com>
