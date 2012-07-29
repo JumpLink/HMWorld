@@ -1,33 +1,5 @@
-HMWorld
-=========
-
-HMWworld - A 2D orthogonal RPG Remake
-
-Dokumentations
--------------
-
-* Cogl - Matrixs, Vectors, ...
-	* vala: http://unstable.valadoc.org/#!api=cogl-1.0/Cogl
-	* original: http://docs.clutter-project.org/docs/cogl/stable/
-
-* Gee - Lists, Maps, .. like the Lists, Maps, .. from java 
-	* vala, original: http://unstable.valadoc.org/#!wiki=gee-0.8/index
-	* Samples: https://live.gnome.org/Vala/GeeSamples
-
-* GIO - Fileoperations
-	* vala: http://unstable.valadoc.org/#!wiki=gio-2.0/index
-	* original: http://developer.gnome.org/gio/
-
-* Glib
-	* vala: http://unstable.valadoc.org/#!api=glib-2.0/GLib
-	* original: http://developer.gnome.org/glib/
-
-* XPath
-	* vala: http://unstable.valadoc.org/#!api=libxml-2.0/Xml.XPath
-	* original: http://xmlsoft.org/html/libxml-xpath.html
-
 Build this Software
--------------
+=========
 
 To compile this software install the following dependencies on Ubuntu
 
@@ -63,8 +35,31 @@ To generate vapis
 	sudo apt-get install gobject-introspection
 
 
+Dokumentations
+=========
+
+* Cogl - Matrixs, Vectors, ...
+	* vala: http://unstable.valadoc.org/#!api=cogl-1.0/Cogl
+	* original: http://docs.clutter-project.org/docs/cogl/stable/
+
+* Gee - Lists, Maps, .. like the Lists, Maps, .. from java 
+	* vala, original: http://unstable.valadoc.org/#!wiki=gee-0.8/index
+	* Samples: https://live.gnome.org/Vala/GeeSamples
+
+* GIO - Fileoperations
+	* vala: http://unstable.valadoc.org/#!wiki=gio-2.0/index
+	* original: http://developer.gnome.org/gio/
+
+* Glib
+	* vala: http://unstable.valadoc.org/#!api=glib-2.0/GLib
+	* original: http://developer.gnome.org/glib/
+
+* XPath
+	* vala: http://unstable.valadoc.org/#!api=libxml-2.0/Xml.XPath
+	* original: http://xmlsoft.org/html/libxml-xpath.html
+
 License
--------------
+=========
 
 This software is free software; you can redistribute it and/or
 modify it under the terms of the Creative Commons licenses CC BY-SA 3.0.
@@ -73,12 +68,12 @@ version 3.0 of the License, or (at your option) any later version.
 More informations on: http://creativecommons.org/licenses/by-sa/3.0/ 
 
 Authors / Copyright
--------------
+=========
 * Pascal Garber <pascal.garber@gmail.com>
 * Ole Lorenzen <ole.lorenzen@gmx.net>
 * Patrick König <knuffi@gmail.com>
 
 More
--------------
+=========
 
 More informations on http://incux.de/projects/reloaded
