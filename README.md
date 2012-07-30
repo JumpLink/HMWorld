@@ -30,9 +30,9 @@ For Debuggin
 
 	sudo apt-get install nemiver
 	
-To generate vapis
+To generate vapi/gir
 
-	sudo apt-get install gobject-introspection
+	sudo apt-get install gobject-introspection libgirepository1.0-dev
 
 
 Dokumentations
