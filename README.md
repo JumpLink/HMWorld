@@ -1,7 +1,10 @@
 ![Screenshot of a very early version](http://hmworld.eu/images/screenshot1.png)
 
 Build this Software
-=========
+===================
+
+Dependencies
+------------
 
 To compile this software install the following dependencies on Ubuntu
 
@@ -35,6 +38,21 @@ For Debuggin
 To generate vapi/gir
 
 	sudo apt-get install gobject-introspection libgirepository1.0-dev
+	
+Compile
+-------
+
+	make
+	
+Run
+---
+With pure OpenGL View Engine
+
+	make run-with-opengl
+	
+Or with Clutter View Engine
+
+	make run-with-clutter
 
 
 Dokumentations
