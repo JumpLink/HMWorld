@@ -41,6 +41,7 @@ To generate vapi/gir
 	
 Compile
 -------
+Just a simple
 
 	make
 	
