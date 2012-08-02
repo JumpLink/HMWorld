@@ -39,24 +39,24 @@ Dokumentations
 =========
 
 * Cogl - Matrixs, Vectors, ...
-	* vala: http://unstable.valadoc.org/#!api=cogl-1.0/Cogl
-	* original: http://docs.clutter-project.org/docs/cogl/stable/
+	* [vala](http://unstable.valadoc.org/#!api=cogl-1.0/Cogl)
+	* [original](http://docs.clutter-project.org/docs/cogl/stable/)
 
 * Gee - Lists, Maps, .. like the Lists, Maps, .. from java 
-	* vala, original: http://unstable.valadoc.org/#!wiki=gee-0.8/index
-	* Samples: https://live.gnome.org/Vala/GeeSamples
+	* [vala, original](http://unstable.valadoc.org/#!wiki=gee-0.8/index)
+	* [Samples](https://live.gnome.org/Vala/GeeSamples)
 
 * GIO - Fileoperations
-	* vala: http://unstable.valadoc.org/#!wiki=gio-2.0/index
-	* original: http://developer.gnome.org/gio/
+	* [vala](http://unstable.valadoc.org/#!wiki=gio-2.0/index)
+	* [original](http://developer.gnome.org/gio/)
 
 * Glib
-	* vala: http://unstable.valadoc.org/#!api=glib-2.0/GLib
-	* original: http://developer.gnome.org/glib/
+	* [vala](http://unstable.valadoc.org/#!api=glib-2.0/GLib)
+	* [original](http://developer.gnome.org/glib/)
 
 * XPath
-	* vala: http://unstable.valadoc.org/#!api=libxml-2.0/Xml.XPath
-	* original: http://xmlsoft.org/html/libxml-xpath.html
+	* [vala](http://unstable.valadoc.org/#!api=libxml-2.0/Xml.XPath)
+	* [original](http://xmlsoft.org/html/libxml-xpath.html)
 
 License
 =========
@@ -76,4 +76,4 @@ Authors / Copyright
 More
 =========
 
-More informations on http://incux.de/projects/reloaded
+More informations on [http://incux.de/projects/reloaded](http://incux.de/projects/reloaded)
