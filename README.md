@@ -1,3 +1,5 @@
+![Screenshot of a very early version](http://hmworld.eu/images/screenshot1.png)
+
 Build this Software
 =========
 
