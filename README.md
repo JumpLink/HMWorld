@@ -97,7 +97,6 @@ Authors / Copyright
 More
 =========
 
-More informations on
-* [incux.de](http://incux.de/projects/reloaded)
-* [hmworld.eu](http://hmworld.eu)
-* [github.com](https://github.com/JumpLink/HMWorld)
+More informations
+-----------------
+on [hmworld.eu](http://hmworld.eu), [incux.de](http://incux.de/projects/reloaded) and [github.com](https://github.com/JumpLink/HMWorld)
