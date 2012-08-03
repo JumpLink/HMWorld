@@ -60,7 +60,10 @@ Dokumentations
 =========
 
 * Gir - Share the Library with other Languages
-	* https://live.gnome.org/Vala/SharedLibSample
+	* [Sample](https://live.gnome.org/Vala/SharedLibSample)
+
+* Javascript - Use Gir in Javascript
+	* [classes, interfaces and properties in Javascript/gjs](http://blogs.gnome.org/danni/2012/03/30/classes-interfaces-properties-in-javascriptgjs/)
 
 * Cogl - Matrixs, Vectors, ...
 	* [vala](http://unstable.valadoc.org/#!api=cogl-1.0/Cogl)
