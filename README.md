@@ -64,6 +64,7 @@ Dokumentations
 
 * Javascript - Use Gir in Javascript
 	* [classes, interfaces and properties in Javascript/gjs](http://blogs.gnome.org/danni/2012/03/30/classes-interfaces-properties-in-javascriptgjs/)
+	* [Sample](https://github.com/antono/vala-object)
 
 * Cogl - Matrixs, Vectors, ...
 	* [vala](http://unstable.valadoc.org/#!api=cogl-1.0/Cogl)
