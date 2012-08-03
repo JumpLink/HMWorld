@@ -105,4 +105,4 @@ More
 
 More informations
 -----------------
-on [hmworld.eu](http://hmworld.eu), [incux.de](http://incux.de/projects/reloaded) and [github.com](https://github.com/JumpLink/HMWorld)
+on [hmworld.eu](http://hmworld.eu), [incux.de](http://incux.de/projects/reloaded), [github.com/JumpLink/HMWorld](https://github.com/JumpLink/HMWorld) and [github.com/JumpLink/HMWorld](https://github.com/JumpLink/HMWorld-Data)
