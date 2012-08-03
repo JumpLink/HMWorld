@@ -59,6 +59,9 @@ Or with Clutter View Engine
 Dokumentations
 =========
 
+* Gir - Share the Library with other Languages
+	* https://live.gnome.org/Vala/SharedLibSample
+
 * Cogl - Matrixs, Vectors, ...
 	* [vala](http://unstable.valadoc.org/#!api=cogl-1.0/Cogl)
 	* [original](http://docs.clutter-project.org/docs/cogl/stable/)
