@@ -106,4 +106,11 @@ More
 
 More information
 -----------------
-on [hmworld.eu](http://hmworld.eu), [incux.de](http://incux.de/projects/reloaded), [github.com/JumpLink/HMWorld](https://github.com/JumpLink/HMWorld) and [github.com/JumpLink/HMWorld](https://github.com/JumpLink/HMWorld-Data)
+
+Website [hmworld.eu](http://hmworld.eu)
+
+Wiki: [incux.de](http://incux.de/projects/reloaded)
+
+The Game-Repo: [github.com/JumpLink/HMWorld](https://github.com/JumpLink/HMWorld)
+
+The Data-Lib-Repo (that load the map on the website and the game): [github.com/JumpLink/HMWorld-Data](https://github.com/JumpLink/HMWorld-Data)
