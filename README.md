@@ -56,7 +56,7 @@ Or with Clutter View Engine
 	make run-with-clutter
 
 
-Dokumentations
+Dokumentation
 =========
 
 * Gir - Share the Library with other Languages
@@ -104,6 +104,6 @@ Authors / Copyright
 More
 =========
 
-More informations
+More information
 -----------------
 on [hmworld.eu](http://hmworld.eu), [incux.de](http://incux.de/projects/reloaded), [github.com/JumpLink/HMWorld](https://github.com/JumpLink/HMWorld) and [github.com/JumpLink/HMWorld](https://github.com/JumpLink/HMWorld-Data)
