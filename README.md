@@ -1,4 +1,3 @@
-![Screenshot of a very early version](http://hmworld.eu/images/screenshot1.png)
 
 Build this Software
 ===================
@@ -56,7 +55,7 @@ Or with Clutter View Engine
 	make run-with-clutter
 
 
-Dokumentation
+Documentation
 =========
 
 * Gir - Share the Library with other Languages
