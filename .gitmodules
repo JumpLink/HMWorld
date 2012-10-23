@@ -4,3 +4,6 @@
 [submodule "librpggl"]
 	path = librpggl
 	url = git://github.com/JumpLink/librpggl.git
+[submodule "libsxml"]
+	path = libsxml
+	url = git://github.com/JumpLink/simple-xml-reader-vala.git
