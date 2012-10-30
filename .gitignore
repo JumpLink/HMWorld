@@ -19,3 +19,6 @@ bin
 doc
 tmp
 lib
+
+# others
+core

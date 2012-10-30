@@ -14,7 +14,9 @@
  *	Patrick König <knuffi@gmail.com>
  */
 
-using GLib;
+using GLFW;
+using GL;
+using rpg;
 
 public class ClientReceiveThread {
 
@@ -43,8 +45,7 @@ public class ClientReceiveThread {
 
 public class Client 
 {
-	public static int main (string[] args)
-	{
+	public int socket () {
 		const uint16 PORT = 8080;
 		const string HOST = "localhost";
 		/* Verbindung herstellen */
@@ -58,37 +59,62 @@ public class Client
 			print("Error: %s\n", e.message);
 		}
 
-		/* IO-Streams */
-		InputStream istream = connection.get_input_stream ();
-		OutputStream ostream = connection.get_output_stream ();
+		if(connection != null) {
+			/* IO-Streams */
+			InputStream istream = connection.get_input_stream ();
+			OutputStream ostream = connection.get_output_stream ();
 
-		/* Input-Thread starten */
-		ClientReceiveThread t = new ClientReceiveThread();
-		t.istream = istream;
-		//Thread<void*> crThread = new Thread<void*>("crThread", t.thread_func);
-		unowned Thread<void*> crThread = Thread<void*>.self<void*>(); //TODO TESTME
+			/* Input-Thread starten */
+			ClientReceiveThread t = new ClientReceiveThread();
+			t.istream = istream;
+			//Thread<void*> crThread = new Thread<void*>("crThread", t.thread_func);
+			unowned Thread<void*> crThread = Thread<void*>.self<void*>(); //TODO TESTME
 
-		/* Output-Schleife */
-		bool running = true;
-		while (running) {
-			string message = stdin.read_line();
-			/* beenden mit q */
-			if (message == "q") {
-				running = false;
-				t.running = false;
+			/* Output-Schleife */
+			bool running = true;
+			while (running) {
+				string message = stdin.read_line();
+				/* beenden mit q */
+				if (message == "q") {
+					running = false;
+					t.running = false;
+				}
+				try {
+					ssize_t count = ostream.write (message.data);
+					if(count==0) {GLib.Process.exit(0);}
+					stdout.printf ("I said: \"%s\"\n", message);
+				} catch (IOError e) {
+					print("Error: %s\n", e.message);
+					running = false;
+				}
 			}
-			try {
-				ssize_t count = ostream.write (message.data);
-				if(count==0) {GLib.Process.exit(0);}
-				stdout.printf ("I said: \"%s\"\n", message);
-			} catch (IOError e) {
-				print("Error: %s\n", e.message);
-				running = false;
+			t.running = false;
+			crThread.join();
+			} else {
+				print("Verbindung zum Server konnte nicht hergestellt werden.\nEnde\n");
+				return 1;
 			}
-		}
-		t.running = false;
-		crThread.join();
 		return 0;
 	}
+}
+
+public static int main (string[] args) {
+	var client = new Client();
+
+	if(client.socket()==1) {
+
+		var data = new rpg.ResourceManager();
+		data.load_spriteset_manager("./librpg/data/spriteset/");
+		data.load_tileset_manager("./librpg/data/tileset/");
+		data.load_map_manager("./librpg/data/map/");
+		var map = data.mapmanager.get_from_filename("testmap.tmx");
+		// var layer = map.get_layer_from_index(0);
+		// var tile = layer.tiles[0,0]; //get tile x y
+		map.merge();
+		map.under.save("under.png");
+		map.over.save("over.png");
+
+	}
+	return 0;
 }
 

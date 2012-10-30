@@ -10,7 +10,7 @@ PKG_NAME      = HMP-ALL
 # ausfuehrbares Ziel
 TARGET        = hmp
 # Pakete
-PACKAGES      = gl glu glut sdl sdl-image cairo libxml-2.0 gee-1.0 gio-2.0 posix clutter-1.0 clutter-gtk-1.0
+PACKAGES      = gl gdk-pixbuf-2.0 gee-1.0 gio-2.0 posix libglfw
 # C-Compileranweisungen
 CFLAGS        = -lglut -lSDL_image -lm
 
