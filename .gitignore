@@ -10,3 +10,12 @@
 *.lai
 *.la
 *.a
+
+# Editor
+*.sublime*
+
+# Binary Output folders
+bin
+doc
+tmp
+lib

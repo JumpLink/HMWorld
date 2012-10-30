@@ -65,7 +65,8 @@ public class Client
 		/* Input-Thread starten */
 		ClientReceiveThread t = new ClientReceiveThread();
 		t.istream = istream;
-		Thread<void*> crThread = new Thread<void*>("crThread", t.thread_func);
+		//Thread<void*> crThread = new Thread<void*>("crThread", t.thread_func);
+		unowned Thread<void*> crThread = Thread<void*>.self<void*>(); //TODO TESTME
 
 		/* Output-Schleife */
 		bool running = true;

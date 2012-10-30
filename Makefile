@@ -7,16 +7,6 @@ VERSION       = 0.1
 # Name des Pakets
 PKG_NAME      = HMP-ALL
 
-# Quelldateien nur fuer das Spiel
-SRCS          = main.vala
-
-# Allgemeine Quelldateien fuer Tests und das Spiel
-
-ASRCS          = values.vala matrix.vala vector.vala layer.vala entity.vala player.vala world.vala texture.vala tileset.vala map.vala mapmanager.vala xml.vala tile.vala subtile.vala regulartile.vala splittile.vala tilesetmanager.vala inventory.vala tool.vala emptyHands.vala spriteset.vala sprite.vala spritelayer.vala spritesetmanager.vala tilesetreference.vala plant.vala hoe.vala axe.vala pickaxe.vala singletool.vala wateringcan.vala sprinkler.vala circletool.vala file.vala potato.vala potatoseed.vala storage.vala scythe.vala multiscythe.vala seed.vala grass.vala grassseed.vala multihoe.vala animation.vala carryable.vala npc.vala chicken.vala haybale.vala egg.vala dialogtree.vala OpenGL/Texture.vala OpenGL/View.vala OpenGL/Input.vala Input.vala Clutter/Input.vala GameState.vala View.vala Gdk/Texture.vala logicalTile.vala toolentity.vala Clutter/GtkTexture.vala Clutter/Texture.vala Clutter/View.vala GdkTextureFactory.vala date.vala eventlocation.vala maptransition.vala cropentity.vala bed.vala
-
-# Quelltestdateien nur fuer Tests
-TSRCS         = main.vala tileset.vala ClutterTest.vala
-
 # ausfuehrbares Ziel
 TARGET        = hmp
 # Pakete
@@ -55,12 +45,8 @@ VDD           = 0.15.3
 # Bazaar
 BZR           = bzr
 
-# Allgemeine Quelldateien mit Pfad
-ASRC_FILES     = $(ASRCS:%.vala=$(SRC_DIR)%.vala)
 # Quelldateien mit Pfad
-SRC_FILES      = $(ASRC_FILES) $(SRCS:%.vala=$(SRC_DIR)%.vala)
-# Test-Quelldateien mit Pfad
-TSRC_FILES     = $(ASRC_FILES) $(TSRCS:%.vala=$(TSRC_DIR)%.vala)
+SRC_FILES     = $(wildcard src/*.vala) $(wildcard libsxml/src/*.vala) $(wildcard librpg/src/*.vala) $(wildcard librpg/src/Gdk/*.vala) $(wildcard librpg/src/XML/*.vala) $(wildcard librpggl/src/*.vala)
 # Zieldatei mit Pfad
 TARGET_FILE   = $(TARGET:%=$(BIN_DIR)%)
 # Paketflags
@@ -128,6 +114,12 @@ clean:
 	@rm -rf $(DOC_DIR)
 	@rm -rf $(SRC_DIR)*.c
 	@rm -rf $(SRC_DIR)/*/*.c
+	@rm -rf libsxml/src/*.c
+	@rm -rf libsxml/src/*/*.c
+	@rm -rf librpg/src/*.c
+	@rm -rf librpg/src/*/*.c
+	@rm -rf librpggl/src/*.c
+	@rm -rf librpggl/src/*/*.c
 	@rm -rf $(TMP_DIR)
 	@rm -rf $(TST_DOC_DIR)
 
