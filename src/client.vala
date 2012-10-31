@@ -14,107 +14,96 @@
  *	Patrick König <knuffi@gmail.com>
  */
 
-using GLFW;
-using GL;
 using rpg;
+using Gtk;
+using WebKit;
+using Posix;
 
-public class ClientReceiveThread {
+public class Browser {
 
-	public InputStream istream;
-	public bool running = true;
-	uint8[] buffer = new uint8[1024];
+    private const string HOME_URL = "http://localhost:3000/";
+    private const string DEFAULT_PROTOCOL = "http";
 
-	public void* thread_func () 
-	{
-		while (running) {
-			try {
-				ssize_t count = istream.read(buffer);
-				if(count==0) {GLib.Process.exit(0);}
-				StringBuilder s = new StringBuilder ();
-				for (int i = 0; i < buffer.length; ++i)
-					s.append_c ((char) buffer[i]);
-				print("Someone said: \"%s\"\n", s.str);
-			} catch (IOError e) {
-				stdout.printf ("Error: %s", e.message);
-			}
-		}
-		return null;
-	}
+    private Regex protocol_regex;
 
+    private WebView web_view;
+    private Window window;
+    public Browser () {
+
+        try {
+            this.protocol_regex = new Regex (".*://.*");
+        } catch (RegexError e) {
+            critical ("%s", e.message);
+        }
+
+        create_widgets ();
+        connect_signals ();
+    }
+
+    private bool create_widgets () {
+        this.web_view = new WebView ();
+        ScrolledWindow scrolled_window;
+        try {
+            var builder = new Builder ();
+            builder.add_from_file ("ui/window.ui");
+            builder.connect_signals (null);
+            window = builder.get_object ("window") as Window;
+            window.maximize();
+            //window.fullscreen();
+            scrolled_window = builder.get_object ("scrolledwindow") as ScrolledWindow;
+            window.show_all ();
+        } catch (Error e) {
+            print ("Could not load UI: %s\n", e.message);
+            return true;
+        } 
+
+        scrolled_window.add (this.web_view);
+
+        return false;
+    }
+
+    private void exit() {
+        try {
+            GLib.Process.spawn_command_line_async("killall start.sh");
+            GLib.Process.spawn_command_line_async("killall node");
+        } catch (GLib.SpawnError e) {
+            print("Error: %s\n", e.message);
+        }
+        Gtk.main_quit();
+    }
+
+    private void connect_signals () {
+        this.window.destroy.connect (exit);
+
+        this.web_view.title_changed.connect ((source, frame, title) => {
+
+        });
+        this.web_view.load_committed.connect ((source, frame) => {
+
+        });
+    }
+
+    public void start () {
+        this.window.show_all ();
+        this.web_view.open (Browser.HOME_URL);
+    }
+
+    public static int main (string[] args) {
+        Gtk.init (ref args);
+
+        var browser = new Browser ();
+        browser.start ();
+
+        /* run nodejs */
+        try {
+            GLib.Process.spawn_command_line_async("node ./node/app.js");
+            Posix.sleep(2);
+        } catch (GLib.SpawnError e) {
+            print("Error: %s\n", e.message);
+        }
+        
+        Gtk.main ();
+
+        return 0;
+    }
 }
-
-public class Client 
-{
-	public int socket () {
-		const uint16 PORT = 8080;
-		const string HOST = "localhost";
-		/* Verbindung herstellen */
-		SocketConnection connection = null;
-		SocketClient client = new SocketClient();
-
-		try {
-			connection = client.connect_to_host (HOST, PORT, null);
-			print("Connected to: %s:%u\n",HOST, PORT);
-		} catch (Error e) {
-			print("Error: %s\n", e.message);
-		}
-
-		if(connection != null) {
-			/* IO-Streams */
-			InputStream istream = connection.get_input_stream ();
-			OutputStream ostream = connection.get_output_stream ();
-
-			/* Input-Thread starten */
-			ClientReceiveThread t = new ClientReceiveThread();
-			t.istream = istream;
-			//Thread<void*> crThread = new Thread<void*>("crThread", t.thread_func);
-			unowned Thread<void*> crThread = Thread<void*>.self<void*>(); //TODO TESTME
-
-			/* Output-Schleife */
-			bool running = true;
-			while (running) {
-				string message = stdin.read_line();
-				/* beenden mit q */
-				if (message == "q") {
-					running = false;
-					t.running = false;
-				}
-				try {
-					ssize_t count = ostream.write (message.data);
-					if(count==0) {GLib.Process.exit(0);}
-					stdout.printf ("I said: \"%s\"\n", message);
-				} catch (IOError e) {
-					print("Error: %s\n", e.message);
-					running = false;
-				}
-			}
-			t.running = false;
-			crThread.join();
-			} else {
-				print("Verbindung zum Server konnte nicht hergestellt werden.\nEnde\n");
-				return 1;
-			}
-		return 0;
-	}
-}
-
-public static int main (string[] args) {
-	var client = new Client();
-
-	if(client.socket()==1) {
-
-		var data = new rpg.ResourceManager();
-		data.load_spriteset_manager("./librpg/data/spriteset/");
-		data.load_tileset_manager("./librpg/data/tileset/");
-		data.load_map_manager("./librpg/data/map/");
-		var map = data.mapmanager.get_from_filename("testmap.tmx");
-		// var layer = map.get_layer_from_index(0);
-		// var tile = layer.tiles[0,0]; //get tile x y
-		map.merge();
-		map.under.save("under.png");
-		map.over.save("over.png");
-
-	}
-	return 0;
-}
-

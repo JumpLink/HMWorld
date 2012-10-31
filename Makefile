@@ -10,40 +10,28 @@ PKG_NAME      = HMP-ALL
 # ausfuehrbares Ziel
 TARGET        = hmp
 # Pakete
-PACKAGES      = gl gdk-pixbuf-2.0 gee-1.0 gio-2.0 posix libglfw
+PACKAGES      = gdk-pixbuf-2.0 gee-1.0 gio-2.0 posix webkit-1.0
 # C-Compileranweisungen
-CFLAGS        = -lglut -lSDL_image -lm
+CFLAGS        = 
 
 # Quellverzeichnis
 SRC_DIR       = src/
 # Test-Quellverzeichnis
-TSRC_DIR       = test/
+TSRC_DIR      = test/
 # Vapiverzeichnis
 VAPI_DIR      = vapi/
 # Verzeichnis fuer erzeuge Binaries
 BIN_DIR       = bin/
 # Verzeichnis fuer Doku
 DOC_DIR       = doc/
-# Verzeichnis fuer Doku
-TST_DOC_DIR       = test/doc/
-# Öffentliches Verzeichnis für die Dokumentationsveröffentlichung
-PUB_DIR       = ~/Dropbox/Public/hmp/
 # Verzeichnis fuer Temporaere Dateien
 TMP_DIR		  = tmp/
-
-# Bazaar-Repository
-BZR_REPO      = bzr+ssh://bazaar.launchpad.net/%2Bbranch/hmproject/0.1/
 
 # Vala-Compiler
 VC            = valac
 
 # Valadoc
 VD            = valadoc
-# Valadoc Driver
-VDD           = 0.15.3
-
-# Bazaar
-BZR           = bzr
 
 # Quelldateien mit Pfad
 SRC_FILES     = $(wildcard src/*.vala) $(wildcard libsxml/src/*.vala) $(wildcard librpg/src/*.vala) $(wildcard librpg/src/Gdk/*.vala) $(wildcard librpg/src/XML/*.vala) $(wildcard librpggl/src/*.vala)
@@ -59,19 +47,10 @@ COMP		  = $(-o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(S
 
 # Targets
 
-.PHONY: all run dirs pull commit commit-* push push-* help clean test
+.PHONY: all node run dirs pull commit commit-* push push-* help clean test
 
 ## * make (all): Programm compilieren
-all: dirs $(TARGET_FILE)
-
-## * make run: Programm compilieren und ausfuehren
-run-with-opengl: all
-	@echo "Running $(TARGET_FILE)..."
-	$(TARGET_FILE) --opengl
-
-run-with-clutter: all
-	@echo "Running $(TARGET_FILE)..."
-	$(TARGET_FILE) --clutter
+all: clean dirs $(TARGET_FILE) node
 
 ## * make dirs: Noetige Verzeichnisse erstellen
 dirs:
@@ -81,14 +60,14 @@ dirs:
 $(TARGET_FILE): $(SRC_FILES)
 	@echo "Compiling Binary..."
 	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES)
+
+node:
+	@echo "Erzeuge Node.js JavaScript Code"
+	@tsc ./node/app.ts --module Node
 	
 c: dirs $(SRC_FILES)
 	@echo "Compiling Binary..."
 	@$(VC) -o $(TARGET_FILE) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) -C
-## * make doc-test: Dokumentation fuer die Tests generieren, inkl. nicht oeffentlicher Bereiche
-doc-test: $(SRC_FILES)
-	@echo "Generating internal Documentation for Tests..."
-	@$(VD) --driver $(VDD) -o $(TST_DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(TSRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION) --private --internal
 ## * make doc: Dokumentation generieren
 doc: $(SRC_FILES)
 	@echo "Generating Documentation..."
@@ -100,12 +79,6 @@ doc-internal: $(SRC_FILES)
 	@echo "Generating internal Documentation"
 	@$(VD) --driver $(VDD) -o $(DOC_DIR) --vapidir=$(VAPI_DIR) $(PKG_FLAGS) $(CC_FLAGS) $(SRC_FILES) --package-name $(PKG_NAME) --package-version=$(VERSION) --private --internal --importdir=$(TST_DOC_DIR) #fix importdir
 	@gnome-open ./doc/index.html
-
-## * make doc-publish: Zuvor generierte Doc veroeffentlichen
-doc-publish: $(SRC_FILES)
-	@mkdir -p $(PUB_DIR)
-	@cp $(DOC_DIR) $(PUB_DIR) -r
-	@gnome-open http://dl.dropbox.com/u/55722973/hmp/doc/index.html
 
 ## * make clean: Raeumt die erzeugten Dateien auf
 clean:
@@ -122,6 +95,7 @@ clean:
 	@rm -rf librpggl/src/*/*.c
 	@rm -rf $(TMP_DIR)
 	@rm -rf $(TST_DOC_DIR)
+	@rm -rf node/*.js
 
 ## * make help: Diese Hilfe anzeigen
 help:
