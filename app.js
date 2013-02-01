@@ -4,6 +4,7 @@
  */
 
 var express = require('express'),
+  lessMiddleware = require('less-middleware'),
   routes = require('./routes'),
   api = require('./routes/api');
 
@@ -16,6 +17,10 @@ app.configure(function(){
   app.set('view engine', 'jade');
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(lessMiddleware({
+      src: __dirname + '/public',
+      compress: true
+  }));
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);
 });
