@@ -8,8 +8,24 @@ function AppCtrl($scope, $http) {
     $scope.name = data.name;
   }).
   error(function(data, status, headers, config) {
-    $scope.name = 'Error!'
+    $scope.name = 'Error!';
   });
+}
+
+function SizeCtrl($scope) {
+
+    $scope.getSize = function() {
+        return {width:$(window).width(),height:$(window).height()};
+    };
+
+    $scope.$watch($scope.getSize, function(newValue, oldValue) {
+        $scope.window_width = newValue.width;
+        $scope.window_height = newValue.height;
+    });
+
+    window.onresize = function(){
+        $scope.$apply();
+    };
 }
 
 function MyCtrl1() {}
