@@ -1,9 +1,0 @@
-[submodule "librpg"]
-	path = librpg
-	url = git@github.com:JumpLink/librpg.git
-[submodule "libsxml"]
-	path = libsxml
-	url = git://github.com/JumpLink/simple-xml-reader-vala.git
-[submodule "node/typescript-node-definitions"]
-	path = node/typescript-node-definitions
-	url = https://github.com/soywiz/typescript-node-definitions
