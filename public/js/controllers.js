@@ -14,18 +14,22 @@ function AppCtrl($scope, $http) {
 
 function SizeCtrl($scope) {
 
-    $scope.getSize = function() {
-        return {width:$(window).width(),height:$(window).height()};
+    var computeWidth = function() {
+        return window.innerWidth;
     };
-
-    $scope.$watch($scope.getSize, function(newValue, oldValue) {
-        $scope.window_width = newValue.width;
-        $scope.window_height = newValue.height;
-    });
-
-    window.onresize = function(){
+    
+    var computeHeight = function() {
+        return window.innerHeight;
+    };
+    
+    $scope.width = computeWidth();
+    $scope.height = computeHeight();
+    
+    angular.element(window).bind('resize', function() {
+        $scope.width = computeWidth();
+        $scope.height = computeHeight();
         $scope.$apply();
-    };
+    });
 }
 
 function MyCtrl1() {}
