@@ -12,26 +12,6 @@ function AppCtrl($scope, $http) {
   });
 }
 
-function SizeCtrl($scope) {
-
-    var computeWidth = function() {
-        return window.innerWidth;
-    };
-    
-    var computeHeight = function() {
-        return window.innerHeight;
-    };
-    
-    $scope.width = computeWidth();
-    $scope.height = computeHeight();
-    
-    angular.element(window).bind('resize', function() {
-        $scope.width = computeWidth();
-        $scope.height = computeHeight();
-        $scope.$apply();
-    });
-}
-
 function MyCtrl1() {}
 MyCtrl1.$inject = [];
 
