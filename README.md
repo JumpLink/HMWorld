@@ -13,8 +13,6 @@ More informations on: http://creativecommons.org/licenses/by-sa/3.0/
 Authors / Copyright
 -------------------
 * Pascal Garber <pascal.garber@gmail.com>
-* Ole Lorenzen <ole.lorenzen@gmx.net>
-* Patrick König <knuffi@gmail.com>
 
 More
 ----
@@ -23,8 +21,6 @@ More
 
 Website [hmworld.eu](http://hmworld.eu)
 
-Wiki: [incux.de](http://incux.de/projects/reloaded)
-
 The Game-Repo: [github.com/JumpLink/HMWorld](https://github.com/JumpLink/HMWorld)
 
-The librpg-Repo (that load the map on the website and the game): [github.com/JumpLink/ibrpg](https://github.com/JumpLink/librpg)
+The librpg-Repo (that load the map on the website and the game): [github.com/JumpLink/librpg](https://github.com/JumpLink/librpg)
