@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function AppCtrl($scope, $http) {
+function GameCtrl($scope, $http, $window) {
   $http({method: 'GET', url: '/api/name'}).
   success(function(data, status, headers, config) {
     $scope.name = data.name;
@@ -10,6 +10,7 @@ function AppCtrl($scope, $http) {
   error(function(data, status, headers, config) {
     $scope.name = 'Error!';
   });
+
 }
 
 function MyCtrl1() {}
