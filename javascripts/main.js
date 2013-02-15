@@ -1,5 +1,8 @@
 var api_domain = 'http://localhost:3005';
 var jsonp_cb = '?callback=?';
+var under_layer = api_domain + '/image/resource_manager/map_manager/testmap.tmx/under';
+var over_layer = api_domain +'/image/resource_manager/map_manager/testmap.tmx/over';
+var hero_image = api_domain +'/image/resource_manager/spriteset_manager/testspriteset.ssx';
 
 function get_json_of_map_from_filename(filename, cb) {
     $.getJSON(api_domain+'/json/resource_manager/map_manager/'+filename+jsonp_cb, {
@@ -59,22 +62,11 @@ function get_sprite_animation_from_name_direction(sprite, name, direction) {
     }
 }
 
-var under_layer = api_domain + '/image/resource_manager/map_manager/testmap.tmx/under';
-var over_layer = api_domain +'/image/resource_manager/map_manager/testmap.tmx/over';
-
-var hero_image = api_domain +'/image/resource_manager/spriteset_manager/testspriteset.ssx';
-
-// create the Scene object
-var scene = sjs.Scene({w:640, h:480});
-var sprites = [];
-var cycle;
-var ticker = scene.Ticker(30, paint);
-
-function get_frame_array_from_animation (animation, width, height) {
+function get_frame_array_from_animation (animation) {
     var array = [];
     console.log(animation);
     for (var i = 0; i < animation.frames.length; i++)
-        array.push([animation.frames[i].x*width , animation.frames[i].y*height, animation.frame_ps]);
+        array.push(animation.frames[i].x + animation.frames[i].y * 11 );
     return array;
 }
 
@@ -83,61 +75,33 @@ function load_data() {
         var map = data;
         get_json_of_spriteset_from_filename('testspriteset.ssx', function(data, map) {
             var hero = data;
-            console.log(hero);
 
-            // create the Sprite object;
-            var sp = scene.Sprite(hero_image);
+            enchant(); // initialize
+            var game = new Game(320, 320); // game stage
+            game.preload(hero_image); // preload image
+            game.fps = 6;
 
-            console.log();
+            game.onload = function(){
+                var sp = new Sprite(hero.sprite_width, hero.sprite_height);
+                sp.image = game.assets[hero_image];
+                game.rootScene.addChild(sp);
 
-            // change the visible size of the sprite
-            sp.size(hero.sprite_width, hero.sprite_height);
+                go_west = get_sprite_animation_from_name_direction(hero, "go", "east");
 
-            sprites.push(sp);
-
-            go_west = get_sprite_animation_from_name_direction(hero, "go", "north");
-
-            cycle = sjs.Cycle(get_frame_array_from_animation(go_west, hero.sprite_width, hero.sprite_height));
-
-            cycle.addSprites(sprites[0]);
-
-            // load the images in parallel. When all the images are
-            // ready, the callback function is called.
-            scene.loadImages([hero_image, under_layer, over_layer], function() {
+                sp.frame =  get_frame_array_from_animation(go_west);   // select sprite frame
+                console.log( get_frame_array_from_animation(go_west) );
                 
-                ticker.run();
+                sp.tl.scaleTo(-1, 1, 10)       // turn right
+                    .moveBy(288, 0, 90)   // move right
+                    .scaleTo(1, 1, 10)      // turn left
+                    .moveBy(-288, 0, 90)     // move left
+                    .loop();                 // loop it
+            };
 
-            } );
-
-
+            game.start(); // start your game!
 
         });
     });
-}
-
-function paint() {
-    // var background = scene.Layer('background', {autoClear:false});
-    // var sprite = background.Sprite(under_layer);
-
-    cycle.next(ticker.lastTicksElapsed);
-
-    // apply the latest visual changes to the sprite
-    // (draw if canvas, update attribute if DOM);
-    sprites[0].update();
-
-    // change the offset of the image in the sprite
-    // (this works the opposite way of a CSS background)
-    //sp.offset(50, 50);
-
-    // various transformations
-    //sp.move(100, 100);
-    //sp.rotate(3.14 / 4);
-    //sp.scale(2);
-    //sprites[0].setOpacity(0.8);
-
-    //onsole.log("test");
-
-    //sp.update();
 }
 
 load_data();
