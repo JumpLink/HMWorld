@@ -62,11 +62,11 @@ function get_sprite_animation_from_name_direction(sprite, name, direction) {
     }
 }
 
-function get_frame_array_from_animation (animation) {
+function get_frame_array_from_animation (animation, width) {
     var array = [];
     console.log(animation);
     for (var i = 0; i < animation.frames.length; i++)
-        array.push(animation.frames[i].x + animation.frames[i].y * 11 );
+        array.push(animation.frames[i].x + animation.frames[i].y * width );
     return array;
 }
 
@@ -75,7 +75,7 @@ function load_data() {
         var map = data;
         get_json_of_spriteset_from_filename('testspriteset.ssx', function(data, map) {
             var hero = data;
-
+            console.log(hero);
             enchant(); // initialize
             var game = new Game(320, 320); // game stage
             game.preload(hero_image); // preload image
@@ -88,8 +88,7 @@ function load_data() {
 
                 go_west = get_sprite_animation_from_name_direction(hero, "go", "east");
 
-                sp.frame =  get_frame_array_from_animation(go_west);   // select sprite frame
-                console.log( get_frame_array_from_animation(go_west) );
+                sp.frame =  get_frame_array_from_animation(go_west, hero.width);   // select sprite frame
                 
                 sp.tl.scaleTo(-1, 1, 10)       // turn right
                     .moveBy(288, 0, 90)   // move right
