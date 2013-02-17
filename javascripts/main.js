@@ -1,7 +1,7 @@
 var api_domain = 'http://localhost:3005';
 var jsonp_cb = '?callback=?';
-var under_layer = api_domain + '/image/resource_manager/map_manager/testmap.tmx/under';
-var over_layer = api_domain +'/image/resource_manager/map_manager/testmap.tmx/over';
+var background = api_domain + '/image/resource_manager/map_manager/testmap.tmx/under';
+var foreground = api_domain +'/image/resource_manager/map_manager/testmap.tmx/over';
 var hero_image = api_domain +'/image/resource_manager/spriteset_manager/testspriteset.ssx';
 
 function get_json_of_map_from_filename(filename, cb) {
@@ -78,23 +78,34 @@ function load_data() {
             console.log(hero);
             enchant(); // initialize
             var game = new Game(320, 320); // game stage
-            game.preload(hero_image); // preload image
-            game.fps = 6;
+            game.preload(hero_image); // preload image 
+            game.preload(background);
+            game.preload(foreground);
+            game.fps = 10;
 
             game.onload = function(){
                 var sp = new Sprite(hero.sprite_width, hero.sprite_height);
                 sp.image = game.assets[hero_image];
-                game.rootScene.addChild(sp);
-
                 go_west = get_sprite_animation_from_name_direction(hero, "go", "east");
-
                 sp.frame =  get_frame_array_from_animation(go_west, hero.width);   // select sprite frame
-                
+
+                bg = new Sprite(320,320);
+                bg.image = game.assets[background];
+
+                fg = new Sprite(320,320);
+                fg.image = game.assets[foreground];
+
                 sp.tl.scaleTo(-1, 1, 10)       // turn right
                     .moveBy(288, 0, 90)   // move right
                     .scaleTo(1, 1, 10)      // turn left
                     .moveBy(-288, 0, 90)     // move left
                     .loop();                 // loop it
+
+                game.rootScene.addChild(bg);
+                game.rootScene.addChild(sp);
+                game.rootScene.addChild(fg);
+
+
             };
 
             game.start(); // start your game!
