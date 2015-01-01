@@ -1,0 +1,22 @@
+{
+  "name": "HMWorld",
+  "version": "0.0.0",
+  "authors": [
+    "Pascal Garber <pascal@jumplink.eu>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "third-party",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "BlocksJS": "williammalone/BlocksJS#master"
+  }
+}
